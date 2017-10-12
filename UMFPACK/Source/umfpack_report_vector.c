@@ -18,17 +18,17 @@
 GLOBAL Int UMFPACK_report_vector
 (
     Int n,
-    const double Xx [ ],
+    const float Xx [ ],
 #ifdef COMPLEX
-    const double Xz [ ],
+    const float Xz [ ],
 #endif
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 )
 {
     Int prl ;
 
 #ifndef COMPLEX
-    double *Xz = (double *) NULL ;
+    float *Xz = (float *) NULL ;
 #endif
 
     prl = GET_CONTROL (UMFPACK_PRL, UMFPACK_DEFAULT_PRL) ;

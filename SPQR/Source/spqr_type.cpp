@@ -7,7 +7,7 @@
 
 #include "spqr.hpp"
 
-template <> int spqr_type <double> (void)
+template <> int spqr_type <float> (void)
 {
     return (CHOLMOD_REAL) ;
 }

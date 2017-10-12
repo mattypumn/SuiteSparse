@@ -58,7 +58,7 @@ void mexFunction
 )
 {
     Long *Bp, *Bi ;
-    double *Ax, *Bx, dummy ;
+    float *Ax, *Bx, dummy ;
     Long m, n, k, bncols, p, i, rank, A_complex, B_complex, is_complex,
         anz, bnz ;
     spqr_mx_options opts ;
@@ -67,7 +67,7 @@ void mexFunction
     cholmod_common Common, *cc ;
     char msg [LEN+1] ;
 
-    double t0 = (nargout > 1) ? SuiteSparse_time ( ) : 0 ;
+    float t0 = (nargout > 1) ? SuiteSparse_time ( ) : 0 ;
 
     // -------------------------------------------------------------------------
     // start CHOLMOD and set parameters
@@ -206,14 +206,14 @@ void mexFunction
             if (B_is_sparse)
             {
                 // X and B are both sparse and real
-                Xsparse = SuiteSparseQR_min2norm <double> (opts.ordering,
+                Xsparse = SuiteSparseQR_min2norm <float> (opts.ordering,
                     opts.tol, A, Bsparse, cc) ;
                 pargout [0] = spqr_mx_put_sparse (&Xsparse, cc) ;
             }
             else
             {
                 // X and B are both dense and real
-                Xdense = SuiteSparseQR_min2norm <double> (opts.ordering,
+                Xdense = SuiteSparseQR_min2norm <float> (opts.ordering,
                     opts.tol, A, Bdense, cc) ;
                 pargout [0] = spqr_mx_put_dense (&Xdense, cc) ;
             }
@@ -248,14 +248,14 @@ void mexFunction
             if (B_is_sparse)
             {
                 // X and B are both sparse and real
-                Xsparse = SuiteSparseQR <double> (opts.ordering, opts.tol,
+                Xsparse = SuiteSparseQR <float> (opts.ordering, opts.tol,
                     A, Bsparse, cc) ;
                 pargout [0] = spqr_mx_put_sparse (&Xsparse, cc) ;
             }
             else
             {
                 // X and B are both dense and real
-                Xdense = SuiteSparseQR <double> (opts.ordering, opts.tol,
+                Xdense = SuiteSparseQR <float> (opts.ordering, opts.tol,
                     A, Bdense, cc) ;
                 pargout [0] = spqr_mx_put_dense (&Xdense, cc) ;
             }
@@ -268,8 +268,8 @@ void mexFunction
 
     if (nargout > 1)
     {
-        double flops = cc->SPQR_flopcount ;
-        double t = SuiteSparse_time ( ) - t0 ;
+        float flops = cc->SPQR_flopcount ;
+        float t = SuiteSparse_time ( ) - t0 ;
         pargout [1] = spqr_mx_info (cc, t, flops) ;
     }
 

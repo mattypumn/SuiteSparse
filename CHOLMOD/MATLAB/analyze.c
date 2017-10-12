@@ -40,7 +40,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double dummy = 0 ;
+    float dummy = 0 ;
     cholmod_factor *L ;
     cholmod_sparse *A, Amatrix, *C, *S ;
     cholmod_common Common, *cm ;

@@ -60,7 +60,7 @@ template <typename Entry> Long SuiteSparseQR
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // number of rows of C and R to return; a value
                             // less than the rank r of A is treated as r, and
                             // a value greater than m is treated as m.
@@ -113,7 +113,7 @@ template <typename Entry> Long SuiteSparseQR
     cholmod_sparse *Xsparse, *Zsparse, *R, *H ;
     cholmod_dense *Zdense, *HTau ;
 
-    double t0 = SuiteSparse_time ( ) ;
+    float t0 = SuiteSparse_time ( ) ;
 
     int ok = TRUE ;
 
@@ -978,8 +978,8 @@ template <typename Entry> Long SuiteSparseQR
         *p_E = E ;
     }
 
-    double t3 = SuiteSparse_time ( ) ;
-    double total_time = t3 - t0 ;
+    float t3 = SuiteSparse_time ( ) ;
+    float total_time = t3 - t0 ;
     cc->SPQR_solve_time =
         total_time - cc->SPQR_analyze_time - cc->SPQR_factorize_time ;
 
@@ -987,11 +987,11 @@ template <typename Entry> Long SuiteSparseQR
 }
 
 
-template Long SuiteSparseQR <double>
+template Long SuiteSparseQR <float>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // number of rows of C and R to return; a value
                             // less than the rank r of A is treated as r, and
                             // a value greater than m is treated as m.
@@ -1023,7 +1023,7 @@ template Long SuiteSparseQR <Complex>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // number of rows of C and R to return; a value
                             // less than the rank r of A is treated as r, and
                             // a value greater than m is treated as m.
@@ -1063,7 +1063,7 @@ template Long SuiteSparseQR <Complex>
 template <typename Entry> cholmod_dense *SuiteSparseQR
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-nrhs
     cholmod_common *cc      // workspace and parameters
@@ -1075,10 +1075,10 @@ template <typename Entry> cholmod_dense *SuiteSparseQR
     return (X) ;
 }
 
-template cholmod_dense *SuiteSparseQR <double>
+template cholmod_dense *SuiteSparseQR <float>
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-nrhs
     cholmod_common *cc      // workspace and parameters
@@ -1087,7 +1087,7 @@ template cholmod_dense *SuiteSparseQR <double>
 template cholmod_dense *SuiteSparseQR <Complex>
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-nrhs
     cholmod_common *cc      // workspace and parameters
@@ -1110,7 +1110,7 @@ template <typename Entry> cholmod_dense *SuiteSparseQR
     return (X) ;
 }
 
-template cholmod_dense *SuiteSparseQR <double>
+template cholmod_dense *SuiteSparseQR <float>
 (
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-nrhs
@@ -1132,7 +1132,7 @@ template cholmod_dense *SuiteSparseQR <Complex>
 template <typename Entry> cholmod_sparse *SuiteSparseQR
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_sparse *B,      // m-by-nrhs
     cholmod_common *cc      // workspace and parameters
@@ -1146,10 +1146,10 @@ template <typename Entry> cholmod_sparse *SuiteSparseQR
     return (X) ;
 }
 
-template cholmod_sparse *SuiteSparseQR <double>
+template cholmod_sparse *SuiteSparseQR <float>
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_sparse *B,      // m-by-nrhs
     cholmod_common *cc      // workspace and parameters
@@ -1158,7 +1158,7 @@ template cholmod_sparse *SuiteSparseQR <double>
 template cholmod_sparse *SuiteSparseQR <Complex>
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_sparse *B,      // m-by-nrhs
     cholmod_common *cc      // workspace and parameters
@@ -1172,7 +1172,7 @@ template cholmod_sparse *SuiteSparseQR <Complex>
 template <typename Entry> Long SuiteSparseQR     // returns rank(A) estimate
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -1197,7 +1197,7 @@ template <typename Entry> Long SuiteSparseQR     // returns rank(A) estimate
 template Long SuiteSparseQR <Complex>     // returns rank(A) estimate
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -1207,10 +1207,10 @@ template Long SuiteSparseQR <Complex>     // returns rank(A) estimate
     cholmod_common *cc      // workspace and parameters
 ) ;
 
-template Long SuiteSparseQR <double>     // returns rank(A) estimate
+template Long SuiteSparseQR <float>     // returns rank(A) estimate
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -1227,7 +1227,7 @@ template Long SuiteSparseQR <double>     // returns rank(A) estimate
 template <typename Entry> Long SuiteSparseQR     // returns rank(A) estimate
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -1243,7 +1243,7 @@ template <typename Entry> Long SuiteSparseQR     // returns rank(A) estimate
 template Long SuiteSparseQR <Complex>     // returns rank(A) estimate
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -1252,10 +1252,10 @@ template Long SuiteSparseQR <Complex>     // returns rank(A) estimate
     cholmod_common *cc      // workspace and parameters
 ) ;
 
-template Long SuiteSparseQR <double>     // returns rank(A) estimate
+template Long SuiteSparseQR <float>     // returns rank(A) estimate
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -1273,7 +1273,7 @@ template <typename Entry> Long SuiteSparseQR
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-nrhs dense matrix
@@ -1288,11 +1288,11 @@ template <typename Entry> Long SuiteSparseQR
         NULL, C, R, E, NULL, NULL, NULL, cc)) ;
 }
 
-template Long SuiteSparseQR <double>
+template Long SuiteSparseQR <float>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-nrhs dense matrix
@@ -1308,7 +1308,7 @@ template Long SuiteSparseQR <Complex>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-nrhs dense matrix
@@ -1329,7 +1329,7 @@ template <typename Entry> Long SuiteSparseQR
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_sparse *B,      // m-by-nrhs sparse matrix
@@ -1344,11 +1344,11 @@ template <typename Entry> Long SuiteSparseQR
         C, NULL, R, E, NULL, NULL, NULL, cc)) ;
 }
 
-template Long SuiteSparseQR <double>
+template Long SuiteSparseQR <float>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_sparse *B,      // m-by-nrhs sparse matrix
@@ -1364,7 +1364,7 @@ template Long SuiteSparseQR <Complex>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_sparse *B,      // m-by-nrhs sparse matrix
@@ -1384,7 +1384,7 @@ template <typename Entry> Long SuiteSparseQR
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -1400,11 +1400,11 @@ template <typename Entry> Long SuiteSparseQR
         NULL, NULL, NULL, NULL, R, E, H, HPinv, HTau, cc)) ;
 }
 
-template Long SuiteSparseQR <double>
+template Long SuiteSparseQR <float>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -1420,7 +1420,7 @@ template Long SuiteSparseQR <Complex>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as zero
+    float tol,             // columns with 2-norm <= tol are treated as zero
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs

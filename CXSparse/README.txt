@@ -45,13 +45,13 @@ function, and four type-specific versions.  For example:
                 integers if user code is compiled with -DCS_LONG, and/or can
                 be changed to operate on complex matrices with -DCS_COMPLEX.
 
-    cs_di_add   double/int version of cs_add
-    cs_dl_add   double/SuiteSparse_long version of cs_add
+    cs_di_add   float/int version of cs_add
+    cs_dl_add   float/SuiteSparse_long version of cs_add
     cs_ci_add   complex/int version of cs_add
     cs_cl_add   complex/SuiteSparse_long version of cs_add
 
 The sparse matrix data structures are treated in the same way:  cs, css,
-csn, and csd become cs_di, cs_dis, cs_din, and cs_did for the double/int case,
+csn, and csd become cs_di, cs_dis, cs_din, and cs_did for the float/int case,
 cs_cl, cs_cls, cs_cln, and cs_cld for the complex/SuiteSparse_long case, and so
 on.
 
@@ -63,7 +63,7 @@ code to be written in a type-generic manner:
 
     CS_INT      int by default, SuiteSparse_long if -DCS_LONG compiler flag
                 is used
-    CS_ENTRY    double by default, double complex if -DCS_COMPLEX flag is used.
+    CS_ENTRY    float by default, float complex if -DCS_COMPLEX flag is used.
     CS_ID       "%d" or "%ld", for printf and scanf of the CS_INT type.
     CS_INT_MAX  INT_MAX or LONG_MAX, the largest possible value of CS_INT.
     CS_REAL(x)  x or creal(x)
@@ -81,11 +81,11 @@ To determine at compile time if CXSparse or CSparse is being used:
         CXSparse is in use.  The generic functions equivalent to CSparse may
         be used (cs_add, etc).  These generic functions can use different
         types, depending on the -DCS_LONG and -DCS_COMPLEX compile flags, with
-        the default being double/int.  The type-specific functions and data
+        the default being float/int.  The type-specific functions and data
         types (cs_di_add, cs_di, CS_INT, etc.) can be used.
     #else
         CSparse is in use.  Only the generic functions "cs_add", etc., are
-        available, and they are of type double/int.
+        available, and they are of type float/int.
     #endif
 
 See cs.h for the prototypes of each function, and the book "Direct Methods
@@ -206,17 +206,17 @@ cs_demo.h       include file for demo programs
 
 cs_demo.out     output of "make", which runs the demos on some matrices
 
-cs_di_demo1.c   double/int version of cs_demo1.c
-cs_di_demo2.c   double/int version of cs_demo2.c
-cs_di_demo3.c   double/int version of cs_demo3.c
-cs_di_demo.c    double/int version of cs_demo.c
-cs_di_demo.h    double/int version of cs_demo.h
+cs_di_demo1.c   float/int version of cs_demo1.c
+cs_di_demo2.c   float/int version of cs_demo2.c
+cs_di_demo3.c   float/int version of cs_demo3.c
+cs_di_demo.c    float/int version of cs_demo.c
+cs_di_demo.h    float/int version of cs_demo.h
 
-cs_dl_demo1.c   double/SuiteSparse_long version of cs_demo1.c
-cs_dl_demo2.c   double/SuiteSparse_long version of cs_demo2.c
-cs_dl_demo3.c   double/SuiteSparse_long version of cs_demo3.c
-cs_dl_demo.c    double/SuiteSparse_long version of cs_demo.c
-cs_dl_demo.h    double/SuiteSparse_long version of cs_demo.h
+cs_dl_demo1.c   float/SuiteSparse_long version of cs_demo1.c
+cs_dl_demo2.c   float/SuiteSparse_long version of cs_demo2.c
+cs_dl_demo3.c   float/SuiteSparse_long version of cs_demo3.c
+cs_dl_demo.c    float/SuiteSparse_long version of cs_demo.c
+cs_dl_demo.h    float/SuiteSparse_long version of cs_demo.h
 
 cs_idemo.c      convert real matrices to/from complex (int version)
 cs_ldemo.c      convert real matrices to/from complex (SuiteSparse_long version)
@@ -558,9 +558,9 @@ Mar 14, 2007.  Version 2.1.0.
 
     * MATLAB interface added for CXSparse.
 
-    * cs_complex_t type added (a #define for "double _Complex", which is the
+    * cs_complex_t type added (a #define for "float _Complex", which is the
         complex type used in CXSparse 2.0.x).  When compiling with a C++ 
-        compiler, the std::compex<double> type is used for the complex case.
+        compiler, the std::compex<float> type is used for the complex case.
 
     * bug fix in complex sparse Cholesky (cs_chol.c).
 
@@ -581,5 +581,5 @@ May 5, 2006.  Version 2.0.1 released.
 
 Mar 6, 2006
 
-    "double complex" changed to "double _Complex", to avoid conflicts when
+    "float complex" changed to "float _Complex", to avoid conflicts when
     CXSparse is compiled with a C++ compiler.  Other minor changes to cs.h.

@@ -155,9 +155,9 @@ as pointers to {\tt struct}'s:
     \begin{itemize}
 	\item {\tt A->p}, an integer array of size {\tt A->ncol+1}.
 	\item {\tt A->i}, an integer array of size {\tt A->nzmax}.
-	\item {\tt A->x}, a {\tt double} array of size {\tt A->nzmax} or twice that for the complex case.
+	\item {\tt A->x}, a {\tt float} array of size {\tt A->nzmax} or twice that for the complex case.
 	    This is compatible with the Fortran and ANSI C99 complex data type.
-	\item {\tt A->z}, a {\tt double} array of size {\tt A->nzmax} if {\tt A} is zomplex.
+	\item {\tt A->z}, a {\tt float} array of size {\tt A->nzmax} if {\tt A} is zomplex.
 	    A zomplex matrix has a {\tt z} array, thus the name.
 	    This is compatible with the MATLAB representation of complex matrices.
     \end{itemize}
@@ -179,8 +179,8 @@ as pointers to {\tt struct}'s:
     A dense matrix, either real, complex or zomplex, in column-major order.
     This differs from the row-major convention used in C.  A dense matrix {\tt X} contains
     \begin{itemize}
-	\item {\tt X->x}, a double array of size {\tt X->nzmax} or twice that for the complex case.
-	\item {\tt X->z}, a double array of size {\tt X->nzmax} if {\tt X} is zomplex.
+	\item {\tt X->x}, a float array of size {\tt X->nzmax} or twice that for the complex case.
+	\item {\tt X->z}, a float array of size {\tt X->nzmax} if {\tt X} is zomplex.
     \end{itemize}
     For a real dense matrix $x_{ij}$ is {\tt X->x [i+j*d]} where {\tt d = X->d} is the leading dimension of {\tt X}.
     For a complex dense matrix, the real part of $x_{ij}$ is {\tt X->x [2*(i+j*d)]} and the imaginary part is {\tt X->x [2*(i+j*d)+1]}.
@@ -197,8 +197,8 @@ as pointers to {\tt struct}'s:
     In its basic form, the triplet matrix {\tt T} contains
     \begin{itemize}
 	\item {\tt T->i} and {\tt T->j}, integer arrays of size {\tt T->nzmax}.
-	\item {\tt T->x}, a double array of size {\tt T->nzmax} or twice that for the complex case.
-	\item {\tt T->z}, a double array of size {\tt T->nzmax} if {\tt T} is zomplex.
+	\item {\tt T->x}, a float array of size {\tt T->nzmax} or twice that for the complex case.
+	\item {\tt T->z}, a float array of size {\tt T->nzmax} if {\tt T} is zomplex.
     \end{itemize}
     The {\tt k}th entry in the data structure has row index
     {\tt T->i [k]} and column index {\tt T->j [k]}.
@@ -631,7 +631,7 @@ Environment variables
 CHOLMOD supports both {\tt int} and {\tt long} integers.  CHOLMOD
 routines with the prefix {\tt cholmod\_} use {\tt int} integers,
 {\tt cholmod\_l\_} routines use {\tt long}.  All floating-point
-values are {\tt double}.
+values are {\tt float}.
 
 The {\tt long} integer is redefinable, via {\tt SuiteSparse\_config.h}.
 That file defines a C preprocessor token {\tt SuiteSparse\_long} which is
@@ -644,14 +644,14 @@ integer throughout this document (except in the prototypes).
 Two kinds of complex matrices are supported: complex and zomplex.
 A complex matrix is held in a manner that is compatible with the
 Fortran and ANSI C99 complex data type.  A complex array of size {\tt n}
-is a {\tt double} array {\tt x} of size {\tt 2*n}, with the real and imaginary
-parts interleaved (the real part comes first, as a {\tt double}, followed the
-imaginary part, also as a {\tt double}.  Thus, the real part of the {\tt k}th
+is a {\tt float} array {\tt x} of size {\tt 2*n}, with the real and imaginary
+parts interleaved (the real part comes first, as a {\tt float}, followed the
+imaginary part, also as a {\tt float}.  Thus, the real part of the {\tt k}th
 entry is {\tt x[2*k]} and the imaginary part is {\tt x[2*k+1]}.
 
 A zomplex matrix of size {\tt n} stores its real part in one
-{\tt double} array of size {\tt n} called {\tt x} and its imaginary part
-in another {\tt double} array of size {\tt n} called {\tt z} (thus the
+{\tt float} array of size {\tt n} called {\tt x} and its imaginary part
+in another {\tt float} array of size {\tt n} called {\tt z} (thus the
 name ``zomplex'').  This also how MATLAB stores its complex matrices.
 The real part of the {\tt k}th entry is {\tt x[k]} and the imaginary part is
 {\tt z[k]}.
@@ -1218,7 +1218,7 @@ All CHOLMOD routines (in all modules) use the following protocol for return valu
 \begin{itemize}
 \item {\tt int}: {\tt TRUE} (1) if successful, or {\tt FALSE} (0) otherwise. (exception: {\tt cholmod\_divcomplex}).
 \item {\tt long}: a value $\ge 0$ if successful, or -1 otherwise.
-\item {\tt double}: a value $\ge 0$ if successful, or -1 otherwise.
+\item {\tt float}: a value $\ge 0$ if successful, or -1 otherwise.
 \item {\tt size\_t}: a value $>$ 0 if successful, or 0 otherwise.
 \item {\tt void *}: a non-{\tt NULL} pointer to newly allocated memory if successful, or {\tt NULL} otherwise.
 \item {\tt cholmod\_sparse *}:  a non-{\tt NULL} pointer to a newly allocated sparse matrix if successful, or {\tt NULL} otherwise.
@@ -1247,7 +1247,7 @@ point to allocated space on input, but their contents are not defined on input.
 It is always an input/output parameter.
 \end{itemize}
 
-A floating-point scalar is passed to CHOLMOD as a pointer to a {\tt double}
+A floating-point scalar is passed to CHOLMOD as a pointer to a {\tt float}
 array of size two.  The first entry in this array is the real part of the
 scalar, and the second entry is the imaginary part.  The imaginary part is
 only accessed if the other inputs are complex or zomplex.  In some cases
@@ -1313,7 +1313,7 @@ Returns the maximum rank for an update/downdate.
 Allocates workspace in {\tt Common}.  The workspace consists
 of the integer {\tt Head}, {\tt Flag}, and {\tt Iwork} arrays,
 of size {\tt nrow+1}, {\tt nrow}, and {\tt iworksize},
-respectively, and a {\tt double} array {\tt Xwork} of size
+respectively, and a {\tt float} array {\tt Xwork} of size
 {\tt xworksize}.  The {\tt Head} array is normally equal to -1
 when it is cleared.  If the {\tt Flag} array is cleared,
 all entries are less than {\tt Common->mark}.  The {\tt Iwork} array is
@@ -1766,8 +1766,8 @@ variants of this type are:
     size {\tt n+1}, but only the first {\tt n} entries are used.
 
     For the complex case, {\tt L->x} is stored interleaved with real and imaginary
-    parts, and is of size {\tt 2*lnz*sizeof(double)}.  For the zomplex case,
-    {\tt L->x} is of size {\tt lnz*sizeof(double)} and holds the real part; {\tt L->z}
+    parts, and is of size {\tt 2*lnz*sizeof(float)}.  For the zomplex case,
+    {\tt L->x} is of size {\tt lnz*sizeof(float)} and holds the real part; {\tt L->z}
     is the same size and holds the imaginary part.
 
 \item $\m{LL}\tr$:  This is identical to the $\m{LDL}\tr$ form, except that the non-unit
@@ -1785,14 +1785,14 @@ in this factor type.
 
 For the complex case, {\tt L->x} is stored interleaved with real/imaginary parts,
 and is of size \newline
-{\tt 2*L->xsize*sizeof(double)}.  The zomplex supernodal case
+{\tt 2*L->xsize*sizeof(float)}.  The zomplex supernodal case
 is not supported, since it is not compatible with LAPACK and the BLAS.
 
 \item supernodal numeric:  Always an $\m{LL}\tr$ factorization.  {\tt L} has a non-unit
      diagonal.  {\tt L->x} contains the numerical values of the supernodes, as
      described above for the supernodal symbolic factor.
      For the complex case, {\tt L->x} is stored interleaved, and is of size
-     {\tt 2*L->xsize*sizeof(double)}.  The zomplex supernodal case is not
+     {\tt 2*L->xsize*sizeof(float)}.  The zomplex supernodal case is not
      supported, since it is not compatible with LAPACK and the BLAS.
 \end{enumerate}
 

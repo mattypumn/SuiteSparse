@@ -108,7 +108,7 @@ static SuiteSparse_long partition    /* size of separator or -1 if failure */
 
 #ifndef NDEBUG
     Int cnt, pruned ;
-    double work = 0, goodwork = 0 ;
+    float work = 0, goodwork = 0 ;
 #endif
 
     /* ---------------------------------------------------------------------- */
@@ -347,9 +347,9 @@ static SuiteSparse_long partition    /* size of separator or -1 if failure */
 	    Hhead [hash] = 1 ;
 	}
 
-	DEBUG (if (((work - goodwork) / (double) nz) > 0.20) PRINT0 ((
+	DEBUG (if (((work - goodwork) / (float) nz) > 0.20) PRINT0 ((
 	    "work %12g good %12g nz %12g (wasted work/nz: %6.2f )\n",
-	    work, goodwork, (double) nz, (work - goodwork) / ((double) nz)))) ;
+	    work, goodwork, (float) nz, (work - goodwork) / ((float) nz)))) ;
 
 	/* All hash buckets now empty.  Cmap no longer needed as workspace. ]
 	 * Cew no longer needed as Hhead; Cew is now restored to all ones. ]
@@ -935,7 +935,7 @@ SuiteSparse_long CHOLMOD(bisect)	/* returns # of nodes in separator */
 
     /* B does not include the diagonal, and both upper and lower parts.
      * Common->anz includes the diagonal, and just the lower part of B */
-    Common->anz = bnz / 2 + ((double) n) ;
+    Common->anz = bnz / 2 + ((float) n) ;
 
     /* Bew should be at least size n for the hash function to work well */
     /* this cannot cause overflow, because the matrix is already created */
@@ -1051,7 +1051,7 @@ SuiteSparse_long CHOLMOD(nested_dissection)
     cholmod_common *Common
 )
 {
-    double prune_dense, nd_oksep ;
+    float prune_dense, nd_oksep ;
     Int *Bp, *Bi, *Bnz, *Cstack, *Imap, *Map, *Flag, *Head, *Next, *Bnw, *Iwork,
 	*Ipost, *NewParent, *Hash, *Cmap, *Cp, *Ci, *Cew, *Cnw, *Part, *Post,
 	*Work3n ;
@@ -1208,7 +1208,7 @@ SuiteSparse_long CHOLMOD(nested_dissection)
     else
     {
 	/* remove nodes with degree more than threshold */
-	threshold = (Int) (MAX (16, prune_dense * sqrt ((double) (n)))) ;
+	threshold = (Int) (MAX (16, prune_dense * sqrt ((float) (n)))) ;
 	threshold = MIN (n, threshold) ;
     }
     ndense = 0 ;
@@ -1540,7 +1540,7 @@ SuiteSparse_long CHOLMOD(nested_dissection)
 	ASSERT (sepsize >= 0 && sepsize <= total_weight) ;
 
 	PRINT0 (("sepsize %d tot %d : %8.4f ", sepsize, total_weight,
-	    ((double) sepsize) / ((double) total_weight))) ;
+	    ((float) sepsize) / ((float) total_weight))) ;
 
 	if (sepsize == total_weight || sepsize == 0 ||
 	    sepsize > nd_oksep * total_weight)
@@ -1958,7 +1958,7 @@ SuiteSparse_long CHOLMOD(collapse_septree)
     /* ---- input ---- */
     size_t n,		/* # of nodes in the graph */
     size_t ncomponents,	/* # of nodes in the separator tree (must be <= n) */
-    double nd_oksep,    /* collapse if #sep >= nd_oksep * #nodes in subtree */
+    float nd_oksep,    /* collapse if #sep >= nd_oksep * #nodes in subtree */
     size_t nd_small,    /* collapse if #nodes in subtree < nd_small */
     /* ---- in/out --- */
     Int *CParent,	/* size ncomponents; from cholmod_nested_dissection */
@@ -2089,7 +2089,7 @@ SuiteSparse_long CHOLMOD(collapse_septree)
 	sepsize = Count [c] ;
 	total_weight = Csubtree [c] ;
 	PRINT1 (("Node "ID" sepsize "ID" subtree "ID" ratio %g\n", c, sepsize,
-	    total_weight, ((double) sepsize)/((double) total_weight))) ;
+	    total_weight, ((float) sepsize)/((float) total_weight))) ;
 	first = First [c] ;
 	if (first < c &&    /* c must not be a leaf */
 	   (sepsize > nd_oksep * total_weight || total_weight < (int) nd_small))

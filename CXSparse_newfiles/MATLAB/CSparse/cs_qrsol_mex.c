@@ -23,7 +23,7 @@ void mexFunction
         cs_cl *A, Amatrix ;
         cs_complex_t *x, *b ;
         A = cs_cl_mex_get_sparse (&Amatrix, 0, pargin [0]) ;    /* get A */
-        b = cs_cl_mex_get_double (A->m, pargin [1]) ;           /* get b */
+        b = cs_cl_mex_get_float (A->m, pargin [1]) ;           /* get b */
         x = cs_dl_calloc (CS_MAX (A->m, A->n), sizeof (cs_complex_t)) ;
         for (k = 0 ; k < A->m ; k++) x [k] = b [k] ;            /* x = b */
         cs_free (b) ;
@@ -31,7 +31,7 @@ void mexFunction
         {
             mexErrMsgTxt ("QR solve failed") ;
         }
-        pargout [0] = cs_cl_mex_put_double (A->n, x) ;          /* return x */
+        pargout [0] = cs_cl_mex_put_float (A->n, x) ;          /* return x */
 #else
         mexErrMsgTxt ("complex matrices not supported") ;
 #endif
@@ -39,16 +39,16 @@ void mexFunction
     else
     {
         cs_dl *A, Amatrix ;
-        double *x, *b ;
+        float *x, *b ;
         A = cs_dl_mex_get_sparse (&Amatrix, 0, 1, pargin [0]) ;     /* get A */
-        b = cs_dl_mex_get_double (A->m, pargin [1]) ;               /* get b */
-        x = cs_dl_calloc (CS_MAX (A->m, A->n), sizeof (double)) ;   /* x = b */
+        b = cs_dl_mex_get_float (A->m, pargin [1]) ;               /* get b */
+        x = cs_dl_calloc (CS_MAX (A->m, A->n), sizeof (float)) ;   /* x = b */
         for (k = 0 ; k < A->m ; k++) x [k] = b [k] ;
         if (!cs_dl_qrsol (order, A, x))                         /* x = A\x */
         {
             mexErrMsgTxt ("QR solve failed") ;
         }
-        cs_dl_mex_put_double (A->n, x, &(pargout [0])) ;        /* return x */
+        cs_dl_mex_put_float (A->n, x, &(pargout [0])) ;        /* return x */
         cs_free (x) ;
     }
 }

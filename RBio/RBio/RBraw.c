@@ -16,7 +16,7 @@ c   mtype: Rutherford/Boeing matrix type (psa, rua, rsa, rse, ...)
 c   Ap: column pointers (1-based)
 c   Ai: row indices (1-based)
 c   Ax: numerical values (real, complex, or integer).  Empty for p*a
-c       matrices.  A complex matrix is read in as a single double array
+c       matrices.  A complex matrix is read in as a single float array
 c       Ax, where the kth entry has real value Ax(2*k-1) and imaginary
 c       value Ax(2*k).
 c   title: a string containing the title from the first line of the file
@@ -52,7 +52,7 @@ void mexFunction
 )
 {
     Long *Ap, *Ai ;
-    double *Ax ;
+    float *Ax ;
     Long p, j, nrow, ncol, mkind, skind, xsize, status, nelnz, fem,
         iclass, nnz ;
     mwSize dims [2] = { 0, 1 } ;
@@ -148,6 +148,6 @@ void mexFunction
     if (nargout > 6)
     {
         /* return nrow */
-        pargout [6] = mxCreateDoubleScalar ((double) nrow) ;
+        pargout [6] = mxCreateDoubleScalar ((float) nrow) ;
     }
 }

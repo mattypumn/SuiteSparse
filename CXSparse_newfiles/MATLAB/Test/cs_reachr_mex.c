@@ -42,7 +42,7 @@ void mexFunction
 )
 {
     cs_dl Lmatrix, Bmatrix, *L, *B ;
-    double *x ;
+    float *x ;
     CS_INT i, j, top, *xi ;
 
     if (nargout > 1 || nargin != 2)

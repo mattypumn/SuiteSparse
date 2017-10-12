@@ -18,10 +18,10 @@
 
 GLOBAL void CAMD_info
 (
-    double Info [ ]
+    float Info [ ]
 )
 {
-    double n, ndiv, nmultsubs_ldl, nmultsubs_lu, lnz, lnzd ;
+    float n, ndiv, nmultsubs_ldl, nmultsubs_lu, lnz, lnzd ;
 
     SUITESPARSE_PRINTF (("\nCAMD version %d.%d.%d, %s, results:\n",
 	CAMD_MAIN_VERSION, CAMD_SUB_VERSION, CAMD_SUBSUB_VERSION, CAMD_DATE)) ;

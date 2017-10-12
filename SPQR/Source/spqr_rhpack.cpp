@@ -142,7 +142,7 @@ template <typename Entry> Long spqr_rhpack   // returns # of entries in R+H
 
 // =============================================================================
 
-template Long spqr_rhpack <double>   // returns # of entries in R+H
+template Long spqr_rhpack <float>   // returns # of entries in R+H
 (
     // input, not modified
     int keepH,              // if true, then H is packed
@@ -153,10 +153,10 @@ template Long spqr_rhpack <double>   // returns # of entries in R+H
                             // Only the first npiv columns can be dead.
 
     // input, not modified (unless the pack occurs in-place)
-    double *F,              // m-by-n frontal matrix in column-major order
+    float *F,              // m-by-n frontal matrix in column-major order
 
     // output, contents not defined on input
-    double *R,              // packed columns of R+H
+    float *R,              // packed columns of R+H
     Long *p_rm              // number of rows in R block
 ) ;
 

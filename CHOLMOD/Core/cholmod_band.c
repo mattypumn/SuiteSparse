@@ -56,7 +56,7 @@ static cholmod_sparse *band		/* returns C, or NULL if failure */
     cholmod_common *Common
 )
 {
-    double *Ax, *Cx ;
+    float *Ax, *Cx ;
     Int packed, nz, j, p, pend, i, ncol, nrow, jlo, jhi, ilo, ihi, sorted,
 	values, diag ;
     Int *Ap, *Anz, *Ai, *Cp, *Ci ;

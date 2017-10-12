@@ -3,7 +3,7 @@
 cs *cs_transpose (const cs *A, csi values)
 {
     csi p, q, j, *Cp, *Ci, n, m, *Ap, *Ai, *w ;
-    double *Cx, *Ax ;
+    float *Cx, *Ax ;
     cs *C ;
     if (!CS_CSC (A)) return (NULL) ;    /* check inputs */
     m = A->m ; n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;

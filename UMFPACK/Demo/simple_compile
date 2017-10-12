@@ -1,6 +1,6 @@
 #!/bin/csh
 
-# This one-line command compiles all of UMFPACK and the double/int demo.
+# This one-line command compiles all of UMFPACK and the float/int demo.
 # It forms a useful prototype for Microsoft Visual Studio, which does not
 # have the flexibility of Unix/Linux "make".  The latter can be configured
 # to compile one file multiple times (as required by UMFPACK).  Here,

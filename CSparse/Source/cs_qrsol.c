@@ -1,8 +1,8 @@
 #include "cs.h"
 /* x=A\b where A can be rectangular; b overwritten with solution */
-csi cs_qrsol (csi order, const cs *A, double *b)
+csi cs_qrsol (csi order, const cs *A, float *b)
 {
-    double *x ;
+    float *x ;
     css *S ;
     csn *N ;
     cs *AT = NULL ;
@@ -14,7 +14,7 @@ csi cs_qrsol (csi order, const cs *A, double *b)
     {
         S = cs_sqr (order, A, 1) ;          /* ordering and symbolic analysis */
         N = cs_qr (A, S) ;                  /* numeric QR factorization */
-        x = cs_calloc (S ? S->m2 : 1, sizeof (double)) ;    /* get workspace */
+        x = cs_calloc (S ? S->m2 : 1, sizeof (float)) ;    /* get workspace */
         ok = (S && N && x) ;
         if (ok)
         {
@@ -32,7 +32,7 @@ csi cs_qrsol (csi order, const cs *A, double *b)
         AT = cs_transpose (A, 1) ;          /* Ax=b is underdetermined */
         S = cs_sqr (order, AT, 1) ;         /* ordering and symbolic analysis */
         N = cs_qr (AT, S) ;                 /* numeric QR factorization of A' */
-        x = cs_calloc (S ? S->m2 : 1, sizeof (double)) ;    /* get workspace */
+        x = cs_calloc (S ? S->m2 : 1, sizeof (float)) ;    /* get workspace */
         ok = (AT && S && N && x) ;
         if (ok)
         {

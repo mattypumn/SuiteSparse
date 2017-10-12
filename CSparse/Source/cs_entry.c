@@ -1,6 +1,6 @@
 #include "cs.h"
 /* add an entry to a triplet matrix; return 1 if ok, 0 otherwise */
-csi cs_entry (cs *T, csi i, csi j, double x)
+csi cs_entry (cs *T, csi i, csi j, float x)
 {
     if (!CS_TRIPLET (T) || i < 0 || j < 0) return (0) ;     /* check inputs */
     if (T->nz >= T->nzmax && !cs_sprealloc (T,2*(T->nzmax))) return (0) ;

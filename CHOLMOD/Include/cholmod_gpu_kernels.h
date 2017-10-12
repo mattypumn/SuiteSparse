@@ -27,16 +27,16 @@ int createMapOnDevice ( Int *d_Map, Int *d_Ls, Int psi, Int nsrow );
 int createRelativeMapOnDevice ( Int *d_Map, Int *d_Ls, Int *d_RelativeMap,
                            Int pdi1, Int ndrow, cudaStream_t astream ); 
 
-int addUpateOnDevice ( double *d_A, double *devPtrC, Int *d_RelativeMap,
+int addUpateOnDevice ( float *d_A, float *devPtrC, Int *d_RelativeMap,
     Int ndrow1, Int ndrow2, Int nsrow, cudaStream_t astream );
 
-int addComplexUpateOnDevice ( double *d_A, double *devPtrC, Int *d_RelativeMap,
+int addComplexUpateOnDevice ( float *d_A, float *devPtrC, Int *d_RelativeMap,
     Int ndrow1, Int ndrow2, Int nsrow, cudaStream_t astream );
 
-int sumAOnDevice ( double *a1, double *a2, const double alpha, int nsrow,
+int sumAOnDevice ( float *a1, float *a2, const float alpha, int nsrow,
     int nscol );
 
-int sumComplexAOnDevice ( double *a1, double *a2, const double alpha,
+int sumComplexAOnDevice ( float *a1, float *a2, const float alpha,
     int nsrow, int nscol );
 
 #ifdef __cplusplus

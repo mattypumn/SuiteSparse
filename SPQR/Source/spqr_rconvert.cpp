@@ -303,11 +303,11 @@ template <typename Entry> void spqr_rconvert
 
 // =============================================================================
 
-template void spqr_rconvert <double>
+template void spqr_rconvert <float>
 (
     // inputs, not modified
     spqr_symbolic *QRsym,
-    spqr_numeric <double> *QRnum,
+    spqr_numeric <float> *QRnum,
 
     Long n1rows,        // added to each row index of Ra, Rb, and H
     Long econ,          // only get entries in rows n1rows to econ-1
@@ -321,7 +321,7 @@ template void spqr_rconvert <double>
 
     // output, not defined on input
     Long *Rai,          // size rnz1 = nnz(Ra); row indices of Ra
-    double *Rax,        // size rnz; numerical values of Ra
+    float *Rax,        // size rnz; numerical values of Ra
 
     // input/output
     Long *Rbp,          // if getT is false:
@@ -336,7 +336,7 @@ template void spqr_rconvert <double>
 
     // output, not defined on input
     Long *Rbi,          // size rnz2 = nnz(Rb); indices of Rb
-    double *Rbx,        // size rnz2; numerical values of Rb
+    float *Rbx,        // size rnz2; numerical values of Rb
 
     // input
     Long *H2p,          // size nh+1; H2p [j] is the column pointer for H.
@@ -345,8 +345,8 @@ template void spqr_rconvert <double>
 
     // output, not defined on input
     Long *H2i,          // size hnz = nnz(H); indices of H
-    double *H2x,        // size hnz; numerical values of H
-    double *H2Tau       // size nh; Householder coefficients
+    float *H2x,        // size hnz; numerical values of H
+    float *H2Tau       // size nh; Householder coefficients
 ) ;
 
 // =============================================================================

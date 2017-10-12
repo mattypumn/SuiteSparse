@@ -691,10 +691,10 @@ The C-callable UMFPACK library consists of 32 user-callable routines and one
 include file.  All but three of the routines come in four versions, with
 different sizes of integers and for real or complex floating-point numbers:
 \begin{enumerate}
-\item {\tt umfpack\_di\_*}: real double precision, {\tt int} integers.
-\item {\tt umfpack\_dl\_*}: real double precision, {\tt SuiteSparse\_long} integers.
-\item {\tt umfpack\_zi\_*}: complex double precision, {\tt int} integers.
-\item {\tt umfpack\_zl\_*}: complex double precision, {\tt SuiteSparse\_long} integers.
+\item {\tt umfpack\_di\_*}: real float precision, {\tt int} integers.
+\item {\tt umfpack\_dl\_*}: real float precision, {\tt SuiteSparse\_long} integers.
+\item {\tt umfpack\_zi\_*}: complex float precision, {\tt int} integers.
+\item {\tt umfpack\_zl\_*}: complex float precision, {\tt SuiteSparse\_long} integers.
 \end{enumerate}
 where {\tt *} denotes the specific name of one of the routines.
 Routine names beginning with {\tt umf\_} are internal to the package,
@@ -711,7 +711,7 @@ Use only one version for any one problem; do not attempt to use one version
 to analyze the matrix and another version to factorize the matrix, for example.
 
 The notation {\tt umfpack\_di\_*} refers to all user-callable routines
-for the real double precision and {\tt int} integer case.  The notation
+for the real float precision and {\tt int} integer case.  The notation
 {\tt umfpack\_*\_numeric}, for example, refers all four versions
 (real/complex, int/SuiteSparse\_long) of a single operation
 (in this case numeric factorization).
@@ -743,10 +743,10 @@ the {\tt SuiteSparse\_config/SuiteSparse\_config.mk} file.
 \subsection{Real and complex floating-point}
 %-------------------------------------------------------------------------------
 
-The {\tt umfpack\_di\_*} and {\tt umfpack\_dl\_*} routines take (real) double
-precision arguments, and return double precision arguments.  In the
+The {\tt umfpack\_di\_*} and {\tt umfpack\_dl\_*} routines take (real) float
+precision arguments, and return float precision arguments.  In the
 {\tt umfpack\_zi\_*} and {\tt umfpack\_zl\_*} routines, these same arguments
-hold the real part of the matrices; and second double precision arrays hold
+hold the real part of the matrices; and second float precision arrays hold
 the imaginary part of the input and output matrices.  Internally, complex
 numbers are stored in arrays with their real and imaginary parts interleaved,
 as required by the BLAS (``packed'' complex form).
@@ -831,7 +831,7 @@ with {\tt nz} entries.  For the {\tt int} version of UMFPACK:
 \begin{verbatim}
      int Ap [n+1] ;
      int Ai [nz] ;
-     double Ax [nz] ;
+     float Ax [nz] ;
 \end{verbatim}
 }
 
@@ -841,7 +841,7 @@ For the {\tt SuiteSparse\_long} version of UMFPACK:
 \begin{verbatim}
      SuiteSparse_long Ap [n+1] ;
      SuiteSparse_long Ai [nz] ;
-     double Ax [nz] ;
+     float Ax [nz] ;
 \end{verbatim}
 }
 
@@ -849,7 +849,7 @@ The complex versions add another array for the imaginary part:
 
 {\footnotesize
 \begin{verbatim}
-     double Az [nz] ;
+     float Az [nz] ;
 \end{verbatim}
 }
 
@@ -901,7 +901,7 @@ The {\tt Ap}, {\tt Ai}, and {\tt Ax} arrays represent the matrix
 and the solution to $\m{Ax}=\m{b}$ is $\m{x} = [1 \, 2 \, 3 \, 4 \, 5]\tr$.
 The program uses default control settings and does not return any statistics
 about the ordering, factorization, or solution ({\tt Control} and {\tt Info}
-are both {\tt (double *) NULL}).  It also ignores the status value returned by
+are both {\tt (float *) NULL}).  It also ignores the status value returned by
 most user-callable UMFPACK routines.
 
 %-------------------------------------------------------------------------------
@@ -1074,7 +1074,7 @@ four arrays.  For the {\tt int} version of UMFPACK:
 \begin{verbatim}
      int Ti [nz] ;
      int Tj [nz] ;
-     double Tx [nz] ;
+     float Tx [nz] ;
 \end{verbatim}
 }
 
@@ -1084,7 +1084,7 @@ For the {\tt SuiteSparse\_long} version:
 \begin{verbatim}
      SuiteSparse_long Ti [nz] ;
      SuiteSparse_long Tj [nz] ;
-     double Tx [nz] ;
+     float Tx [nz] ;
 \end{verbatim}
 }
 
@@ -1092,7 +1092,7 @@ The complex versions use another array to hold the imaginary part:
 
 {\footnotesize
 \begin{verbatim}
-     double Tz [nz] ;
+     float Tz [nz] ;
 \end{verbatim}
 }
 
@@ -1298,7 +1298,7 @@ into the C-callable UMFPACK library than when used in the MATLAB mexFunction.
 MATLAB stores its sparse matrices using the same compressed column data
 structure discussed above, where row and column indices of an $m$-by-$n$
 matrix are in the range 0 to $m-1$ or $n-1$, respectively\footnote{Complex
-matrices in MATLAB use the split array form, with one {\tt double} array
+matrices in MATLAB use the split array form, with one {\tt float} array
 for the real part and another array for the imaginary part.  UMFPACK
 supports that format, as well as the packed complex format (new to Version 4.4).}
 It prints them as if they are in the range 1 to $m$ or $n$.
@@ -1360,8 +1360,8 @@ versions (there is no {\tt umfpack\_di\_timer} routine, for example).
 \label{control_param}
 %-------------------------------------------------------------------------------
 
-UMFPACK uses an optional {\tt double} array (currently of size 20)
-to modify its control parameters.  If you pass {\tt (double *) NULL} instead
+UMFPACK uses an optional {\tt float} array (currently of size 20)
+to modify its control parameters.  If you pass {\tt (float *) NULL} instead
 of a {\tt Control} array, then defaults are used.  These defaults provide
 nearly optimal performance (both speed, memory usage, and numerical accuracy)
 for a wide range of matrices from real applications.
@@ -1684,7 +1684,7 @@ Value & & system \\
 \begin{verbatim}
 #include "umfpack.h"
 int status, sys, n, m, nz, Ap [n+1], Ai [nz] ;
-double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], Ax [nz], X [n], B [n] ;
+float Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], Ax [nz], X [n], B [n] ;
 void *Symbolic, *Numeric ;
 
 status = umfpack_di_symbolic (m, n, Ap, Ai, Ax, &Symbolic, Control, Info) ;
@@ -1702,7 +1702,7 @@ umfpack_di_free_numeric (&Numeric) ;
 {\footnotesize
 \begin{verbatim}
 int Qinit [n], Wi [n] ;
-double W [5*n] ;
+float W [5*n] ;
 
 umfpack_di_defaults (Control) ;
 status = umfpack_di_qsymbolic (m, n, Ap, Ai, Ax, Qinit, &Symbolic, Control, Info) ;
@@ -1718,7 +1718,7 @@ status = umfpack_di_wsolve (sys, Ap, Ai, Ax, X, B, Numeric, Control, Info, Wi, W
 {\footnotesize
 \begin{verbatim}
 int Ti [nz], Tj [nz], P [m], Q [n], Rp [m+1], Ri [nz], Map [nz] ;
-double Tx [nz], Rx [nz], Y [m], Z [m] ;
+float Tx [nz], Rx [nz], Y [m], Z [m] ;
 
 status = umfpack_di_col_to_triplet (n, Ap, Tj) ;
 status = umfpack_di_triplet_to_col (m, n, nz, Ti, Tj, Tx, Ap, Ai, Ax, Map) ;
@@ -1736,7 +1736,7 @@ The {\tt filename} string should be large enough to hold the name of a file.
 {\footnotesize
 \begin{verbatim}
 int lnz, unz, Lp [m+1], Lj [lnz], Up [n+1], Ui [unz], do_recip ;
-double Lx [lnz], Ux [unz], D [min (m,n)], Rs [m], Mx [1], Ex [1] ;
+float Lx [lnz], Ux [unz], D [min (m,n)], Rs [m], Mx [1], Ex [1] ;
 int nfr, nchains, P1 [m], Q1 [n], Front_npivcol [n+1], Front_parent [n+1], Front_1strow [n+1],
     Front_leftmostdesc [n+1], Chain_start [n+1], Chain_maxrows [n+1], Chain_maxcols [n+1] ;
 char filename [100] ;
@@ -1787,7 +1787,7 @@ status = umfpack_di_report_vector (n, X, Control) ;
 
 {\footnotesize
 \begin{verbatim}
-double Az [nz], Xx [n], Xz [n], Bx [n], Bz [n] ;
+float Az [nz], Xx [n], Xz [n], Bx [n], Bz [n] ;
 
 status = umfpack_zi_symbolic (m, n, Ap, Ai, Ax, Az, &Symbolic, Control, Info) ;
 status = umfpack_zi_numeric (Ap, Ai, Ax, Az, Symbolic, &Numeric, Control, Info) ;
@@ -1797,7 +1797,7 @@ umfpack_zi_free_numeric (&Numeric) ;
 \end{verbatim}
 }
 
-The arrays {\tt Ax}, {\tt Bx}, and {\tt Xx} double in size if
+The arrays {\tt Ax}, {\tt Bx}, and {\tt Xx} float in size if
 any imaginary argument ({\tt Az}, {\tt Xz}, or {\tt Bz}) is {\tt NULL}.
 
 %-------------------------------------------------------------------------------
@@ -1806,7 +1806,7 @@ any imaginary argument ({\tt Az}, {\tt Xz}, or {\tt Bz}) is {\tt NULL}.
 
 {\footnotesize
 \begin{verbatim}
-double Wz [10*n] ;
+float Wz [10*n] ;
 
 umfpack_zi_defaults (Control) ;
 status = umfpack_zi_qsymbolic (m, n, Ap, Ai, Ax, Az, Qinit, &Symbolic, Control, Info) ;
@@ -1821,7 +1821,7 @@ status = umfpack_zi_wsolve (sys, Ap, Ai, Ax, Az, Xx, Xz, Bx, Bz, Numeric, Contro
 
 {\footnotesize
 \begin{verbatim}
-double Tz [nz], Rz [nz], Yx [m], Yz [m], Zx [m], Zz [m] ;
+float Tz [nz], Rz [nz], Yx [m], Yz [m], Zx [m], Zz [m] ;
 
 status = umfpack_zi_col_to_triplet (n, Ap, Tj) ;
 status = umfpack_zi_triplet_to_col (m, n, nz, Ti, Tj, Tx, Tz, Ap, Ai, Ax, Az, Map) ;
@@ -1831,7 +1831,7 @@ status = umfpack_zi_scale (Yx, Yz, Zx, Zz, Numeric) ;
 \end{verbatim}
 }
 
-The arrays {\tt Tx}, {\tt Rx}, {\tt Yx}, and {\tt Zx} double in size if
+The arrays {\tt Tx}, {\tt Rx}, {\tt Yx}, and {\tt Zx} float in size if
 any imaginary argument ({\tt Tz}, {\tt Rz}, {\tt Yz}, or {\tt Zz}) is {\tt NULL}.
 
 %-------------------------------------------------------------------------------
@@ -1840,7 +1840,7 @@ any imaginary argument ({\tt Tz}, {\tt Rz}, {\tt Yz}, or {\tt Zz}) is {\tt NULL}
 
 {\footnotesize
 \begin{verbatim}
-double Lz [lnz], Uz [unz], Dx [min (m,n)], Dz [min (m,n)], Mz [1] ;
+float Lz [lnz], Uz [unz], Dx [min (m,n)], Dz [min (m,n)], Mz [1] ;
 
 status = umfpack_zi_get_lunz (&lnz, &unz, &m, &n, &nz_udiag, Numeric) ;
 status = umfpack_zi_get_numeric (Lp, Lj, Lx, Lz, Up, Ui, Ux, Uz, P, Q, Dx, Dz,
@@ -1856,7 +1856,7 @@ status = umfapck_zi_get_determinant (Mx, Mz, Ex, Numeric, Info) ;
 \end{verbatim}
 }
 
-The arrays {\tt Lx}, {\tt Ux}, {\tt Dx}, and {\tt Mx} double in size if
+The arrays {\tt Lx}, {\tt Ux}, {\tt Dx}, and {\tt Mx} float in size if
 any imaginary argument ({\tt Lz}, {\tt Uz}, {\tt Dz}, or {\tt Mz}) is {\tt NULL}.
 
 %-------------------------------------------------------------------------------
@@ -1880,7 +1880,7 @@ status = umfpack_zi_report_vector (n, Xx, Xz, Control) ;
 \end{verbatim}
 }
 
-The arrays {\tt Ax}, {\tt Rx}, {\tt Tx}, and {\tt Xx} double in size if
+The arrays {\tt Ax}, {\tt Rx}, {\tt Tx}, and {\tt Xx} float in size if
 any imaginary argument ({\tt Az}, {\tt Rz}, {\tt Tz}, or {\tt Xz}) is {\tt NULL}.
 
 
@@ -1894,7 +1894,7 @@ These routines are the same in all four versions of UMFPACK.
 
 {\footnotesize
 \begin{verbatim}
-double t, s [2] ;
+float t, s [2] ;
 
 t = umfpack_timer ( ) ;
 umfpack_tic (s) ;
@@ -1917,7 +1917,7 @@ for more information, or to the file {\tt amd.h} which documents these routines.
 {\footnotesize
 \begin{verbatim}
 #include "amd.h"
-double amd_control [AMD_CONTROL], amd_info [AMD_INFO] ;
+float amd_control [AMD_CONTROL], amd_info [AMD_INFO] ;
 
 amd_defaults (amd_control) ;
 status = amd_order (n, Ap, Ai, P, amd_control, amd_info) ;
@@ -2001,7 +2001,7 @@ The following definitions apply for the Fortran routines:
 {\footnotesize
 \begin{verbatim}
     integer m, n, Ap (n+1), Ai (nz), symbolic, numeric, filenum, status
-    double precision Ax (nz), control (20), info (90), x (n), b (n)
+    float precision Ax (nz), control (20), info (90), x (n), b (n)
 \end{verbatim}
 }
 

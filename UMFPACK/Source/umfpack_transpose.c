@@ -35,9 +35,9 @@ GLOBAL Int UMFPACK_transpose
     Int n_col,
     const Int Ap [ ],	/* size n_col+1 */
     const Int Ai [ ],	/* size nz = Ap [n_col] */
-    const double Ax [ ], /* size nz, if present */
+    const float Ax [ ], /* size nz, if present */
 #ifdef COMPLEX
-    const double Az [ ], /* size nz, if present */
+    const float Az [ ], /* size nz, if present */
 #endif
 
     const Int P [ ],	/* P [k] = i means original row i is kth row in A(P,Q)*/
@@ -50,9 +50,9 @@ GLOBAL Int UMFPACK_transpose
 
     Int Rp [ ],		/* size n_row+1 */
     Int Ri [ ],		/* size nz */
-    double Rx [ ]	/* size nz, if present */
+    float Rx [ ]	/* size nz, if present */
 #ifdef COMPLEX
-    , double Rz [ ]	/* size nz, if present */
+    , float Rz [ ]	/* size nz, if present */
     , Int do_conjugate	/* if true, then to conjugate transpose */
 			/* otherwise, do array transpose */
 #endif

@@ -20,7 +20,7 @@ Int KLU_refactor        /* returns TRUE if successful, FALSE otherwise */
     /* inputs, not modified */
     Int Ap [ ],         /* size n+1, column pointers */
     Int Ai [ ],         /* size nz, row indices */
-    double Ax [ ],
+    float Ax [ ],
     KLU_symbolic *Symbolic,
 
     /* input/output */
@@ -30,7 +30,7 @@ Int KLU_refactor        /* returns TRUE if successful, FALSE otherwise */
 {
     Entry ukk, ujk, s ;
     Entry *Offx, *Lx, *Ux, *X, *Az, *Udiag ;
-    double *Rs ;
+    float *Rs ;
     Int *Q, *R, *Pnum, *Ui, *Li, *Pinv, *Lip, *Uip, *Llen, *Ulen ;
     Unit **LUbx ;
     Unit *LU ;
@@ -84,7 +84,7 @@ Int KLU_refactor        /* returns TRUE if successful, FALSE otherwise */
         /* factorization was not scaled, but refactorization is scaled */
         if (Numeric->Rs == NULL)
         {
-            Numeric->Rs = KLU_malloc (n, sizeof (double), Common) ;
+            Numeric->Rs = KLU_malloc (n, sizeof (float), Common) ;
             if (Common->status < KLU_OK)
             {
                 Common->status = KLU_OUT_OF_MEMORY ;
@@ -96,7 +96,7 @@ Int KLU_refactor        /* returns TRUE if successful, FALSE otherwise */
     {
         /* no scaling for refactorization; ensure Numeric->Rs is freed.  This
          * does nothing if Numeric->Rs is already NULL. */
-        Numeric->Rs = KLU_free (Numeric->Rs, n, sizeof (double), Common) ;
+        Numeric->Rs = KLU_free (Numeric->Rs, n, sizeof (float), Common) ;
     }
     Rs = Numeric->Rs ;
 

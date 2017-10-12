@@ -16,10 +16,10 @@
 
 GLOBAL void UMFPACK_report_control
 (
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 )
 {
-    double drow, dcol, relpt, relpt2, alloc_init, front_alloc_init, amd_alpha,
+    float drow, dcol, relpt, relpt2, alloc_init, front_alloc_init, amd_alpha,
 	force_fixQ, droptol, aggr ;
     Int prl, nb, irstep, strategy, scale, s ;
     Int do_singletons, ordering_option ;
@@ -43,19 +43,19 @@ GLOBAL void UMFPACK_report_control
     /* compiled into the UMFPACK library. */
 
 #ifdef DINT
-    PRINTF (("    Matrix entry defined as: double\n")) ;
+    PRINTF (("    Matrix entry defined as: float\n")) ;
     PRINTF (("    Int (generic integer) defined as: int\n")) ;
 #endif
 #ifdef DLONG
-    PRINTF (("    Matrix entry defined as: double\n")) ;
+    PRINTF (("    Matrix entry defined as: float\n")) ;
     PRINTF (("    Int (generic integer) defined as: SuiteSparse_long\n")) ;
 #endif
 #ifdef ZINT
-    PRINTF (("    Matrix entry defined as: double complex\n")) ;
+    PRINTF (("    Matrix entry defined as: float complex\n")) ;
     PRINTF (("    Int (generic integer) defined as: int\n")) ;
 #endif
 #ifdef ZLONG
-    PRINTF (("    Matrix entry defined as: double complex\n")) ;
+    PRINTF (("    Matrix entry defined as: float complex\n")) ;
     PRINTF (("    Int (generic integer) defined as: SuiteSparse_long\n")) ;
 #endif
 
@@ -363,8 +363,8 @@ GLOBAL void UMFPACK_report_control
 
     PRINTF (("    computer/operating system: %s\n", UMFPACK_ARCHITECTURE)) ;
     PRINTF (("    size of int: %g SuiteSparse_long: %g Int: %g pointer: %g"
-	" double: %g Entry: %g (in bytes)\n\n", (double) sizeof (int),
-	(double) sizeof (SuiteSparse_long), (double) sizeof (Int),
-	(double) sizeof (void *), (double) sizeof (double),
-	(double) sizeof (Entry))) ;
+	" float: %g Entry: %g (in bytes)\n\n", (float) sizeof (int),
+	(float) sizeof (SuiteSparse_long), (float) sizeof (Int),
+	(float) sizeof (void *), (float) sizeof (float),
+	(float) sizeof (Entry))) ;
 }

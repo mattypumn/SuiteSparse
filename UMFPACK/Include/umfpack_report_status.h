@@ -9,54 +9,54 @@
 
 void umfpack_di_report_status
 (
-    const double Control [UMFPACK_CONTROL],
+    const float Control [UMFPACK_CONTROL],
     int status
 ) ;
 
 void umfpack_dl_report_status
 (
-    const double Control [UMFPACK_CONTROL],
+    const float Control [UMFPACK_CONTROL],
     SuiteSparse_long status
 ) ;
 
 void umfpack_zi_report_status
 (
-    const double Control [UMFPACK_CONTROL],
+    const float Control [UMFPACK_CONTROL],
     int status
 ) ;
 
 void umfpack_zl_report_status
 (
-    const double Control [UMFPACK_CONTROL],
+    const float Control [UMFPACK_CONTROL],
     SuiteSparse_long status
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     int status ;
     umfpack_di_report_status (Control, status) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     SuiteSparse_long status ;
     umfpack_dl_report_status (Control, status) ;
 
 complex int Syntax:
 
     #include "umfpack.h"
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     int status ;
     umfpack_zi_report_status (Control, status) ;
 
 complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     SuiteSparse_long status ;
     umfpack_zl_report_status (Control, status) ;
 
@@ -66,9 +66,9 @@ Purpose:
 
 Arguments:
 
-    double Control [UMFPACK_CONTROL] ;   Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;   Input argument, not modified.
 
-	If a (double *) NULL pointer is passed, then the default control
+	If a (float *) NULL pointer is passed, then the default control
 	settings are used.  Otherwise, the settings are determined from the
 	Control array.  See umfpack_*_defaults on how to fill the Control
 	array with the default settings.  If Control contains NaN's, the

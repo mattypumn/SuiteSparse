@@ -203,7 +203,7 @@ int CHOLMOD(rowcolcounts)
     cholmod_common *Common
 )
 {
-    double fl, ff ;
+    float fl, ff ;
     Int *Ap, *Ai, *Anz, *PrevNbr, *SetParent, *Head, *PrevLeaf, *Anext, *Ipost,
 	*Iwork ;
     Int i, j, r, k, len, s, p, pend, inew, stype, nf, anz, inode, parent,
@@ -375,7 +375,7 @@ int CHOLMOD(rowcolcounts)
 	    /* column j is in the fset; find the smallest row (if any) */
 	    p = Ap [j] ;
 	    pend = (packed) ? (Ap [j+1]) : (p + Anz [j]) ;
-	    ff = (double) MAX (0, pend - p) ;
+	    ff = (float) MAX (0, pend - p) ;
 	    fl += ff*ff + ff ;
 	    if (pend > p)
 	    {
@@ -514,13 +514,13 @@ int CHOLMOD(rowcolcounts)
     /* flop count and nnz(L) for subsequent LL' numerical factorization */
     /* ---------------------------------------------------------------------- */
 
-    /* use double to avoid integer overflow.  lnz cannot be NaN. */
+    /* use float to avoid integer overflow.  lnz cannot be NaN. */
     Common->aatfl = fl ;
     Common->lnz = 0. ;
     fl = 0 ;
     for (j = 0 ; j < nrow ; j++)
     {
-	ff = (double) (ColCount [j]) ;
+	ff = (float) (ColCount [j]) ;
 	Common->lnz += ff ;
 	fl += ff*ff ;
     }

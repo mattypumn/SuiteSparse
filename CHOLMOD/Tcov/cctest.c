@@ -50,7 +50,7 @@ Int check_constraints (Int *P, Int *Cmember, Int n)
 void cctest (cholmod_sparse *A)
 {
 
-    double knobs [CCOLAMD_KNOBS], knobs2 [CCOLAMD_KNOBS] ;
+    float knobs [CCOLAMD_KNOBS], knobs2 [CCOLAMD_KNOBS] ;
     Int *P, *Cmember, *Cp, *Ci, *Front_npivcol, *Front_nrows, *Front_ncols,
 	*Front_parent, *Front_cols, *InFront, *Si, *Sp ;
     cholmod_sparse *C, *A2, *B, *S ;

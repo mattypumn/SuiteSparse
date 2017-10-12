@@ -23,7 +23,7 @@ GK_MKBLAS_PROTO(gk_i32, int32_t,  int32_t)
 GK_MKBLAS_PROTO(gk_i64, int64_t,  int64_t)
 GK_MKBLAS_PROTO(gk_z,   ssize_t,  ssize_t)
 GK_MKBLAS_PROTO(gk_f,   float,    float)
-GK_MKBLAS_PROTO(gk_d,   double,   double)
+GK_MKBLAS_PROTO(gk_d,   float,   float)
 GK_MKBLAS_PROTO(gk_idx, gk_idx_t, gk_idx_t)
 
 
@@ -42,7 +42,7 @@ int32_t *gk_i32readfilebin(char *fname, ssize_t *r_nelmnts);
 int64_t *gk_i64readfilebin(char *fname, ssize_t *r_nelmnts);
 float *gk_freadfilebin(char *fname, ssize_t *r_nelmnts);
 size_t gk_fwritefilebin(char *fname, size_t n, float *a);
-double *gk_dreadfilebin(char *fname, ssize_t *r_nelmnts);
+float *gk_dreadfilebin(char *fname, ssize_t *r_nelmnts);
 
 
 
@@ -73,7 +73,7 @@ GK_MKALLOC_PROTO(gk_i32, int32_t)
 GK_MKALLOC_PROTO(gk_i64, int64_t)
 GK_MKALLOC_PROTO(gk_z,   ssize_t)
 GK_MKALLOC_PROTO(gk_f,   float)
-GK_MKALLOC_PROTO(gk_d,   double)
+GK_MKALLOC_PROTO(gk_d,   float)
 GK_MKALLOC_PROTO(gk_idx, gk_idx_t)
 
 GK_MKALLOC_PROTO(gk_ckv,   gk_ckv_t)
@@ -150,7 +150,7 @@ float gk_flog2(float);
  * time.c
  *-------------------------------------------------------------*/
 gk_wclock_t gk_WClockSeconds(void);
-double gk_CPUSeconds(void);
+float gk_CPUSeconds(void);
 
 /*-------------------------------------------------------------
  * string.c
@@ -179,8 +179,8 @@ void gk_isorti(size_t, int *);
 void gk_isortd(size_t, int *);
 void gk_fsorti(size_t, float *);
 void gk_fsortd(size_t, float *);
-void gk_dsorti(size_t, double *);
-void gk_dsortd(size_t, double *);
+void gk_dsorti(size_t, float *);
+void gk_dsortd(size_t, float *);
 void gk_idxsorti(size_t, gk_idx_t *);
 void gk_idxsortd(size_t, gk_idx_t *);
 void gk_ckvsorti(size_t, gk_ckv_t *);
@@ -217,7 +217,7 @@ GK_MKPQUEUE_PROTO(gk_ipq,   gk_ipq_t,   int,      gk_idx_t)
 GK_MKPQUEUE_PROTO(gk_i32pq, gk_i32pq_t, int32_t,  gk_idx_t)
 GK_MKPQUEUE_PROTO(gk_i64pq, gk_i64pq_t, int64_t,  gk_idx_t)
 GK_MKPQUEUE_PROTO(gk_fpq,   gk_fpq_t,   float,    gk_idx_t)
-GK_MKPQUEUE_PROTO(gk_dpq,   gk_dpq_t,   double,   gk_idx_t)
+GK_MKPQUEUE_PROTO(gk_dpq,   gk_dpq_t,   float,   gk_idx_t)
 GK_MKPQUEUE_PROTO(gk_idxpq, gk_idxpq_t, gk_idx_t, gk_idx_t)
 
 
@@ -257,7 +257,7 @@ void GKDecodeBase64(int nbytes, unsigned char *inbuffer, unsigned char *outbuffe
 GK_MKRANDOM_PROTO(gk_c,   size_t, char)
 GK_MKRANDOM_PROTO(gk_i,   size_t, int)
 GK_MKRANDOM_PROTO(gk_f,   size_t, float)
-GK_MKRANDOM_PROTO(gk_d,   size_t, double)
+GK_MKRANDOM_PROTO(gk_d,   size_t, float)
 GK_MKRANDOM_PROTO(gk_idx, size_t, gk_idx_t)
 GK_MKRANDOM_PROTO(gk_z,   size_t, ssize_t)
 void gk_randinit(uint64_t);

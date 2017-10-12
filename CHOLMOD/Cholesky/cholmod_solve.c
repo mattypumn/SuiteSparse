@@ -113,7 +113,7 @@ static void perm
     cholmod_dense *Y	/* output matrix Y, already allocated */
 )
 {
-    double *Yx, *Yz, *Bx, *Bz ;
+    float *Yx, *Yz, *Bx, *Bz ;
     Int k2, nk, p, k, j, nrow, ncol, d, dual, dj, j2 ;
 
     /* ---------------------------------------------------------------------- */
@@ -330,7 +330,7 @@ static void iperm
     cholmod_dense *X	/* output matrix X, already allocated */
 )
 {
-    double *Yx, *Yz, *Xx, *Xz ;
+    float *Yx, *Yz, *Xx, *Xz ;
     Int k2, nk, p, k, j, nrow, ncol, d, dj, j2 ;
 
     /* ---------------------------------------------------------------------- */
@@ -535,7 +535,7 @@ static void ptrans
     cholmod_dense *Y	/* output matrix Y, already allocated */
 )
 {
-    double *Yx, *Yz, *Bx, *Bz ;
+    float *Yx, *Yz, *Bx, *Bz ;
     Int k2, nk, p, k, j, nrow, ncol, d, dual, dj, j2 ;
 
     /* ---------------------------------------------------------------------- */
@@ -762,7 +762,7 @@ static void iptrans
     cholmod_dense *X	/* output matrix X, already allocated */
 )
 {
-    double *Yx, *Yz, *Xx, *Xz ;
+    float *Yx, *Yz, *Xx, *Xz ;
     Int k2, nk, p, k, j, nrow, ncol, d, dj, j2 ;
 
     /* ---------------------------------------------------------------------- */
@@ -1046,7 +1046,7 @@ int CHOLMOD(solve2)         /* returns TRUE on success, FALSE on failure */
     cholmod_common *Common
 )
 {
-    double *Yx, *Yz, *Bx, *Bz, *Xx, *Xz ;
+    float *Yx, *Yz, *Bx, *Bz, *Xx, *Xz ;
     cholmod_dense *Y = NULL, *X = NULL ;
     cholmod_sparse *C, *Yset, C_header, Yset_header, *Xset ;
     Int *Perm = NULL, *IPerm = NULL ;

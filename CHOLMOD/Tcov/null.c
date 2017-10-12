@@ -41,8 +41,8 @@ void null_test (cholmod_common *cn)
 	*UserPerm = NULL, *colmark = NULL, *Constraints = NULL,
 	*r = NULL, *c = NULL, *Set = NULL ;
     char *name = NULL ;
-    double alpha [2], beta [2], bk [2], yk [2], rcond ;
-    double dj = 1, nm = 0, tol = 0 ;
+    float alpha [2], beta [2], bk [2], yk [2], rcond ;
+    float dj = 1, nm = 0, tol = 0 ;
     int ok, stype = 0, xtype = 0, sorted = 0, packed = 0, nint = 0, update = 0,
 	postorder = 0, pack = 0, values = 0, mode = 0, sys = 0, norm = 0,
 	to_xtype = 0, to_ll = 0, to_super = 0, to_packed = 0, to_monotonic = 0,

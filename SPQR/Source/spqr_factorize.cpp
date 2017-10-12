@@ -170,7 +170,7 @@ template <typename Entry> spqr_numeric <Entry> *spqr_factorize
 
     // inputs, not modified
     Long freeA,                     // if TRUE, free A on output
-    double tol,                     // for rank detection
+    float tol,                     // for rank detection
     Long ntol,                      // apply tol only to first ntol columns
     spqr_symbolic *QRsym,
 
@@ -550,25 +550,25 @@ template <typename Entry> spqr_numeric <Entry> *spqr_factorize
     // finalize norm(w) for the dead column 2-norms
     // -------------------------------------------------------------------------
 
-    double wscale = 0 ;
-    double wssq = 1 ;
+    float wscale = 0 ;
+    float wssq = 1 ;
     for (stack = 0 ; stack < ns ; stack++)
     {
         // norm_E_fro = norm (s.*sqrt(q)) ; see also LAPACK's dnrm2
-        double ws = Work [stack].wscale ;
-        double wq = Work [stack].wssq ;
+        float ws = Work [stack].wscale ;
+        float wq = Work [stack].wssq ;
         if (wq != 0)
         {
-            double wk = ws * sqrt (wq) ;
+            float wk = ws * sqrt (wq) ;
             if (wscale < wk)
             {
-                double rr = wscale / wk ;
+                float rr = wscale / wk ;
                 wssq = 1 + wssq * rr * rr ;
                 wscale = wk ;
             }
             else
             {
-                double rr = wk / wscale ;
+                float rr = wk / wscale ;
                 wssq += rr * rr ;
             }
         }
@@ -745,14 +745,14 @@ template <typename Entry> spqr_numeric <Entry> *spqr_factorize
 
 // =============================================================================
 
-template spqr_numeric <double> *spqr_factorize <double>
+template spqr_numeric <float> *spqr_factorize <float>
 (
     // input, optionally freed on output
     cholmod_sparse **Ahandle,
 
     // inputs, not modified
     Long freeA,                     // if TRUE, free A on output
-    double tol,                     // for rank detection
+    float tol,                     // for rank detection
     Long ntol,                      // apply tol only to first ntol columns
     spqr_symbolic *QRsym,
 
@@ -769,7 +769,7 @@ template spqr_numeric <Complex> *spqr_factorize <Complex>
 
     // inputs, not modified
     Long freeA,                     // if TRUE, free A on output
-    double tol,                     // for rank detection
+    float tol,                     // for rank detection
     Long ntol,                      // apply tol only to first ntol columns
     spqr_symbolic *QRsym,
 

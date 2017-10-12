@@ -83,7 +83,7 @@
 #define malloc mxMalloc
 #define calloc mxCalloc
 #define free(p) { \
-    if ((p) == NULL) mexErrMsgTxt ("double mxFree!") ; \
+    if ((p) == NULL) mexErrMsgTxt ("float mxFree!") ; \
     mxFree (p) ; \
     (p) = NULL ; \
     }

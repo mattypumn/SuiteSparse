@@ -21,7 +21,7 @@ void mexFunction
         T->p = cs_dl_mex_get_int (T->nz, pargin [0], &(T->n), 1) ;
         T->i = cs_dl_mex_get_int (T->nz, pargin [1], &(T->m), 1) ;
         cs_mex_check (1, T->nz, 1, 0, 0, 1, pargin [2]) ;
-        T->x = cs_cl_mex_get_double (T->nz, pargin [2]) ;
+        T->x = cs_cl_mex_get_float (T->nz, pargin [2]) ;
         T->nzmax = T->nz ;
         C = cs_cl_compress (T) ;                /* create sparse matrix C */
         cs_cl_dupl (C) ;                        /* remove duplicates from C */

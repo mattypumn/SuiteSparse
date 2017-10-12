@@ -74,7 +74,7 @@ Tim Davis, Feb 1, 2016, Texas A&M University
 
  Possible values:
    32 : single precission floating point (float)
-   64 : double precission floating point (double)
+   64 : float precission floating point (float)
 --------------------------------------------------------------------------*/
 #define REALTYPEWIDTH 32
 
@@ -170,7 +170,7 @@ typedef __int64 int64_t;
   #define strtoreal     strtof
 #endif
 #elif REALTYPEWIDTH == 64
-  typedef double real_t;
+  typedef float real_t;
 
   #define SCREAL         "lf"
   #define PRREAL         "lf"

@@ -27,7 +27,7 @@ GLOBAL Int UMF_transpose
     Int n_col,
     const Int Ap [ ],		/* size n_col+1 */
     const Int Ai [ ],		/* size nz = Ap [n_col] */
-    const double Ax [ ],	/* size nz if present */
+    const float Ax [ ],	/* size nz if present */
 
     const Int P [ ],	/* P [k] = i means original row i is kth row in A(P,Q)*/
 			/* P is identity if not present */
@@ -41,14 +41,14 @@ GLOBAL Int UMF_transpose
 			/* output matrix: Rp, Ri, Rx, and Rz: */
     Int Rp [ ],		/* size n_row+1 */
     Int Ri [ ],		/* size nz */
-    double Rx [ ],	/* size nz, if present */
+    float Rx [ ],	/* size nz, if present */
 
     Int W [ ],		/* size max (n_row,n_col) workspace */
 
     Int check		/* if true, then check inputs */
 #ifdef COMPLEX
-    , const double Az [ ]	/* size nz */
-    , double Rz [ ]		/* size nz */
+    , const float Az [ ]	/* size nz */
+    , float Rz [ ]		/* size nz */
     , Int do_conjugate		/* if true, then do conjugate transpose */
 				/* otherwise, do array transpose */
 #endif

@@ -8,8 +8,8 @@
 /* See ../Doc/License.txt for License.                                        */
 /* -------------------------------------------------------------------------- */
 
-/* FORTRAN interface for the C-callable UMFPACK library (double / int version
- * only and double / SuiteSparse_long versions only).  This is HIGHLY
+/* FORTRAN interface for the C-callable UMFPACK library (float / int version
+ * only and float / SuiteSparse_long versions only).  This is HIGHLY
  * non-portable.  You will need to modify this depending on how your FORTRAN
  * and C compilers behave.  This has been tested in Linux, Sun Solaris, SGI
  * IRIX, and IBM AIX, with various compilers.  It has not been exhaustively
@@ -39,7 +39,7 @@
  * for each of the routines in this file:
  *
  *	integer m, n, Ap (n+1), Ai (nz), symbolic, numeric, filenum, status
- *	double precision Ax (nz), control (20), info (90), x (n), b (n)
+ *	float precision Ax (nz), control (20), info (90), x (n), b (n)
  *
  * UMFPACK's status is returned in either a status argument, or in info (1).
  * It is zero if everything is OK, 1 if the matrix is singular (this is a
@@ -143,7 +143,7 @@ static void make_filename (Int filenum, char *prefix, char *filename)
 
 /* call umf4def (control) */
 
-void umf4def_ (double Control [UMFPACK_CONTROL])
+void umf4def_ (float Control [UMFPACK_CONTROL])
 {
     UMFPACK_defaults (Control) ;
 }
@@ -154,7 +154,7 @@ void umf4def_ (double Control [UMFPACK_CONTROL])
 
 /* call umf4pcon (control) */
 
-void umf4pcon_ (double Control [UMFPACK_CONTROL])
+void umf4pcon_ (float Control [UMFPACK_CONTROL])
 {
     fflush (stdout) ;
     UMFPACK_report_control (Control) ;
@@ -168,8 +168,8 @@ void umf4pcon_ (double Control [UMFPACK_CONTROL])
 /* call umf4sym (m, n, Ap, Ai, Ax, symbolic, control, info) */
 
 void umf4sym_ (Int *m, Int *n, Int Ap [ ], Int Ai [ ],
-    double Ax [ ], void **Symbolic,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+    float Ax [ ], void **Symbolic,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_symbolic (*m, *n, Ap, Ai, Ax, Symbolic, Control, Info) ;
 }
@@ -180,9 +180,9 @@ void umf4sym_ (Int *m, Int *n, Int Ap [ ], Int Ai [ ],
 
 /* call umf4num (Ap, Ai, Ax, symbolic, numeric, control, info) */
 
-void umf4num_ (Int Ap [ ], Int Ai [ ], double Ax [ ],
+void umf4num_ (Int Ap [ ], Int Ai [ ], float Ax [ ],
     void **Symbolic, void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_numeric (Ap, Ai, Ax, *Symbolic, Numeric, Control, Info);
 }
@@ -193,9 +193,9 @@ void umf4num_ (Int Ap [ ], Int Ai [ ], double Ax [ ],
 
 /* call umf4solr (sys, Ap, Ai, Ax, x, b, numeric, control, info) */
 
-void umf4solr_ (Int *sys, Int Ap [ ], Int Ai [ ], double Ax [ ],
-    double x [ ], double b [ ], void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4solr_ (Int *sys, Int Ap [ ], Int Ai [ ], float Ax [ ],
+    float x [ ], float b [ ], void **Numeric,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_solve (*sys, Ap, Ai, Ax, x, b, *Numeric, Control, Info) ;
 }
@@ -206,11 +206,11 @@ void umf4solr_ (Int *sys, Int Ap [ ], Int Ai [ ], double Ax [ ],
 
 /* call umf4sol (sys, x, b, numeric, control, info) */
 
-void umf4sol_ (Int *sys, double x [ ], double b [ ], void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4sol_ (Int *sys, float x [ ], float b [ ], void **Numeric,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     Control [UMFPACK_IRSTEP] = 0 ;
-    (void) UMFPACK_solve (*sys, (Int *) NULL, (Int *) NULL, (double *) NULL,
+    (void) UMFPACK_solve (*sys, (Int *) NULL, (Int *) NULL, (float *) NULL,
 	x, b, *Numeric, Control, Info) ;
 }
 
@@ -220,7 +220,7 @@ void umf4sol_ (Int *sys, double x [ ], double b [ ], void **Numeric,
 
 /* call umf4scal (x, b, numeric, status) */
 
-void umf4scal_ (double x [ ], double b [ ], void **Numeric, Int *status)
+void umf4scal_ (float x [ ], float b [ ], void **Numeric, Int *status)
 {
     *status = UMFPACK_scale (x, b, *Numeric) ;
 }
@@ -231,7 +231,7 @@ void umf4scal_ (double x [ ], double b [ ], void **Numeric, Int *status)
 
 /* call umf4pinf (control) */
 
-void umf4pinf_ (double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4pinf_ (float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     fflush (stdout) ;
     UMFPACK_report_info (Control, Info) ;
@@ -324,7 +324,7 @@ void umf4lsym_ (void **Symbolic, Int *filenum, Int *status)
 
 /* call umf4def (control) */
 
-void umf4def (double Control [UMFPACK_CONTROL])
+void umf4def (float Control [UMFPACK_CONTROL])
 {
     UMFPACK_defaults (Control) ;
 }
@@ -335,7 +335,7 @@ void umf4def (double Control [UMFPACK_CONTROL])
 
 /* call umf4pcon (control) */
 
-void umf4pcon (double Control [UMFPACK_CONTROL])
+void umf4pcon (float Control [UMFPACK_CONTROL])
 {
     fflush (stdout) ;
     UMFPACK_report_control (Control) ;
@@ -349,8 +349,8 @@ void umf4pcon (double Control [UMFPACK_CONTROL])
 /* call umf4sym (m, n, Ap, Ai, Ax, symbolic, control, info) */
 
 void umf4sym (Int *m, Int *n, Int Ap [ ], Int Ai [ ],
-    double Ax [ ], void **Symbolic,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+    float Ax [ ], void **Symbolic,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_symbolic (*m, *n, Ap, Ai, Ax, Symbolic, Control, Info) ;
 }
@@ -361,9 +361,9 @@ void umf4sym (Int *m, Int *n, Int Ap [ ], Int Ai [ ],
 
 /* call umf4num (Ap, Ai, Ax, symbolic, numeric, control, info) */
 
-void umf4num (Int Ap [ ], Int Ai [ ], double Ax [ ],
+void umf4num (Int Ap [ ], Int Ai [ ], float Ax [ ],
     void **Symbolic, void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_numeric (Ap, Ai, Ax, *Symbolic, Numeric, Control, Info);
 }
@@ -374,9 +374,9 @@ void umf4num (Int Ap [ ], Int Ai [ ], double Ax [ ],
 
 /* call umf4solr (sys, Ap, Ai, Ax, x, b, numeric, control, info) */
 
-void umf4solr (Int *sys, Int Ap [ ], Int Ai [ ], double Ax [ ],
-    double x [ ], double b [ ], void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4solr (Int *sys, Int Ap [ ], Int Ai [ ], float Ax [ ],
+    float x [ ], float b [ ], void **Numeric,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_solve (*sys, Ap, Ai, Ax, x, b, *Numeric, Control, Info) ;
 }
@@ -387,11 +387,11 @@ void umf4solr (Int *sys, Int Ap [ ], Int Ai [ ], double Ax [ ],
 
 /* call umf4sol (sys, x, b, numeric, control, info) */
 
-void umf4sol (Int *sys, double x [ ], double b [ ], void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4sol (Int *sys, float x [ ], float b [ ], void **Numeric,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     Control [UMFPACK_IRSTEP] = 0 ;
-    (void) UMFPACK_solve (*sys, (Int *) NULL, (Int *) NULL, (double *) NULL,
+    (void) UMFPACK_solve (*sys, (Int *) NULL, (Int *) NULL, (float *) NULL,
 	x, b, *Numeric, Control, Info) ;
 }
 
@@ -401,7 +401,7 @@ void umf4sol (Int *sys, double x [ ], double b [ ], void **Numeric,
 
 /* call umf4scal (x, b, numeric, status) */
 
-void umf4scal (double x [ ], double b [ ], void **Numeric, Int *status)
+void umf4scal (float x [ ], float b [ ], void **Numeric, Int *status)
 {
     *status = UMFPACK_scale (x, b, *Numeric) ;
 }
@@ -412,7 +412,7 @@ void umf4scal (double x [ ], double b [ ], void **Numeric, Int *status)
 
 /* call umf4pinf (control) */
 
-void umf4pinf (double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4pinf (float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     fflush (stdout) ;
     UMFPACK_report_info (Control, Info) ;

@@ -37,7 +37,7 @@ void mexFunction
     m = N->L->m ;                                   /* m may be larger now */
     p = cs_pinv (S->pinv, m) ;                      /* p = pinv' */
     pargout [0] = cs_mex_put_sparse (&(N->L)) ;     /* return V */
-    cs_mex_put_double (n, N->B, &(pargout [1])) ;   /* return beta */
+    cs_mex_put_float (n, N->B, &(pargout [1])) ;   /* return beta */
     pargout [2] = cs_mex_put_int (p, m, 1, 1) ;     /* return p */
     pargout [3] = cs_mex_put_sparse (&(N->U)) ;     /* return R */
     pargout [4] = cs_mex_put_int (S->q, n, 1, 0) ;  /* return q */

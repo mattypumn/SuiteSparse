@@ -28,7 +28,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double dummy = 0, one [2] = {1,0}, zero [2] = {0,0} ;
+    float dummy = 0, one [2] = {1,0}, zero [2] = {0,0} ;
     cholmod_sparse *S, Smatrix ;
     cholmod_dense *F, Fmatrix, *C ;
     cholmod_common Common, *cm ;

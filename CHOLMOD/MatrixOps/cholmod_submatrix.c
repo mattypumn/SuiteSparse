@@ -83,8 +83,8 @@ cholmod_sparse *CHOLMOD(submatrix)
     cholmod_common *Common
 )
 {
-    double aij = 0 ;
-    double *Ax, *Cx ;
+    float aij = 0 ;
+    float *Ax, *Cx ;
     Int *Ap, *Ai, *Anz, *Ci, *Cp, *Head, *Rlen, *Rnext, *Iwork ;
     cholmod_sparse *C ;
     Int packed, ancol, anrow, cnrow, cncol, nnz, i, j, csorted, ilast, p,

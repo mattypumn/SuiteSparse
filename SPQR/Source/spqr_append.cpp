@@ -132,10 +132,10 @@ template <typename Entry> int spqr_append       // TRUE/FALSE if OK or not
 
 // =============================================================================
 
-template int spqr_append <double>
+template int spqr_append <float>
 (
     // inputs, not modified
-    double *X,      // size m-by-1
+    float *X,      // size m-by-1
     Long *P,        // size m, or NULL; permutation to apply to X.
                     // P [k] = i if row k of A is row i of X
 

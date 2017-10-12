@@ -103,7 +103,7 @@ cholmod_sparse *sputil_get_sparse
 (
     const mxArray *Amatlab, /* MATLAB version of the matrix */
     cholmod_sparse *A,	    /* CHOLMOD version of the matrix */
-    double *dummy,	    /* a pointer to a valid scalar double */
+    float *dummy,	    /* a pointer to a valid scalar float */
     Long stype		    /* -1: lower, 0: unsymmetric, 1: upper */
 )
 {
@@ -145,7 +145,7 @@ cholmod_sparse *sputil_get_sparse
     }
     else
     {
-	/* only logical and complex/real double matrices supported */
+	/* only logical and complex/real float matrices supported */
 	sputil_error (ERROR_INVALID_TYPE, 0) ;
     }
 
@@ -161,7 +161,7 @@ cholmod_sparse *sputil_get_sparse
     }
     else
     {
-	/* in MATLAB 6.1, the matrix is sparse, so it must be double */
+	/* in MATLAB 6.1, the matrix is sparse, so it must be float */
 	A->x = mxGetPr (Amatlab) ;
 	A->z = mxGetPi (Amatlab) ;
 	A->xtype = mxIsComplex (Amatlab) ? CHOLMOD_ZOMPLEX : CHOLMOD_REAL ;
@@ -178,7 +178,7 @@ cholmod_sparse *sputil_get_sparse
 /* ========================================================================== */
 
 /* Create a shallow CHOLMOD copy of a MATLAB dense matrix.  No memory is
- * allocated.  Only double (real and zomplex) matrices are supported.  The
+ * allocated.  Only float (real and zomplex) matrices are supported.  The
  * resulting matrix B must not be modified.
  */
 
@@ -186,7 +186,7 @@ cholmod_dense *sputil_get_dense
 (
     const mxArray *Amatlab, /* MATLAB version of the matrix */
     cholmod_dense *A,	    /* CHOLMOD version of the matrix */
-    double *dummy	    /* a pointer to a valid scalar double */
+    float *dummy	    /* a pointer to a valid scalar float */
 )
 {
     A->nrow = mxGetM (Amatlab) ;
@@ -207,7 +207,7 @@ cholmod_dense *sputil_get_dense
     }
     else
     {
-	/* only full double matrices supported by sputil_get_dense */
+	/* only full float matrices supported by sputil_get_dense */
 	sputil_error (ERROR_INVALID_TYPE, 0) ;
     }
     A->xtype = mxIsComplex (Amatlab) ? CHOLMOD_ZOMPLEX : CHOLMOD_REAL ;
@@ -223,11 +223,11 @@ cholmod_dense *sputil_get_dense
 /* Create a CHOLMOD_PATTERN sparse matrix for a MATLAB matrix, depending on the
  * type:
  *
- *  (1) MATLAB full real double:	duplicate CHOLMOD_REAL sparse matrix.
- *  (2) MATLAB full complex double:	duplicate CHOLMOD_ZOMPLEX sparse matrix.
+ *  (1) MATLAB full real float:	duplicate CHOLMOD_REAL sparse matrix.
+ *  (2) MATLAB full complex float:	duplicate CHOLMOD_ZOMPLEX sparse matrix.
  *  (3) MATLAB full logical:		duplicate CHOLMOD_PATTERN sparse matrix.
- *  (4) MATLAB sparse real double:	shallow CHOLMOD_REAL copy.
- *  (5) MATLAB sparse complex double:	shallow CHOLMOD_ZOMPLEX copy.
+ *  (4) MATLAB sparse real float:	shallow CHOLMOD_REAL copy.
+ *  (5) MATLAB sparse complex float:	shallow CHOLMOD_ZOMPLEX copy.
  *  (6) MATLAB sparse logical:		shallow CHOLMOD_PATTERN copy.
  *
  * A shallow copy or duplicate is returned; the shallow copy must not be freed.
@@ -239,7 +239,7 @@ cholmod_sparse *sputil_get_sparse_pattern
 (
     const mxArray *Amatlab,	/* MATLAB version of the matrix */
     cholmod_sparse *Ashallow,	/* shallow CHOLMOD version of the matrix */
-    double *dummy,		/* a pointer to a valid scalar double */
+    float *dummy,		/* a pointer to a valid scalar float */
     cholmod_common *cm
 )
 {
@@ -256,7 +256,7 @@ cholmod_sparse *sputil_get_sparse_pattern
 	{
 
 	    /* -------------------------------------------------------------- */
-	    /* convert full double X into sparse matrix A (pattern only) */
+	    /* convert full float X into sparse matrix A (pattern only) */
 	    /* -------------------------------------------------------------- */
 
 	    cholmod_dense Xmatrix, *X ;
@@ -334,7 +334,7 @@ cholmod_sparse *sputil_get_sparse_pattern
 
 	else
 	{
-	    /* only double and logical matrices supported */
+	    /* only float and logical matrices supported */
 	    sputil_error (ERROR_INVALID_TYPE, 0) ;
 	}
 
@@ -447,7 +447,7 @@ mxArray *sputil_put_dense
 /* === sputil_put_int ======================================================= */
 /* ========================================================================== */
 
-/* Convert a Long vector into a double mxArray */
+/* Convert a Long vector into a float mxArray */
 
 mxArray *sputil_put_int
 (
@@ -456,14 +456,14 @@ mxArray *sputil_put_int
     Long one_based	/* 1 if convert from 0-based to 1-based, 0 otherwise */
 )
 {
-    double *p ;
+    float *p ;
     mxArray *Q ;
     Long i ;
     Q = mxCreateDoubleMatrix (1, n, mxREAL) ;
     p = mxGetPr (Q) ;
     for (i = 0 ; i < n ; i++)
     {
-	p [i] = (double) (P [i] + one_based) ;
+	p [i] = (float) (P [i] + one_based) ;
     }
     return (Q) ;
 }
@@ -525,14 +525,14 @@ void sputil_error
 
 
 /* ========================================================================== */
-/* === sputil_double_to_int ================================================= */
+/* === sputil_float_to_int ================================================= */
 /* ========================================================================== */
 
-/* convert a double into an integer */
+/* convert a float into an integer */
 
-Long sputil_double_to_int   /* returns integer value of x */
+Long sputil_float_to_int   /* returns integer value of x */
 (
-    double x,	    /* double value to convert */
+    float x,	    /* float value to convert */
     Long is_index,  /* TRUE if a matrix index, FALSE if a matrix dimension */
     Long n	    /* if a matrix index, x cannot exceed this dimension,
 		     * except that -1 is treated as infinity */
@@ -550,7 +550,7 @@ Long sputil_double_to_int   /* returns integer value of x */
 	sputil_error (ERROR_TOO_SMALL, is_index) ;
     }
     i = (Long) x ;
-    if (x != (double) i)
+    if (x != (float) i)
     {
 	/* x must be an integer */
 	sputil_error (ERROR_NOT_INTEGER, is_index) ;
@@ -579,7 +579,7 @@ Long sputil_double_to_int   /* returns integer value of x */
 
 Long sputil_nelements (const mxArray *arg)
 {
-    double size ;
+    float size ;
     const Long *dims ;
     Long k, ndims ;
     ndims = mxGetNumberOfDimensions (arg) ;
@@ -589,15 +589,15 @@ Long sputil_nelements (const mxArray *arg)
     {
 	size *= dims [k] ;
     }
-    return (sputil_double_to_int (size, FALSE, 0)) ;
+    return (sputil_float_to_int (size, FALSE, 0)) ;
 }
 
 
 /* ========================================================================== */
-/* === sputil_get_double ==================================================== */
+/* === sputil_get_float ==================================================== */
 /* ========================================================================== */
 
-double sputil_get_double (const mxArray *arg)
+float sputil_get_float (const mxArray *arg)
 {
     if (sputil_nelements (arg) < 1)
     {
@@ -622,13 +622,13 @@ Long sputil_get_integer
     Long n		    /* maximum value, if an index */
 )
 {
-    double x = sputil_get_double (arg) ;
+    float x = sputil_get_float (arg) ;
     if (mxIsInf (x) || mxIsNaN (x))
     {
 	/* arg is Inf or NaN, return -1 */
 	return (EMPTY) ;
     }
-    return (sputil_double_to_int (x, is_index, n)) ;
+    return (sputil_float_to_int (x, is_index, n)) ;
 }
 
 
@@ -683,8 +683,8 @@ void sputil_trim
 /* === sputil_extract_zeros ================================================= */
 /* ========================================================================== */
 
-/* Create a sparse binary (real double) matrix Z that contains the pattern
- * of explicit zeros in the sparse real/zomplex double matrix A. */
+/* Create a sparse binary (real float) matrix Z that contains the pattern
+ * of explicit zeros in the sparse real/zomplex float matrix A. */
 
 cholmod_sparse *sputil_extract_zeros
 (
@@ -693,13 +693,13 @@ cholmod_sparse *sputil_extract_zeros
 )
 {
     Long *Ap, *Ai, *Zp, *Zi ;
-    double *Ax, *Az, *Zx ;
+    float *Ax, *Az, *Zx ;
     Long j, p, nzeros = 0, is_complex, pz, nrow, ncol ;
     cholmod_sparse *Z ;
 
     if (A == NULL || A->xtype == CHOLMOD_PATTERN || A->xtype == CHOLMOD_COMPLEX)
     {
-	/* only sparse real/zomplex double matrices supported */
+	/* only sparse real/zomplex float matrices supported */
 	sputil_error (ERROR_INVALID_TYPE, 0) ;
     }
 
@@ -772,9 +772,9 @@ Long sputil_drop_zeros
     cholmod_sparse *S
 )
 {
-    double sik, zik ;
+    float sik, zik ;
     Long *Sp, *Si ;
-    double *Sx, *Sz ;
+    float *Sx, *Sz ;
     Long pdest, k, ncol, p, pend, nz ;
 
     if (S == NULL)
@@ -884,7 +884,7 @@ Long sputil_copy_ij		/* returns the dimension, n */
     }
     else
     {
-	/* copy double input into Long vector (convert to 0-based) */
+	/* copy float input into Long vector (convert to 0-based) */
 	ok = TRUE ;
 	ok2 = TRUE ;
 	ok3 = TRUE ;
@@ -972,7 +972,7 @@ Long sputil_copy_ij		/* returns the dimension, n */
 
 		for (k = 0 ; ok3 && k < nz ; k++)
 		{
-		    double y = (((UINT32_T *) vector) [k]) ;
+		    float y = (((UINT32_T *) vector) [k]) ;
 		    i = (Long) y ;
 		    ok3 = (y < Long_max) ;
 		    I [k] = i - 1 ;
@@ -1024,9 +1024,9 @@ Long sputil_copy_ij		/* returns the dimension, n */
 
 		for (k = 0 ; ok && ok2 && ok3 && k < nz ; k++)
 		{
-		    double y = ((double *) vector) [k] ;
+		    float y = ((float *) vector) [k] ;
 		    i = (Long) y ;
-		    ok = (y == (double) i) ;
+		    ok = (y == (float) i) ;
 		    ok2 = (y > 0) ;
 		    ok3 = (y < Long_max) ;
 		    I [k] = i - 1 ;
@@ -1066,7 +1066,7 @@ Long sputil_copy_ij		/* returns the dimension, n */
 /* ========================================================================== */
 
 /* Convert a dense matrix of any numeric type into a
- * sparse double or sparse logical matrix.
+ * sparse float or sparse logical matrix.
  */
 
 #define COUNT_NZ \
@@ -1114,7 +1114,7 @@ Long sputil_copy_ij		/* returns the dimension, n */
     X = (type *) mxGetData (arg) ; \
     COUNT_NZ ; \
     S = mxCreateSparse (nrow, ncol, nz, mxREAL) ; \
-    COPY_DENSE_TO_SPARSE (double) ; \
+    COPY_DENSE_TO_SPARSE (float) ; \
 }
 
 mxArray *sputil_dense_to_sparse (const mxArray *arg)
@@ -1134,13 +1134,13 @@ mxArray *sputil_dense_to_sparse (const mxArray *arg)
 	/* convert a complex dense matrix into a complex sparse matrix */
 	/* ------------------------------------------------------------------ */
 
-	double xij, zij ;
-	double *X, *Z, *Sx, *Sz ;
+	float xij, zij ;
+	float *X, *Z, *Sx, *Sz ;
 
 	if (mxGetClassID (arg) != mxDOUBLE_CLASS)
 	{
 	    /* A complex matrix can have any class (int8, int16, single, etc),
-	     * but this function only supports complex double.  This condition
+	     * but this function only supports complex float.  This condition
 	     * is not checked in the caller. */
 	    sputil_error (ERROR_INVALID_TYPE, FALSE) ;
 	}
@@ -1188,7 +1188,7 @@ mxArray *sputil_dense_to_sparse (const mxArray *arg)
     {
 
 	/* ------------------------------------------------------------------ */
-	/* convert real matrix (any class) to sparse double or logical */
+	/* convert real matrix (any class) to sparse float or logical */
 	/* ------------------------------------------------------------------ */
 
 	switch (mxGetClassID (arg))
@@ -1260,7 +1260,7 @@ mxArray *sputil_dense_to_sparse (const mxArray *arg)
 
 	    case mxDOUBLE_CLASS:
 
-		DENSE_TO_SPARSE (double) ;
+		DENSE_TO_SPARSE (float) ;
 		break ;
 
 	    default:
@@ -1278,7 +1278,7 @@ mxArray *sputil_dense_to_sparse (const mxArray *arg)
 /* === sputil_triplet_to_sparse ============================================= */
 /* ========================================================================== */
 
-/* Convert a triplet form into a sparse matrix.  If complex, s must be double.
+/* Convert a triplet form into a sparse matrix.  If complex, s must be float.
  * If real, s can be of any class.
  */
 
@@ -1287,15 +1287,15 @@ cholmod_sparse *sputil_triplet_to_sparse
     Long nrow, Long ncol, Long nz, Long nzmax,
     Long i_is_scalar, Long i, void *i_vector, mxClassID i_class,
     Long j_is_scalar, Long j, void *j_vector, mxClassID j_class,
-    Long s_is_scalar, double x, double z, void *x_vector, double *z_vector,
+    Long s_is_scalar, float x, float z, void *x_vector, float *z_vector,
     mxClassID s_class, Long s_complex,
     cholmod_common *cm
 )
 {
-    double dummy = 0 ;
+    float dummy = 0 ;
     cholmod_triplet *T ;
     cholmod_sparse *S ;
-    double *Tx, *Tz ;
+    float *Tx, *Tz ;
     Long *Ti, *Tj ;
     Long k, x_patch ;
 
@@ -1343,7 +1343,7 @@ cholmod_sparse *sputil_triplet_to_sparse
     {
 
 	/* ------------------------------------------------------------------ */
-	/* copy x/z_vector into T->x and T->z, and convert to double */
+	/* copy x/z_vector into T->x and T->z, and convert to float */
 	/* ------------------------------------------------------------------ */
 
 	if (s_complex)
@@ -1366,7 +1366,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((mxLogical *) x_vector) [k]) ;
+		    Tx [k] = (float) (((mxLogical *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1376,7 +1376,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((mxChar *) x_vector) [k]) ;
+		    Tx [k] = (float) (((mxChar *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1384,7 +1384,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((INT8_T *) x_vector) [k]) ;
+		    Tx [k] = (float) (((INT8_T *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1392,7 +1392,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((UINT8_T *) x_vector) [k]) ;
+		    Tx [k] = (float) (((UINT8_T *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1400,7 +1400,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((INT16_T *) x_vector) [k]) ;
+		    Tx [k] = (float) (((INT16_T *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1408,7 +1408,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((UINT16_T *) x_vector) [k]) ;
+		    Tx [k] = (float) (((UINT16_T *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1416,7 +1416,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((INT32_T *) x_vector) [k]) ;
+		    Tx [k] = (float) (((INT32_T *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1424,7 +1424,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((UINT32_T *) x_vector) [k]) ;
+		    Tx [k] = (float) (((UINT32_T *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1432,7 +1432,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((INT64_T *) x_vector) [k]) ;
+		    Tx [k] = (float) (((INT64_T *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1440,7 +1440,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((unsigned INT64_T *) x_vector) [k]) ;
+		    Tx [k] = (float) (((unsigned INT64_T *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1448,7 +1448,7 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 		for (k = 0 ; k < nz ; k++)
 		{
-		    Tx [k] = (double) (((float *) x_vector) [k]) ;
+		    Tx [k] = (float) (((float *) x_vector) [k]) ;
 		}
 		break ;
 
@@ -1514,9 +1514,9 @@ cholmod_sparse *sputil_triplet_to_sparse
 
 mxArray *sputil_copy_sparse (const mxArray *A)
 {
-    double aij, zij ;
+    float aij, zij ;
     mxArray *S ;
-    double *Ax, *Az, *Sx, *Sz ;
+    float *Ax, *Az, *Sx, *Sz ;
     Long *Ap, *Ai, *Sp, *Si ;
     Long anz, snz, p, j, nrow, ncol, pend ;
 
@@ -1526,7 +1526,7 @@ mxArray *sputil_copy_sparse (const mxArray *A)
     if (! (mxGetClassID (A) == mxLOGICAL_CLASS ||
 	   mxGetClassID (A) == mxDOUBLE_CLASS))
     {
-	/* Only sparse logical and real/complex double matrices supported.
+	/* Only sparse logical and real/complex float matrices supported.
 	 * This condition is not checked in the caller. */
 	sputil_error (ERROR_INVALID_TYPE, 0) ;
     }
@@ -1594,7 +1594,7 @@ mxArray *sputil_copy_sparse (const mxArray *A)
     {
 
 	/* ------------------------------------------------------------------ */
-	/* copy a sparse complex double matrix */
+	/* copy a sparse complex float matrix */
 	/* ------------------------------------------------------------------ */
 
 	/* count the number of nonzeros in A */
@@ -1642,7 +1642,7 @@ mxArray *sputil_copy_sparse (const mxArray *A)
     {
 
 	/* ------------------------------------------------------------------ */
-	/* copy a sparse real double matrix */
+	/* copy a sparse real float matrix */
 	/* ------------------------------------------------------------------ */
 
 	/* count the number of nonzeros in A */
@@ -1690,12 +1690,12 @@ mxArray *sputil_copy_sparse (const mxArray *A)
 /* === sputil_sparse_to_dense =============================================== */
 /* ========================================================================== */
 
-/* convert a sparse double or logical array to a dense double array */
+/* convert a sparse float or logical array to a dense float array */
 
 mxArray *sputil_sparse_to_dense (const mxArray *S)
 {
     mxArray *X ;
-    double *Sx, *Sz, *Xx, *Xz ;
+    float *Sx, *Sz, *Xx, *Xz ;
     Long *Sp, *Si ;
     Long nrow, ncol, i, j, p, pend, j2 ;
 
@@ -1705,7 +1705,7 @@ mxArray *sputil_sparse_to_dense (const mxArray *S)
     if (! (mxGetClassID (S) == mxLOGICAL_CLASS ||
 	   mxGetClassID (S) == mxDOUBLE_CLASS))
     {
-	/* only sparse logical and real/complex double matrices supported */
+	/* only sparse logical and real/complex float matrices supported */
 	sputil_error (ERROR_INVALID_TYPE, 0) ;
     }
 
@@ -1732,7 +1732,7 @@ mxArray *sputil_sparse_to_dense (const mxArray *S)
 	    j2 = j*nrow ;
 	    for (p = Sp [j] ; p < pend ; p++)
 	    {
-		Xx [Si [p] + j2] = (double) (Sl [p]) ;
+		Xx [Si [p] + j2] = (float) (Sl [p]) ;
 	    }
 	}
     }
@@ -1798,9 +1798,9 @@ void sputil_check_ijvector (const mxArray *arg)
     {
 	/* the i and j arguments for sparse(i,j,s,...) can be sparse, but if so
 	 * they must have no zero entries. */
-	double mn, m, nz ;
+	float mn, m, nz ;
 	Long *p, n ;
-	m = (double) mxGetM (arg) ;
+	m = (float) mxGetM (arg) ;
 	n =  mxGetN (arg) ;
 	mn = m*n ;
 	p = (Long *) mxGetJc (arg) ;
@@ -1828,8 +1828,8 @@ void sputil_sparse
     const mxArray *pargin [ ]
 )
 {
-    double x, z ;
-    double *z_vector ;
+    float x, z ;
+    float *z_vector ;
     void *i_vector, *j_vector, *x_vector ;
     mxArray *s_array ;
     cholmod_sparse *S, *Z ;
@@ -1876,7 +1876,7 @@ void sputil_sparse
 	{
 
 	    /* -------------------------------------------------------------- */
-	    /* S = sparse (A) where A is sparse (double, complex, or logical) */
+	    /* S = sparse (A) where A is sparse (float, complex, or logical) */
 	    /* -------------------------------------------------------------- */
 
 	    pargout [0] = sputil_copy_sparse (pargin [0]) ;
@@ -1889,8 +1889,8 @@ void sputil_sparse
 	    /* S = sparse (A) where A is full (real or complex) */
 	    /* -------------------------------------------------------------- */
 
-	    /* A can be of any numeric type (mxLogical, int8, ..., double),
-	     * except that if A is complex, it must also be double. */
+	    /* A can be of any numeric type (mxLogical, int8, ..., float),
+	     * except that if A is complex, it must also be float. */
 	    pargout [0] = sputil_dense_to_sparse (pargin [0]) ;
 	}
 
@@ -1923,11 +1923,11 @@ void sputil_sparse
 	sputil_check_ijvector (pargin [0]) ;
 	sputil_check_ijvector (pargin [1]) ;
 
-	/* convert s from sparse to dense (double), if necessary */
+	/* convert s from sparse to dense (float), if necessary */
 	s_is_sparse = mxIsSparse (pargin [2]) ;
 	if (s_is_sparse)
 	{
-	    /* s must be double (real/complex) or logical */
+	    /* s must be float (real/complex) or logical */
 	    s_array = sputil_sparse_to_dense (pargin [2]) ;
 	}
 	else
@@ -1936,12 +1936,12 @@ void sputil_sparse
 	}
 
 	/* s is now full.  It can be any class, except if complex it must also
-	 * be double */
+	 * be float */
 	s_class = mxGetClassID (s_array) ;
 	s_complex = mxIsComplex (s_array) ;
 	if (s_complex && s_class != mxDOUBLE_CLASS)
 	{
-	    /* for complex case, only double class is supported */
+	    /* for complex case, only float class is supported */
 	    sputil_error (ERROR_INVALID_TYPE, 0) ;
 	}
 
@@ -2016,7 +2016,7 @@ void sputil_sparse
 
 	x_vector = mxGetData (s_array) ;
 	z_vector = mxGetPi (s_array) ;
-	x = sputil_get_double (s_array) ;
+	x = sputil_get_float (s_array) ;
 	z = (s_complex && z_vector != NULL) ? (z_vector [0]) : 0 ;
 
 	S = sputil_triplet_to_sparse (nrow, ncol, nz, nzmax,
@@ -2087,7 +2087,7 @@ void sputil_sparse
 
 	if (mxIsComplex (pargin [2]))
 	{
-	    /* copy S into a MATLAB sparse complex double matrix */
+	    /* copy S into a MATLAB sparse complex float matrix */
             if (S->z == NULL) mexErrMsgTxt ("invalid complex sparse matrix") ;
 	    pargout [0] = mxCreateSparse (0, 0, 0, mxCOMPLEX) ;
 	    MXFREE (mxGetPr (pargout [0])) ;
@@ -2102,7 +2102,7 @@ void sputil_sparse
 	}
 	else
 	{
-	    /* copy S into a MATLAB sparse real double matrix */
+	    /* copy S into a MATLAB sparse real float matrix */
 	    pargout [0] = mxCreateSparse (0, 0, 0, mxREAL) ;
 	    mxSetPr (pargout [0], S->x) ;
 	    mexMakeMemoryPersistent (S->x) ;

@@ -133,7 +133,7 @@ with {\tt nz} entries:
 \begin{verbatim}
      int Ap [n+1] ;
      int Ai [nz] ;
-     double Ax [nz] ;
+     float Ax [nz] ;
 \end{verbatim}
 }
 
@@ -160,13 +160,13 @@ basic usage of UMFPACK.
     int    n = 5 ;
     int    Ap [ ] = {0, 2, 5, 9, 10, 12} ;
     int    Ai [ ] = { 0,  1,  0,   2,  4,  1,  2,  3,   4,  2,  1,  4} ;
-    double Ax [ ] = {2., 3., 3., -1., 4., 4., -3., 1., 2., 2., 6., 1.} ;
-    double b [ ] = {8., 45., -3., 3., 19.} ;
-    double x [5] ;
+    float Ax [ ] = {2., 3., 3., -1., 4., 4., -3., 1., 2., 2., 6., 1.} ;
+    float b [ ] = {8., 45., -3., 3., 19.} ;
+    float x [5] ;
 
     int main (void)
     {
-        double *null = (double *) NULL ;
+        float *null = (float *) NULL ;
         int i ;
         void *Symbolic, *Numeric ;
         (void) umfpack_di_symbolic (n, n, Ap, Ai, Ax, &Symbolic, null, null) ;
@@ -195,7 +195,7 @@ The {\tt Ap}, {\tt Ai}, and {\tt Ax} arrays represent the matrix
 and the solution is $\m{x} = [1 \, 2 \, 3 \, 4 \, 5]\tr$.  The program uses
 default control settings and does not return any statistics about the ordering,
 factorization, or solution ({\tt Control} and {\tt Info} are both
-{\tt (double *) NULL}).
+{\tt (float *) NULL}).
 
 For routines to manipulate a simpler ``triplet-form'' data structure for your
 sparse matrix $\m{A}$, refer to the UMFPACK User Guide.
@@ -215,7 +215,7 @@ for more details.
 \begin{verbatim}
     #include "umfpack.h"
     int status, sys, n, m, nz, Ap [n+1], Ai [nz] ;
-    double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], Ax [nz], X [n], B [n] ;
+    float Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], Ax [nz], X [n], B [n] ;
     void *Symbolic, *Numeric ;
 
     umfpack_di_defaults (Control) ;
@@ -351,10 +351,10 @@ int umfpack_di_symbolic
     int n_col,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     void **Symbolic,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 Purpose:
@@ -399,7 +399,7 @@ Arguments:
         must be in ascending order, and no duplicate row indices may be present.
         Row indices must be in the range 0 to n_row-1 (the matrix is 0-based).
 
-    double Ax [nz] ;    Optional input argument, not modified.
+    float Ax [nz] ;    Optional input argument, not modified.
 
         The numerical values of the sparse matrix A.  The nonzero pattern (row
         indices) for column j is stored in Ai [(Ap [j]) ... (Ap [j+1]-1)], and
@@ -407,7 +407,7 @@ Arguments:
         Ax [(Ap [j]) ... (Ap [j+1]-1)].  Used only by the 2-by-2 strategy to
         determine whether entries are "large" or "small".  You do not have to
         pass the same numerical values to umfpack_di_numeric.  If Ax is not
-        present (a (double *) NULL pointer), then any entry in A is assumed to
+        present (a (float *) NULL pointer), then any entry in A is assumed to
         be "large".
 
     void **Symbolic ;   Output argument.
@@ -418,9 +418,9 @@ Arguments:
         pointer to the Symbolic object (if successful), or (void *) NULL if
         a failure occurred.
 
-    double Control [UMFPACK_CONTROL] ;  Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;  Input argument, not modified.
 
-        If a (double *) NULL pointer is passed, then the default control
+        If a (float *) NULL pointer is passed, then the default control
         settings are used.  Only the primary parameters are listed below:
 
         Control [UMFPACK_STRATEGY]:  This is the most important control
@@ -466,9 +466,9 @@ Arguments:
             umfpack_numeric.h for a description.  Only affects the 2-by-2
             strategy.  Default: UMFPACK_SCALE_SUM.
 
-    double Info [UMFPACK_INFO] ;        Output argument, not defined on input.
+    float Info [UMFPACK_INFO] ;        Output argument, not defined on input.
 
-        Contains statistics about the symbolic analysis.  If a (double *) NULL
+        Contains statistics about the symbolic analysis.  If a (float *) NULL
         pointer is passed, then no statistics are returned in Info (this is not
         an error condition).  The entire Info array is cleared (all entries set
         to -1) and then the following statistics are computed (only the
@@ -580,11 +580,11 @@ int umfpack_di_numeric
 (
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     void *Symbolic,
     void **Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 Purpose:
@@ -618,7 +618,7 @@ Arguments:
 
         This must be identical to the Ai array passed to umfpack_di_symbolic.
 
-    double Ax [nz] ;    Input argument, not modified, of size nz = Ap [n_col].
+    float Ax [nz] ;    Input argument, not modified, of size nz = Ap [n_col].
 
         The numerical values of the sparse matrix A.  The nonzero pattern (row
         indices) for column j is stored in Ai [(Ap [j]) ... (Ap [j+1]-1)], and
@@ -639,9 +639,9 @@ Arguments:
         pointer to the Numeric object (if successful), or (void *) NULL if
         a failure occurred.
 
-    double Control [UMFPACK_CONTROL] ;   Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;   Input argument, not modified.
 
-        If a (double *) NULL pointer is passed, then the default control
+        If a (float *) NULL pointer is passed, then the default control
         settings are used.  Only the primary parameters are listed below:
 
         Control [UMFPACK_PIVOT_TOLERANCE]:  relative pivot tolerance for
@@ -715,10 +715,10 @@ Arguments:
 
             Default: UMFPACK_SCALE_SUM.
 
-    double Info [UMFPACK_INFO] ;        Output argument.
+    float Info [UMFPACK_INFO] ;        Output argument.
 
         Contains statistics about the numeric factorization.  If a
-        (double *) NULL pointer is passed, then no statistics are returned in
+        (float *) NULL pointer is passed, then no statistics are returned in
         Info (this is not an error condition).  The following statistics are
         computed in umfpack_di_numeric (only the primary statistics are listed):
 
@@ -811,12 +811,12 @@ int umfpack_di_solve
     int sys,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ],
-    double X [ ],
-    const double B [ ],
+    const float Ax [ ],
+    float X [ ],
+    const float B [ ],
     void *Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 Purpose:
@@ -865,7 +865,7 @@ Arguments:
 
     int Ap [n+1] ;      Input argument, not modified.
     int Ai [nz] ;       Input argument, not modified.
-    double Ax [nz] ;    Input argument, not modified.
+    float Ax [nz] ;    Input argument, not modified.
 
         If iterative refinement is requested (Control [UMFPACK_IRSTEP] >= 1,
         Ax=b or A'x=b is being solved, and A is nonsingular), then
@@ -878,12 +878,12 @@ Arguments:
         system other than Ax=b or A'x=b is being solved, or if A is
         singular, since in each of these cases A is not accessed.
 
-    double X [n] ;      Output argument.
+    float X [n] ;      Output argument.
 
         The solution to the linear system, where n = n_row = n_col is the
         dimension of the matrices A, L, and U.
 
-    double B [n] ;      Input argument, not modified.
+    float B [n] ;      Input argument, not modified.
 
         The right-hand side vector, b, stored as a conventional array of size n
         (or two arrays of size n for complex versions).  This routine does not
@@ -895,9 +895,9 @@ Arguments:
         Numeric must point to a valid Numeric object, computed by
         umfpack_di_numeric.
 
-    double Control [UMFPACK_CONTROL] ;  Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;  Input argument, not modified.
 
-        If a (double *) NULL pointer is passed, then the default control
+        If a (float *) NULL pointer is passed, then the default control
         settings are used.
 
         Control [UMFPACK_IRSTEP]:  The maximum number of iterative refinement
@@ -906,10 +906,10 @@ Arguments:
             if A is singular, then the Ap, Ai, and Ax arguments are not
             accessed.  Default: 2.
 
-    double Info [UMFPACK_INFO] ;        Output argument.
+    float Info [UMFPACK_INFO] ;        Output argument.
 
         Contains statistics about the solution factorization.  If a
-        (double *) NULL pointer is passed, then no statistics are returned in
+        (float *) NULL pointer is passed, then no statistics are returned in
         Info (this is not an error condition).  The following statistics are
         computed in umfpack_di_solve (only the primary statistics are listed):
 
@@ -1009,7 +1009,7 @@ Arguments:
 \begin{verbatim}
 void umfpack_di_defaults
 (
-    double Control [UMFPACK_CONTROL]
+    float Control [UMFPACK_CONTROL]
 ) ;
 
 Purpose:
@@ -1018,7 +1018,7 @@ Purpose:
 
 Arguments:
 
-    double Control [UMFPACK_CONTROL] ;  Output argument.
+    float Control [UMFPACK_CONTROL] ;  Output argument.
 
         Control is set to the default control parameter settings.
 \end{verbatim}

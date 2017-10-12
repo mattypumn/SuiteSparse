@@ -24,7 +24,7 @@ function kinds = UFkinds
 %
 %   Problem = 
 %        title: 'SYMMETRIC STIFFNESS MATRIX - FRAME WITHIN A SUSPENSION BRIDGE'
-%            A: [485x485 double]
+%            A: [485x485 float]
 %         name: 'HB/bcsstk20'
 %           id: 42
 %         date: '1984'
@@ -56,7 +56,7 @@ statfile = sprintf ('%smatrices/UFstats.csv', params.topdir) ;
 
 try
     f = fopen (statfile, 'r') ;
-    nmat = str2double (fgetl (f)) ;     % number of matrices
+    nmat = str2float (fgetl (f)) ;     % number of matrices
     s = fgetl (f) ;                     % date the UFstats.csv file was created
     kinds = cell (nmat,1) ;
     for id = 1:nmat

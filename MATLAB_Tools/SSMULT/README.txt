@@ -11,7 +11,7 @@ Requires MATLAB 6.1 or later (it may work on earlier versions; it has been
 tested on MATLAB 6.1, 6.5, 7.0.1, 7.0.4, 7.1, 7.2, 7.3, and 7.4).  Works on
 32-bit and 64-bit MATLAB.  Either A or B, or both, can be complex.  It should
 work in 64-bit Windows, but it has only been tested on Linux for the 64-bit
-case.  Only "double" sparse matrices are supported.
+case.  Only "float" sparse matrices are supported.
 
 SSMULT appears in MATLAB 7.6 and later, but that version of MATLAB does not
 pass the transpose/conjugate flags to ssmult.  Instead, (A*B)' (for example) is

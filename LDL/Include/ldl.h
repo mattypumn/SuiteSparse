@@ -45,21 +45,21 @@
 void ldl_symbolic (int n, int Ap [ ], int Ai [ ], int Lp [ ],
     int Parent [ ], int Lnz [ ], int Flag [ ], int P [ ], int Pinv [ ]) ;
 
-int ldl_numeric (int n, int Ap [ ], int Ai [ ], double Ax [ ],
-    int Lp [ ], int Parent [ ], int Lnz [ ], int Li [ ], double Lx [ ],
-    double D [ ], double Y [ ], int Pattern [ ], int Flag [ ],
+int ldl_numeric (int n, int Ap [ ], int Ai [ ], float Ax [ ],
+    int Lp [ ], int Parent [ ], int Lnz [ ], int Li [ ], float Lx [ ],
+    float D [ ], float Y [ ], int Pattern [ ], int Flag [ ],
     int P [ ], int Pinv [ ]) ;
 
-void ldl_lsolve (int n, double X [ ], int Lp [ ], int Li [ ],
-    double Lx [ ]) ;
+void ldl_lsolve (int n, float X [ ], int Lp [ ], int Li [ ],
+    float Lx [ ]) ;
 
-void ldl_dsolve (int n, double X [ ], double D [ ]) ;
+void ldl_dsolve (int n, float X [ ], float D [ ]) ;
 
-void ldl_ltsolve (int n, double X [ ], int Lp [ ], int Li [ ],
-    double Lx [ ]) ;
+void ldl_ltsolve (int n, float X [ ], int Lp [ ], int Li [ ],
+    float Lx [ ]) ;
 
-void ldl_perm  (int n, double X [ ], double B [ ], int P [ ]) ;
-void ldl_permt (int n, double X [ ], double B [ ], int P [ ]) ;
+void ldl_perm  (int n, float X [ ], float B [ ], int P [ ]) ;
+void ldl_permt (int n, float X [ ], float B [ ], int P [ ]) ;
 
 int ldl_valid_perm (int n, int P [ ], int Flag [ ]) ;
 int ldl_valid_matrix ( int n, int Ap [ ], int Ai [ ]) ;
@@ -75,23 +75,23 @@ void ldl_l_symbolic (SuiteSparse_long n, SuiteSparse_long Ap [ ],
     SuiteSparse_long Pinv [ ]) ;
 
 SuiteSparse_long ldl_l_numeric (SuiteSparse_long n, SuiteSparse_long Ap [ ],
-    SuiteSparse_long Ai [ ], double Ax [ ], SuiteSparse_long Lp [ ],
+    SuiteSparse_long Ai [ ], float Ax [ ], SuiteSparse_long Lp [ ],
     SuiteSparse_long Parent [ ], SuiteSparse_long Lnz [ ],
-    SuiteSparse_long Li [ ], double Lx [ ], double D [ ], double Y [ ],
+    SuiteSparse_long Li [ ], float Lx [ ], float D [ ], float Y [ ],
     SuiteSparse_long Pattern [ ], SuiteSparse_long Flag [ ],
     SuiteSparse_long P [ ], SuiteSparse_long Pinv [ ]) ;
 
-void ldl_l_lsolve (SuiteSparse_long n, double X [ ], SuiteSparse_long Lp [ ],
-    SuiteSparse_long Li [ ], double Lx [ ]) ;
+void ldl_l_lsolve (SuiteSparse_long n, float X [ ], SuiteSparse_long Lp [ ],
+    SuiteSparse_long Li [ ], float Lx [ ]) ;
 
-void ldl_l_dsolve (SuiteSparse_long n, double X [ ], double D [ ]) ;
+void ldl_l_dsolve (SuiteSparse_long n, float X [ ], float D [ ]) ;
 
-void ldl_l_ltsolve (SuiteSparse_long n, double X [ ], SuiteSparse_long Lp [ ],
-    SuiteSparse_long Li [ ], double Lx [ ]) ;
+void ldl_l_ltsolve (SuiteSparse_long n, float X [ ], SuiteSparse_long Lp [ ],
+    SuiteSparse_long Li [ ], float Lx [ ]) ;
 
-void ldl_l_perm  (SuiteSparse_long n, double X [ ], double B [ ],
+void ldl_l_perm  (SuiteSparse_long n, float X [ ], float B [ ],
     SuiteSparse_long P [ ]) ;
-void ldl_l_permt (SuiteSparse_long n, double X [ ], double B [ ],
+void ldl_l_permt (SuiteSparse_long n, float X [ ], float B [ ],
     SuiteSparse_long P [ ]) ;
 
 SuiteSparse_long ldl_l_valid_perm (SuiteSparse_long n, SuiteSparse_long P [ ],

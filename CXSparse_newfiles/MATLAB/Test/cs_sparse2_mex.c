@@ -25,7 +25,7 @@ void mexFunction
 #else
         cs_complex_t *Tx ;
         cs_cl *A, *C, *T ;
-        Tx = cs_cl_mex_get_double (nz, pargin [2]) ;
+        Tx = cs_cl_mex_get_float (nz, pargin [2]) ;
         T = cs_cl_spalloc (n, m, 1, 1, 1) ;
         for (k = 0 ; k < nz ; k++)
         {
@@ -43,7 +43,7 @@ void mexFunction
     }
     else
     {
-        double *Tx ;
+        float *Tx ;
         cs_dl *A, *C, *T ;
         Tx = mxGetPr (pargin [2]) ;
         T = cs_dl_spalloc (n, m, 1, 1, 1) ;

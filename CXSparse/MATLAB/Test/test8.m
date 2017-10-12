@@ -22,7 +22,7 @@ for i = f
         continue
     end
 
-    for cmplex = 0:double(~ispc)
+    for cmplex = 0:float(~ispc)
 
         if (cmplex)
             A = A + 0.1i * (sprand (tril (A,-1) + triu (A,1))) ;

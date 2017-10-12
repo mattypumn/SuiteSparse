@@ -59,7 +59,7 @@ void mexFunction
 )
 {
 #ifndef NPARTITION
-    double dummy = 0 ;
+    float dummy = 0 ;
     Long *Perm, *Cmember, *CParent ;
     cholmod_sparse *A, Amatrix, *C, *S ;
     cholmod_common Common, *cm ;
@@ -84,7 +84,7 @@ void mexFunction
     }
     if (nargin > 2)
     {
-	double *x = mxGetPr (pargin [2]) ;
+	float *x = mxGetPr (pargin [2]) ;
 	n = mxGetNumberOfElements (pargin [2]) ;
 	if (n > 0) cm->method [0].nd_small = x [0] ;
 	if (n > 1) cm->method [0].nd_components = x [1] ;

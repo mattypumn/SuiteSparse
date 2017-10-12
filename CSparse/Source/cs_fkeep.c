@@ -1,9 +1,9 @@
 #include "cs.h"
 /* drop entries for which fkeep(A(i,j)) is false; return nz if OK, else -1 */
-csi cs_fkeep (cs *A, csi (*fkeep) (csi, csi, double, void *), void *other)
+csi cs_fkeep (cs *A, csi (*fkeep) (csi, csi, float, void *), void *other)
 {
     csi j, p, nz = 0, n, *Ap, *Ai ;
-    double *Ax ;
+    float *Ax ;
     if (!CS_CSC (A) || !fkeep) return (-1) ;    /* check inputs */
     n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;
     for (j = 0 ; j < n ; j++)

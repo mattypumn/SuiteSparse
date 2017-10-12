@@ -13,12 +13,12 @@
 
     For umfpack_*_solve:
 	Dynamic memory usage:  UMFPACK_solve calls UMF_malloc twice, for
-	workspace of size c*n*sizeof(double) + n*sizeof(Int), where c is
+	workspace of size c*n*sizeof(float) + n*sizeof(Int), where c is
 	defined below.  On return, all of this workspace is free'd via UMF_free.
 
     For umfpack_*_wsolve:
 	No dynamic memory usage.  Input arrays are used for workspace instead.
-	Pattern is a workspace of size n Integers.  The double array W must be
+	Pattern is a workspace of size n Integers.  The float array W must be
 	at least of size c*n, where c is defined below.
 
     If iterative refinement is requested, and Ax=b, A'x=b or A.'x=b is being
@@ -49,24 +49,24 @@ UMFPACK_solve
     Int sys,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
-    double Xx [ ],
+    float Xx [ ],
 #ifdef COMPLEX
-    double Xz [ ],
+    float Xz [ ],
 #endif
-    const double Bx [ ],
+    const float Bx [ ],
 #ifdef COMPLEX
-    const double Bz [ ],
+    const float Bz [ ],
 #endif
     void *NumericHandle,
-    const double Control [UMFPACK_CONTROL],
-    double User_Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float User_Info [UMFPACK_INFO]
 #ifdef WSOLVE
     , Int Pattern [ ],
-    double W [ ]
+    float W [ ]
 #endif
 )
 {
@@ -74,13 +74,13 @@ UMFPACK_solve
     /* local variables */
     /* ---------------------------------------------------------------------- */
 
-    double Info2 [UMFPACK_INFO], stats [2] ;
-    double *Info ;
+    float Info2 [UMFPACK_INFO], stats [2] ;
+    float *Info ;
     NumericType *Numeric ;
     Int n, i, irstep, status ;
 #ifndef WSOLVE
     Int *Pattern, wsize ;
-    double *W ;
+    float *W ;
 #endif
 
     /* ---------------------------------------------------------------------- */
@@ -101,7 +101,7 @@ UMFPACK_solve
 
     irstep = GET_CONTROL (UMFPACK_IRSTEP, UMFPACK_DEFAULT_IRSTEP) ;
 
-    if (User_Info != (double *) NULL)
+    if (User_Info != (float *) NULL)
     {
 	/* return Info in user's array */
 	Info = User_Info ;
@@ -196,7 +196,7 @@ UMFPACK_solve
 #endif
 
     Pattern = (Int *) UMF_malloc (n, sizeof (Int)) ;
-    W = (double *) UMF_malloc (wsize, sizeof (double)) ;
+    W = (float *) UMF_malloc (wsize, sizeof (float)) ;
     if (!W || !Pattern)
     {
 	DEBUGm4 (("out of memory: solve work\n")) ;

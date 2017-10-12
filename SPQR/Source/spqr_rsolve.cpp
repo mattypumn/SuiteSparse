@@ -375,23 +375,23 @@ template <typename Entry> void spqr_rsolve
 
 // =============================================================================
 
-template void spqr_rsolve <double>
+template void spqr_rsolve <float>
 (
     // inputs
-    SuiteSparseQR_factorization <double> *QR,
+    SuiteSparseQR_factorization <float> *QR,
     int use_Q1fill,
 
     Long nrhs,              // number of columns of B
     Long ldb,               // leading dimension of B
-    double *B,              // size m-by-nrhs with leading dimesion ldb
+    float *B,              // size m-by-nrhs with leading dimesion ldb
 
     // output
-    double *X,              // size n-by-nrhs with leading dimension n
+    float *X,              // size n-by-nrhs with leading dimension n
 
     // workspace
-    double **Rcolp,
+    float **Rcolp,
     Long *Rlive,
-    double *W,
+    float *W,
 
     cholmod_common *cc
 ) ;

@@ -35,10 +35,10 @@
 PRIVATE Int rescale_determinant
 (
     Entry *d_mantissa,
-    double *d_exponent
+    float *d_exponent
 )
 {
-    double d_abs ;
+    float d_abs ;
 
     ABS (d_abs, *d_mantissa) ;
 
@@ -78,13 +78,13 @@ PRIVATE Int rescale_determinant
 
 GLOBAL Int UMFPACK_get_determinant
 (
-    double *Mx,
+    float *Mx,
 #ifdef COMPLEX
-    double *Mz,
+    float *Mz,
 #endif
-    double *Ex,
+    float *Ex,
     void *NumericHandle,
-    double User_Info [UMFPACK_INFO]
+    float User_Info [UMFPACK_INFO]
 )
 {
     /* ---------------------------------------------------------------------- */
@@ -92,9 +92,9 @@ GLOBAL Int UMFPACK_get_determinant
     /* ---------------------------------------------------------------------- */
 
     Entry d_mantissa, d_tmp ;
-    double d_exponent, Info2 [UMFPACK_INFO], one [2] = {1.0, 0.0}, d_sign ;
+    float d_exponent, Info2 [UMFPACK_INFO], one [2] = {1.0, 0.0}, d_sign ;
     Entry *D ;
-    double *Info, *Rs ;
+    float *Info, *Rs ;
     NumericType *Numeric ;
     Int i, n, itmp, npiv, *Wi, *Rperm, *Cperm, do_scale ;
 
@@ -106,7 +106,7 @@ GLOBAL Int UMFPACK_get_determinant
     /* check input parameters */
     /* ---------------------------------------------------------------------- */
 
-    if (User_Info != (double *) NULL)
+    if (User_Info != (float *) NULL)
     {
 	/* return Info in user's array */
 	Info = User_Info ;
@@ -137,7 +137,7 @@ GLOBAL Int UMFPACK_get_determinant
 	return (UMFPACK_ERROR_invalid_system) ;
     }
 
-    if (Mx == (double *) NULL)
+    if (Mx == (float *) NULL)
     {
 	Info [UMFPACK_STATUS] = UMFPACK_ERROR_argument_missing ;
 	return (UMFPACK_ERROR_argument_missing) ;
@@ -163,7 +163,7 @@ GLOBAL Int UMFPACK_get_determinant
     /* ---------------------------------------------------------------------- */
 
     Rs = Numeric->Rs ;		/* row scale factors */
-    do_scale = (Rs != (double *) NULL) ;
+    do_scale = (Rs != (float *) NULL) ;
 
 #ifndef NRECIPROCAL
     do_recip = Numeric->do_recip ;
@@ -271,7 +271,7 @@ GLOBAL Int UMFPACK_get_determinant
     /* compute the magnitude and exponent of the determinant */
     /* ---------------------------------------------------------------------- */
 
-    if (Ex == (double *) NULL)
+    if (Ex == (float *) NULL)
     {
 	/* Ex is not provided, so return the entire determinant in d_mantissa */
 	SCALE (d_mantissa, pow (10.0, d_exponent)) ;

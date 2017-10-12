@@ -13,12 +13,12 @@ int umfpack_di_transpose
     int n_col,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     const int P [ ],
     const int Q [ ],
     int Rp [ ],
     int Ri [ ],
-    double Rx [ ]
+    float Rx [ ]
 ) ;
 
 SuiteSparse_long umfpack_dl_transpose
@@ -27,12 +27,12 @@ SuiteSparse_long umfpack_dl_transpose
     SuiteSparse_long n_col,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     const SuiteSparse_long P [ ],
     const SuiteSparse_long Q [ ],
     SuiteSparse_long Rp [ ],
     SuiteSparse_long Ri [ ],
-    double Rx [ ]
+    float Rx [ ]
 ) ;
 
 int umfpack_zi_transpose
@@ -41,12 +41,12 @@ int umfpack_zi_transpose
     int n_col,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ], const double Az [ ],
+    const float Ax [ ], const float Az [ ],
     const int P [ ],
     const int Q [ ],
     int Rp [ ],
     int Ri [ ],
-    double Rx [ ], double Rz [ ],
+    float Rx [ ], float Rz [ ],
     int do_conjugate
 ) ;
 
@@ -56,35 +56,35 @@ SuiteSparse_long umfpack_zl_transpose
     SuiteSparse_long n_col,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ], const double Az [ ],
+    const float Ax [ ], const float Az [ ],
     const SuiteSparse_long P [ ],
     const SuiteSparse_long Q [ ],
     SuiteSparse_long Rp [ ],
     SuiteSparse_long Ri [ ],
-    double Rx [ ], double Rz [ ],
+    float Rx [ ], float Rz [ ],
     SuiteSparse_long do_conjugate
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     int n_row, n_col, status, *Ap, *Ai, *P, *Q, *Rp, *Ri ;
-    double *Ax, *Rx ;
+    float *Ax, *Rx ;
     status = umfpack_di_transpose (n_row, n_col, Ap, Ai, Ax, P, Q, Rp, Ri, Rx) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long n_row, n_col, status, *Ap, *Ai, *P, *Q, *Rp, *Ri ;
-    double *Ax, *Rx ;
+    float *Ax, *Rx ;
     status = umfpack_dl_transpose (n_row, n_col, Ap, Ai, Ax, P, Q, Rp, Ri, Rx) ;
 
 complex int Syntax:
 
     #include "umfpack.h"
     int n_row, n_col, status, *Ap, *Ai, *P, *Q, *Rp, *Ri, do_conjugate ;
-    double *Ax, *Az, *Rx, *Rz ;
+    float *Ax, *Az, *Rx, *Rz ;
     status = umfpack_zi_transpose (n_row, n_col, Ap, Ai, Ax, Az, P, Q,
 	Rp, Ri, Rx, Rz, do_conjugate) ;
 
@@ -92,7 +92,7 @@ complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long n_row, n_col, status, *Ap, *Ai, *P, *Q, *Rp, *Ri, do_conjugate ;
-    double *Ax, *Az, *Rx, *Rz ;
+    float *Ax, *Az, *Rx, *Rz ;
     status = umfpack_zl_transpose (n_row, n_col, Ap, Ai, Ax, Az, P, Q,
 	Rp, Ri, Rx, Rz, do_conjugate) ;
 
@@ -151,9 +151,9 @@ Arguments:
 	must be in ascending order, and no duplicate row indices may be present.
 	Row indices must be in the range 0 to n_row-1 (the matrix is 0-based).
 
-    double Ax [nz] ;	Input argument, not modified, of size nz = Ap [n_col].
+    float Ax [nz] ;	Input argument, not modified, of size nz = Ap [n_col].
 			Size 2*nz if Az or Rz are NULL.
-    double Az [nz] ;	Input argument, not modified, for complex versions.
+    float Az [nz] ;	Input argument, not modified, for complex versions.
 
 	If present, these are the numerical values of the sparse matrix A.
 	The nonzero pattern (row indices) for column j is stored in
@@ -196,9 +196,9 @@ Arguments:
 	The row indices of the matrix R = (A (P,Q))' or (A (P,Q)).' , in the
 	same form as the row indices Ai for the matrix A.
 
-    double Rx [nz] ;	Output argument.
+    float Rx [nz] ;	Output argument.
 			Size 2*nz if Az or Rz are NULL.
-    double Rz [nz] ;	Output argument, imaginary part for complex versions.
+    float Rz [nz] ;	Output argument, imaginary part for complex versions.
 
 	If present, these are the numerical values of the sparse matrix R,
 	in the same form as the values Ax and Az of the matrix A.

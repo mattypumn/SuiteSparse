@@ -19,7 +19,7 @@
 
 void spqrDebug_print
 (
-    double x
+    float x
 )
 {
     PR ((" %10.4g", x)) ;
@@ -91,9 +91,9 @@ template <typename Entry> void spqrDebug_dumpdense
 
 }
 
-template void spqrDebug_dumpdense <double>
+template void spqrDebug_dumpdense <float>
 (
-    double *A,
+    float *A,
     Long m,
     Long n,
     Long lda,
@@ -142,11 +142,11 @@ template <typename Entry> void spqrDebug_dumpsparse
     }
 }
 
-template void spqrDebug_dumpsparse <double>
+template void spqrDebug_dumpsparse <float>
 (
     Long *Ap,
     Long *Ai,
-    double *Ax,
+    float *Ax,
     Long m,
     Long n,
     cholmod_common *cc

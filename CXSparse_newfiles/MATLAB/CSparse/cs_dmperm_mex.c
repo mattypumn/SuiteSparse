@@ -8,7 +8,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double seed ;
+    float seed ;
     cs_dl *A, Amatrix ;
     cs_dld *D ;
     CS_INT m, n, *jmatch, iseed ;

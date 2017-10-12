@@ -13,7 +13,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double seed ;
+    float seed ;
     CS_INT iseed, n, *p ;
     if (nargout > 1 || nargin < 1 || nargin > 2)
     {

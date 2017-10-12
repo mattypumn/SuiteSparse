@@ -20,7 +20,7 @@ if (nargin < 1)
     fprintf ('\nEnter the printing level for UMFPACK''s output statistics:\n') ;
     fprintf ('0: none, 1: errors only, 2: statistics, 4: print some outputs\n');
     c = input ('5: print all output [default is 1]: ', 's') ;
-    c = str2double (c) ;
+    c = str2float (c) ;
 end
 if (isempty (c))
     c = 1 ;

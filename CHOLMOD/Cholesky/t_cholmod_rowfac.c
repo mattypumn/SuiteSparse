@@ -23,7 +23,7 @@ static int TEMPLATE (cholmod_rowfac)
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
     cholmod_sparse *F,	/* used for A*A' case only. F=A' or A(:,f)' */
-    double beta [2],	/* factorize beta*I+A or beta*I+AA' (beta [0] only) */
+    float beta [2],	/* factorize beta*I+A or beta*I+AA' (beta [0] only) */
     size_t kstart,	/* first row to factorize */
     size_t kend,	/* last row to factorize is kend-1 */
 #ifdef MASK
@@ -39,11 +39,11 @@ static int TEMPLATE (cholmod_rowfac)
     cholmod_common *Common
 )
 {
-    double yx [2], lx [2], fx [2], dk [1], di [1], fl = 0 ;
+    float yx [2], lx [2], fx [2], dk [1], di [1], fl = 0 ;
 #ifdef ZOMPLEX
-    double yz [1], lz [1], fz [1] ;
+    float yz [1], lz [1], fz [1] ;
 #endif
-    double *Ax, *Az, *Lx, *Lz, *Wx, *Wz, *Fx, *Fz ;
+    float *Ax, *Az, *Lx, *Lz, *Wx, *Wz, *Fx, *Fz ;
     Int *Ap, *Anz, *Ai, *Lp, *Lnz, *Li, *Lnext, *Flag, *Stack, *Fp, *Fi, *Fnz,
 	*Iwork ;
     Int i, p, k, t, pf, pfend, top, s, mark, pend, n, lnz, is_ll, multadds,
@@ -214,9 +214,9 @@ static int TEMPLATE (cholmod_rowfac)
 		SUBTREE ;
 #undef SCATTER
 #ifdef REAL
-		fl += 2 * ((double) multadds) ;
+		fl += 2 * ((float) multadds) ;
 #else
-		fl += 8 * ((double) multadds) ;
+		fl += 8 * ((float) multadds) ;
 #endif
 	    }
 	}
@@ -323,9 +323,9 @@ static int TEMPLATE (cholmod_rowfac)
 	    else if (is_ll)
 	    {
 #ifdef REAL
-		fl += 2 * ((double) (pend - p - 1)) + 3 ;
+		fl += 2 * ((float) (pend - p - 1)) + 3 ;
 #else
-		fl += 8 * ((double) (pend - p - 1)) + 6 ;
+		fl += 8 * ((float) (pend - p - 1)) + 6 ;
 #endif
 		/* forward solve using L (i:(k-1),i) */
 		/* divide by L(i,i), which must be real and nonzero */
@@ -345,9 +345,9 @@ static int TEMPLATE (cholmod_rowfac)
 	    else
 	    {
 #ifdef REAL
-		fl += 2 * ((double) (pend - p - 1)) + 3 ;
+		fl += 2 * ((float) (pend - p - 1)) + 3 ;
 #else
-		fl += 8 * ((double) (pend - p - 1)) + 6 ;
+		fl += 8 * ((float) (pend - p - 1)) + 6 ;
 #endif
 		/* forward solve using D (i,i) and L ((i+1):(k-1),i) */
 		for (p++ ; p < pend ; p++)

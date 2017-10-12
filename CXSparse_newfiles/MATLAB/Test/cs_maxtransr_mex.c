@@ -63,7 +63,7 @@ void mexFunction
 )
 {
     cs_dl *A, Amatrix ;
-    double *x ;
+    float *x ;
     CS_INT i, m, n, *imatch, *jmatch ;
 
     if (nargout > 1 || nargin != 1)

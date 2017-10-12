@@ -13,7 +13,7 @@
 struct SEntry
 {
     long findex;        // Index into the front where the value belongs
-    double value;       // The numeric value to be placed
+    float value;       // The numeric value to be placed
 
     SEntry()
     {

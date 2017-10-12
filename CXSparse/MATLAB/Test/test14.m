@@ -18,7 +18,7 @@ for trial = 1:100
     A = sparse (i,j,2*x-1) ;
     fprintf ('test14 m %3d n %3d nz %d\n', m, n, nnz (A)) ;
 
-    for cmplex = 0:double(~ispc)
+    for cmplex = 0:float(~ispc)
 
         if (cmplex)
             A = A + 1i * sparse (i,j,2*rand(size(x))-1) ;

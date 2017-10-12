@@ -19,7 +19,7 @@
 
 void ctest (cholmod_sparse *A)
 {
-    double knobs [COLAMD_KNOBS], knobs2 [COLAMD_KNOBS] ;
+    float knobs [COLAMD_KNOBS], knobs2 [COLAMD_KNOBS] ;
     Int *P, *Cp, *Ci, *Si, *Sp ;
     cholmod_sparse *C, *A2, *B, *S, *BT ;
     Int nrow, ncol, alen, ok, stats [COLAMD_STATS], i, p, trial ;

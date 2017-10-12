@@ -6,9 +6,9 @@
 
 #include "spqr.hpp"
 
-inline double spqr_private_nrm2 (Long n, double *X, cholmod_common *cc)
+inline float spqr_private_nrm2 (Long n, float *X, cholmod_common *cc)
 {
-    double norm = 0 ;
+    float norm = 0 ;
     BLAS_INT N = n, one = 1 ;
     if (CHECK_BLAS_INT && !EQ (N,n))
     {
@@ -16,14 +16,14 @@ inline double spqr_private_nrm2 (Long n, double *X, cholmod_common *cc)
     }
     if (!CHECK_BLAS_INT || cc->blas_ok)
     {
-        norm = BLAS_DNRM2 (&N, X, &one) ;
+        norm = BLAS_SNRM2 (&N, X, &one) ;
     }
     return (norm) ;
 }
 
-inline double spqr_private_nrm2 (Long n, Complex *X, cholmod_common *cc)
+inline float spqr_private_nrm2 (Long n, Complex *X, cholmod_common *cc)
 {
-    double norm = 0 ;
+    float norm = 0 ;
     BLAS_INT N = n, one = 1 ;
     if (CHECK_BLAS_INT && !EQ (N,n))
     {
@@ -41,7 +41,7 @@ inline double spqr_private_nrm2 (Long n, Complex *X, cholmod_common *cc)
 // === spqr_maxcolnorm =========================================================
 // =============================================================================
 
-template <typename Entry> double spqr_maxcolnorm
+template <typename Entry> float spqr_maxcolnorm
 (
     // inputs, not modified
     cholmod_sparse *A,
@@ -50,7 +50,7 @@ template <typename Entry> double spqr_maxcolnorm
     cholmod_common *cc
 )
 {
-    double norm, maxnorm ;
+    float norm, maxnorm ;
     Long j, p, len, n, *Ap ;
     Entry *Ax ;
 
@@ -82,7 +82,7 @@ template <typename Entry> double spqr_maxcolnorm
 
 // =============================================================================
 
-template double spqr_maxcolnorm <double>
+template float spqr_maxcolnorm <float>
 (
     // inputs, not modified
     cholmod_sparse *A,
@@ -91,7 +91,7 @@ template double spqr_maxcolnorm <double>
     cholmod_common *cc
 ) ;
 
-template double spqr_maxcolnorm <Complex>
+template float spqr_maxcolnorm <Complex>
 (
     // inputs, not modified
     cholmod_sparse *A,

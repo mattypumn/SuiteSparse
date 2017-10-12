@@ -1,9 +1,9 @@
 #include "cs.h"
 /* solve Lx=b where x and b are dense.  x=b on input, solution on output. */
-csi cs_lsolve (const cs *L, double *x)
+csi cs_lsolve (const cs *L, float *x)
 {
     csi p, j, n, *Lp, *Li ;
-    double *Lx ;
+    float *Lx ;
     if (!CS_CSC (L) || !x) return (0) ;                     /* check inputs */
     n = L->n ; Lp = L->p ; Li = L->i ; Lx = L->x ;
     for (j = 0 ; j < n ; j++)

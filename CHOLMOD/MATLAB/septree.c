@@ -42,10 +42,10 @@ void mexFunction
 )
 {
 #ifndef NPARTITION
-    double *p ;
+    float *p ;
     Long *Cmember, *CParent ;
     cholmod_common Common, *cm ;
-    double nd_oksep ;
+    float nd_oksep ;
     Long nd_small, nc, n, c, j, nc_new ;
 
     /* ---------------------------------------------------------------------- */

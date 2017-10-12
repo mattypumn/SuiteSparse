@@ -309,8 +309,8 @@ permissions, edit your {\tt startup.m} by adding {\tt addpath} commands (type
 
 KLU and BTF include the following C-callable functions.  Each function is
 available in two or four versions: with {\tt int} or {\tt long} integers, and
-(for functions that deal with numerical values), with {\tt double} or complex
-{\tt double} values.  The {\tt long} integer is actually a {\tt SuiteSparse\_long},
+(for functions that deal with numerical values), with {\tt float} or complex
+{\tt float} values.  The {\tt long} integer is actually a {\tt SuiteSparse\_long},
 which is typically a {\tt long}, defined with a {\tt \#define} statement.  It
 becomes an {\tt \_\_int64} on Microsoft Windows 64, however.
 
@@ -470,7 +470,7 @@ The row indices of entries in column {\tt j} of {\tt A} are located in
 {\tt Ai [Ap [j] ... Ap [j+1]-1]}.  The matrix is zero-based; row and column
 indices are in the range 0 to {\tt n-1}.
 
-\item {\tt Ax}: a {\tt double} array of size {\tt nz} for the real case, or
+\item {\tt Ax}: a {\tt float} array of size {\tt nz} for the real case, or
 {\tt 2*nz} for the complex case.  For the complex case, the real and imaginary
 parts are interleaved, compatible with Fortran and the ANSI C99 Complex data
 type.  KLU does not rely on the ANSI C99 data type, however, for portability
@@ -575,7 +575,7 @@ Symbolic} object.  A NULL pointer is returned if an error occurs.
 \begin{verbatim}
     #include "klu.h"
     int Ap [n+1], Ai [nz] ;
-    double Ax [nz], Az [2*nz] ;
+    float Ax [nz], Az [2*nz] ;
     klu_symbolic *Symbolic ;
     klu_numeric *Numeric ;
     klu_common Common ;
@@ -585,7 +585,7 @@ Symbolic} object.  A NULL pointer is returned if an error occurs.
 
     #include "klu.h"
     SuiteSparse_long Ap [n+1], Ai [nz] ;
-    double Ax [nz], Az [2*nz] ;
+    float Ax [nz], Az [2*nz] ;
     klu_l_symbolic *Symbolic ;
     klu_l_numeric *Numeric ;
     klu_l_common Common ;
@@ -611,7 +611,7 @@ entry $b_{ij}$ is stored in {\tt B [2*(i+j*ldim)]} and {\tt B [2*(i+j*ldim)+1]}
 \begin{verbatim}
     #include "klu.h"
     int ldim, nrhs, ok ;
-    double B [ldim*nrhs], Bz [2*ldim*nrhs] ;
+    float B [ldim*nrhs], Bz [2*ldim*nrhs] ;
     klu_symbolic *Symbolic ;
     klu_numeric *Numeric ;
     klu_common Common ;
@@ -621,7 +621,7 @@ entry $b_{ij}$ is stored in {\tt B [2*(i+j*ldim)]} and {\tt B [2*(i+j*ldim)+1]}
 
     #include "klu.h"
     SuiteSparse_long ldim, nrhs, ok ;
-    double B [ldim*nrhs], Bz [2*ldim*nrhs] ;
+    float B [ldim*nrhs], Bz [2*ldim*nrhs] ;
     klu_symbolic *Symbolic ;
     klu_numeric *Numeric ;
     klu_common Common ;
@@ -643,7 +643,7 @@ identical to {\tt klu\_solve}.
 \begin{verbatim}
     #include "klu.h"
     int ldim, nrhs, ok ;
-    double B [ldim*nrhs], Bz [2*ldim*nrhs] ;
+    float B [ldim*nrhs], Bz [2*ldim*nrhs] ;
     klu_symbolic *Symbolic ;
     klu_numeric *Numeric ;
     klu_common Common ;
@@ -653,7 +653,7 @@ identical to {\tt klu\_solve}.
 
     #include "klu.h"
     SuiteSparse_long ldim, nrhs, ok ;
-    double B [ldim*nrhs], Bz [2*ldim*nrhs] ;
+    float B [ldim*nrhs], Bz [2*ldim*nrhs] ;
     klu_symbolic *Symbolic ;
     klu_numeric *Numeric ;
     klu_common Common ;
@@ -682,7 +682,7 @@ and requires no dynamic memory allocation.
 \begin{verbatim}
     #include "klu.h"
     int ok, Ap [n+1], Ai [nz] ;
-    double Ax [nz], Az [2*nz] ;
+    float Ax [nz], Az [2*nz] ;
     klu_symbolic *Symbolic ;
     klu_numeric *Numeric ;
     klu_common Common ;
@@ -692,7 +692,7 @@ and requires no dynamic memory allocation.
 
     #include "klu.h"
     SuiteSparse_long ok, Ap [n+1], Ai [nz] ;
-    double Ax [nz], Az [2*nz] ;
+    float Ax [nz], Az [2*nz] ;
     klu_l_symbolic *Symbolic ;
     klu_l_numeric *Numeric ;
     klu_l_common Common ;
@@ -837,7 +837,7 @@ result is returned in {\tt Common.rgrowth}.
 \begin{verbatim}
     #include "klu.h"
     int ok, Ap [n+1], Ai [nz] ;
-    double Ax [nz], Az [2*nz] ;
+    float Ax [nz], Az [2*nz] ;
     klu_symbolic *Symbolic ;
     klu_numeric *Numeric ;
     klu_common Common ;
@@ -847,7 +847,7 @@ result is returned in {\tt Common.rgrowth}.
 
     #include "klu.h"
     SuiteSparse_long ok, Ap [n+1], Ai [nz] ;
-    double Ax [nz], Az [2*nz] ;
+    float Ax [nz], Az [2*nz] ;
     klu_l_symbolic *Symbolic ;
     klu_l_numeric *Numeric ;
     klu_l_common Common ;
@@ -871,7 +871,7 @@ complex case) must be unchanged since the last call to {\tt klu\_factor} or
 \begin{verbatim}
     #include "klu.h"
     int ok, Ap [n+1] ;
-    double Ax [nz], Az [2*nz] ;
+    float Ax [nz], Az [2*nz] ;
     klu_symbolic *Symbolic ;
     klu_numeric *Numeric ;
     klu_common Common ;
@@ -881,7 +881,7 @@ complex case) must be unchanged since the last call to {\tt klu\_factor} or
 
     #include "klu.h"
     SuiteSparse_long ok, Ap [n+1] ;
-    double Ax [nz], Az [2*nz] ;
+    float Ax [nz], Az [2*nz] ;
     klu_l_symbolic *Symbolic ;
     klu_l_numeric *Numeric ;
     klu_l_common Common ;
@@ -953,7 +953,7 @@ NULL on input, the check for duplicate entries is skipped.
 \begin{verbatim}
     #include "klu.h"
     int scale, ok, n, Ap [n+1], Ai [nz], W [n] ;
-    double Ax [nz], Az [2*nz], Rs [n] ;
+    float Ax [nz], Az [2*nz], Rs [n] ;
     klu_common Common ;
     ok = klu_scale (scale, n, Ap, Ai, Ax, Symbolic, Numeric, &Common) ;               /* real */
     ok = klu_z_scale (scale, n, Ap, Ai, Az, Symbolic, Numeric, &Common) ;             /* complex */
@@ -961,7 +961,7 @@ NULL on input, the check for duplicate entries is skipped.
 
     #include "klu.h"
     SuiteSparse_long scale, ok, n, Ap [n+1], Ai [nz], W [n] ;
-    double Ax [nz], Az [2*nz], Rs [n] ;
+    float Ax [nz], Az [2*nz], Rs [n] ;
     klu_l_common Common ;
     ok = klu_l_scale (scale, n, Ap, Ai, Ax, Symbolic, Numeric, &Common) ;             /* real */
     ok = klu_zl_scale (scale, n, Ap, Ai, Az, Symbolic, Numeric, &Common) ;            /* complex */
@@ -994,7 +994,7 @@ use to the end user who wishes to examine the contents of the LU factors.
 \begin{verbatim}
     #include "klu.h"
     int ok, Lp [n+1], Li [lnz], Up [n+1], Ui [unz], Fp [n+1], Fi [nzoff], P [n], Q [n], R [n] ;
-    double Lx [lnz], Lz [lnz], Ux [unz], Uz [unz], Fx [nzoff], Fz [nzoff], Rs [n] ;
+    float Lx [lnz], Lz [lnz], Ux [unz], Uz [unz], Fx [nzoff], Fz [nzoff], Rs [n] ;
     klu_symbolic *Symbolic ;
     klu_numeric *Numeric ;
     klu_common Common ;
@@ -1007,7 +1007,7 @@ use to the end user who wishes to examine the contents of the LU factors.
     #include "klu.h"
     SuiteSparse_long ok, Lp [n+1], Li [lnz], Up [n+1], Ui [unz], Fp [n+1],
         Fi [nzoff], P [n], Q [n], R [n] ;
-    double Lx [lnz], Lz [lnz], Ux [unz], Uz [unz], Fx [nzoff], Fz [nzoff], Rs [n] ;
+    float Lx [lnz], Lz [lnz], Ux [unz], Uz [unz], Fx [nzoff], Fz [nzoff], Rs [n] ;
     klu_l_symbolic *Symbolic ;
     klu_l_numeric *Numeric ;
     klu_l_common Common ;
@@ -1091,12 +1091,12 @@ are undefined on input and output.
 {\footnotesize
 \begin{verbatim}
     int nrow, ncol, Ap [ncol+1], Ai [nz], Match [nrow], Work [5*ncol], nmatch ;
-    double maxwork, work ;
+    float maxwork, work ;
     nmatch = btf_maxtrans (nrow, ncol, Ap, Ai, maxwork, &work, Match, Work) ;
 
 
     SuiteSparse_long nrow, ncol, Ap [ncol+1], Ai [nz], Match [nrow], Work [5*ncol], nmatch ;
-    double maxwork, work ;
+    float maxwork, work ;
     nmatch = btf_l_maxtrans (nrow, ncol, Ap, Ai, maxwork, &work, Match, Work) ;
 \end{verbatim}
 }
@@ -1147,12 +1147,12 @@ are the same as {\tt btf\_strongcomp}.
 {\footnotesize
 \begin{verbatim}
     int n, Ap [n+1], Ai [nz], P [n], Q [n], R [n+1], nfound, Work [5*n], ncomp, nfound ;
-    double maxwork, work ;
+    float maxwork, work ;
     ncomp = btf_order (n, Ap, Ai, maxwork, &work, P, Q, R, &nfound, Work) ;
 
 
     SuiteSparse_long n, Ap [n+1], Ai [nz], P [n], Q [n], R [n+1], nfound, Work [5*n], ncomp, nfound ;
-    double maxwork, work ;
+    float maxwork, work ;
     ncomp = btf_l_order (n, Ap, Ai, maxwork, &work, P, Q, R, &nfound, Work) ;
 \end{verbatim}
 }

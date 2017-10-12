@@ -22,8 +22,8 @@
     } \
 }
 
-/* RATIO macro uses a double relop, but ignore NaN case: */
-#define RATIO(a,b,c) (((b) == 0) ? (c) : (((double) a)/((double) b)))
+/* RATIO macro uses a float relop, but ignore NaN case: */
+#define RATIO(a,b,c) (((b) == 0) ? (c) : (((float) a)/((float) b)))
 
 /* ========================================================================== */
 /* === print_ratio ========================================================== */
@@ -33,16 +33,16 @@ PRIVATE void print_ratio
 (
     char *what,
     char *format,
-    double estimate,
-    double actual
+    float estimate,
+    float actual
 )
 {
-    if (estimate < 0 && actual < 0)	/* double relop, but ignore Nan case */
+    if (estimate < 0 && actual < 0)	/* float relop, but ignore Nan case */
     {
 	return ;
     }
     PRINTF (("    %-27s", what)) ;
-    if (estimate >= 0)			/* double relop, but ignore Nan case */
+    if (estimate >= 0)			/* float relop, but ignore Nan case */
     {
 	PRINTF ((format, estimate)) ;
     }
@@ -50,7 +50,7 @@ PRIVATE void print_ratio
     {
 	PRINTF (("                    -")) ;
     }
-    if (actual >= 0)			/* double relop, but ignore Nan case */
+    if (actual >= 0)			/* float relop, but ignore Nan case */
     {
 	PRINTF ((format, actual)) ;
     }
@@ -58,7 +58,7 @@ PRIVATE void print_ratio
     {
 	PRINTF (("                    -")) ;
     }
-    if (estimate >= 0 && actual >= 0)	/* double relop, but ignore Nan case */
+    if (estimate >= 0 && actual >= 0)	/* float relop, but ignore Nan case */
     {
 	PRINTF ((" %5.0f%%\n", 100 * RATIO (actual, estimate, 1))) ;
     }
@@ -74,12 +74,12 @@ PRIVATE void print_ratio
 
 GLOBAL void UMFPACK_report_info
 (
-    const double Control [UMFPACK_CONTROL],
-    const double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    const float Info [UMFPACK_INFO]
 )
 {
 
-    double lnz_est, unz_est, lunz_est, lnz, unz, lunz, tsym, tnum, fnum, tsolve,
+    float lnz_est, unz_est, lunz_est, lnz, unz, lunz, tsym, tnum, fnum, tsolve,
 	fsolve, ftot, twsym, twnum, twsolve, twtot, n2 ;
     Int n_row, n_col, n_inner, prl, is_sym, strategy ;
 
@@ -91,7 +91,7 @@ GLOBAL void UMFPACK_report_info
 
     if (!Info || prl < 2)
     {
-	/* no output generated if Info is (double *) NULL */
+	/* no output generated if Info is (float *) NULL */
 	/* or if prl is less than 2 */
 	return ;
     }
@@ -114,19 +114,19 @@ GLOBAL void UMFPACK_report_info
     /* ---------------------------------------------------------------------- */
 
 #ifdef DINT
-    PRINTF (("    matrix entry defined as:          double\n")) ;
+    PRINTF (("    matrix entry defined as:          float\n")) ;
     PRINTF (("    Int (generic integer) defined as: int\n")) ;
 #endif
 #ifdef DLONG
-    PRINTF (("    matrix entry defined as:          double\n")) ;
+    PRINTF (("    matrix entry defined as:          float\n")) ;
     PRINTF (("    Int (generic integer) defined as: SuiteSparse_long\n")) ;
 #endif
 #ifdef ZINT
-    PRINTF (("    matrix entry defined as:          double complex\n")) ;
+    PRINTF (("    matrix entry defined as:          float complex\n")) ;
     PRINTF (("    Int (generic integer) defined as: int\n")) ;
 #endif
 #ifdef ZLONG
-    PRINTF (("    matrix entry defined as:          double complex\n")) ;
+    PRINTF (("    matrix entry defined as:          float complex\n")) ;
     PRINTF (("    Int (generic integer) defined as: SuiteSparse_long\n")) ;
 #endif
 
@@ -320,7 +320,7 @@ GLOBAL void UMFPACK_report_info
     if (strategy == UMFPACK_STRATEGY_SYMMETRIC && 
         Info [UMFPACK_ORDERING_USED] != UMFPACK_ORDERING_GIVEN)
     {
-	double dmax = Info [UMFPACK_SYMMETRIC_DMAX] ;
+	float dmax = Info [UMFPACK_SYMMETRIC_DMAX] ;
 	PRINTF (("    AMD statistics, for strict diagonal pivoting:\n")) ;
 	PRINT_INFO ("        est. flops for LU factorization:           %.5e\n",
 	    Info [UMFPACK_SYMMETRIC_FLOPS]) ;
@@ -390,7 +390,7 @@ GLOBAL void UMFPACK_report_info
     /* estimate/actual in symbolic/numeric factorization */
     /* ---------------------------------------------------------------------- */
 
-    /* double relop, but ignore NaN case: */
+    /* float relop, but ignore NaN case: */
     if (Info [UMFPACK_SYMBOLIC_DEFRAG] >= 0	/* UMFPACK_*symbolic called */
     ||  Info [UMFPACK_NUMERIC_DEFRAG] >= 0)	/* UMFPACK_numeric called */
     {
@@ -419,7 +419,7 @@ GLOBAL void UMFPACK_report_info
 
     lnz_est = Info [UMFPACK_LNZ_ESTIMATE] ;
     unz_est = Info [UMFPACK_UNZ_ESTIMATE] ;
-    if (lnz_est >= 0 && unz_est >= 0)	/* double relop, but ignore NaN case */
+    if (lnz_est >= 0 && unz_est >= 0)	/* float relop, but ignore NaN case */
     {
 	lunz_est = lnz_est + unz_est - n_inner ;
     }
@@ -429,7 +429,7 @@ GLOBAL void UMFPACK_report_info
     }
     lnz = Info [UMFPACK_LNZ] ;
     unz = Info [UMFPACK_UNZ] ;
-    if (lnz >= 0 && unz >= 0)		/* double relop, but ignore NaN case */
+    if (lnz >= 0 && unz >= 0)		/* float relop, but ignore NaN case */
     {
 	lunz = lnz + unz - n_inner ;
     }

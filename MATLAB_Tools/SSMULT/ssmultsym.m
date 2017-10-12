@@ -6,7 +6,7 @@ function s = ssmultsym (A,B)                                                %#ok
 %   s.flops         flops required to compute C=A*B
 %   s.memory        memory required to compute C=A*B, including C itself.
 %
-% Either A or B, or both, can be complex.  Only matrices of class "double" are
+% Either A or B, or both, can be complex.  Only matrices of class "float" are
 % supported.  If i is the size of an integer (4 bytes on 32-bit MATLAB, 8 bytes
 % on 64-bit MATLAB) and x is the size of an entry (8 bytes if real, 16 if
 % complex), and [m n]=size(C), then the memory usage of SSMULT is

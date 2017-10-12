@@ -16,7 +16,7 @@
 
 #define FREE_WORK \
     cholmod_l_free_factor (&Sc, cc) ; \
-    cholmod_l_free (2*(nf+1), sizeof (double), Flops,         cc) ; \
+    cholmod_l_free (2*(nf+1), sizeof (float), Flops,         cc) ; \
     cholmod_l_free (ns+2,     sizeof (Long),    Stack_stack,   cc) ; \
     cholmod_l_free (nf,       sizeof (Long),    Rh,            cc) ; \
     cholmod_l_free (ntasks,   sizeof (Long),    TaskParent,    cc) ;
@@ -59,8 +59,8 @@ spqr_symbolic *spqr_analyze
     cholmod_sparse *AT ;
     cholmod_factor *Sc ;
     int ok = TRUE, do_parallel_analysis ;
-    double total_flops = 0 ;
-    double *Flops, *Flops_subtree ;
+    float total_flops = 0 ;
+    float *Flops, *Flops_subtree ;
     Long *Sp, *Sj;
 
 #ifdef GPU_BLAS
@@ -471,7 +471,7 @@ spqr_symbolic *spqr_analyze
     if (do_parallel_analysis)
     {
         // allocate Flops and Flops_subtree, each of size nf+1
-        Flops = (double *) cholmod_l_malloc (2*(nf+1), sizeof (double), cc) ;
+        Flops = (float *) cholmod_l_malloc (2*(nf+1), sizeof (float), cc) ;
         Flops_subtree = Flops + (nf+1) ;
         if (keepH)
         {
@@ -886,7 +886,7 @@ spqr_symbolic *spqr_analyze
         // determine flop counts and upper bounds on the size R+H if H kept
         // ---------------------------------------------------------------------
 
-        double fflops = 0 ;                 // flop count for this front
+        float fflops = 0 ;                 // flop count for this front
         Long rhsize = 0 ;                   // count entire staircase
         for (j = 0 ; j < fn ; j++)
         {
@@ -896,7 +896,7 @@ spqr_symbolic *spqr_analyze
             rhsize += t ;                   // Long overflow cannot occur
             if (t > j)
             {
-                double h = (t-j) ;          // length of Householder vector
+                float h = (t-j) ;          // length of Householder vector
                 fflops += 3*h               // compute Householder vector
                     + 4*h*(fn-j-1) ;        // apply to cols j+1:fn-1
             }
@@ -1024,7 +1024,7 @@ spqr_symbolic *spqr_analyze
         Flops_subtree [nf] = total_flops ;
 
 #ifndef NDEBUG
-        double fflops2 = 0 ;
+        float fflops2 = 0 ;
         for (p = Childp [nf] ; p < Childp [nf+1] ; p++)
         {
             c = Child [p] ;                 // get a root (child of nf)
@@ -1146,9 +1146,9 @@ spqr_symbolic *spqr_analyze
 
     // a front f is "big" if the work in the subtree rooted at f is > big_flops
 
-    double big_flops = total_flops / cc->SPQR_grain ;
+    float big_flops = total_flops / cc->SPQR_grain ;
     big_flops = MAX (big_flops, cc->SPQR_small) ;
-    double small_flops = big_flops / 16 ;
+    float small_flops = big_flops / 16 ;
     PR (("total flops %g\n", total_flops)) ;
     PR (("big flops   %g\n", big_flops)) ;
     PR (("small flops %g\n", small_flops)) ;
@@ -1264,7 +1264,7 @@ spqr_symbolic *spqr_analyze
         // start a new task, or merge with a prior sibling
         // ---------------------------------------------------------------------
 
-        double flops = Flops_subtree [flast] ;
+        float flops = Flops_subtree [flast] ;
         if (SMALL_TASK (parent) == EMPTY)
         {
             // pending parent of flast has no small child task;  get new task
@@ -1423,7 +1423,7 @@ spqr_symbolic *spqr_analyze
 #endif
 
     // Flops no longer needed
-    cholmod_l_free (2*(nf+1), sizeof (double), Flops, cc) ;
+    cholmod_l_free (2*(nf+1), sizeof (float), Flops, cc) ;
     Flops = NULL ;
     Flops_subtree = NULL ;
 

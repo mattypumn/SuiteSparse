@@ -1,5 +1,5 @@
 #include "cs.h"
-static csi cs_nonzero (csi i, csi j, double aij, void *other)
+static csi cs_nonzero (csi i, csi j, float aij, void *other)
 {
     return (aij != 0) ;
 }

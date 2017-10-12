@@ -31,7 +31,7 @@ GLOBAL Int UMF_grow_front
     /* local variables */
     /* ---------------------------------------------------------------------- */
 
-    double s ;
+    float s ;
     Entry *Fcold, *Fcnew ;
     Int j, i, col, *Fcpos, *Fcols, fnrows_max, fncols_max, fnr_curr, nb,
 	fnrows_new, fncols_new, fnr_min, fnc_min, minsize,
@@ -81,7 +81,7 @@ GLOBAL Int UMF_grow_front
     fnr_min = MIN (fnrows_new, fnrows_max) ;
     fnc_min = MIN (fncols_new, fncols_max) ;
     minsize = fnr_min * fnc_min ;
-    if (INT_OVERFLOW ((double) fnr_min * (double) fnc_min * sizeof (Entry)))
+    if (INT_OVERFLOW ((float) fnr_min * (float) fnc_min * sizeof (Entry)))
     {
 	/* :: the minimum front size is bigger than the integer maximum :: */
 	return (FALSE) ;
@@ -106,13 +106,13 @@ GLOBAL Int UMF_grow_front
     ASSERT (fnr2 >= 0) ;
     ASSERT (fnr2 % 2 == 1) ;
 
-    s = ((double) fnr2) * ((double) fnc2) ;
+    s = ((float) fnr2) * ((float) fnc2) ;
     if (INT_OVERFLOW (s * sizeof (Entry)))
     {
 	/* :: frontal matrix size int overflow :: */
 	/* the desired front size is bigger than the integer maximum */
 	/* compute a such that a*a*s < Int_MAX / sizeof (Entry) */
-	double a = 0.9 * sqrt ((Int_MAX / sizeof (Entry)) / s) ;
+	float a = 0.9 * sqrt ((Int_MAX / sizeof (Entry)) / s) ;
 	fnr2 = MAX (fnr_min, a * fnr2) ;
 	fnc2 = MAX (fnc_min, a * fnc2) ;
 	/* the new frontal size is a*r*a*c = a*a*s */
@@ -154,9 +154,9 @@ GLOBAL Int UMF_grow_front
 
 #ifndef NDEBUG
     UMF_allocfail = FALSE ;
-    if (UMF_gprob > 0)  /* a double relop, but ignore NaN case */
+    if (UMF_gprob > 0)  /* a float relop, but ignore NaN case */
     {
-	double rrr = ((double) (rand ( ))) / (((double) RAND_MAX) + 1) ;
+	float rrr = ((float) (rand ( ))) / (((float) RAND_MAX) + 1) ;
 	DEBUG1 (("Check random %e %e\n", rrr, UMF_gprob)) ;
 	UMF_allocfail = rrr < UMF_gprob ;
 	if (UMF_allocfail) DEBUGm2 (("Random garbage collection (grow)\n")) ;

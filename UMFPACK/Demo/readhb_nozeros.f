@@ -31,7 +31,7 @@ c       >> spy (A)
         character title*72, key*30, type*3, ptrfmt*16,
      $          indfmt*16, valfmt*20, rhsfmt*20
         logical sym
-        double precision Value (nzmax), skew
+        float precision Value (nzmax), skew
         character rhstyp*3
         integer nzrhs, nel
 

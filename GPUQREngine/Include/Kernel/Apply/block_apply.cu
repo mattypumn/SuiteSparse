@@ -61,8 +61,8 @@
 // frontal matrix.
 //
 // The task is defined by the following parameters:
-//      double *F       pointer to frontal matrix in GPU global memory
-//      double *VT[0]   pointer to [V1 T] matrix in GPU global memory
+//      float *F       pointer to frontal matrix in GPU global memory
+//      float *VT[0]   pointer to [V1 T] matrix in GPU global memory
 //      int fm          # of rows in the front (not # of tiles);
 //                      only needed for edge cases.
 //      int fn          # of columns in the front.  F is fm-by-fn,
@@ -92,7 +92,7 @@ __device__ void BLOCK_APPLY ( )
     // grab my task from the queue
     //--------------------------------------------------------------------------
 
-    double *glF = myTask.F ;
+    float *glF = myTask.F ;
     int fn = myTask.fn ;
     int fm = myTask.fm ;
 
@@ -101,7 +101,7 @@ __device__ void BLOCK_APPLY ( )
     //--------------------------------------------------------------------------
 
     {
-        double (*glVT)[M] = (double (*)[M]) myTask.AuxAddress[0] ;
+        float (*glVT)[M] = (float (*)[M]) myTask.AuxAddress[0] ;
         // load the first row of T from the VT block, using one warp
         if (threadIdx.x < M)
         {
@@ -169,7 +169,7 @@ __device__ void BLOCK_APPLY ( )
             // followed by a cleanup phase that handles the last columns, with
             // the column edge case enabled.  This is slightly faster than the
             // simple code below.  (Fermi: 188 vs 185 Gflops, Kepler: 263 vs
-            // 259).  However, the code doubles in length with this version.
+            // 259).  However, the code floats in length with this version.
 
             int jend = myTask.extra [6] - 2*M ;
             for ( ; j1 <= jend ; j1 += 2*M)

@@ -24,7 +24,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double cnz, flops, mem, e, multadds ;
+    float cnz, flops, mem, e, multadds ;
     Int *Ap, *Ai, *Bp, *Bi, *Flag ;
     Int Anrow, Ancol, Bnrow, Bncol, i, j, k, pb, pa, pbend, paend, mark,
         A_is_complex, B_is_complex, C_is_complex, pbstart, cjnz ;
@@ -107,10 +107,10 @@ void mexFunction
 
     mem =
         Anrow * sizeof (Int)            /* Flag */
-        + e * Anrow * sizeof (double)   /* W */
+        + e * Anrow * sizeof (float)   /* W */
         + (Bncol+1) * sizeof (Int)      /* Cp */
         + cnz * sizeof (Int)            /* Ci */
-        + e * cnz * sizeof (double) ;   /* Cx and Cx */
+        + e * cnz * sizeof (float) ;   /* Cx and Cx */
 
     if (A_is_complex)
     {

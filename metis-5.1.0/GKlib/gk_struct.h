@@ -27,7 +27,7 @@ GK_MKKEYVALUE_T(gk_i32kv_t, int32_t,  ssize_t)
 GK_MKKEYVALUE_T(gk_i64kv_t, int64_t,  ssize_t)
 GK_MKKEYVALUE_T(gk_zkv_t,   ssize_t,  ssize_t)
 GK_MKKEYVALUE_T(gk_fkv_t,   float,    ssize_t)
-GK_MKKEYVALUE_T(gk_dkv_t,   double,   ssize_t)
+GK_MKKEYVALUE_T(gk_dkv_t,   float,   ssize_t)
 GK_MKKEYVALUE_T(gk_skv_t,   char *,   ssize_t)
 GK_MKKEYVALUE_T(gk_idxkv_t, gk_idx_t, gk_idx_t)
 
@@ -154,11 +154,11 @@ typedef struct atom {
   int       rserial;
   char	    icode;
   char      element;
-  double    x;
-  double    y;
-  double    z;
-  double    opcy;
-  double    tmpt;
+  float    x;
+  float    y;
+  float    z;
+  float    opcy;
+  float    tmpt;
 } atom;
 
 
@@ -168,9 +168,9 @@ typedef struct atom {
  *------------------------------------------------------------*/
 typedef struct center_of_mass {
   char name;
-  double x;
-  double y;
-  double z;
+  float x;
+  float y;
+  float z;
 } center_of_mass;
 
 

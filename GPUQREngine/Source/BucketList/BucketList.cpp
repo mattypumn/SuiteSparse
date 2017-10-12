@@ -26,7 +26,7 @@
     next = (Int *) SuiteSparse_free(next); \
     triu = (bool *) SuiteSparse_free(triu); \
     Bundles = (LLBundle *) SuiteSparse_free(Bundles); \
-    gpuVT = (double **) SuiteSparse_free(gpuVT); \
+    gpuVT = (float **) SuiteSparse_free(gpuVT); \
     wsMongoVT = Workspace::destroy(wsMongoVT);
 
 BucketList::BucketList
@@ -63,11 +63,11 @@ BucketList::BucketList
     prev = (Int*) SuiteSparse_calloc(numRowTiles, sizeof(Int));
     triu = (bool*) SuiteSparse_calloc(numRowTiles, sizeof(bool));
     Bundles = (LLBundle*) SuiteSparse_calloc(numRowTiles, sizeof(LLBundle));
-    gpuVT = (double**) SuiteSparse_calloc(numRowTiles, sizeof(double*));
+    gpuVT = (float**) SuiteSparse_calloc(numRowTiles, sizeof(float*));
 
     // malloc wsMongoVT on the GPU
     wsMongoVT = Workspace::allocate (numRowTiles*(TILESIZE+1)*TILESIZE, // GPU
-        sizeof(double), false, false, true, false) ;
+        sizeof(float), false, false, true, false) ;
 
     /* If we failed to allocate memory, return. */
     if(!head || !idleTileCount || !bundleCount || !next || !prev || !triu
@@ -95,7 +95,7 @@ BucketList::BucketList
     /* Initialize VT structure */
     for(int i=0; i<numRowTiles; i++)
     {
-        gpuVT[i] = (double*) wsMongoVT->gpu() + 33*32*i; // base + offset
+        gpuVT[i] = (float*) wsMongoVT->gpu() + 33*32*i; // base + offset
     }
 }
 

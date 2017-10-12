@@ -37,10 +37,10 @@
 
 typedef struct cholmod_gpu_pointers
 {
-    double *h_Lx [CHOLMOD_HOST_SUPERNODE_BUFFERS] ;
-    double *d_Lx [CHOLMOD_DEVICE_STREAMS] ;
-    double *d_C ;
-    double *d_A [CHOLMOD_DEVICE_STREAMS] ;
+    float *h_Lx [CHOLMOD_HOST_SUPERNODE_BUFFERS] ;
+    float *d_Lx [CHOLMOD_DEVICE_STREAMS] ;
+    float *d_C ;
+    float *d_A [CHOLMOD_DEVICE_STREAMS] ;
     void   *d_Ls ;
     void   *d_Map ;
     void   *d_RelativeMap ;

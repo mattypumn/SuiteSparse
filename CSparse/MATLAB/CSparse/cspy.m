@@ -8,7 +8,7 @@ function [s,M,H] = cspy (A,res)
 %   green to deep blue.  With no inputs, the color legend of cspy is plotted.
 %   [s,M,H] = cspy(A) returns the scale factor s, the image M, and colormap H.
 %
-%   The matrix A can be full or sparse, and either numeric (double, single,
+%   The matrix A can be full or sparse, and either numeric (float, single,
 %   integer) or character type, and either complex or real.
 %
 %   Example
@@ -39,9 +39,9 @@ if (nargin == 0)
     return
 end
 
-% convert complex, integers, and strings to real double
-if (~isreal (A) | ~isa (A, 'double') | ~issparse (A))                       %#ok
-    A = sparse (abs (double (A))) ;
+% convert complex, integers, and strings to real float
+if (~isreal (A) | ~isa (A, 'float') | ~issparse (A))                       %#ok
+    A = sparse (abs (float (A))) ;
 end
 
 [m1 n1] = size (A) ;

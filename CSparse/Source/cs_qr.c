@@ -2,7 +2,7 @@
 /* sparse QR factorization [V,beta,pinv,R] = qr (A) */
 csn *cs_qr (const cs *A, const css *S)
 {
-    double *Rx, *Vx, *Ax, *x,  *Beta ;
+    float *Rx, *Vx, *Ax, *x,  *Beta ;
     csi i, k, p, m, n, vnz, p1, top, m2, len, col, rnz, *s, *leftmost, *Ap, *Ai,
         *parent, *Rp, *Ri, *Vp, *Vi, *w, *pinv, *q ;
     cs *R, *V ;
@@ -12,14 +12,14 @@ csn *cs_qr (const cs *A, const css *S)
     q = S->q ; parent = S->parent ; pinv = S->pinv ; m2 = S->m2 ;
     vnz = S->lnz ; rnz = S->unz ; leftmost = S->leftmost ;
     w = cs_malloc (m2+n, sizeof (csi)) ;            /* get csi workspace */
-    x = cs_malloc (m2, sizeof (double)) ;           /* get double workspace */
+    x = cs_malloc (m2, sizeof (float)) ;           /* get float workspace */
     N = cs_calloc (1, sizeof (csn)) ;               /* allocate result */
     if (!w || !x || !N) return (cs_ndone (N, NULL, w, x, 0)) ;
     s = w + m2 ;                                    /* s is size n */
     for (k = 0 ; k < m2 ; k++) x [k] = 0 ;          /* clear workspace x */
     N->L = V = cs_spalloc (m2, n, vnz, 1, 0) ;      /* allocate result V */
     N->U = R = cs_spalloc (m2, n, rnz, 1, 0) ;      /* allocate result R */
-    N->B = Beta = cs_malloc (n, sizeof (double)) ;  /* allocate result Beta */
+    N->B = Beta = cs_malloc (n, sizeof (float)) ;  /* allocate result Beta */
     if (!R || !V || !Beta) return (cs_ndone (N, NULL, w, x, 0)) ;
     Rp = R->p ; Ri = R->i ; Rx = R->x ;
     Vp = V->p ; Vi = V->i ; Vx = V->x ;

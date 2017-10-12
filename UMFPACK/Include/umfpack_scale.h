@@ -9,59 +9,59 @@
 
 int umfpack_di_scale
 (
-    double X [ ],
-    const double B [ ],
+    float X [ ],
+    const float B [ ],
     void *Numeric
 ) ;
 
 SuiteSparse_long umfpack_dl_scale
 (
-    double X [ ],
-    const double B [ ],
+    float X [ ],
+    const float B [ ],
     void *Numeric
 ) ;
 
 int umfpack_zi_scale
 (
-    double Xx [ ],	 double Xz [ ],
-    const double Bx [ ], const double Bz [ ],
+    float Xx [ ],	 float Xz [ ],
+    const float Bx [ ], const float Bz [ ],
     void *Numeric
 ) ;
 
 SuiteSparse_long umfpack_zl_scale
 (
-    double Xx [ ],	 double Xz [ ],
-    const double Bx [ ], const double Bz [ ],
+    float Xx [ ],	 float Xz [ ],
+    const float Bx [ ], const float Bz [ ],
     void *Numeric
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    double *B, *X ;
+    float *B, *X ;
     status = umfpack_di_scale (X, B, Numeric) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    double *B, *X ;
+    float *B, *X ;
     status = umfpack_dl_scale (X, B, Numeric) ;
 
 complex int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    double *Bx, *Bz, *Xx, *Xz ;
+    float *Bx, *Bz, *Xx, *Xz ;
     status = umfpack_zi_scale (Xx, Xz, Bx, Bz, Numeric) ;
 
 complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    double *Bx, *Bz, *Xx, *Xz ;
+    float *Bx, *Bz, *Xx, *Xz ;
     status = umfpack_zl_scale (Xx, Xz, Bx, Bz, Numeric) ;
 
 packed complex Syntax:
@@ -85,21 +85,21 @@ Returns:
 
 Arguments:
 
-    double X [n_row] ;	Output argument.
+    float X [n_row] ;	Output argument.
     or:
-    double Xx [n_row] ;	Output argument, real part.
+    float Xx [n_row] ;	Output argument, real part.
 			Size 2*n_row for packed complex case.
-    double Xz [n_row] ;	Output argument, imaginary part.
+    float Xz [n_row] ;	Output argument, imaginary part.
 
 	The output vector X.  If either Xz or Bz are NULL, the vector
 	X is in packed complex form, with the kth entry in Xx [2*k] and
 	Xx [2*k+1], and likewise for B.
 
-    double B [n_row] ;	Input argument, not modified.
+    float B [n_row] ;	Input argument, not modified.
     or:
-    double Bx [n_row] ;	Input argument, not modified, real part.
+    float Bx [n_row] ;	Input argument, not modified, real part.
 			Size 2*n_row for packed complex case.
-    double Bz [n_row] ;	Input argument, not modified, imaginary part.
+    float Bz [n_row] ;	Input argument, not modified, imaginary part.
 
 	The input vector B.  See above if either Xz or Bz are NULL.
 

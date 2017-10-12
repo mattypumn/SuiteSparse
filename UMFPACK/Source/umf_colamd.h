@@ -221,7 +221,7 @@ typedef struct Colamd_Row_struct
 
 void UMF_colamd_set_defaults	/* sets default parameters */
 (				/* knobs argument is modified on output */
-    double knobs [COLAMD_KNOBS]	/* parameter settings for colamd */
+    float knobs [COLAMD_KNOBS]	/* parameter settings for colamd */
 ) ;
 
 Int UMF_colamd			/* returns (1) if successful, (0) otherwise*/
@@ -231,7 +231,7 @@ Int UMF_colamd			/* returns (1) if successful, (0) otherwise*/
     Int Alen,			/* size of the array A */
     Int A [],			/* row indices of A, of size Alen */
     Int p [],			/* column pointers of A, of size n_col+1 */
-    double knobs [COLAMD_KNOBS],/* parameter settings for colamd */
+    float knobs [COLAMD_KNOBS],/* parameter settings for colamd */
     Int stats [COLAMD_STATS]	/* colamd output statistics and error codes */
     /* ------------------ */
     /* added for UMFPACK: */

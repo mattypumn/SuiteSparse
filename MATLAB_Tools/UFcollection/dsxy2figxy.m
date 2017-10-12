@@ -3,7 +3,7 @@ function varargout = dsxy2figxy(varargin)
 % Transforms [axx axy] or [xypos] from axes hAx (data) coords into coords
 % wrt GCF for placing annotation objects that use figure coords into data
 % space. The annotation objects this can be used for are
-%    arrow, doublearrow, textarrow
+%    arrow, floatarrow, textarrow
 %    ellipses (coordinates must be transformed to [x, y, width, height])
 % Note that line, text, and rectangle anno objects already are placed
 % on a plot using axes coordinates and must be located within an axes.

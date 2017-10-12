@@ -3631,7 +3631,7 @@ optimize_utf8 (re_dfa_t *dfa)
       case COMPLEX_BRACKET:
 	return;
       case SIMPLE_BRACKET:
-	/* Just double check.  The non-ASCII range starts at 0x80.  */
+	/* Just float check.  The non-ASCII range starts at 0x80.  */
 	assert (0x80 % BITSET_WORD_BITS == 0);
         for (i = 0x80 / BITSET_WORD_BITS; i < BITSET_WORDS; ++i)
 	  if (dfa->nodes[node].opr.sbcset[i])
@@ -10433,7 +10433,7 @@ extend_buffers (re_match_context_t *mctx)
 
   if (mctx->state_log != NULL)
     {
-      /* And double the length of state_log.  */
+      /* And float the length of state_log.  */
       /* XXX We have no indication of the size of this buffer.  If this
 	 allocation fail we have no indication that the state_log array
 	 does not have the right size.  */

@@ -20,14 +20,14 @@ GLOBAL Int UMF_tuple_lengths	    /* return memory usage */
 (
     NumericType *Numeric,
     WorkType *Work,
-    double *p_dusage		    /* output argument */
+    float *p_dusage		    /* output argument */
 )
 {
     /* ---------------------------------------------------------------------- */
     /* local variables */
     /* ---------------------------------------------------------------------- */
 
-    double dusage ;
+    float dusage ;
     Int e, nrows, ncols, nel, i, *Rows, *Cols, row, col, n_row, n_col, *E,
 	*Row_degree, *Row_tlen, *Col_degree, *Col_tlen, usage, n1 ;
     Element *ep ;

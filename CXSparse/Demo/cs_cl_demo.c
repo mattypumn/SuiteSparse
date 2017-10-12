@@ -36,15 +36,15 @@ static cs_cl *make_sym (cs_cl *A)
 static void rhs (cs_complex_t *x, cs_complex_t *b, cs_long_t m)
 {
     cs_long_t i ;
-    for (i = 0 ; i < m ; i++) b [i] = 1 + ((double) i) / m ;
+    for (i = 0 ; i < m ; i++) b [i] = 1 + ((float) i) / m ;
     for (i = 0 ; i < m ; i++) x [i] = b [i] ;
 }
 
 /* infinity-norm of x */
-static double norm (cs_complex_t *x, cs_long_t n)
+static float norm (cs_complex_t *x, cs_long_t n)
 {
     cs_long_t i ;
-    double normx = 0 ;
+    float normx = 0 ;
     for (i = 0 ; i < n ; i++) normx = CS_MAX (normx, cabs (x [i])) ;
     return (normx) ;
 }
@@ -61,8 +61,8 @@ static void print_resid (cs_long_t ok, cs_cl *A, cs_complex_t *x, cs_complex_t *
         (cs_cl_norm (A) * norm (x,n) + norm (b,m)))) ;
 }
 
-static double tic (void) { return (clock () / (double) CLOCKS_PER_SEC) ; }
-static double toc (double t) { double s = tic () ; return (CS_MAX (0, s-t)) ; }
+static float tic (void) { return (clock () / (float) CLOCKS_PER_SEC) ; }
+static float toc (float t) { float s = tic () ; return (CS_MAX (0, s-t)) ; }
 
 static void print_order (cs_long_t order)
 {
@@ -76,7 +76,7 @@ static void print_order (cs_long_t order)
 }
 
 /* read a problem from a file; use %g for integers to avoid cs_long_t conflicts */
-problem *get_problem (FILE *f, double tol)
+problem *get_problem (FILE *f, float tol)
 {
     cs_cl *T, *A, *C ;
     cs_long_t sym, m, n, mn, nz1, nz2 ;
@@ -97,11 +97,11 @@ problem *get_problem (FILE *f, double tol)
     Prob->C = C = sym ? make_sym (A) : A ;  /* C = A + triu(A,1)', or C=A */
     if (!C) return (free_problem (Prob)) ;
     printf ("\n--- Matrix: %g-by-%g, nnz: %g (sym: %g: nnz %g), norm: %8.2e\n",
-            (double) m, (double) n, (double) (A->p [n]), (double) sym,
-            (double) (sym ? C->p [n] : 0), cs_cl_norm (C)) ;
-    if (nz1 != nz2) printf ("zero entries dropped: %g\n", (double) (nz1 - nz2));
+            (float) m, (float) n, (float) (A->p [n]), (float) sym,
+            (float) (sym ? C->p [n] : 0), cs_cl_norm (C)) ;
+    if (nz1 != nz2) printf ("zero entries dropped: %g\n", (float) (nz1 - nz2));
     if (nz2 != A->p [n]) printf ("tiny entries dropped: %g\n",
-            (double) (nz2 - A->p [n])) ;
+            (float) (nz2 - A->p [n])) ;
     Prob->b = cs_cl_malloc (mn, sizeof (cs_complex_t)) ;
     Prob->x = cs_cl_malloc (mn, sizeof (cs_complex_t)) ;
     Prob->resid = cs_cl_malloc (mn, sizeof (cs_complex_t)) ;
@@ -125,7 +125,7 @@ cs_long_t demo2 (problem *Prob)
 {
     cs_cl *A, *C ;
     cs_complex_t *b, *x, *resid ;
-    double t, tol ;
+    float t, tol ;
     cs_long_t k, m, n, ok, order, nb, ns, *r, *s, *rr, sprank ;
     cs_cld *D ;
     if (!Prob) return (0) ;
@@ -141,7 +141,7 @@ cs_long_t demo2 (problem *Prob)
         ns += ((r [k+1] == r [k]+1) && (s [k+1] == s [k]+1)) ;
     }
     printf ("blocks: %g singletons: %g structural rank: %g\n",
-        (double) nb, (double) ns, (double) sprank) ;
+        (float) nb, (float) ns, (float) sprank) ;
     cs_cl_dfree (D) ;
     for (order = 0 ; order <= 3 ; order += 3)   /* natural and amd(A'*A) */
     {
@@ -199,7 +199,7 @@ cs_long_t demo3 (problem *Prob)
     cs_cl *A, *C, *W = NULL, *WW, *WT, *E = NULL, *W2 ;
     cs_long_t n, k, *Li, *Lp, *Wi, *Wp, p1, p2, *p = NULL, ok ;
     cs_complex_t *b, *x, *resid, *y = NULL, *Lx, *Wx, s ;
-    double t, t1 ;
+    float t, t1 ;
     cs_cls *S = NULL ;
     cs_cln *N = NULL ;
     if (!Prob || !Prob->sym || Prob->A->n == 0) return (0) ;
@@ -239,7 +239,7 @@ cs_long_t demo3 (problem *Prob)
     {
         p2 = p1 - Lp [k] ;
         Wi [p2] = Li [p1] ;
-        Wx [p2] = s * rand () / ((double) RAND_MAX) ;
+        Wx [p2] = s * rand () / ((float) RAND_MAX) ;
     }
     t = tic () ;
     ok = cs_cl_updown (N->L, +1, W, S->parent) ;   /* update: L*L'+W*W' */

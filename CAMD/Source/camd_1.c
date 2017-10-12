@@ -37,8 +37,8 @@ GLOBAL void CAMD_1
     Int slen,		/* slen >= sum (Len [0..n-1]) + 7n+2,
 			 * ideally slen = 1.2 * sum (Len) + 8n+2 */
     Int S [ ],		/* size slen workspace */
-    double Control [ ],	/* input array of size CAMD_CONTROL */
-    double Info [ ],	/* output array of size CAMD_INFO */
+    float Control [ ],	/* input array of size CAMD_CONTROL */
+    float Info [ ],	/* output array of size CAMD_INFO */
     const Int C [ ]	/* Constraint set of size n */
 )
 {

@@ -203,7 +203,7 @@ int cholmod_rowadd_solve
     /* ---- input ---- */
     size_t k,		/* row/column index to add */
     cholmod_sparse *R,	/* row/column of matrix to factorize (n-by-1) */
-    double bk [2],	/* kth entry of the right-hand-side b */
+    float bk [2],	/* kth entry of the right-hand-side b */
     /* ---- in/out --- */
     cholmod_factor *L,	/* factor to modify */
     cholmod_dense *X,	/* solution to Lx=b (size n-by-1) */
@@ -212,7 +212,7 @@ int cholmod_rowadd_solve
     cholmod_common *Common
 ) ;
 
-int cholmod_l_rowadd_solve (size_t, cholmod_sparse *, double *,
+int cholmod_l_rowadd_solve (size_t, cholmod_sparse *, float *,
     cholmod_factor *, cholmod_dense *, cholmod_dense *, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
@@ -228,7 +228,7 @@ int cholmod_rowadd_mark
     /* ---- input ---- */
     size_t k,		/* row/column index to add */
     cholmod_sparse *R,	/* row/column of matrix to factorize (n-by-1) */
-    double bk [2],	/* kth entry of the right hand side, b */
+    float bk [2],	/* kth entry of the right hand side, b */
     int *colmark,	/* int array of size n.  See cholmod_updown.c */
     /* ---- in/out --- */
     cholmod_factor *L,	/* factor to modify */
@@ -238,7 +238,7 @@ int cholmod_rowadd_mark
     cholmod_common *Common
 ) ;
 
-int cholmod_l_rowadd_mark (size_t, cholmod_sparse *, double *,
+int cholmod_l_rowadd_mark (size_t, cholmod_sparse *, float *,
     SuiteSparse_long *, cholmod_factor *, cholmod_dense *, cholmod_dense *,
     cholmod_common *) ;
 
@@ -282,7 +282,7 @@ int cholmod_rowdel_solve
     /* ---- input ---- */
     size_t k,		/* row/column index to delete */
     cholmod_sparse *R,	/* NULL, or the nonzero pattern of kth row of L */
-    double yk [2],	/* kth entry in the solution to A*y=b */
+    float yk [2],	/* kth entry in the solution to A*y=b */
     /* ---- in/out --- */
     cholmod_factor *L,	/* factor to modify */
     cholmod_dense *X,	/* solution to Lx=b (size n-by-1) */
@@ -291,7 +291,7 @@ int cholmod_rowdel_solve
     cholmod_common *Common
 ) ;
 
-int cholmod_l_rowdel_solve (size_t, cholmod_sparse *, double *,
+int cholmod_l_rowdel_solve (size_t, cholmod_sparse *, float *,
     cholmod_factor *, cholmod_dense *, cholmod_dense *, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
@@ -307,7 +307,7 @@ int cholmod_rowdel_mark
     /* ---- input ---- */
     size_t k,		/* row/column index to delete */
     cholmod_sparse *R,	/* NULL, or the nonzero pattern of kth row of L */
-    double yk [2],	/* kth entry in the solution to A*y=b */
+    float yk [2],	/* kth entry in the solution to A*y=b */
     int *colmark,	/* int array of size n.  See cholmod_updown.c */
     /* ---- in/out --- */
     cholmod_factor *L,	/* factor to modify */
@@ -317,7 +317,7 @@ int cholmod_rowdel_mark
     cholmod_common *Common
 ) ;
 
-int cholmod_l_rowdel_mark (size_t, cholmod_sparse *, double *,
+int cholmod_l_rowdel_mark (size_t, cholmod_sparse *, float *,
     SuiteSparse_long *, cholmod_factor *, cholmod_dense *, cholmod_dense *,
     cholmod_common *) ;
 

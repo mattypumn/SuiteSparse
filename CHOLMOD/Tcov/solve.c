@@ -32,9 +32,9 @@ EXTERN int cholmod_dump, cholmod_l_dump ;
 
 /* Test solve(A) with various control parameters */
 
-double test_solver (cholmod_sparse *A)
+float test_solver (cholmod_sparse *A)
 {
-    double err, maxerr = 0 ;
+    float err, maxerr = 0 ;
     int save ;
 
     for (cm->postorder = 0 ; cm->postorder <= 1 ; cm->postorder++)
@@ -171,9 +171,9 @@ cm->default_nesdis = FALSE ;
  * it is used both normally and in the memory tests.
  */
 
-double solve (cholmod_sparse *A)
+float solve (cholmod_sparse *A)
 {
-    double r, enorm, snorm, maxerr = 0, gnorm, anorm, bnorm, xnorm, norm, rcond;
+    float r, enorm, snorm, maxerr = 0, gnorm, anorm, bnorm, xnorm, norm, rcond;
     cholmod_factor *L, *Lcopy, *L2 ;
     cholmod_sparse *Lmat, *Lo, *D, *Up, *S, *LD, *LDL, *E, *I, *C, *CC, *Ct,
 	*Ssym, *Cperm, *C2, *S2, *H, *F, *Lo1, *Aboth, *Bset ;
@@ -181,8 +181,8 @@ double solve (cholmod_sparse *A)
 	*A3, *C3, *E3 ;
     cholmod_dense *B2, *B2complex, *B2zomplex, *B2real, *Ywork, *Ework ;
     cholmod_sparse *AFt, *AF, *G, *RowK, *Bsparse, *Xsparse ;
-    double *Cx ;
-    double *B2x ;
+    float *Cx ;
+    float *B2x ;
     Int *P, *cset, *fset, *Parent, *Post, *RowCount, *ColCount,
 	     *First, *Level, *rcount, *ccount, *Lp, *Li ;
     Int p, i, j, k, n, nrhs, save, save2, csize, rank, nrow, ncol, is_ll,
@@ -226,7 +226,7 @@ double solve (cholmod_sparse *A)
     B2 = CHOLMOD(copy_dense) (B, cm) ;
     if (B2 != NULL)
     {
-        B2x = (double *) B2->x ;
+        B2x = (float *) B2->x ;
         B2x [0] = 42 ;
     }
 
@@ -326,12 +326,12 @@ double solve (cholmod_sparse *A)
 		&& Bzomplex->xtype == CHOLMOD_ZOMPLEX)
 	{
 	    /* add an arbitrary imaginary part */
-	    double *Bz = Bzomplex->z ;
+	    float *Bz = Bzomplex->z ;
 	    for (j = 0 ; j < NRHS ; j++)
 	    {
 		for (i = 0 ; i < n ; i++)
 		{
-		    Bz [i+j*n] = (double) (i+j*n) ;
+		    Bz [i+j*n] = (float) (i+j*n) ;
 		}
 	    }
 	}
@@ -343,7 +343,7 @@ double solve (cholmod_sparse *A)
         B2zomplex = CHOLMOD(copy_dense) (Bzomplex, cm) ;
         if (B2zomplex != NULL)
         {
-            B2x = (double *) B2zomplex->x ;
+            B2x = (float *) B2zomplex->x ;
             B2x [0] = 99 ;
         }
 
@@ -370,7 +370,7 @@ double solve (cholmod_sparse *A)
         B2complex = CHOLMOD(copy_dense) (Bcomplex, cm) ;
         if (B2complex != NULL)
         {
-            B2x = (double *) B2complex->x ;
+            B2x = (float *) B2complex->x ;
             B2x [0] = 777 ;
         }
 
@@ -397,7 +397,7 @@ double solve (cholmod_sparse *A)
         B2real = CHOLMOD(copy_dense) (Breal, cm) ;
         if (B2real != NULL)
         {
-            B2x = (double *) B2real->x ;
+            B2x = (float *) B2real->x ;
             B2x [0] = 1234 ;
         }
 
@@ -663,8 +663,8 @@ double solve (cholmod_sparse *A)
 	if (!is_ll && D != NULL && Lo != NULL)
 	{
 	    /* factorization is LDL' = Lo*D*Up */
-	    double *Dx = D->x ;
-	    double *Lx = Lo->x ;
+	    float *Dx = D->x ;
+	    float *Lx = Lo->x ;
 	    Lp = Lo->p ;
 	    for (k = 0 ; k < n ; k++)
 	    {
@@ -940,7 +940,7 @@ double solve (cholmod_sparse *A)
         cholmod_sparse *Xset ;
         cholmod_dense *X2 ;
         Int *Bseti, *Bsetp, *Xseti ;
-        double *X2x, *X1x, *Bx, *Bz ;
+        float *X2x, *X1x, *Bx, *Bz ;
 
         Xset = NULL ;
         X2 = NULL ;
@@ -1458,8 +1458,8 @@ double solve (cholmod_sparse *A)
 
     if (A->stype == 0)
     {
-	double *Rx, *Rz, *Xx, *Xz ;
-	double beta [2] ;
+	float *Rx, *Rz, *Xx, *Xz ;
+	float beta [2] ;
 	beta [0] = 3.14159 ;
 	beta [1] = 0 ;
 	L = CHOLMOD(analyze) (A, cm) ;

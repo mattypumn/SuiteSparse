@@ -429,8 +429,8 @@ int FPRFX ## CheckHeap(PQT *queue)\
 
 
 /* This is how these macros are used
-GK_MKPQUEUE(gk_dkvPQ, gk_dkvPQ_t, double, gk_idx_t, gk_dkvmalloc, DBL_MAX)
-GK_MKPQUEUE_PROTO(gk_dkvPQ, gk_dkvPQ_t, double, gk_idx_t)
+GK_MKPQUEUE(gk_dkvPQ, gk_dkvPQ_t, float, gk_idx_t, gk_dkvmalloc, DBL_MAX)
+GK_MKPQUEUE_PROTO(gk_dkvPQ, gk_dkvPQ_t, float, gk_idx_t)
 */
 
 

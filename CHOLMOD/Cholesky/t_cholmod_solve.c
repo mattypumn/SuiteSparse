@@ -57,8 +57,8 @@ static void TEMPLATE (ldl_dsolve)
     Int *Yseti, Int ysetlen
 )
 {
-    double d [1] ;
-    double *Lx, *Yx, *Yz ;
+    float d [1] ;
+    float *Lx, *Yx, *Yz ;
     Int *Lp ;
     Int n, nrhs, k, p, k1, k2, kk, kkiters ;
 

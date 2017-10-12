@@ -41,7 +41,7 @@ cholmod_sparse *CHOLMOD(vertcat)
     cholmod_common *Common
 )
 {
-    double *Ax, *Bx, *Cx ;
+    float *Ax, *Bx, *Cx ;
     Int *Ap, *Ai, *Anz, *Bp, *Bi, *Bnz, *Cp, *Ci ;
     cholmod_sparse *C, *A2, *B2 ;
     Int apacked, bpacked, anrow, bnrow, ncol, nrow, anz, bnz, nz, j, p, pend,

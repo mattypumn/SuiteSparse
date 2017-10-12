@@ -29,7 +29,7 @@ public:
     bool memory_ok;          // A flag indicating whether the object
                              // was constructed properly
 
-    double *gpuF;            // The gpu front pointer
+    float *gpuF;            // The gpu front pointer
 
     Int *head;               // The head idle tile index in the bucket
     Int *next;               // The next idle tile index in the bucket
@@ -58,7 +58,7 @@ public:
     Int numBundles;          // Total # of bundles
 
     Workspace *wsMongoVT;    // The VT blocks this bucket list scheduler owns
-    double **gpuVT;          // Array of available VT slots within the VT struct
+    float **gpuVT;          // Array of available VT slots within the VT struct
     int VThead;              // Index of the first available entry in VTlist
 
     // Constructors
@@ -77,8 +77,8 @@ public:
     #endif
 
     // VT management functions
-    double *allocateVT();
-    double *freeVT(double *gpuVT);
+    float *allocateVT();
+    float *freeVT(float *gpuVT);
 
     bool IsDone()
     {

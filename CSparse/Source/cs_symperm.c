@@ -3,7 +3,7 @@
 cs *cs_symperm (const cs *A, const csi *pinv, csi values)
 {
     csi i, j, p, q, i2, j2, n, *Ap, *Ai, *Cp, *Ci, *w ;
-    double *Cx, *Ax ;
+    float *Cx, *Ax ;
     cs *C ;
     if (!CS_CSC (A)) return (NULL) ;                    /* check inputs */
     n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;

@@ -58,7 +58,7 @@ static void cs_unmatched (csi m, const csi *wi, csi *p, csi *rr, csi set)
 }
 
 /* return 1 if row i is in R2 */
-static csi cs_rprune (csi i, csi j, double aij, void *other)
+static csi cs_rprune (csi i, csi j, float aij, void *other)
 {
     csi *rr = (csi *) other ;
     return (i >= rr [1] && i < rr [2]) ;

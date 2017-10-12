@@ -27,7 +27,7 @@ static Int analyze_worker       /* returns KLU_OK or < 0 if error */
     /* output only, not defined on input */
     Int P [ ],          /* size n */
     Int Q [ ],          /* size n */
-    double Lnz [ ],     /* size n, but only Lnz [0..nblocks-1] is used */
+    float Lnz [ ],     /* size n, but only Lnz [0..nblocks-1] is used */
 
     /* workspace, not defined on input or output */
     Int Pblk [ ],       /* size maxblock */
@@ -41,7 +41,7 @@ static Int analyze_worker       /* returns KLU_OK or < 0 if error */
     KLU_common *Common
 )
 {
-    double amd_Info [AMD_INFO], lnz, lnz1, flops, flops1 ;
+    float amd_Info [AMD_INFO], lnz, lnz1, flops, flops1 ;
     Int k1, k2, nk, k, block, oldcol, pend, newcol, result, pc, p, newrow,
         maxnz, nzoff, cstats [COLAMD_STATS], ok, err = KLU_INVALID ;
 
@@ -265,9 +265,9 @@ static KLU_symbolic *order_and_analyze  /* returns NULL if error, or a valid
     KLU_common *Common
 )
 {
-    double work ;
+    float work ;
     KLU_symbolic *Symbolic ;
-    double *Lnz ;
+    float *Lnz ;
     Int *Qbtf, *Cp, *Ci, *Pinv, *Pblk, *Pbtf, *P, *Q, *R ;
     Int nblocks, nz, block, maxblock, k1, k2, nk, do_btf, ordering, k, Cilen,
         *Work ;

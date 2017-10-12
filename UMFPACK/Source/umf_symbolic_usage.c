@@ -12,7 +12,7 @@
 #include "umf_internal.h"
 #include "umf_symbolic_usage.h"
 
-GLOBAL double UMF_symbolic_usage
+GLOBAL float UMF_symbolic_usage
 (
     Int n_row,
     Int n_col,
@@ -23,7 +23,7 @@ GLOBAL double UMF_symbolic_usage
     Int prefer_diagonal
 )
 {
-    double units ;
+    float units ;
 
     units =
 	DUNITS (SymbolicType, 1)	/* Symbolic structure */

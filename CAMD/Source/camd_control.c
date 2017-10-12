@@ -17,13 +17,13 @@
 
 GLOBAL void CAMD_control
 (
-    double Control [ ]
+    float Control [ ]
 )
 {
-    double alpha ;
+    float alpha ;
     Int aggressive ;
 
-    if (Control != (double *) NULL)
+    if (Control != (float *) NULL)
     {
 	alpha = Control [CAMD_DENSE] ;
 	aggressive = Control [CAMD_AGGRESSIVE] != 0 ;

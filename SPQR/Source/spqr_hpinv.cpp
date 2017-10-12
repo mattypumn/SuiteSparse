@@ -166,12 +166,12 @@ template <typename Entry> void spqr_hpinv
 
 // =============================================================================
 
-template void spqr_hpinv <double>
+template void spqr_hpinv <float>
 (
     // input
     spqr_symbolic *QRsym,
     // input/output
-    spqr_numeric <double> *QRnum,
+    spqr_numeric <float> *QRnum,
     // workspace
     Long *W              // size QRnum->m
 ) ;

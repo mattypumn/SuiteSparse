@@ -11,57 +11,57 @@ int umfpack_di_report_perm
 (
     int np,
     const int Perm [ ],
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_dl_report_perm
 (
     SuiteSparse_long np,
     const SuiteSparse_long Perm [ ],
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 int umfpack_zi_report_perm
 (
     int np,
     const int Perm [ ],
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_zl_report_perm
 (
     SuiteSparse_long np,
     const SuiteSparse_long Perm [ ],
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     int np, *Perm, status ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     status = umfpack_di_report_perm (np, Perm, Control) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long np, *Perm, status ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     status = umfpack_dl_report_perm (np, Perm, Control) ;
 
 complex int Syntax:
 
     #include "umfpack.h"
     int np, *Perm, status ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     status = umfpack_zi_report_perm (np, Perm, Control) ;
 
 complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long np, *Perm, status ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     status = umfpack_zl_report_perm (np, Perm, Control) ;
 
 Purpose:
@@ -93,9 +93,9 @@ Arguments:
 	and is not an error condition.  If Perm is present, the entries in Perm
 	must range between 0 and np-1, and no duplicates may exist.
 
-    double Control [UMFPACK_CONTROL] ;	Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;	Input argument, not modified.
 
-	If a (double *) NULL pointer is passed, then the default control
+	If a (float *) NULL pointer is passed, then the default control
 	settings are used.  Otherwise, the settings are determined from the
 	Control array.  See umfpack_*_defaults on how to fill the Control
 	array with the default settings.  If Control contains NaN's, the

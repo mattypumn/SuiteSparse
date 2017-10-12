@@ -6,8 +6,8 @@
 GLOBAL Int UMF_report_vector
 (
     Int n,
-    const double Xx [ ],
-    const double Xz [ ],
+    const float Xx [ ],
+    const float Xz [ ],
     Int prl,
     Int user,
     Int scalar

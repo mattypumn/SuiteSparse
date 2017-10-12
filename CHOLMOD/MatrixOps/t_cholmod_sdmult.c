@@ -30,23 +30,23 @@ static void TEMPLATE (cholmod_sdmult)
     /* ---- input ---- */
     cholmod_sparse *A,	/* sparse matrix to multiply */
     int transpose,	/* use A if 0, or A' otherwise */
-    double alpha [2],   /* scale factor for A */
-    double beta [2],    /* scale factor for Y */
+    float alpha [2],   /* scale factor for A */
+    float beta [2],    /* scale factor for Y */
     cholmod_dense *X,	/* dense matrix to multiply */
     /* ---- in/out --- */
     cholmod_dense *Y,	/* resulting dense matrix */
     /* -- workspace -- */
-    double *W		/* size 4*nx if needed, twice that for c/zomplex case */
+    float *W		/* size 4*nx if needed, twice that for c/zomplex case */
 )
 {
 
-    double yx [8], xx [8], ax [2] ;
+    float yx [8], xx [8], ax [2] ;
 #ifdef ZOMPLEX
-    double yz [4], xz [4], az [1] ;
-    double betaz [1], alphaz [1] ;
+    float yz [4], xz [4], az [1] ;
+    float betaz [1], alphaz [1] ;
 #endif
 
-    double *Ax, *Az, *Xx, *Xz, *Yx, *Yz, *w, *Wz ;
+    float *Ax, *Az, *Xx, *Xz, *Yx, *Yz, *w, *Wz ;
     Int *Ap, *Ai, *Anz ;
     size_t nx, ny, dx, dy ;
     Int packed, nrow, ncol, j, k, p, pend, kcol, i ;

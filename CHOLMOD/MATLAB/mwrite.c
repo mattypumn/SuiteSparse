@@ -35,7 +35,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double dummy = 0 ;
+    float dummy = 0 ;
     cholmod_sparse Amatrix, Zmatrix, *A, *Z ;
     cholmod_dense Xmatrix, *X ;
     cholmod_common Common, *cm ;

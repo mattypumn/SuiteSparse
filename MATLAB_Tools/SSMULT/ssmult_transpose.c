@@ -11,7 +11,7 @@
 void ssdump (const mxArray *A)
 {
     Int j, p, m, n, *Ap, *Ai, anz ;
-    double *Ax, *Az ;
+    float *Ax, *Az ;
 
     m = mxGetM (A) ;
     n = mxGetN (A) ;
@@ -43,7 +43,7 @@ mxArray *ssmult_transpose       /* returns C = A' or A.' */
 )
 {
     Int *Cp, *Ci, *Ap, *Ai, *W ;
-    double *Cx, *Cz, *Ax, *Az ;
+    float *Cx, *Cz, *Ax, *Az ;
     mxArray *C ;
     Int p, pend, q, i, j, n, m, anz, cnz ;
     int C_is_complex ;
@@ -73,8 +73,8 @@ mxArray *ssmult_transpose       /* returns C = A' or A.' */
     mxFree (mxGetPi (C)) ;
     Cp = mxMalloc ((m+1) * sizeof (Int)) ;
     Ci = mxMalloc (cnz * sizeof (Int)) ;
-    Cx = mxMalloc (cnz * sizeof (double)) ;
-    Cz = C_is_complex ? mxMalloc (cnz * sizeof (double)) : NULL ;
+    Cx = mxMalloc (cnz * sizeof (float)) ;
+    Cz = C_is_complex ? mxMalloc (cnz * sizeof (float)) : NULL ;
     mxSetJc (C, (mwIndex *) Cp) ;
     mxSetIr (C, (mwIndex *) Ci) ;
     mxSetPr (C, Cx) ;

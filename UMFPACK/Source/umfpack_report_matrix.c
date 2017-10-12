@@ -20,12 +20,12 @@ GLOBAL Int UMFPACK_report_matrix
     Int n_col,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
     Int col_form,		/* 1: column form, 0: row form */
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 )
 {
     Entry a ;
@@ -97,7 +97,7 @@ GLOBAL Int UMFPACK_report_matrix
 	return (UMFPACK_ERROR_argument_missing) ;
     }
 
-    do_values = Ax != (double *) NULL ;
+    do_values = Ax != (float *) NULL ;
 
     PRINTF4 (("\n")) ;
 

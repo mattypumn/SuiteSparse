@@ -14,8 +14,8 @@ int umfpack_di_report_triplet
     int nz,
     const int Ti [ ],
     const int Tj [ ],
-    const double Tx [ ],
-    const double Control [UMFPACK_CONTROL]
+    const float Tx [ ],
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_dl_report_triplet
@@ -25,8 +25,8 @@ SuiteSparse_long umfpack_dl_report_triplet
     SuiteSparse_long nz,
     const SuiteSparse_long Ti [ ],
     const SuiteSparse_long Tj [ ],
-    const double Tx [ ],
-    const double Control [UMFPACK_CONTROL]
+    const float Tx [ ],
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 int umfpack_zi_report_triplet
@@ -36,8 +36,8 @@ int umfpack_zi_report_triplet
     int nz,
     const int Ti [ ],
     const int Tj [ ],
-    const double Tx [ ], const double Tz [ ],
-    const double Control [UMFPACK_CONTROL]
+    const float Tx [ ], const float Tz [ ],
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_zl_report_triplet
@@ -47,30 +47,30 @@ SuiteSparse_long umfpack_zl_report_triplet
     SuiteSparse_long nz,
     const SuiteSparse_long Ti [ ],
     const SuiteSparse_long Tj [ ],
-    const double Tx [ ], const double Tz [ ],
-    const double Control [UMFPACK_CONTROL]
+    const float Tx [ ], const float Tz [ ],
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     int n_row, n_col, nz, *Ti, *Tj, status ;
-    double *Tx, Control [UMFPACK_CONTROL] ;
+    float *Tx, Control [UMFPACK_CONTROL] ;
     status = umfpack_di_report_triplet (n_row, n_col, nz, Ti, Tj, Tx, Control) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long n_row, n_col, nz, *Ti, *Tj, status ;
-    double *Tx, Control [UMFPACK_CONTROL] ;
+    float *Tx, Control [UMFPACK_CONTROL] ;
     status = umfpack_dl_report_triplet (n_row, n_col, nz, Ti, Tj, Tx, Control) ;
 
 complex int Syntax:
 
     #include "umfpack.h"
     int n_row, n_col, nz, *Ti, *Tj, status ;
-    double *Tx, *Tz, Control [UMFPACK_CONTROL] ;
+    float *Tx, *Tz, Control [UMFPACK_CONTROL] ;
     status = umfpack_zi_report_triplet (n_row, n_col, nz, Ti, Tj, Tx, Tz,
 	Control) ;
 
@@ -78,7 +78,7 @@ complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long n_row, n_col, nz, *Ti, *Tj, status ;
-    double *Tx, *Tz, Control [UMFPACK_CONTROL] ;
+    float *Tx, *Tz, Control [UMFPACK_CONTROL] ;
     status = umfpack_zl_report_triplet (n_row, n_col, nz, Ti, Tj, Tx, Tz,
 	Control) ;
 
@@ -116,9 +116,9 @@ Arguments:
 
     Int Ti [nz] ;	Input argument, not modified.
     Int Tj [nz] ;	Input argument, not modified.
-    double Tx [nz] ;	Input argument, not modified.
+    float Tx [nz] ;	Input argument, not modified.
 			Size 2*nz for packed complex case.
-    double Tz [nz] ;	Input argument, not modified, for complex versions.
+    float Tz [nz] ;	Input argument, not modified, for complex versions.
 
 	Ti, Tj, Tx (and Tz for complex versions) hold the "triplet" form of a
 	sparse matrix.  The kth nonzero entry is in row i = Ti [k], column
@@ -127,16 +127,16 @@ Arguments:
 	column indices i and j must be in the range 0 to n_row-1 or 0 to
 	n_col-1, respectively.  Duplicate entries may be present.  The
 	"triplets" may be in any order.  Tx and Tz are optional; if Tx is
-	not present ((double *) NULL), then the numerical values are
+	not present ((float *) NULL), then the numerical values are
 	not printed.
 
 	If Tx is present and Tz is NULL, then both real
 	and imaginary parts are contained in Tx[0..2*nz-1], with Tx[2*k]
 	and Tx[2*k+1] being the real and imaginary part of the kth entry.
 
-    double Control [UMFPACK_CONTROL] ;	Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;	Input argument, not modified.
 
-	If a (double *) NULL pointer is passed, then the default control
+	If a (float *) NULL pointer is passed, then the default control
 	settings are used.  Otherwise, the settings are determined from the
 	Control array.  See umfpack_*_defaults on how to fill the Control
 	array with the default settings.  If Control contains NaN's, the

@@ -29,7 +29,7 @@ void *Workspace::cpu_malloc(size_t nitems, size_t size_of_item, bool pageLocked)
         size_t requestSize = nitems * size_of_item;
 
         // check for integer overflow
-        if (requestSize != ((double) nitems) * size_of_item)
+        if (requestSize != ((float) nitems) * size_of_item)
         {
             return (NULL) ;     // size_t overflow
         }
@@ -72,7 +72,7 @@ void *Workspace::cpu_calloc(size_t nitems, size_t size_of_item, bool pageLocked)
         size_t requestSize = nitems * size_of_item;
 
         // check for integer overflow
-        if (requestSize != ((double) nitems) * size_of_item)
+        if (requestSize != ((float) nitems) * size_of_item)
         {
             return (NULL) ;     // size_t overflow
         }

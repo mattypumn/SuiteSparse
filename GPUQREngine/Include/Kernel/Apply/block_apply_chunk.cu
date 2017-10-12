@@ -194,13 +194,13 @@
     //--------------------------------------------------------------------------
 
     // C bitty block is no larger than the A bitty block, in both dimensions.
-    double rbit [ABITTYROWS][ABITTYCOLS] ;
-    double rrow [ABITTYROWS] ;
-    double rcol [ABITTYCOLS] ;
+    float rbit [ABITTYROWS][ABITTYCOLS] ;
+    float rrow [ABITTYROWS] ;
+    float rcol [ABITTYCOLS] ;
 
     #if (CBITTYCOLS == ABITTYCOLS)
         // the A bitty block is too small to hold the A buffer
-        double abuffer [NACHUNKS] ;
+        float abuffer [NACHUNKS] ;
         #define rbitA(i) abuffer [i]
     #else
         // use the last column of the A bitty block for the A buffer

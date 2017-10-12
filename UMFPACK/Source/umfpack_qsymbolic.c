@@ -11,7 +11,7 @@
     User-callable.  Performs a symbolic factorization.
     See umfpack_qsymbolic.h and umfpack_symbolic.h for details.
 
-    Dynamic memory usage:  about (3.4nz + 8n + n) integers and n double's as
+    Dynamic memory usage:  about (3.4nz + 8n + n) integers and n float's as
     workspace (via UMF_malloc, for a square matrix).  All of it is free'd via
     UMF_free if an error occurs.  If successful, the Symbolic object contains
     12 to 14 objects allocated by UMF_malloc, with a total size of no more
@@ -44,7 +44,7 @@ typedef struct	/* SWType */
     Int *InvRperm1 ;	    /* size n_row */
     Int *Si ;		    /* size nz */
     Int *Sp ;		    /* size n_col + 1 */
-    double *Rs ;	    /* size n_row */
+    float *Rs ;	    /* size n_row */
 
 } SWType ;
 
@@ -66,7 +66,7 @@ PRIVATE void error
      4 * DUNITS (Int, n_row) + \
      4 * DUNITS (Int, n_col) + \
      2 * DUNITS (Int, n_col + 1) + \
-     DUNITS (double, n_row))
+     DUNITS (float, n_row))
 
 /* required size of Ci for code that calls UMF_transpose and UMF_analyze below*/
 #define UMF_ANALYZE_CLEN(nz,n_row,n_col,nn) \
@@ -160,7 +160,7 @@ PRIVATE int do_amd_1
         Int *,          /* size ncol, fill-reducing permutation */
         /* input/output */
         void *,         /* user_params (ignored by UMFPACK) */
-        double *        /* user_info[0..2], optional output for symmetric case.
+        float *        /* user_info[0..2], optional output for symmetric case.
                            user_info[0]: max column count for L=chol(P(A+A')P')
                            user_info[1]: nnz (L)
                            user_info[2]: flop count for chol, if A real */
@@ -169,8 +169,8 @@ PRIVATE int do_amd_1
 
     Int *ordering_used,
 
-    double amd_Control [ ],	/* input array of size AMD_CONTROL */
-    double amd_Info [ ] 	/* output array of size AMD_INFO */
+    float amd_Control [ ],	/* input array of size AMD_CONTROL */
+    float amd_Info [ ] 	/* output array of size AMD_INFO */
 )
 {
     Int i, j, k, p, pfree, iwlen, pj, p1, p2, pj2, anz, *Iw, *Pe, *Nv, *Head,
@@ -345,7 +345,7 @@ PRIVATE int do_amd_1
     {
 
         /* use the user-provided symmetric ordering, or umf_cholmod */
-        double user_info [3], dmax, lnz, flops ;
+        float user_info [3], dmax, lnz, flops ;
         int ok ;
         user_info [0] = EMPTY ;
         user_info [1] = EMPTY ;
@@ -427,10 +427,10 @@ PRIVATE int do_amd
     Int Sdeg [ ],		/* degree of A+A', from AMD_aat */
     Int Clen,			/* size of Ci */
     Int Ci [ ],			/* size Clen workspace */
-    double amd_Control [ ],	/* AMD control parameters */
-    double amd_Info [ ],	/* AMD info */
+    float amd_Control [ ],	/* AMD control parameters */
+    float amd_Info [ ],	/* AMD info */
     SymbolicType *Symbolic,	/* Symbolic object */
-    double Info [ ],		/* UMFPACK info */
+    float Info [ ],		/* UMFPACK info */
     Int ordering_option,
     Int print_level,
 
@@ -447,7 +447,7 @@ PRIVATE int do_amd
         Int *,          /* size ncol, fill-reducing permutation */
         /* input/output */
         void *,         /* user_params (ignored by UMFPACK) */
-        double *        /* user_info[0..2], optional output for symmetric case.
+        float *        /* user_info[0..2], optional output for symmetric case.
                            user_info[0]: max column count for L=chol(P(A+A')P')
                            user_info[1]: nnz (L)
                            user_info[2]: flop count for chol, if A real */
@@ -504,9 +504,9 @@ PRIVATE Int prune_singletons
     Int n_col,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
     Int Cperm1 [ ],
     Int InvRperm1 [ ],
@@ -524,7 +524,7 @@ PRIVATE Int prune_singletons
 #endif
 
     nzdiag = 0 ;
-    do_nzdiag = (Ax != (double *) NULL) ;
+    do_nzdiag = (Ax != (float *) NULL) ;
 
 #ifndef NDEBUG
     DEBUGm4 (("Prune : S = A (Cperm1 (n1+1:end), Rperm1 (n1+1:end))\n")) ;
@@ -663,9 +663,9 @@ PRIVATE Int symbolic_analysis
     Int n_col,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
 
     /* user-provided ordering (may be NULL) */
@@ -684,7 +684,7 @@ PRIVATE Int symbolic_analysis
         Int *,          /* size ncol, fill-reducing permutation */
         /* input/output */
         void *,         /* user_params (ignored by UMFPACK) */
-        double *        /* user_info[0..2], optional output for symmetric case.
+        float *        /* user_info[0..2], optional output for symmetric case.
                            user_info[0]: max column count for L=chol(P(A+A')P')
                            user_info[1]: nnz (L)
                            user_info[2]: flop count for chol, if A real */
@@ -692,8 +692,8 @@ PRIVATE Int symbolic_analysis
     void *user_params,  /* passed to user_ordering function */
 
     void **SymbolicHandle,
-    const double Control [UMFPACK_CONTROL],
-    double User_Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float User_Info [UMFPACK_INFO]
 )
 {
 
@@ -701,12 +701,12 @@ PRIVATE Int symbolic_analysis
     /* local variables */
     /* ---------------------------------------------------------------------- */
 
-    double knobs [COLAMD_KNOBS], flops, f, r, c, force_fixQ,
+    float knobs [COLAMD_KNOBS], flops, f, r, c, force_fixQ,
 	Info2 [UMFPACK_INFO], drow, dcol, dtail_usage, dlf, duf, dmax_usage,
 	dhead_usage, dlnz, dunz, dmaxfrsize, dClen, dClen_analyze, sym,
 	amd_Info [AMD_INFO], dClen_amd, dr, dc, cr, cc, cp,
 	amd_Control [AMD_CONTROL], stats [2] ;
-    double *Info ;
+    float *Info ;
     Int i, nz, j, newj, status, f1, f2, maxnrows, maxncols, nfr, col,
 	nchains, maxrows, maxcols, p, nb, nn, *Chain_start, *Chain_maxrows,
 	*Chain_maxcols, *Front_npivcol, *Ci, Clen, colamd_stats [COLAMD_STATS],
@@ -787,7 +787,7 @@ PRIVATE Int symbolic_analysis
     DEBUG0 (("UMFPACK_qsymbolic: nb = "ID" aggressive = "ID"\n", nb,
 	aggressive)) ;
 
-    if (User_Info != (double *) NULL)
+    if (User_Info != (float *) NULL)
     {
 	/* return Info in user's array */
 	Info = User_Info ;
@@ -809,11 +809,11 @@ PRIVATE Int symbolic_analysis
     Info [UMFPACK_STATUS] = UMFPACK_OK ;
     Info [UMFPACK_NROW] = n_row ;
     Info [UMFPACK_NCOL] = n_col ;
-    Info [UMFPACK_SIZE_OF_UNIT] = (double) (sizeof (Unit)) ;
-    Info [UMFPACK_SIZE_OF_INT] = (double) (sizeof (int)) ;
-    Info [UMFPACK_SIZE_OF_LONG] = (double) (sizeof (SuiteSparse_long)) ;
-    Info [UMFPACK_SIZE_OF_POINTER] = (double) (sizeof (void *)) ;
-    Info [UMFPACK_SIZE_OF_ENTRY] = (double) (sizeof (Entry)) ;
+    Info [UMFPACK_SIZE_OF_UNIT] = (float) (sizeof (Unit)) ;
+    Info [UMFPACK_SIZE_OF_INT] = (float) (sizeof (int)) ;
+    Info [UMFPACK_SIZE_OF_LONG] = (float) (sizeof (SuiteSparse_long)) ;
+    Info [UMFPACK_SIZE_OF_POINTER] = (float) (sizeof (void *)) ;
+    Info [UMFPACK_SIZE_OF_ENTRY] = (float) (sizeof (Entry)) ;
     Info [UMFPACK_SYMBOLIC_DEFRAG] = 0 ;
     Info [UMFPACK_ORDERING_USED] = EMPTY ;
 
@@ -886,18 +886,18 @@ PRIVATE Int symbolic_analysis
     /* This is about 2.2*nz + 9*n_col + 6*n_row, or nz/5 + 13*n_col + 6*n_row,
      * whichever is bigger.  For square matrices, it works out to
      * 2.2nz + 15n, or nz/5 + 19n, whichever is bigger (typically 2.2nz+15n). */
-    dClen = UMF_COLAMD_RECOMMENDED ((double) nz, (double) n_row,
-	(double) n_col) ;
+    dClen = UMF_COLAMD_RECOMMENDED ((float) nz, (float) n_row,
+	(float) n_col) ;
 
     /* This is defined above, as max (nz,n_col) + 3*nn+1 + 2*n_col, where
      * nn = max (n_row,n_col).  It is always smaller than the space required
      * for colamd or amd. */
-    dClen_analyze = UMF_ANALYZE_CLEN ((double) nz, (double) n_row,
-	(double) n_col, (double) nn) ;
+    dClen_analyze = UMF_ANALYZE_CLEN ((float) nz, (float) n_row,
+	(float) n_col, (float) nn) ;
     dClen = MAX (dClen, dClen_analyze) ;
 
     /* The space for AMD can be larger than what's required for colamd: */
-    dClen_amd = 2.4 * (double) nz + 8 * (double) n_inner + 1 ;
+    dClen_amd = 2.4 * (float) nz + 8 * (float) n_inner + 1 ;
 
     dClen = MAX (dClen, dClen_amd) ;
 
@@ -1021,7 +1021,7 @@ PRIVATE Int symbolic_analysis
      * This space will be free'd when this routine finishes.
      *
      * Total space thus far is about 3.4nz + 12n integers.
-     * For the double precision, 32-bit integer version, the user's matrix
+     * For the float precision, 32-bit integer version, the user's matrix
      * requires an equivalent space of 3*nz + n integers.  So this space is just
      * slightly larger than the user's input matrix (including the numerical
      * values themselves).
@@ -1049,7 +1049,7 @@ PRIVATE Int symbolic_analysis
     SW->InFront	      = (Int *) UMF_malloc (n_row, sizeof (Int)) ;
 
     /* this is allocated last, and free'd first */
-    SW->Rs	      = (double *) NULL ;	/* will be n_row double's */
+    SW->Rs	      = (float *) NULL ;	/* will be n_row float's */
 
     Ci	       = SW->Ci ;
     Fr_npivcol = SW->Front_npivcol ;
@@ -1181,11 +1181,11 @@ PRIVATE Int symbolic_analysis
 	    /* need to sort the columns of S first */
 	    Rp = Ci ;
 	    Ri = Ci + (n_row) + 1 ;
-	    (void) UMF_transpose (n2, n2, Sp, Si, (double *) NULL,
+	    (void) UMF_transpose (n2, n2, Sp, Si, (float *) NULL,
 		(Int *) NULL, (Int *) NULL, 0,
-		Rp, Ri, (double *) NULL, Wq, FALSE
+		Rp, Ri, (float *) NULL, Wq, FALSE
 #ifdef COMPLEX
-		, (double *) NULL, (double *) NULL, FALSE
+		, (float *) NULL, (float *) NULL, FALSE
 #endif
 		) ;
 	}
@@ -1357,9 +1357,9 @@ PRIVATE Int symbolic_analysis
 	 * pointers. */
 
 	(void) prune_singletons (n1, n_col, Ap, Ai,
-	    (double *) NULL,
+	    (float *) NULL,
 #ifdef COMPLEX
-	    (double *) NULL,
+	    (float *) NULL,
 #endif
 	    Cperm1, InvRperm1, Ci, Cperm_init
 #ifndef NDEBUG
@@ -1383,7 +1383,7 @@ PRIVATE Int symbolic_analysis
             /* use the user-provided column ordering */
             /* -------------------------------------------------------------- */
 
-            double user_info [3] ;    /* not needed */
+            float user_info [3] ;    /* not needed */
             Int *Qinv = Fr_npivcol ;  /* use Fr_npivcol as workspace for Qinv */
             Int *QQ = Fr_nrows ;      /* use Fr_nrows as workspace for QQ */
 
@@ -1559,9 +1559,9 @@ PRIVATE Int symbolic_analysis
 	/* S = column form submatrix after removing singletons and applying
 	 * initial column ordering (includes singleton ordering) */
 	(void) prune_singletons (n1, n_col, Ap, Ai,
-	    (double *) NULL,
+	    (float *) NULL,
 #ifdef COMPLEX
-	    (double *) NULL,
+	    (float *) NULL,
 #endif
 	    Cperm_init, InvRperm1, Si, Sp
 #ifndef NDEBUG
@@ -1676,10 +1676,10 @@ PRIVATE Int symbolic_analysis
 	ASSERT (Clen2 >= n_col) ;
 
 	(void) UMF_transpose (n_row - n1, n_col - n1 - nempty_col,
-	    Sp, Si, (double *) NULL,
-	    P, (Int *) NULL, 0, Bp, Bi, (double *) NULL, W, FALSE
+	    Sp, Si, (float *) NULL,
+	    P, (Int *) NULL, 0, Bp, Bi, (float *) NULL, W, FALSE
 #ifdef COMPLEX
-	    , (double *) NULL, (double *) NULL, FALSE
+	    , (float *) NULL, (float *) NULL, FALSE
 #endif
 	    ) ;
 
@@ -1761,14 +1761,14 @@ PRIVATE Int symbolic_analysis
     /* free some of the workspace */
     /* ---------------------------------------------------------------------- */
 
-    /* (4) The real workspace, Rs, of size n_row doubles has already been
+    /* (4) The real workspace, Rs, of size n_row floats has already been
      * free'd.  An additional workspace of size nz + n_col+1 + n_col integers
      * is now free'd as well. */
 
     SW->Si = (Int *) UMF_free ((void *) SW->Si) ;
     SW->Sp = (Int *) UMF_free ((void *) SW->Sp) ;
     SW->Cperm1 = (Int *) UMF_free ((void *) SW->Cperm1) ;
-    ASSERT (SW->Rs == (double *) NULL) ;
+    ASSERT (SW->Rs == (float *) NULL) ;
 
     /* ---------------------------------------------------------------------- */
     /* determine the size of the Symbolic object */
@@ -2105,7 +2105,7 @@ PRIVATE Int symbolic_analysis
 		CLEAR (aij) ;
 		oldrow = Ai [p] ;
 		newrow = Ci [oldrow] ;
-		if (Ax != (double *) NULL)
+		if (Ax != (float *) NULL)
 		{
 		    ASSIGN (aij, Ax, Az, p, SPLIT (Az)) ;
 		}
@@ -2186,7 +2186,7 @@ PRIVATE Int symbolic_analysis
 	if (parent != i+1)
 	{
 	    /* this is the end of a chain */
-	    double s ;
+	    float s ;
 	    DEBUG1 (("\nEnd of chain "ID"\n", nchains)) ;
 
 	    /* make sure maxrows is an odd number */
@@ -2201,7 +2201,7 @@ PRIVATE Int symbolic_analysis
 	    /* keep track of the maximum front size for all chains */
 
 	    /* for Info only: */
-	    s = (double) maxrows * (double) maxcols ;
+	    s = (float) maxrows * (float) maxcols ;
 	    dmaxfrsize = MAX (dmaxfrsize, s) ;
 
 	    /* for the subsequent numerical factorization */
@@ -2424,7 +2424,7 @@ PRIVATE Int symbolic_analysis
     dmax_usage = MAX (Symbolic->num_mem_init_usage, ceil (dmax_usage)) ;
     Info [UMFPACK_VARIABLE_INIT_ESTIMATE] = dmax_usage ;
 
-    /* In case Symbolic->num_mem_init_usage overflows, keep as a double, too */
+    /* In case Symbolic->num_mem_init_usage overflows, keep as a float, too */
     Symbolic->dnum_mem_init_usage = dmax_usage ;
 
     /* free the Rpi and Rpx workspace */
@@ -2446,7 +2446,7 @@ PRIVATE Int symbolic_analysis
 
     for (chain = 0 ; chain < nchains ; chain++)
     {
-	double fsize ;
+	float fsize ;
 	f1 = Chain_start [chain] ;
 	f2 = Chain_start [chain+1] - 1 ;
 
@@ -2470,7 +2470,7 @@ PRIVATE Int symbolic_analysis
 	    fallcols = Fr_ncols [i] ;   /* all cols (not just Schur comp*/
 	    parent = Front_parent [i] ; /* parent in column etree */
 	    fpiv = MIN (fpivcol, fallrows) ;	/* # pivot rows and cols */
-	    f = (double) fpiv ;
+	    f = (float) fpiv ;
 	    r = fallrows - fpiv ;		/* # rows in Schur comp. */
 	    c = fallcols - fpiv ;		/* # cols in Schur comp. */
 
@@ -2495,7 +2495,7 @@ PRIVATE Int symbolic_analysis
 		/* f outer products: */
 		+ MULTSUB_FLOPS * (f*r*c + (r+c)*(f-1)*f/2 + (f-1)*f*(2*f-1)/6);
 
-	    /* count nonzeros and memory usage in double precision */
+	    /* count nonzeros and memory usage in float precision */
 	    dlf = (f*f-f)/2 + f*r ;		/* nz in L below diagonal */
 	    duf = (f*f-f)/2 + f*c ;		/* nz in U above diagonal */
 	    dlnz += dlf ;
@@ -2546,10 +2546,10 @@ PRIVATE Int symbolic_analysis
 	dlnz,			/* estimated nz in L */
 	dunz,			/* estimated nz in U */
 	dmaxfrsize,		/* estimated largest front size */
-	(double) n_col,		/* worst case Numeric->Upattern size */
-	(double) n_inner,	/* max possible pivots to be found */
-	(double) maxnrows,	/* estimated largest #rows in front */
-	(double) maxncols,	/* estimated largest #cols in front */
+	(float) n_col,		/* worst case Numeric->Upattern size */
+	(float) n_inner,	/* max possible pivots to be found */
+	(float) maxnrows,	/* estimated largest #rows in front */
+	(float) maxncols,	/* estimated largest #cols in front */
 	TRUE,			/* assume scaling is to be performed */
 	prefer_diagonal,
 	ESTIMATE) ;
@@ -2626,7 +2626,7 @@ PRIVATE void free_work
     if (SW)
     {
 	SW->InvRperm1 = (Int *) UMF_free ((void *) SW->InvRperm1) ;
-	SW->Rs = (double *) UMF_free ((void *) SW->Rs) ;
+	SW->Rs = (float *) UMF_free ((void *) SW->Rs) ;
 	SW->Si = (Int *) UMF_free ((void *) SW->Si) ;
 	SW->Sp = (Int *) UMF_free ((void *) SW->Sp) ;
 	SW->Ci = (Int *) UMF_free ((void *) SW->Ci) ;
@@ -2671,14 +2671,14 @@ GLOBAL Int UMFPACK_qsymbolic
     Int n_col,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
     const Int Quser [ ],
     void **SymbolicHandle,
-    const double Control [UMFPACK_CONTROL],
-    double User_Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float User_Info [UMFPACK_INFO]
 )
 {
     return (symbolic_analysis (n_row, n_col, Ap, Ai, Ax,
@@ -2707,9 +2707,9 @@ GLOBAL Int UMFPACK_fsymbolic
     Int n_col,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
 
     /* user-provided ordering function */
@@ -2725,7 +2725,7 @@ GLOBAL Int UMFPACK_fsymbolic
         Int *,          /* size ncol, fill-reducing permutation */
         /* input/output */
         void *,         /* user_params (ignored by UMFPACK) */
-        double *        /* user_info[0..2], optional output for symmetric case.
+        float *        /* user_info[0..2], optional output for symmetric case.
                            user_info[0]: max column count for L=chol(P(A+A')P')
                            user_info[1]: nnz (L)
                            user_info[2]: flop count for chol, if A real */
@@ -2733,8 +2733,8 @@ GLOBAL Int UMFPACK_fsymbolic
     void *user_params,  /* passed to user_ordering function */
 
     void **SymbolicHandle,
-    const double Control [UMFPACK_CONTROL],
-    double User_Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float User_Info [UMFPACK_INFO]
 )
 {
     return (symbolic_analysis (n_row, n_col, Ap, Ai, Ax,

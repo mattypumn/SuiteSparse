@@ -188,10 +188,10 @@ static void test_memory_handler ( void )
 
 /* print a sparse matrix */
 
-static void print_sparse (Int n, Int isreal, Int *Ap, Int *Ai, double *Ax,
-    double *Az)
+static void print_sparse (Int n, Int isreal, Int *Ap, Int *Ai, float *Ax,
+    float *Az)
 {
-    double ax, az ;
+    float ax, az ;
     Int i, j, p ;
     for (j = 0 ; j < n ; j++)
     {
@@ -246,12 +246,12 @@ static void print_int (Int n, Int *P)
 
 
 /* ========================================================================== */
-/* === print_double ========================================================= */
+/* === print_float ========================================================= */
 /* ========================================================================== */
 
-/* print a double vector */
+/* print a float vector */
 
-static void print_double (Int n, double *X)
+static void print_float (Int n, float *X)
 {
     Int j ;
     for (j = 0 ; j < n ; j++)
@@ -272,7 +272,7 @@ static void ludump (KLU_symbolic *Symbolic, KLU_numeric *Numeric, Int isreal,
     cholmod_common *ch, KLU_common *Common)
 {
     Int *Lp, *Li, *Up, *Ui, *Fp, *Fi, *P, *Q, *R ;
-    double *Lx, *Ux, *Fx, *Lz, *Uz, *Fz, *Rs ;
+    float *Lx, *Ux, *Fx, *Lz, *Uz, *Fz, *Rs ;
     Int n, lnz, unz, fnz, nb, result ;
 
     if (Symbolic == NULL || Numeric == NULL)
@@ -292,23 +292,23 @@ static void ludump (KLU_symbolic *Symbolic, KLU_numeric *Numeric, Int isreal,
 
     Lp = malloc ((n+1) * sizeof (Int)) ;
     Li = malloc (lnz * sizeof (Int)) ;
-    Lx = malloc (lnz * sizeof (double)) ;
-    Lz = malloc (lnz * sizeof (double)) ;
+    Lx = malloc (lnz * sizeof (float)) ;
+    Lz = malloc (lnz * sizeof (float)) ;
 
     Up = malloc ((n+1) * sizeof (Int)) ;
     Ui = malloc (unz * sizeof (Int)) ;
-    Ux = malloc (unz * sizeof (double)) ;
-    Uz = malloc (unz * sizeof (double)) ;
+    Ux = malloc (unz * sizeof (float)) ;
+    Uz = malloc (unz * sizeof (float)) ;
 
     Fp = malloc ((n+1) * sizeof (Int)) ;
     Fi = malloc (fnz * sizeof (Int)) ;
-    Fx = malloc (fnz * sizeof (double)) ;
-    Fz = malloc (fnz * sizeof (double)) ;
+    Fx = malloc (fnz * sizeof (float)) ;
+    Fz = malloc (fnz * sizeof (float)) ;
 
     P = malloc (n * sizeof (Int)) ;
     Q = malloc (n * sizeof (Int)) ;
-    Rs = malloc (n * sizeof (double)) ;
-    R = malloc ((nb+1) * sizeof (double)) ;
+    Rs = malloc (n * sizeof (float)) ;
+    R = malloc ((nb+1) * sizeof (float)) ;
 
     if (isreal)
     {
@@ -330,7 +330,7 @@ static void ludump (KLU_symbolic *Symbolic, KLU_numeric *Numeric, Int isreal,
         printf ("------ F:\n") ; print_sparse (n, isreal, Fp, Fi, Fx, Fz) ;
         printf ("------ P:\n") ; print_int (n, P) ;
         printf ("------ Q:\n") ; print_int (n, Q) ;
-        printf ("------ Rs:\n") ; print_double (n, Rs) ;
+        printf ("------ Rs:\n") ; print_float (n, Rs) ;
         printf ("------ R:\n") ; print_int (nb+1, R) ;
     }
 
@@ -386,17 +386,17 @@ static Int *randperm (Int n, Int seed)
 /* === do_1_solve =========================================================== */
 /* ========================================================================== */
 
-static double do_1_solve (cholmod_sparse *A, cholmod_dense *B,
+static float do_1_solve (cholmod_sparse *A, cholmod_dense *B,
     cholmod_dense *Xknown, Int *Puser, Int *Quser,
     KLU_common *Common, cholmod_common *ch, Int *isnan)
 {
     Int *Ai, *Ap ;
-    double *Ax, *Xknownx, *Xx, *Ax2, *Axx ;
+    float *Ax, *Xknownx, *Xx, *Ax2, *Axx ;
     KLU_symbolic *Symbolic = NULL ; 
     KLU_numeric *Numeric = NULL ;
     cholmod_dense *X = NULL, *R = NULL ;
     cholmod_sparse *AT = NULL, *A2 = NULL, *AT2 = NULL ;
-    double one [2], minusone [2],
+    float one [2], minusone [2],
         rnorm, anorm, xnorm, relresid, relerr, err = 0. ;
     Int i, j, nrhs2, isreal, n, nrhs, transpose, step, k, save, tries ;
 
@@ -461,7 +461,7 @@ static double do_1_solve (cholmod_sparse *A, cholmod_dense *B,
     for (k = 0 ; k < Ap [n] * (isreal ? 1:2) ; k++)
     {
         Ax2 [k] = Ax [k] * 
-            (1 + 1e-4 * ((double) my_rand ( )) / ((double) MY_RAND_MAX)) ;
+            (1 + 1e-4 * ((float) my_rand ( )) / ((float) MY_RAND_MAX)) ;
     }
 
     AT = isreal ? NULL : CHOLMOD_transpose (A, 1, ch) ;
@@ -770,10 +770,10 @@ static double do_1_solve (cholmod_sparse *A, cholmod_dense *B,
 
 /* test KLU with many options */
 
-static double do_solves (cholmod_sparse *A, cholmod_dense *B, cholmod_dense *X,
+static float do_solves (cholmod_sparse *A, cholmod_dense *B, cholmod_dense *X,
     Int *Puser, Int *Quser, KLU_common *Common, cholmod_common *ch, Int *isnan)
 {
-    double err, maxerr = 0 ;
+    float err, maxerr = 0 ;
     Int n = A->nrow, sflag ;
     *isnan = FALSE ;
 
@@ -852,8 +852,8 @@ int main (void)
     cholmod_dense *X, *B ;
     cholmod_common ch ;
     Int *Ap, *Ai, *Puser, *Quser, *Gunk ;
-    double *Ax, *Xx, *A2x ;
-    double one [2], zero [2], xsave, maxerr ;
+    float *Ax, *Xx, *A2x ;
+    float one [2], zero [2], xsave, maxerr ;
     Int n, i, j, nz, save, isreal, k, isnan ;
     KLU_symbolic *Symbolic, *Symbolic2 ;
     KLU_numeric *Numeric ;
@@ -914,12 +914,12 @@ int main (void)
         {
             if (isreal)
             {
-                Xx [i] = 1 + ((double) i) / ((double) n) + j * 100;
+                Xx [i] = 1 + ((float) i) / ((float) n) + j * 100;
             }
             else
             {
-                Xx [2*i  ] = 1 + ((double) i) / ((double) n) + j * 100 ;
-                Xx [2*i+1] =  - ((double) i+1) / ((double) n + j) ;
+                Xx [2*i  ] = 1 + ((float) i) / ((float) n) + j * 100 ;
+                Xx [2*i+1] =  - ((float) i+1) / ((float) n + j) ;
                 if (j == NRHS-1)
                 {
                     Xx [2*i+1] = 0 ;    /* zero imaginary part */

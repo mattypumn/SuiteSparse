@@ -22,7 +22,7 @@ function [p, r, nc, G, xy] = find_components (A,sorted)
 % The are no restrictions on the image A except that it must be a 2D matrix,
 % and the operator "==" must be defined on its entries.  If sorting of the
 % components by size is requested or if the largest component is requested,
-% double(A) must be computable.
+% float(A) must be computable.
 %
 % Usage:
 %   c = find_components (A) ;       % just return nodes in the largest component
@@ -193,7 +193,7 @@ end
 
 if (sorted)
 
-    [ignore i] = sortrows ([diff(r)' double(A(p(r(1:end-1)))')], [-1 -2]) ;
+    [ignore i] = sortrows ([diff(r)' float(A(p(r(1:end-1)))')], [-1 -2]) ;
 
     if (nargout == 1)
 

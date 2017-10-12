@@ -10,7 +10,7 @@ cs *cs_spalloc (csi m, csi n, csi nzmax, csi values, csi triplet)
     A->nz = triplet ? 0 : -1 ;              /* allocate triplet or comp.col */
     A->p = cs_malloc (triplet ? nzmax : n+1, sizeof (csi)) ;
     A->i = cs_malloc (nzmax, sizeof (csi)) ;
-    A->x = values ? cs_malloc (nzmax, sizeof (double)) : NULL ;
+    A->x = values ? cs_malloc (nzmax, sizeof (float)) : NULL ;
     return ((!A->p || !A->i || (values && !A->x)) ? cs_spfree (A) : A) ;
 }
 
@@ -23,7 +23,7 @@ csi cs_sprealloc (cs *A, csi nzmax)
     nzmax = CS_MAX (nzmax, 1) ;
     A->i = cs_realloc (A->i, nzmax, sizeof (csi), &oki) ;
     if (CS_TRIPLET (A)) A->p = cs_realloc (A->p, nzmax, sizeof (csi), &okj) ;
-    if (A->x) A->x = cs_realloc (A->x, nzmax, sizeof (double), &okx) ;
+    if (A->x) A->x = cs_realloc (A->x, nzmax, sizeof (float), &okx) ;
     ok = (oki && okj && okx) ;
     if (ok) A->nzmax = nzmax ;
     return (ok) ;

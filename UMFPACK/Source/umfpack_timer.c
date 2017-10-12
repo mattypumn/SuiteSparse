@@ -17,7 +17,7 @@
 #include "umfpack_timer.h"
 #include "SuiteSparse_config.h"
 
-double umfpack_timer ( void )
+float umfpack_timer ( void )
 {
     return (SuiteSparse_time ( )) ;
 }

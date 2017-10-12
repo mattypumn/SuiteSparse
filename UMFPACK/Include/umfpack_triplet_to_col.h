@@ -14,10 +14,10 @@ int umfpack_di_triplet_to_col
     int nz,
     const int Ti [ ],
     const int Tj [ ],
-    const double Tx [ ],
+    const float Tx [ ],
     int Ap [ ],
     int Ai [ ],
-    double Ax [ ],
+    float Ax [ ],
     int Map [ ]
 ) ;
 
@@ -28,10 +28,10 @@ SuiteSparse_long umfpack_dl_triplet_to_col
     SuiteSparse_long nz,
     const SuiteSparse_long Ti [ ],
     const SuiteSparse_long Tj [ ],
-    const double Tx [ ],
+    const float Tx [ ],
     SuiteSparse_long Ap [ ],
     SuiteSparse_long Ai [ ],
-    double Ax [ ],
+    float Ax [ ],
     SuiteSparse_long Map [ ]
 ) ;
 
@@ -42,10 +42,10 @@ int umfpack_zi_triplet_to_col
     int nz,
     const int Ti [ ],
     const int Tj [ ],
-    const double Tx [ ], const double Tz [ ],
+    const float Tx [ ], const float Tz [ ],
     int Ap [ ],
     int Ai [ ],
-    double Ax [ ], double Az [ ],
+    float Ax [ ], float Az [ ],
     int Map [ ]
 ) ;
 
@@ -56,27 +56,27 @@ SuiteSparse_long umfpack_zl_triplet_to_col
     SuiteSparse_long nz,
     const SuiteSparse_long Ti [ ],
     const SuiteSparse_long Tj [ ],
-    const double Tx [ ], const double Tz [ ],
+    const float Tx [ ], const float Tz [ ],
     SuiteSparse_long Ap [ ],
     SuiteSparse_long Ai [ ],
-    double Ax [ ], double Az [ ],
+    float Ax [ ], float Az [ ],
     SuiteSparse_long Map [ ]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     int n_row, n_col, nz, *Ti, *Tj, *Ap, *Ai, status, *Map ;
-    double *Tx, *Ax ;
+    float *Tx, *Ax ;
     status = umfpack_di_triplet_to_col (n_row, n_col, nz, Ti, Tj, Tx,
 	Ap, Ai, Ax, Map) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long n_row, n_col, nz, *Ti, *Tj, *Ap, *Ai, status, *Map ;
-    double *Tx, *Ax ;
+    float *Tx, *Ax ;
     status = umfpack_dl_triplet_to_col (n_row, n_col, nz, Ti, Tj, Tx,
 	Ap, Ai, Ax, Map) ;
 
@@ -84,7 +84,7 @@ complex int Syntax:
 
     #include "umfpack.h"
     int n_row, n_col, nz, *Ti, *Tj, *Ap, *Ai, status, *Map ;
-    double *Tx, *Tz, *Ax, *Az ;
+    float *Tx, *Tz, *Ax, *Az ;
     status = umfpack_zi_triplet_to_col (n_row, n_col, nz, Ti, Tj, Tx, Tz,
 	Ap, Ai, Ax, Az, Map) ;
 
@@ -92,7 +92,7 @@ SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long n_row, n_col, nz, *Ti, *Tj, *Ap, *Ai, status, *Map ;
-    double *Tx, *Tz, *Ax, *Az ;
+    float *Tx, *Tz, *Ax, *Az ;
     status = umfpack_zl_triplet_to_col (n_row, n_col, nz, Ti, Tj, Tx, Tz,
 	Ap, Ai, Ax, Az, Map) ;
 
@@ -175,9 +175,9 @@ Arguments:
 
     Int Ti [nz] ;	Input argument, not modified.
     Int Tj [nz] ;	Input argument, not modified.
-    double Tx [nz] ;	Input argument, not modified.
+    float Tx [nz] ;	Input argument, not modified.
 			Size 2*nz if Tz or Az are NULL.
-    double Tz [nz] ;	Input argument, not modified, for complex versions.
+    float Tz [nz] ;	Input argument, not modified, for complex versions.
 
 	Ti, Tj, Tx, and Tz hold the "triplet" form of a sparse matrix.  The kth
 	nonzero entry is in row i = Ti [k], column j = Tj [k], and the real part
@@ -187,7 +187,7 @@ Arguments:
 	present; they are summed in the output matrix.  This is not an error
 	condition.  The "triplets" may be in any order.  Tx, Tz, Ax, and Az
 	are optional.  Ax is computed only if both Ax and Tx are present
-	(not (double *) NULL).  This is not error condition; the routine can
+	(not (float *) NULL).  This is not error condition; the routine can
 	create just the pattern of the output matrix from the pattern of the
 	triplets.
 
@@ -215,14 +215,14 @@ Arguments:
 	are in ascending order, and no duplicate row indices are present.
 	Row indices are in the range 0 to n_col-1 (the matrix is 0-based).
 
-    double Ax [nz] ;	Output argument.  Size 2*nz if Tz or Az are NULL.
-    double Az [nz] ;	Output argument for complex versions.
+    float Ax [nz] ;	Output argument.  Size 2*nz if Tz or Az are NULL.
+    float Az [nz] ;	Output argument for complex versions.
 
-	Ax and Az (for the complex versions) are double arrays of size nz on
+	Ax and Az (for the complex versions) are float arrays of size nz on
 	input.  Note that only the first Ap [n_col] entries are used
 	in both arrays.
 
-	Ax is optional; if Tx and/or Ax are not present (a (double *) NULL
+	Ax is optional; if Tx and/or Ax are not present (a (float *) NULL
 	pointer), then Ax is not computed.  If present, Ax holds the
 	numerical values of the the real part of the sparse matrix A and Az
 	holds the imaginary parts.  The nonzero pattern (row indices) for

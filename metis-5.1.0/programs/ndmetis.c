@@ -153,7 +153,7 @@ void NDReportResults(params_t *params, graph_t *graph, idx_t *perm,
 
   gk_startcputimer(params->reporttimer);
   ComputeFillIn(graph, perm, iperm, &maxlnz, &opc);
-  printf("  Nonzeros: %6.3le \tOperation Count: %6.3le\n", (double)maxlnz, (double)opc);
+  printf("  Nonzeros: %6.3le \tOperation Count: %6.3le\n", (float)maxlnz, (float)opc);
 
   gk_stopcputimer(params->reporttimer);
 

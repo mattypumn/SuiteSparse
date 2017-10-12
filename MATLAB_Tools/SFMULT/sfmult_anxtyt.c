@@ -19,7 +19,7 @@ mxArray *sfmult_AN_XT_YT    // y = (A*x')'
 )
 {
     mxArray *Y ;
-    double *Ax, *Az, *Xx, *Xz, *Yx, *Yz, *Wx, *Wz ;
+    float *Ax, *Az, *Xx, *Xz, *Yx, *Yz, *Wx, *Wz ;
     Int *Ap, *Ai ;
     Int m, n, k, k1, i ;
     int Acomplex, Xcomplex, Ycomplex ;
@@ -82,7 +82,7 @@ mxArray *sfmult_AN_XT_YT    // y = (A*x')'
     {
 	// Y = (A * X')' when A is moderately sparse and X is large
 	mxArray *C ;
-	double *Cx, *Cz ;
+	float *Cx, *Cz ;
 	Int *Cp, *Ci ;
 	// C = A' ;
 	C = ssmult_transpose (A, 0) ;

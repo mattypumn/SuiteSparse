@@ -14,7 +14,7 @@
 #include "umf_internal.h"
 #include "umf_utsolve.h"
 
-GLOBAL double
+GLOBAL float
 #ifdef CONJUGATE_SOLVE
 UMF_uhsolve			/* solve U'x=b  (complex conjugate transpose) */
 #else
@@ -327,5 +327,5 @@ UMF_utsolve			/* solve U.'x=b (array transpose) */
     DEBUG4 (("Utsolve done.\n")) ;
 #endif
 
-    return (DIV_FLOPS * ((double) n) + MULTSUB_FLOPS * ((double) Numeric->unz));
+    return (DIV_FLOPS * ((float) n) + MULTSUB_FLOPS * ((float) Numeric->unz));
 }

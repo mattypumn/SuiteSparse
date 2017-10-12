@@ -25,7 +25,7 @@ void mexFunction
 {
     Int *Zp, *Zi, *Lp, *Li, *Up, *Uj, *Zpatp, *Zpati, n, *Zdiagp, *Lmunch,
         znz, j, p, flops ;
-    double *Zx, *Lx, *Ux, *z, *d ;
+    float *Zx, *Lx, *Ux, *z, *d ;
 
     /* check inputs */
     if (nargin != 4 || nargout > 2)
@@ -68,7 +68,7 @@ void mexFunction
     Zx = mxGetPr (pargout [0]) ;
 
     /* get workspace */
-    z = mxCalloc (n, sizeof (double)) ;
+    z = mxCalloc (n, sizeof (float)) ;
     Zdiagp = mxMalloc (n * sizeof (Int)) ;
     Lmunch = mxMalloc (n * sizeof (Int)) ;
 
@@ -112,6 +112,6 @@ void mexFunction
 
     if (nargout > 1)
     {
-        pargout [1] = mxCreateDoubleScalar ((double) flops) ;
+        pargout [1] = mxCreateDoubleScalar ((float) flops) ;
     }
 }

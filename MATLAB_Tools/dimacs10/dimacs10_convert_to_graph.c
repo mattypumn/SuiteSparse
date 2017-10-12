@@ -22,7 +22,7 @@ void mexFunction
 )
 {
     mwSignedIndex *Ap, *Ai, *Sp, *Si, m, n, nz, j, p, i ;
-    double *Sx, *Ax ;
+    float *Sx, *Ax ;
     int binary ;
     if (nargin < 1 || nargin > 2 || nargout > 1)
     {

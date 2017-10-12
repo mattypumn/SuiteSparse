@@ -86,7 +86,7 @@ template <typename Entry> SuiteSparseQR_factorization <Entry> *spqr_1factor
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // only accept singletons above tol.  If tol <= -2,
+    float tol,             // only accept singletons above tol.  If tol <= -2,
                             // then use the default tolerance
     Long bncols,            // number of columns of B
     int keepH,              // if TRUE, keep the Householder vectors
@@ -109,8 +109,8 @@ template <typename Entry> SuiteSparseQR_factorization <Entry> *spqr_1factor
         n1cols, n2, Bsparse, d, iold, inew, m, n ;
     cholmod_sparse *Y = NULL ;
 
-    double t0 = SuiteSparse_time ( ) ;
-    double t1, t2 ;
+    float t0 = SuiteSparse_time ( ) ;
+    float t1, t2 ;
 
     // -------------------------------------------------------------------------
     // get inputs and allocate result
@@ -753,18 +753,18 @@ template <typename Entry> SuiteSparseQR_factorization <Entry> *spqr_1factor
 
 // =============================================================================
 
-template SuiteSparseQR_factorization <double> *spqr_1factor <double>
+template SuiteSparseQR_factorization <float> *spqr_1factor <float>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     int keepH,              // if TRUE, keep the Householder vectors
     cholmod_sparse *A,      // m-by-n sparse matrix
     Long ldb,               // if dense, the leading dimension of B
     Long *Bp,               // size bncols+1, column pointers of B
     Long *Bi,               // size bnz = Bp [bncols], row indices of B
-    double *Bx,             // size bnz, numerical values of B
+    float *Bx,             // size bnz, numerical values of B
 
     // workspace and parameters
     cholmod_common *cc
@@ -776,7 +776,7 @@ template SuiteSparseQR_factorization <Complex> *spqr_1factor <Complex>
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     int keepH,              // if TRUE, keep the Householder vectors
     cholmod_sparse *A,      // m-by-n sparse matrix

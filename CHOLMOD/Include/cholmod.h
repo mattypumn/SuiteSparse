@@ -34,7 +34,7 @@
  * -------------
  *
  *	Most CHOLMOD routines return an int (TRUE (1) if successful, or FALSE
- *	(0) otherwise.  A SuiteSparse_long or double return value is >= 0 if
+ *	(0) otherwise.  A SuiteSparse_long or float return value is >= 0 if
  *	successful, or -1 otherwise.  A size_t return value is > 0 if
  *	successful, or 0 otherwise.
  *

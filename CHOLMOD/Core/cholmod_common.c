@@ -415,7 +415,7 @@ int CHOLMOD(allocate_work)
     cholmod_common *Common
 )
 {
-    double *W ;
+    float *W ;
     Int *Head ;
     Int i ;
     size_t nrow1 ;
@@ -514,7 +514,7 @@ int CHOLMOD(allocate_work)
     }
 
     /* ---------------------------------------------------------------------- */
-    /* Allocate Xwork (xworksize) and set it to ((double) 0.) */
+    /* Allocate Xwork (xworksize) and set it to ((float) 0.) */
     /* ---------------------------------------------------------------------- */
 
     /* make sure xworksize is >= 1 */
@@ -530,9 +530,9 @@ int CHOLMOD(allocate_work)
 	}
 
 	/* free the old workspace (if any) and allocate new space */
-	CHOLMOD(free) (Common->xworksize, sizeof (double), Common->Xwork,
+	CHOLMOD(free) (Common->xworksize, sizeof (float), Common->Xwork,
 		Common) ;
-	Common->Xwork = CHOLMOD(malloc) (xworksize, sizeof (double), Common) ;
+	Common->Xwork = CHOLMOD(malloc) (xworksize, sizeof (float), Common) ;
 
 	/* record the new size of Xwork */
 	Common->xworksize = xworksize ;
@@ -576,7 +576,7 @@ int CHOLMOD(free_work)
 	    Common->Head, Common) ;
     Common->Iwork = CHOLMOD(free) (Common->iworksize, sizeof (Int),
 	    Common->Iwork, Common) ;
-    Common->Xwork = CHOLMOD(free) (Common->xworksize, sizeof (double),
+    Common->Xwork = CHOLMOD(free) (Common->xworksize, sizeof (float),
 	    Common->Xwork, Common) ;
     Common->nrow = 0 ;
     Common->iworksize = 0 ;
@@ -646,14 +646,14 @@ size_t CHOLMOD(maxrank)	/* returns validated value of Common->maxrank */
     maxrank = Common->maxrank ;
     if (n > 0)
     {
-	/* Ensure maxrank*n*sizeof(double) does not result in integer overflow.
-	 * If n is so large that 2*n*sizeof(double) results in integer overflow
+	/* Ensure maxrank*n*sizeof(float) does not result in integer overflow.
+	 * If n is so large that 2*n*sizeof(float) results in integer overflow
 	 * (n = 268,435,455 if an Int is 32 bits), then maxrank will be 0 or 1,
 	 * but maxrank will be set to 2 below.  2*n will not result in integer
 	 * overflow, and CHOLMOD will run out of memory or safely detect integer
 	 * overflow elsewhere.
 	 */
-	maxrank = MIN (maxrank, Size_max / (n * sizeof (double))) ;
+	maxrank = MIN (maxrank, Size_max / (n * sizeof (float))) ;
     }
     if (maxrank <= 2)
     {
@@ -683,15 +683,15 @@ size_t CHOLMOD(maxrank)	/* returns validated value of Common->maxrank */
  * this routine if Common->dbound is NaN.
  */
 
-double CHOLMOD(dbound)	/* returns modified diagonal entry of D */
+float CHOLMOD(dbound)	/* returns modified diagonal entry of D */
 (
     /* ---- input ---- */
-    double dj,		/* diagonal entry of D, for LDL' factorization */
+    float dj,		/* diagonal entry of D, for LDL' factorization */
     /* --------------- */
     cholmod_common *Common
 )
 {
-    double dbound ;
+    float dbound ;
     RETURN_IF_NULL_COMMON (0) ;
     if (!IS_NAN (dj))
     {

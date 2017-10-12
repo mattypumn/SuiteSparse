@@ -36,13 +36,13 @@ SuiteSparse_long umfpack_zl_col_to_triplet
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     int n_col, *Tj, *Ap, status ;
     status = umfpack_di_col_to_triplet (n_col, Ap, Tj) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long n_col, *Tj, *Ap, status ;

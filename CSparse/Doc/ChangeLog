@@ -167,7 +167,7 @@ Nov 2006, v2.0.5
 
 Oct 13, 2006, v2.0.4
 
-    * minor modification to cs_updown.c.  "n" was incorrectly declared "double".
+    * minor modification to cs_updown.c.  "n" was incorrectly declared "float".
         It should be "int".  This was safe, just a little confusing (n was only
         used in an argument to cs_malloc, and is thus typecast).
 
@@ -251,16 +251,16 @@ Apr 10, 2006:
             order = 2: amd (S'*S), where S=A except dense rows dropped
             order = 3: amd (A'*A)
 
-            int cs_cholsol (int order, const cs *A, double *b) ;
-            int cs_lusol (int order, const cs *A, double *b, double tol) ;
-            int cs_qrsol (int order, const cs *A, double *b) ;
+            int cs_cholsol (int order, const cs *A, float *b) ;
+            int cs_lusol (int order, const cs *A, float *b, float tol) ;
+            int cs_qrsol (int order, const cs *A, float *b) ;
             int *cs_amd (int order, const cs *A) ;
             css *cs_schol (int order, const cs *A) ;
             css *cs_sqr (int order, const cs *A, int qr) ;
 
             int *cs_post (const int *parent, int n) ;
-            int cs_ipvec (const int *p, const double *b, double *x, int n) ;
-            int cs_pvec (const int *p, const double *b, double *x, int n) ;
+            int cs_ipvec (const int *p, const float *b, float *x, int n) ;
+            int cs_pvec (const int *p, const float *b, float *x, int n) ;
 
             cs *cs_compress (const cs *T) ;
 
@@ -272,16 +272,16 @@ Apr 10, 2006:
             order = 1: amd (S'*S), where S=A except dense rows dropped
             order = 2: amd (A'*A)
 
-            int cs_cholsol (const cs *A, double *b, int order) ;
-            int cs_lusol (const cs *A, double *b, int order, double tol) ;
-            int cs_qrsol (const cs *A, double *b, int order) ;
+            int cs_cholsol (const cs *A, float *b, int order) ;
+            int cs_lusol (const cs *A, float *b, int order, float tol) ;
+            int cs_qrsol (const cs *A, float *b, int order) ;
             int *cs_amd (const cs *A, int order) ;
             css *cs_schol (const cs *A, int order) ;
             css *cs_sqr (const cs *A, int order, int qr) ;
 
             int *cs_post (int n, const int *parent) ;
-            int cs_ipvec (int n, const int *p, const double *b, double *x) ;
-            int cs_pvec (int n, const int *p, const double *b, double *x) ;
+            int cs_ipvec (int n, const int *p, const float *b, float *x) ;
+            int cs_pvec (int n, const int *p, const float *b, float *x) ;
 
             cs *cs_triplet (const cs *T) ;
 

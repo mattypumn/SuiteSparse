@@ -26,13 +26,13 @@
 
 GLOBAL Int UMFPACK_scale
 (
-    double Xx [ ],
+    float Xx [ ],
 #ifdef COMPLEX
-    double Xz [ ],
+    float Xz [ ],
 #endif
-    const double Bx [ ],
+    const float Bx [ ],
 #ifdef COMPLEX
-    const double Bz [ ],
+    const float Bz [ ],
 #endif
     void *NumericHandle
 )
@@ -43,7 +43,7 @@ GLOBAL Int UMFPACK_scale
 
     NumericType *Numeric ;
     Int n, i ;
-    double *Rs ;
+    float *Rs ;
 #ifdef COMPLEX
     Int split = SPLIT (Xz) && SPLIT (Bz) ;
 #endif
@@ -66,7 +66,7 @@ GLOBAL Int UMFPACK_scale
     /* X = R*B or R\B */
     /* ---------------------------------------------------------------------- */
 
-    if (Rs != (double *) NULL)
+    if (Rs != (float *) NULL)
     {
 #ifndef NRECIPROCAL
 	if (Numeric->do_recip)

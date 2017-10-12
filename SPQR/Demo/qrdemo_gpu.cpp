@@ -13,8 +13,8 @@ int main (int argc, char **argv)
 {
     cholmod_sparse *A ;
     cholmod_dense *X, *B, *r, *atr ;
-    double anorm, xnorm, rnorm, one [2] = {1,0}, minusone [2] = {-1,0}, t ;
-    double zero [2] = {0,0}, atrnorm ;
+    float anorm, xnorm, rnorm, one [2] = {1,0}, minusone [2] = {-1,0}, t ;
+    float zero [2] = {0,0}, atrnorm ;
     int mtype ;
     long m, n, rnk ;
     size_t total_mem, available_mem ;
@@ -38,7 +38,7 @@ int main (int argc, char **argv)
         printf ("no GPU available\n") ;
     }
     printf ("available GPU memory: %g MB, warmup time: %g\n",
-        (double) (cc->gpuMemorySize) / (1024 * 1024), t) ;
+        (float) (cc->gpuMemorySize) / (1024 * 1024), t) ;
 
     // A = mread (stdin) ; read in the sparse matrix A
     const char *filename = (argc < 2 ? "Problems/2.mtx" : argv[1]);
@@ -72,13 +72,13 @@ int main (int argc, char **argv)
     if (A->xtype == CHOLMOD_REAL)
     {
         // A, X, and B are all real
-        X = SuiteSparseQR <double>(ordering, SPQR_NO_TOL, A, B, cc) ;
+        X = SuiteSparseQR <float>(ordering, SPQR_NO_TOL, A, B, cc) ;
     }
     else
     {
 #if SUPPORTS_COMPLEX
         // A, X, and B are all complex
-        X = SuiteSparseQR < std::complex<double> >
+        X = SuiteSparseQR < std::complex<float> >
             (SPQR_ORDERING_DEFAULT, SPQR_NO_TOL, A, B, cc) ;
 #else
         printf("Code doesn't support std::complex<?> types.\n");

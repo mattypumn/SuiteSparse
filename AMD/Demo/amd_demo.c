@@ -51,7 +51,7 @@ int main (void)
 	/* column 23: */    6, 11, 12, 23 } ;
 
     int P [24], Pinv [24], i, j, k, jnew, p, inew, result ;
-    double Control [AMD_CONTROL], Info [AMD_INFO] ;
+    float Control [AMD_CONTROL], Info [AMD_INFO] ;
     char A [24][24] ;
 
     /* here is an example of how to use AMD_VERSION.  This code will work in

@@ -22,25 +22,25 @@ Int KLU_extract     /* returns TRUE if successful, FALSE otherwise */
     /* L */
     Int *Lp,        /* size n+1 */
     Int *Li,        /* size nnz(L) */
-    double *Lx,     /* size nnz(L) */
+    float *Lx,     /* size nnz(L) */
 #ifdef COMPLEX
-    double *Lz,     /* size nnz(L) for the complex case, ignored if real */
+    float *Lz,     /* size nnz(L) for the complex case, ignored if real */
 #endif
 
     /* U */
     Int *Up,        /* size n+1 */
     Int *Ui,        /* size nnz(U) */
-    double *Ux,     /* size nnz(U) */
+    float *Ux,     /* size nnz(U) */
 #ifdef COMPLEX
-    double *Uz,     /* size nnz(U) for the complex case, ignored if real */
+    float *Uz,     /* size nnz(U) for the complex case, ignored if real */
 #endif
 
     /* F */
     Int *Fp,        /* size n+1 */
     Int *Fi,        /* size nnz(F) */
-    double *Fx,     /* size nnz(F) */
+    float *Fx,     /* size nnz(F) */
 #ifdef COMPLEX
-    double *Fz,     /* size nnz(F) for the complex case, ignored if real */
+    float *Fz,     /* size nnz(F) for the complex case, ignored if real */
 #endif
 
     /* P, row permutation */
@@ -50,7 +50,7 @@ Int KLU_extract     /* returns TRUE if successful, FALSE otherwise */
     Int *Q,         /* size n */
 
     /* Rs, scale factors */
-    double *Rs,     /* size n */
+    float *Rs,     /* size n */
 
     /* R, block boundaries */
     Int *R,         /* size nblocks+1 */

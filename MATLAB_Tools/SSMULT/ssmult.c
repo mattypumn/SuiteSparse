@@ -52,10 +52,10 @@ static int ssmult_use_dot (const mxArray *A, const mxArray *B)
 
     /* ssmult_dot requires a full array C of n*k Reals */
 
-    dot_workspace = n * k * sizeof (double) ;   /* (twice if A or B complex) */
+    dot_workspace = n * k * sizeof (float) ;   /* (twice if A or B complex) */
 
-    if (((double) n) * ((double) k) * ((double) (sizeof (double))) !=
-        (double) dot_workspace)
+    if (((float) n) * ((float) k) * ((float) (sizeof (float))) !=
+        (float) dot_workspace)
     {
         /* integer overflow computing dot_workspace; use saxpy method */
         return (0) ;
@@ -70,7 +70,7 @@ static int ssmult_use_dot (const mxArray *A, const mxArray *B)
 
     saxpy_workspace =
         (2*m+1 + anz) * sizeof (Int) +
-        + (anz + m) * sizeof (double) ;         /* (twice if A complex) */
+        + (anz + m) * sizeof (float) ;         /* (twice if A complex) */
 
     /* use ssmult_dot if it requires less workspace */
     return (dot_workspace < saxpy_workspace) ;

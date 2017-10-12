@@ -112,18 +112,18 @@
  *	C syntax:
  *
  *	    #include "ccolamd.h"
- *	    ccolamd_set_defaults (double knobs [CCOLAMD_KNOBS]) ;
- *	    ccolamd_l_set_defaults (double knobs [CCOLAMD_KNOBS]) ;
+ *	    ccolamd_set_defaults (float knobs [CCOLAMD_KNOBS]) ;
+ *	    ccolamd_l_set_defaults (float knobs [CCOLAMD_KNOBS]) ;
  *
  *	Purpose:
  *
  *	    Sets the default parameters.  The use of this routine is optional.
- *	    Passing a (double *) NULL pointer for the knobs results in the
+ *	    Passing a (float *) NULL pointer for the knobs results in the
  *	    default parameter settings.
  *
  *	Arguments:
  *
- *	    double knobs [CCOLAMD_KNOBS] ;	Output only.
+ *	    float knobs [CCOLAMD_KNOBS] ;	Output only.
  *
  *	    knobs [0] and knobs [1] behave differently than they did in COLAMD.
  *	    The other knobs are new to CCOLAMD.
@@ -178,13 +178,13 @@
  *
  *	    #include "ccolamd.h"
  *	    int ccolamd (int n_row, int n_col, int Alen, int *A, int *p,
- *	    	double knobs [CCOLAMD_KNOBS], int stats [CCOLAMD_STATS],
+ *	    	float knobs [CCOLAMD_KNOBS], int stats [CCOLAMD_STATS],
  *		int *cmember) ;
  *
  *	    SuiteSparse_long ccolamd_l (SuiteSparse_long n_row,
  *	        SuiteSparse_long n_col, SuiteSparse_long Alen,
  *              SuiteSparse_long *A, SuiteSparse_long *p,
- *              double knobs [CCOLAMD_KNOBS],
+ *              float knobs [CCOLAMD_KNOBS],
  *              SuiteSparse_long stats [CCOLAMD_STATS],
  *              SuiteSparse_long *cmember) ;
  *
@@ -272,7 +272,7 @@
  *		If ccolamd returns FALSE, then no permutation is returned, and
  *		p is undefined on output.
  *
- *	    double knobs [CCOLAMD_KNOBS] ;	Input argument.
+ *	    float knobs [CCOLAMD_KNOBS] ;	Input argument.
  *
  *		See ccolamd_set_defaults for a description.
  *
@@ -379,7 +379,7 @@
  *		int A [ALEN] = {0, 1, 4, 2, 4, 0, 1, 2, 3, 1, 3} ;
  *		int p [ ] = {0, 3, 5, 9, 11} ;
  *		int stats [CCOLAMD_STATS] ;
- *		ccolamd (5, 4, ALEN, A, p, (double *) NULL, stats, NULL) ;
+ *		ccolamd (5, 4, ALEN, A, p, (float *) NULL, stats, NULL) ;
  *
  *	    The permutation is returned in the array p, and A is destroyed.
  *
@@ -392,13 +392,13 @@
  *	    #include "ccolamd.h"
  *
  *	    int csymamd (int n, int *A, int *p, int *perm,
- *	    	double knobs [CCOLAMD_KNOBS], int stats [CCOLAMD_STATS],
+ *	    	float knobs [CCOLAMD_KNOBS], int stats [CCOLAMD_STATS],
  *		void (*allocate) (size_t, size_t), void (*release) (void *),
  *		int *cmember, int stype) ;
  *
  *	    SuiteSparse_long csymamd_l (SuiteSparse_long n,
  *              SuiteSparse_long *A, SuiteSparse_long *p,
- *              SuiteSparse_long *perm, double knobs [CCOLAMD_KNOBS],
+ *              SuiteSparse_long *perm, float knobs [CCOLAMD_KNOBS],
  *              SuiteSparse_long stats [CCOLAMD_STATS], void (*allocate)
  *              (size_t, size_t), void (*release) (void *),
  *              SuiteSparse_long *cmember, SuiteSparse_long stype) ;
@@ -465,7 +465,7 @@
  *		PAP').  The array is used as a workspace during the ordering,
  *		which is why it must be of length n+1, not just n.
  *
- *	    double knobs [CCOLAMD_KNOBS] ;	Input argument.
+ *	    float knobs [CCOLAMD_KNOBS] ;	Input argument.
  *
  *		See colamd_set_defaults for a description.
  *
@@ -733,15 +733,15 @@ typedef struct CColamd_Row_struct
 #define PRIVATE static 
 
 #define DENSE_DEGREE(alpha,n) \
-    ((Int) MAX (16.0, (alpha) * sqrt ((double) (n))))
+    ((Int) MAX (16.0, (alpha) * sqrt ((float) (n))))
 
 #define CMEMBER(c) ((cmember == (Int *) NULL) ? (0) : (cmember [c]))
 
 /* True if x is NaN */
 #define SCALAR_IS_NAN(x)        ((x) != (x))
 
-/* true if an integer (stored in double x) would overflow (or if x is NaN) */
-#define INT_OVERFLOW(x) ((!((x) * (1.0+1e-8) <= (double) Int_MAX)) \
+/* true if an integer (stored in float x) would overflow (or if x is NaN) */
+#define INT_OVERFLOW(x) ((!((x) * (1.0+1e-8) <= (float) Int_MAX)) \
                         || SCALAR_IS_NAN (x))
 
 #define ONES_COMPLEMENT(r) (-(r)-1)
@@ -896,7 +896,7 @@ PRIVATE void init_scoring
     CColamd_Col Col [ ],
     Int A [ ],
     Int head [ ],
-    double knobs [CCOLAMD_KNOBS],
+    float knobs [CCOLAMD_KNOBS],
     Int *p_n_row2,
     Int *p_n_col2,
     Int *p_max_deg,
@@ -1115,7 +1115,7 @@ PUBLIC void CCOLAMD_set_defaults
 (
     /* === Parameters ======================================================= */
 
-    double knobs [CCOLAMD_KNOBS]		/* knob array */
+    float knobs [CCOLAMD_KNOBS]		/* knob array */
 )
 {
     /* === Local variables ================================================== */
@@ -1149,7 +1149,7 @@ PUBLIC Int CSYMAMD_MAIN		/* return TRUE if OK, FALSE otherwise */
     Int A [ ],				/* row indices of A */
     Int p [ ],				/* column pointers of A */
     Int perm [ ],			/* output permutation, size n+1 */
-    double knobs [CCOLAMD_KNOBS],	/* parameters (uses defaults if NULL) */
+    float knobs [CCOLAMD_KNOBS],	/* parameters (uses defaults if NULL) */
     Int stats [CCOLAMD_STATS],		/* output statistics and error codes */
     void * (*allocate) (size_t, size_t),/* pointer to calloc (ANSI C) or */
 					/* mxCalloc (for MATLAB mexFunction) */
@@ -1161,8 +1161,8 @@ PUBLIC Int CSYMAMD_MAIN		/* return TRUE if OK, FALSE otherwise */
 {
     /* === Local variables ================================================== */
 
-    double cknobs [CCOLAMD_KNOBS] ;
-    double default_knobs [CCOLAMD_KNOBS] ;
+    float cknobs [CCOLAMD_KNOBS] ;
+    float default_knobs [CCOLAMD_KNOBS] ;
 
     Int *count ;		/* length of each column of M, and col pointer*/
     Int *mark ;			/* mark array for finding duplicate entries */
@@ -1360,14 +1360,14 @@ PUBLIC Int CSYMAMD_MAIN		/* return TRUE if OK, FALSE otherwise */
     Mlen = CCOLAMD_recommended (mnz, n_row, n) ;
     M = (Int *) ((*allocate) (Mlen, sizeof (Int))) ;
     DEBUG1 (("csymamd: M is "ID"-by-"ID" with "ID" entries, Mlen = %g\n",
-    	n_row, n, mnz, (double) Mlen)) ;
+    	n_row, n, mnz, (float) Mlen)) ;
 
     if (!M)
     {
 	stats [CCOLAMD_STATUS] = CCOLAMD_ERROR_out_of_memory ;
 	(*release) ((void *) count) ;
 	(*release) ((void *) mark) ;
-	DEBUG1 (("csymamd: allocate M (size %g) failed\n", (double) Mlen)) ;
+	DEBUG1 (("csymamd: allocate M (size %g) failed\n", (float) Mlen)) ;
 	return (FALSE) ;
     }
 
@@ -1482,7 +1482,7 @@ PUBLIC Int CCOLAMD_MAIN
     Int Alen,			/* length of A */
     Int A [ ],			/* row indices of A */
     Int p [ ],			/* pointers to columns in A */
-    double knobs [CCOLAMD_KNOBS],/* parameters (uses defaults if NULL) */
+    float knobs [CCOLAMD_KNOBS],/* parameters (uses defaults if NULL) */
     Int stats [CCOLAMD_STATS],	/* output statistics and error codes */
     Int cmember [ ]		/* constraint set of A */
 )
@@ -1511,7 +1511,7 @@ PUBLIC Int CCOLAMD_2	    /* returns TRUE if successful, FALSE otherwise */
     Int Alen,			/* length of A */
     Int A [ ],			/* row indices of A */
     Int p [ ],			/* pointers to columns in A */
-    double knobs [CCOLAMD_KNOBS],/* parameters (uses defaults if NULL) */
+    float knobs [CCOLAMD_KNOBS],/* parameters (uses defaults if NULL) */
     Int stats [CCOLAMD_STATS],	/* output statistics and error codes */
 
     /* each Front array is of size n_col+1. */
@@ -1541,7 +1541,7 @@ PUBLIC Int CCOLAMD_2	    /* returns TRUE if successful, FALSE otherwise */
     Int n_row2 ;		/* number of non-dense, non-empty rows */
     Int ngarbage ;		/* number of garbage collections performed */
     Int max_deg ;		/* maximum row degree */
-    double default_knobs [CCOLAMD_KNOBS] ;	/* default knobs array */
+    float default_knobs [CCOLAMD_KNOBS] ;	/* default knobs array */
 
     Int n_cset ;		/* number of constraint sets */
     Int *cset ;			/* cset of A */
@@ -2266,7 +2266,7 @@ PRIVATE void init_scoring
     CColamd_Col Col [ ],	/* of size n_col+1 */
     Int A [ ],			/* column form and row form of A */
     Int head [ ],		/* of size n_col+1 */
-    double knobs [CCOLAMD_KNOBS],/* parameters */
+    float knobs [CCOLAMD_KNOBS],/* parameters */
     Int *p_n_row2,		/* number of non-dense, non-empty rows */
     Int *p_n_col2,		/* number of non-dense, non-empty columns */
     Int *p_max_deg,		/* maximum row degree */
@@ -3916,7 +3916,7 @@ GLOBAL void CCOLAMD_fsize
     Int Npiv [ ]
 )
 {
-    double dr, dc ;
+    float dr, dc ;
     Int j, parent, frsize, r, c ;
 
     for (j = 0 ; j < nn ; j++)
@@ -3938,8 +3938,8 @@ GLOBAL void CCOLAMD_fsize
 	    r = Fnrows [j] ;
 	    c = Fncols [j] ;
 	    /* avoid integer overflow */
-	    dr = (double) r ;
-	    dc = (double) c ;
+	    dr = (float) r ;
+	    dc = (float) c ;
 	    frsize = (INT_OVERFLOW (dr * dc)) ?  Int_MAX : (r * c) ;
 	    DEBUG1 ((""ID" : npiv "ID" size "ID" parent "ID" ",
 		j, Npiv [j], frsize, parent)) ;

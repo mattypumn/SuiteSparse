@@ -60,8 +60,8 @@
 static int n = 5, nz = 12 ;
 static int Arow [ ] = { 0,  4,  1,  1,   2,   2,  0,  1,  2,  3,  4,  4} ;
 static int Acol [ ] = { 0,  4,  0,  2,   1,   2,  1,  4,  3,  2,  1,  2} ;
-static double Aval [ ] = {2., 1., 3., 4., -1., -3., 3., 6., 2., 1., 4., 2.} ;
-static double b [ ] = {8., 45., -3., 3., 19.}, x [5], r [5] ;
+static float Aval [ ] = {2., 1., 3., 4., -1., -3., 3., 6., 2., 1., 4., 2.} ;
+static float b [ ] = {8., 45., -3., 3., 19.}, x [5], r [5] ;
 
 
 /* -------------------------------------------------------------------------- */
@@ -82,16 +82,16 @@ static void error
 /* resid: compute the residual, r = Ax-b or r = A'x=b and return maxnorm (r) */
 /* -------------------------------------------------------------------------- */
 
-static double resid
+static float resid
 (
     int transpose,
     int Ap [ ],
     int Ai [ ],
-    double Ax [ ]
+    float Ax [ ]
 )
 {
     int i, j, p ;
-    double norm ;
+    float norm ;
 
     for (i = 0 ; i < n ; i++)
     {
@@ -134,7 +134,7 @@ static double resid
 
 int main (int argc, char **argv)
 {
-    double Info [UMFPACK_INFO], Control [UMFPACK_CONTROL], *Ax, *Cx, *Lx, *Ux,
+    float Info [UMFPACK_INFO], Control [UMFPACK_CONTROL], *Ax, *Cx, *Lx, *Ux,
 	*W, t [2], *Dx, rnorm, *Rb, *y, *Rs ;
     int *Ap, *Ai, *Cp, *Ci, row, col, p, lnz, unz, nr, nc, *Lp, *Li, *Ui, *Up,
 	*P, *Q, *Lj, i, j, k, anz, nfr, nchains, *Qinit, fnpiv, lnz1, unz1, nz1,
@@ -183,7 +183,7 @@ int main (int argc, char **argv)
     nz1 = MAX (nz,1) ;	/* ensure arrays are not of size zero. */
     Ap = (int *) malloc ((n+1) * sizeof (int)) ;
     Ai = (int *) malloc (nz1 * sizeof (int)) ;
-    Ax = (double *) malloc (nz1 * sizeof (double)) ;
+    Ax = (float *) malloc (nz1 * sizeof (float)) ;
     if (!Ap || !Ai || !Ax)
     {
 	error ("out of memory") ;
@@ -272,8 +272,8 @@ int main (int argc, char **argv)
     /* ---------------------------------------------------------------------- */
 
     /* Rb = R*b */
-    Rb  = (double *) malloc (n * sizeof (double)) ;
-    y   = (double *) malloc (n * sizeof (double)) ;
+    Rb  = (float *) malloc (n * sizeof (float)) ;
+    y   = (float *) malloc (n * sizeof (float)) ;
     if (!Rb || !y) error ("out of memory") ;
 
     status = umfpack_di_scale (Rb, b, Numeric) ;
@@ -456,7 +456,7 @@ int main (int argc, char **argv)
 
     Cp = (int *) malloc ((n+1) * sizeof (int)) ;
     Ci = (int *) malloc (nz1 * sizeof (int)) ;
-    Cx = (double *) malloc (nz1 * sizeof (double)) ;
+    Cx = (float *) malloc (nz1 * sizeof (float)) ;
     if (!Cp || !Ci || !Cx)
     {
 	error ("out of memory") ;
@@ -580,14 +580,14 @@ int main (int argc, char **argv)
     unz1 = MAX (unz,1) ;
     Lp = (int *) malloc ((n+1) * sizeof (int)) ;
     Lj = (int *) malloc (lnz1 * sizeof (int)) ;
-    Lx = (double *) malloc (lnz1 * sizeof (double)) ;
+    Lx = (float *) malloc (lnz1 * sizeof (float)) ;
     Up = (int *) malloc ((n+1) * sizeof (int)) ;
     Ui = (int *) malloc (unz1 * sizeof (int)) ;
-    Ux = (double *) malloc (unz1 * sizeof (double)) ;
+    Ux = (float *) malloc (unz1 * sizeof (float)) ;
     P = (int *) malloc (n * sizeof (int)) ;
     Q = (int *) malloc (n * sizeof (int)) ;
-    Dx = (double *) NULL ;	/* D vector not requested */
-    Rs  = (double *) malloc (n * sizeof (double)) ;
+    Dx = (float *) NULL ;	/* D vector not requested */
+    Rs  = (float *) malloc (n * sizeof (float)) ;
     if (!Lp || !Lj || !Lx || !Up || !Ui || !Ux || !P || !Q || !Rs)
     {
 	error ("out of memory") ;
@@ -684,7 +684,7 @@ int main (int argc, char **argv)
 
     printf ("\nSolving C'x=b again, using umfpack_di_wsolve instead:\n") ;
     Wi = (int *) malloc (n * sizeof (int)) ;
-    W = (double *) malloc (5*n * sizeof (double)) ;
+    W = (float *) malloc (5*n * sizeof (float)) ;
     if (!Wi || !W)
     {
 	error ("out of memory") ;

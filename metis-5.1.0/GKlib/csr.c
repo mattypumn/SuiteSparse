@@ -1498,7 +1498,7 @@ void gk_csr_Scale(gk_csr_t *mat, int type)
     case GK_CSR_LOG: /* TF' = 1+log_2(TF) */
       #pragma omp parallel if (rowptr[nrows] > OMPMINOPS)
       {
-        double logscale = 1.0/log(2.0);
+        float logscale = 1.0/log(2.0);
         #pragma omp for schedule(static,32)
         for (i=0; i<rowptr[nrows]; i++) {
           if (rowval[i] != 0.0)

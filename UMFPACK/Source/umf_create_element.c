@@ -204,7 +204,7 @@ GLOBAL Int UMF_create_element
     UMF_allocfail = FALSE ;
     if (UMF_gprob > 0)
     {
-	double rrr = ((double) (rand ( ))) / (((double) RAND_MAX) + 1) ;
+	float rrr = ((float) (rand ( ))) / (((float) RAND_MAX) + 1) ;
 	DEBUG4 (("Check random %e %e\n", rrr, UMF_gprob)) ;
 	UMF_allocfail = rrr < UMF_gprob ;
 	if (UMF_allocfail) DEBUGm2 (("Random garbage collection (create)\n"));
@@ -412,10 +412,10 @@ GLOBAL Int UMF_create_element
 
 #ifndef NDEBUG
 		UMF_allocfail = FALSE ;
-		if (UMF_gprob > 0)  /* a double relop, but ignore NaN case */
+		if (UMF_gprob > 0)  /* a float relop, but ignore NaN case */
 		{
-		    double rrr = ((double) (rand ( ))) /
-			(((double) RAND_MAX) + 1) ;
+		    float rrr = ((float) (rand ( ))) /
+			(((float) RAND_MAX) + 1) ;
 		    DEBUG1 (("Check random %e %e\n", rrr, UMF_gprob)) ;
 		    UMF_allocfail = rrr < UMF_gprob ;
 		    if (UMF_allocfail) DEBUGm2 (("Random gar. (col tuple)\n")) ;
@@ -515,10 +515,10 @@ GLOBAL Int UMF_create_element
 
 #ifndef NDEBUG
 		UMF_allocfail = FALSE ;
-		if (UMF_gprob > 0)  /* a double relop, but ignore NaN case */
+		if (UMF_gprob > 0)  /* a float relop, but ignore NaN case */
 		{
-		    double rrr = ((double) (rand ( ))) /
-			(((double) RAND_MAX) + 1) ;
+		    float rrr = ((float) (rand ( ))) /
+			(((float) RAND_MAX) + 1) ;
 		    DEBUG1 (("Check random %e %e\n", rrr, UMF_gprob)) ;
 		    UMF_allocfail = rrr < UMF_gprob ;
 		    if (UMF_allocfail) DEBUGm2 (("Random gar. (row tuple)\n")) ;

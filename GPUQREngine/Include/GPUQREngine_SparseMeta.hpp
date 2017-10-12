@@ -45,8 +45,8 @@ public:
     int lastCjStart;      // Last contribution block col where we added a task
     int *gpuRjmap;        // The gpu location of the Rjmap
     int *gpuRimap;        // The gpu location of the Rimap
-    double *gpuC;         // location of the front's contribution block
-    double *gpuP;         // The location of the front's parent
+    float *gpuC;         // location of the front's contribution block
+    float *gpuP;         // The location of the front's parent
 
     SparseMeta()
     {

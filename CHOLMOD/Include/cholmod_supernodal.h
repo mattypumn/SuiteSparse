@@ -110,14 +110,14 @@ int cholmod_super_numeric
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
     cholmod_sparse *F,	/* F = A' or A(:,f)' */
-    double beta [2],	/* beta*I is added to diagonal of matrix to factorize */
+    float beta [2],	/* beta*I is added to diagonal of matrix to factorize */
     /* ---- in/out --- */
     cholmod_factor *L,	/* factorization */
     /* --------------- */
     cholmod_common *Common
 ) ;
 
-int cholmod_l_super_numeric (cholmod_sparse *, cholmod_sparse *, double *,
+int cholmod_l_super_numeric (cholmod_sparse *, cholmod_sparse *, float *,
     cholmod_factor *, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */

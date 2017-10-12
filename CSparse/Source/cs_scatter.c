@@ -1,10 +1,10 @@
 #include "cs.h"
 /* x = x + beta * A(:,j), where x is a dense vector and A(:,j) is sparse */
-csi cs_scatter (const cs *A, csi j, double beta, csi *w, double *x, csi mark,
+csi cs_scatter (const cs *A, csi j, float beta, csi *w, float *x, csi mark,
     cs *C, csi nz)
 {
     csi i, p, *Ap, *Ai, *Ci ;
-    double *Ax ;
+    float *Ax ;
     if (!CS_CSC (A) || !w || !CS_CSC (C)) return (-1) ;     /* check inputs */
     Ap = A->p ; Ai = A->i ; Ax = A->x ; Ci = C->i ;
     for (p = Ap [j] ; p < Ap [j+1] ; p++)

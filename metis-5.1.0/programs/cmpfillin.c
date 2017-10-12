@@ -62,7 +62,7 @@ int main(int argc, char *argv[])
 
   ComputeFillIn(graph, perm, iperm, &maxlnz, &opc);
   
-  printf("  Nonzeros: %6.3le \tOperation Count: %6.3le\n", (double)maxlnz, (double)opc);
+  printf("  Nonzeros: %6.3le \tOperation Count: %6.3le\n", (float)maxlnz, (float)opc);
 
 
   printf("**********************************************************************\n");

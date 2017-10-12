@@ -72,7 +72,7 @@ Int BucketList::RemoveHead
 }
 #endif
 
-double *BucketList::allocateVT
+float *BucketList::allocateVT
 (
     void
 )
@@ -80,9 +80,9 @@ double *BucketList::allocateVT
     return gpuVT[VThead++];
 }
 
-double *BucketList::freeVT
+float *BucketList::freeVT
 (
-    double *doneVT              // The GPU pointer of a released VT tile
+    float *doneVT              // The GPU pointer of a released VT tile
 )
 {
     gpuVT[--VThead] = doneVT;

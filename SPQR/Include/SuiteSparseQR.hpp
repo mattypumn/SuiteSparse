@@ -259,7 +259,7 @@ template <typename Entry> struct spqr_numeric
 
     SuiteSparse_long maxfrank ;  // max number of rows in any R block
 
-    double norm_E_fro ; // 2-norm of w, the vector of dead column 2-norms
+    float norm_E_fro ; // 2-norm of w, the vector of dead column 2-norms
 
     // -------------------------------------------------------------------------
     // for keeping Householder vectors
@@ -305,7 +305,7 @@ template <typename Entry> struct SuiteSparseQR_factorization
 {
 
     // QR factorization of A or [A Binput] after singletons have been removed
-    double tol ;        // tol used
+    float tol ;        // tol used
     spqr_symbolic *QRsym ;
     spqr_numeric <Entry> *QRnum ;
 
@@ -354,7 +354,7 @@ template <typename Entry> SuiteSparse_long SuiteSparseQR
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
 
     SuiteSparse_long econ,  // number of rows of C and R to return; a value
                             // less than the rank r of A is treated as r, and
@@ -391,7 +391,7 @@ template <typename Entry> SuiteSparse_long SuiteSparseQR
 template <typename Entry> cholmod_dense *SuiteSparseQR
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,
+    float tol,
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-nrhs
     cholmod_common *cc      // workspace and parameters
@@ -409,7 +409,7 @@ template <typename Entry> cholmod_dense *SuiteSparseQR
 template <typename Entry> cholmod_sparse *SuiteSparseQR
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,
+    float tol,
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_sparse *B,      // m-by-nrhs
     cholmod_common *cc      // workspace and parameters
@@ -420,7 +420,7 @@ template <typename Entry> SuiteSparse_long SuiteSparseQR
     // returns rank(A) estimate
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,
+    float tol,
     SuiteSparse_long econ,
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -435,7 +435,7 @@ template <typename Entry> SuiteSparse_long SuiteSparseQR
     // returns rank(A) estimate
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,
+    float tol,
     SuiteSparse_long econ,
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -449,7 +449,7 @@ template <typename Entry> SuiteSparse_long SuiteSparseQR
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     SuiteSparse_long econ,  // number of rows of C and R to return
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-nrhs dense matrix
@@ -465,7 +465,7 @@ template <typename Entry> SuiteSparse_long SuiteSparseQR
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     SuiteSparse_long econ,  // number of rows of C and R to return
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_sparse *B,      // m-by-nrhs sparse matrix
@@ -481,7 +481,7 @@ template <typename Entry> SuiteSparse_long SuiteSparseQR
 (
     // inputs, not modified
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     SuiteSparse_long econ,  // number of rows of C and R to return
     cholmod_sparse *A,      // m-by-n sparse matrix
     // outputs
@@ -542,7 +542,7 @@ SuiteSparseQR_factorization <Entry> *SuiteSparseQR_factorize
 (
     // inputs, not modified:
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // treat columns with 2-norm <= tol as zero
+    float tol,             // treat columns with 2-norm <= tol as zero
     cholmod_sparse *A,      // sparse matrix to factorize
     // workspace and parameters
     cholmod_common *cc
@@ -601,7 +601,7 @@ template <typename Entry> int SuiteSparseQR_free
 template <typename Entry> cholmod_dense *SuiteSparseQR_min2norm
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,
+    float tol,
     cholmod_sparse *A,
     cholmod_dense *B,
     cholmod_common *cc
@@ -610,7 +610,7 @@ template <typename Entry> cholmod_dense *SuiteSparseQR_min2norm
 template <typename Entry> cholmod_sparse *SuiteSparseQR_min2norm
 (
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,
+    float tol,
     cholmod_sparse *A,
     cholmod_sparse *B,
     cholmod_common *cc
@@ -632,7 +632,7 @@ SuiteSparseQR_factorization <Entry> *SuiteSparseQR_symbolic
 template <typename Entry> int SuiteSparseQR_numeric
 (
     // inputs:
-    double tol,             // treat columns with 2-norm <= tol as zero
+    float tol,             // treat columns with 2-norm <= tol as zero
     cholmod_sparse *A,      // sparse matrix to factorize
     // input/output
     SuiteSparseQR_factorization <Entry> *QR,

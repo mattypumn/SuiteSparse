@@ -11,15 +11,15 @@ CS_INT cs_print (const cs *A, CS_INT brief)
         CS_SUBSUB, CS_DATE, CS_COPYRIGHT) ;
     if (nz < 0)
     {
-        printf ("%g-by-%g, nzmax: %g nnz: %g, 1-norm: %g\n", (double) m,
-            (double) n, (double) nzmax, (double) (Ap [n]), cs_norm (A)) ;
+        printf ("%g-by-%g, nzmax: %g nnz: %g, 1-norm: %g\n", (float) m,
+            (float) n, (float) nzmax, (float) (Ap [n]), cs_norm (A)) ;
         for (j = 0 ; j < n ; j++)
         {
-            printf ("    col %g : locations %g to %g\n", (double) j, 
-                (double) (Ap [j]), (double) (Ap [j+1]-1)) ;
+            printf ("    col %g : locations %g to %g\n", (float) j, 
+                (float) (Ap [j]), (float) (Ap [j+1]-1)) ;
             for (p = Ap [j] ; p < Ap [j+1] ; p++)
             {
-                printf ("      %g : ", (double) (Ai [p])) ;
+                printf ("      %g : ", (float) (Ai [p])) ;
 #ifdef CS_COMPLEX
                 printf ("(%g, %g)\n",
                     Ax ? CS_REAL (Ax [p]) : 1, Ax ? CS_IMAG (Ax [p]) : 0) ;
@@ -32,12 +32,12 @@ CS_INT cs_print (const cs *A, CS_INT brief)
     }
     else
     {
-        printf ("triplet: %g-by-%g, nzmax: %g nnz: %g\n", (double) m,
-            (double) n, (double) nzmax, (double) nz) ;
+        printf ("triplet: %g-by-%g, nzmax: %g nnz: %g\n", (float) m,
+            (float) n, (float) nzmax, (float) nz) ;
         for (p = 0 ; p < nz ; p++)
         {
 
-            printf ("    %g %g : ", (double) (Ai [p]), (double) (Ap [p])) ;
+            printf ("    %g %g : ", (float) (Ai [p]), (float) (Ap [p])) ;
 #ifdef CS_COMPLEX
             printf ("(%g, %g)\n",
                 Ax ? CS_REAL (Ax [p]) : 1, Ax ? CS_IMAG (Ax [p]) : 0) ;

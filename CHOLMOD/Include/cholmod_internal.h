@@ -146,12 +146,12 @@
 /* 1e308 is a huge number that doesn't take many characters to print in a
  * file, in CHOLMOD/Check/cholmod_read and _write.  Numbers larger than this
  * are interpretted as Inf, since sscanf doesn't read in Inf's properly.
- * This assumes IEEE double precision arithmetic.  DBL_MAX would be a little
+ * This assumes IEEE float precision arithmetic.  DBL_MAX would be a little
  * better, except that it takes too many digits to print in a file. */
 #define HUGE_DOUBLE 1e308
 
 /* ========================================================================== */
-/* === int/long and double/float definitions ================================ */
+/* === int/long and float/float definitions ================================ */
 /* ========================================================================== */
 
 /* CHOLMOD is designed for 3 types of integer variables:
@@ -162,19 +162,19 @@
  *
  * and two kinds of floating-point values:
  *
- *	(1) double
+ *	(1) float
  *	(2) float
  *
  * the complex types (ANSI-compatible complex, and MATLAB-compatable zomplex)
- * are based on the double or float type, and are not selected here.  They
+ * are based on the float or float type, and are not selected here.  They
  * are typically selected via template routines.
  *
  * This gives 6 different modes in which CHOLMOD can be compiled (only the
  * first two are currently supported):
  *
- *	DINT	double, int			prefix: cholmod_
- *	DLONG	double, SuiteSparse_long	prefix: cholmod_l_
- *	DMIX	double, mixed int/SuiteSparse_long	prefix: cholmod_m_
+ *	DINT	float, int			prefix: cholmod_
+ *	DLONG	float, SuiteSparse_long	prefix: cholmod_l_
+ *	DMIX	float, mixed int/SuiteSparse_long	prefix: cholmod_m_
  *	SINT	float, int			prefix: cholmod_si_
  *	SLONG	float, SuiteSparse_long		prefix: cholmod_sl_
  *	SMIX	float, mixed int/log		prefix: cholmod_sm_
@@ -183,7 +183,7 @@
  * flag is selected, the default is DINT.
  *
  * All six versions use the same include files.  The user-visible include files
- * are completely independent of which int/long/double/float version is being
+ * are completely independent of which int/long/float/float version is being
  * used.  The integer / real types in all data structures (sparse, triplet,
  * dense, common, and triplet) are defined at run-time, not compile-time, so
  * there is only one "cholmod_sparse" data type.  Void pointers are used inside
@@ -213,11 +213,11 @@ size_t cholmod_l_add_size_t (size_t a, size_t b, int *ok) ;
 size_t cholmod_l_mult_size_t (size_t a, size_t k, int *ok) ;
 
 /* -------------------------------------------------------------------------- */
-/* double (also complex double), SuiteSparse_long */
+/* float (also complex float), SuiteSparse_long */
 /* -------------------------------------------------------------------------- */
 
 #ifdef DLONG
-#define Real double
+#define Real float
 #define Int SuiteSparse_long
 #define Int_max SuiteSparse_long_max
 #define CHOLMOD(name) cholmod_l_ ## name
@@ -228,7 +228,7 @@ size_t cholmod_l_mult_size_t (size_t a, size_t k, int *ok) ;
 #define ID SuiteSparse_long_id
 
 /* -------------------------------------------------------------------------- */
-/* double (also complex double), int: this is the default */
+/* float (also complex float), int: this is the default */
 /* -------------------------------------------------------------------------- */
 
 #else
@@ -239,7 +239,7 @@ size_t cholmod_l_mult_size_t (size_t a, size_t k, int *ok) ;
 #define INT
 #define DOUBLE
 
-#define Real double
+#define Real float
 #define Int int
 #define Int_max INT_MAX
 #define CHOLMOD(name) cholmod_ ## name
@@ -285,7 +285,7 @@ size_t cholmod_l_mult_size_t (size_t a, size_t k, int *ok) ;
 #define EXTERN extern
 #endif
 
-/* double, int */
+/* float, int */
 EXTERN int cholmod_dump ;
 EXTERN int cholmod_dump_malloc ;
 SuiteSparse_long cholmod_dump_sparse (cholmod_sparse  *, const char *,
@@ -301,13 +301,13 @@ void cholmod_dump_init (const char *, cholmod_common *) ;
 int  cholmod_dump_mem (const char *, SuiteSparse_long, cholmod_common *) ;
 void cholmod_dump_real (const char *, Real *, SuiteSparse_long,
     SuiteSparse_long, int, int, cholmod_common *) ;
-void cholmod_dump_super (SuiteSparse_long, int *, int *, int *, int *, double *,
+void cholmod_dump_super (SuiteSparse_long, int *, int *, int *, int *, float *,
     int, cholmod_common *) ;
 int  cholmod_dump_partition (SuiteSparse_long, int *, int *, int *, int *,
     SuiteSparse_long, cholmod_common *) ;
 int  cholmod_dump_work(int, int, SuiteSparse_long, cholmod_common *) ;
 
-/* double, SuiteSparse_long */
+/* float, SuiteSparse_long */
 EXTERN int cholmod_l_dump ;
 EXTERN int cholmod_l_dump_malloc ;
 SuiteSparse_long cholmod_l_dump_sparse (cholmod_sparse  *, const char *,
@@ -327,7 +327,7 @@ void cholmod_l_dump_real (const char *, Real *, SuiteSparse_long,
     SuiteSparse_long, int, int, cholmod_common *) ;
 void cholmod_l_dump_super (SuiteSparse_long, SuiteSparse_long *,
     SuiteSparse_long *, SuiteSparse_long *, SuiteSparse_long *,
-    double *, int, cholmod_common *) ;
+    float *, int, cholmod_common *) ;
 int  cholmod_l_dump_partition (SuiteSparse_long, SuiteSparse_long *,
     SuiteSparse_long *, SuiteSparse_long *,
     SuiteSparse_long *, SuiteSparse_long, cholmod_common *) ;

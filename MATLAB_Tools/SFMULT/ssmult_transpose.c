@@ -14,7 +14,7 @@ mxArray *ssmult_transpose	// returns C = A' or A.'
 )
 {
     Int *Cp, *Ci, *Ap, *Ai, *W ;
-    double *Cx, *Cz, *Ax, *Az ;	    // (TO DO): do single too
+    float *Cx, *Cz, *Ax, *Az ;	    // (TO DO): do single too
     mxArray *C ;
     Int p, pend, q, i, j, n, m, anz, cnz ;
     int C_is_complex ;
@@ -44,8 +44,8 @@ mxArray *ssmult_transpose	// returns C = A' or A.'
     MXFREE (mxGetPi (C)) ;
     Cp = mxMalloc ((m+1) * sizeof (Int)) ;
     Ci = mxMalloc (MAX (cnz,1) * sizeof (Int)) ;
-    Cx = mxMalloc (MAX (cnz,1) * sizeof (double)) ;
-    Cz = C_is_complex ? mxMalloc (MAX (cnz,1) * sizeof (double)) : NULL ;
+    Cx = mxMalloc (MAX (cnz,1) * sizeof (float)) ;
+    Cz = C_is_complex ? mxMalloc (MAX (cnz,1) * sizeof (float)) : NULL ;
     mxSetJc (C, Cp) ;
     mxSetIr (C, Ci) ;
     mxSetPr (C, Cx) ;

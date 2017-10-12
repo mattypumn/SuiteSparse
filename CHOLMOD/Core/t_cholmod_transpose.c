@@ -39,7 +39,7 @@ static int TEMPLATE (cholmod_transpose_unsym)
     cholmod_common *Common
 )
 {
-    double *Ax, *Az, *Fx, *Fz ;
+    float *Ax, *Az, *Fx, *Fz ;
     Int *Ap, *Anz, *Ai, *Fp, *Fnz, *Fj, *Wi, *Iwork ;
     Int j, p, pend, nrow, ncol, Apacked, use_fset, fp, Fpacked, jj, permute ;
 
@@ -136,7 +136,7 @@ static int TEMPLATE (cholmod_transpose_sym)
     cholmod_common *Common
 )
 {
-    double *Ax, *Az, *Fx, *Fz ;
+    float *Ax, *Az, *Fx, *Fz ;
     Int *Ap, *Anz, *Ai, *Fp, *Fj, *Wi, *Pinv, *Iwork ;
     Int p, pend, packed, fp, upper, permute, jold, n, i, j, iold ;
 

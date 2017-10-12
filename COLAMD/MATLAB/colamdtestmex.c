@@ -90,10 +90,10 @@ void mexFunction
     Long n_row ;                /* number of rows of A */
     Long nnz ;                  /* number of entries in A */
     Long full ;                 /* TRUE if input matrix full, FALSE if sparse */
-    double knobs [COLAMD_KNOBS] ; /* colamd user-controllable parameters */
-    double *out_perm ;          /* output permutation vector */
-    double *out_stats ;         /* output stats vector */
-    double *in_knobs ;          /* input knobs vector */
+    float knobs [COLAMD_KNOBS] ; /* colamd user-controllable parameters */
+    float *out_perm ;          /* output permutation vector */
+    float *out_stats ;         /* output stats vector */
+    float *in_knobs ;          /* input knobs vector */
     Long i ;                    /* loop counter */
     mxArray *Ainput ;           /* input matrix handle */
     Long spumoni ;              /* verbosity variable */

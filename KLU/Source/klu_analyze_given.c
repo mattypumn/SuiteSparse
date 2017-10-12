@@ -24,7 +24,7 @@ KLU_symbolic *KLU_alloc_symbolic
 {
     KLU_symbolic *Symbolic ;
     Int *P, *Q, *R ;
-    double *Lnz ;
+    float *Lnz ;
     Int nz, i, j, p, pend ;
 
     if (Common == NULL)
@@ -107,7 +107,7 @@ KLU_symbolic *KLU_alloc_symbolic
 
     Q = KLU_malloc (n, sizeof (Int), Common) ;
     R = KLU_malloc (n+1, sizeof (Int), Common) ;
-    Lnz = KLU_malloc (n, sizeof (double), Common) ;
+    Lnz = KLU_malloc (n, sizeof (float), Common) ;
 
     Symbolic->n = n ;
     Symbolic->nz = nz ;
@@ -146,7 +146,7 @@ KLU_symbolic *KLU_analyze_given     /* returns NULL if error, or a valid
 )
 {
     KLU_symbolic *Symbolic ;
-    double *Lnz ;
+    float *Lnz ;
     Int nblocks, nz, block, maxblock, *P, *Q, *R, nzoff, p, pend, do_btf, k ;
 
     /* ---------------------------------------------------------------------- */

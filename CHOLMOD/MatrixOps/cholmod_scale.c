@@ -70,8 +70,8 @@ int CHOLMOD(scale)
     cholmod_common *Common
 )
 {
-    double t ;
-    double *Ax, *s ;
+    float t ;
+    float *Ax, *s ;
     Int *Ap, *Anz, *Ai ;
     Int packed, j, ncol, nrow, p, pend, sncol, snrow, nn, ok ;
 

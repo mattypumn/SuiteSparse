@@ -19,7 +19,7 @@ cs *cs_frand (csi n, csi nel, csi s)
         {
             for (i = 0 ; i < s ; i++)
             {
-                cs_entry (T, P [i], P [j], rand () / (double) RAND_MAX) ;
+                cs_entry (T, P [i], P [j], rand () / (float) RAND_MAX) ;
             }
         }
     }

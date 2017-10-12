@@ -24,7 +24,7 @@ Workspace::Workspace
     totalSize = nitems * size_of_item;
 
     // check for integer overflow
-    if (totalSize != ((double) nitems) * size_of_item)
+    if (totalSize != ((float) nitems) * size_of_item)
     {
         totalSize = 0 ;            // size_t overflow
     }

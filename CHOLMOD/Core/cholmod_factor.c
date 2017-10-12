@@ -217,16 +217,16 @@ int CHOLMOD(free_factor)
     /* numerical values for both simplicial and supernodal L */
     if (L->xtype == CHOLMOD_REAL)
     {
-	CHOLMOD(free) (xs, sizeof (double), L->x, Common) ;
+	CHOLMOD(free) (xs, sizeof (float), L->x, Common) ;
     }
     else if (L->xtype == CHOLMOD_COMPLEX)
     {
-	CHOLMOD(free) (xs, 2*sizeof (double), L->x, Common) ;
+	CHOLMOD(free) (xs, 2*sizeof (float), L->x, Common) ;
     }
     else if (L->xtype == CHOLMOD_ZOMPLEX)
     {
-	CHOLMOD(free) (xs, sizeof (double), L->x, Common) ;
-	CHOLMOD(free) (xs, sizeof (double), L->z, Common) ;
+	CHOLMOD(free) (xs, sizeof (float), L->x, Common) ;
+	CHOLMOD(free) (xs, sizeof (float), L->z, Common) ;
     }
 
     *LHandle = CHOLMOD(free) (1, sizeof (cholmod_factor), (*LHandle), Common) ;
@@ -269,7 +269,7 @@ int CHOLMOD(reallocate_factor)
 	return (FALSE) ;
     }
     Common->status = CHOLMOD_OK ;
-    PRINT1 (("realloc factor %g to %g\n", (double) L->nzmax, (double) nznew)) ;
+    PRINT1 (("realloc factor %g to %g\n", (float) L->nzmax, (float) nznew)) ;
 
     /* ---------------------------------------------------------------------- */
     /* resize (or allocate) the L->i and L->x components of the factor */
@@ -303,8 +303,8 @@ int CHOLMOD(reallocate_column)
     cholmod_common *Common
 )
 {
-    double xneed ;
-    double *Lx, *Lz ;
+    float xneed ;
+    float *Lx, *Lz ;
     Int *Lp, *Lprev, *Lnext, *Li, *Lnz ;
     Int n, pold, pnew, len, k, tail ;
 
@@ -343,44 +343,44 @@ int CHOLMOD(reallocate_column)
 
     ASSERT (Lnz != NULL) ;
     ASSERT (Lnext != NULL && Lprev != NULL) ;
-    PRINT1 (("col %g need %g\n", (double) j, (double) need)) ;
+    PRINT1 (("col %g need %g\n", (float) j, (float) need)) ;
 
     /* column j cannot have more than n-j entries if all entries are present */
     need = MIN (need, n-j) ;
 
-    /* compute need in double to avoid integer overflow */
+    /* compute need in float to avoid integer overflow */
     if (Common->grow1 >= 1.0)
     {
-	xneed = (double) need ;
+	xneed = (float) need ;
 	xneed = Common->grow1 * xneed + Common->grow2 ;
 	xneed = MIN (xneed, n-j) ;
 	need = (Int) xneed ;
     }
-    PRINT1 (("really new need %g current %g\n", (double) need,
-	    (double) (Lp [Lnext [j]] - Lp [j]))) ;
+    PRINT1 (("really new need %g current %g\n", (float) need,
+	    (float) (Lp [Lnext [j]] - Lp [j]))) ;
     ASSERT (need >= 1 && need <= n-j) ;
 
     if (Lp [Lnext [j]] - Lp [j] >= (Int) need)
     {
 	/* no need to reallocate the column, it's already big enough */
 	PRINT1 (("colrealloc: quick return %g %g\n",
-	    (double) (Lp [Lnext [j]] - Lp [j]), (double) need)) ;
+	    (float) (Lp [Lnext [j]] - Lp [j]), (float) need)) ;
 	return (TRUE) ;
 
     }
 
     if (Lp [tail] + need > L->nzmax)
     {
-	/* use double to avoid integer overflow */
-	xneed = (double) need ;
+	/* use float to avoid integer overflow */
+	xneed = (float) need ;
 	if (Common->grow0 < 1.2)	    /* fl. pt. compare, false if NaN */
 	{
 	    /* if grow0 is less than 1.2 or NaN, don't use it */
-	    xneed = 1.2 * (((double) L->nzmax) + xneed + 1) ;
+	    xneed = 1.2 * (((float) L->nzmax) + xneed + 1) ;
 	}
 	else
 	{
-	    xneed = Common->grow0 * (((double) L->nzmax) + xneed + 1) ;
+	    xneed = Common->grow0 * (((float) L->nzmax) + xneed + 1) ;
 	}
 	if (xneed > Size_max ||
 		!CHOLMOD(reallocate_factor) ((Int) xneed, L, Common))
@@ -392,7 +392,7 @@ int CHOLMOD(reallocate_column)
 	    return (FALSE) ;	    /* out of memory */
 	}
 	PRINT1 (("\n=== GROW L from %g to %g\n",
-		    (double) L->nzmax, (double) xneed)) ;
+		    (float) L->nzmax, (float) xneed)) ;
 	/* pack all columns so that each column has at most grow2 free space */
 	CHOLMOD(pack_factor) (L, Common) ;
 	ASSERT (Common->status == CHOLMOD_OK) ;
@@ -493,7 +493,7 @@ int CHOLMOD(pack_factor)
     cholmod_common *Common
 )
 {
-    double *Lx, *Lz ;
+    float *Lx, *Lz ;
     Int *Lp, *Li, *Lnz, *Lnext ;
     Int pnew, j, k, pold, len, n, head, tail, grow2 ;
 
@@ -697,7 +697,7 @@ cholmod_factor *CHOLMOD(copy_factor)
 )
 {
     cholmod_factor *L2 ;
-    double *Lx, *L2x, *Lz, *L2z ;
+    float *Lx, *L2x, *Lz, *L2z ;
     Int *Perm, *ColCount, *Lp, *Li, *Lnz, *Lnext, *Lprev, *Lsuper, *Lpi, *Lpx,
 	*Ls, *Perm2, *ColCount2, *L2p, *L2i, *L2nz, *L2next, *L2prev, *L2super,
 	*L2pi, *L2px, *L2s ;

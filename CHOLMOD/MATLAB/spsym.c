@@ -22,7 +22,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double dummy = 0 ;
+    float dummy = 0 ;
     cholmod_sparse Amatrix, *A ;
     cholmod_common Common, *cm ;
     Long result, quick, option, xmatched, pmatched, nzoffdiag, nzdiag ;
@@ -45,7 +45,7 @@ void mexFunction
     }
     if (!mxIsSparse (pargin [0]))
     {
-    	mexErrMsgTxt ("A must be sparse and double") ;
+    	mexErrMsgTxt ("A must be sparse and float") ;
     }
 
     /* get sparse matrix A */

@@ -35,9 +35,9 @@ PRIVATE void get_L
 (
     Int Lp [ ],
     Int Lj [ ],
-    double Lx [ ],
+    float Lx [ ],
 #ifdef COMPLEX
-    double Lz [ ],
+    float Lz [ ],
 #endif
     NumericType *Numeric,
     Int Pattern [ ],
@@ -48,9 +48,9 @@ PRIVATE void get_U
 (
     Int Up [ ],
     Int Ui [ ],
-    double Ux [ ],
+    float Ux [ ],
 #ifdef COMPLEX
-    double Uz [ ],
+    float Uz [ ],
 #endif
     NumericType *Numeric,
     Int Pattern [ ],
@@ -65,24 +65,24 @@ GLOBAL Int UMFPACK_get_numeric
 (
     Int Lp [ ],
     Int Lj [ ],
-    double Lx [ ],
+    float Lx [ ],
 #ifdef COMPLEX
-    double Lz [ ],
+    float Lz [ ],
 #endif
     Int Up [ ],
     Int Ui [ ],
-    double Ux [ ],
+    float Ux [ ],
 #ifdef COMPLEX
-    double Uz [ ],
+    float Uz [ ],
 #endif
     Int P [ ],
     Int Q [ ],
-    double Dx [ ],
+    float Dx [ ],
 #ifdef COMPLEX
-    double Dz [ ],
+    float Dz [ ],
 #endif
     Int *p_do_recip,
-    double Rs [ ],
+    float Rs [ ],
     void *NumericHandle
 )
 {
@@ -94,7 +94,7 @@ GLOBAL Int UMFPACK_get_numeric
     NumericType *Numeric ;
     Int getL, getU, *Rperm, *Cperm, k, nn, n_row, n_col, *Wi, *Pattern,
 	n_inner ;
-    double *Rs1 ;
+    float *Rs1 ;
     Entry *D ;
 
 #ifndef NDEBUG
@@ -181,7 +181,7 @@ GLOBAL Int UMFPACK_get_numeric
 	    Numeric, Pattern, Wi) ;
     }
 
-    if (Dx != (double *) NULL)
+    if (Dx != (float *) NULL)
     {
 	D = Numeric->D ;
 #ifdef COMPLEX
@@ -226,10 +226,10 @@ GLOBAL Int UMFPACK_get_numeric
 #endif
     }
 
-    if (Rs != (double *) NULL)
+    if (Rs != (float *) NULL)
     {
 	Rs1 = Numeric->Rs ;
-	if (Rs1 == (double *) NULL)
+	if (Rs1 == (float *) NULL)
 	{
 	    /* R is the identity matrix.  */
 	    for (k = 0 ; k < n_row ; k++)
@@ -323,9 +323,9 @@ PRIVATE void get_L
 (
     Int Lp [ ],		/* of size n_row+1 */
     Int Lj [ ],		/* of size lnz, where lnz = Lp [n_row] */
-    double Lx [ ],	/* of size lnz */
+    float Lx [ ],	/* of size lnz */
 #ifdef COMPLEX
-    double Lz [ ],	/* of size lnz */
+    float Lz [ ],	/* of size lnz */
 #endif
     NumericType *Numeric,
     Int Pattern [ ],	/* workspace of size n_row */
@@ -688,9 +688,9 @@ PRIVATE void get_U
 (
     Int Up [ ],		/* of size n_col+1 */
     Int Ui [ ],		/* of size unz, where unz = Up [n_col] */
-    double Ux [ ],	/* of size unz */
+    float Ux [ ],	/* of size unz */
 #ifdef COMPLEX
-    double Uz [ ],	/* of size unz */
+    float Uz [ ],	/* of size unz */
 #endif
     NumericType *Numeric,
     Int Pattern [ ],	/* workspace of size n_col */

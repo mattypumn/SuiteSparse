@@ -30,7 +30,7 @@ Long SuiteSparseQR_C             // returns rank(A) estimate, (-1) if failure
 (
     // inputs:
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as 0
+    float tol,             // columns with 2-norm <= tol are treated as 0
     Long econ,              // e = max(min(m,econ),rank(A))
     int getCTX,             // 0: Z=C (e-by-k), 1: Z=C', 2: Z=X (e-by-k)
     cholmod_sparse *A,      // m-by-n sparse matrix to factorize
@@ -52,7 +52,7 @@ Long SuiteSparseQR_C             // returns rank(A) estimate, (-1) if failure
     cc->status = CHOLMOD_OK ;
 
     return ((A->xtype == CHOLMOD_REAL) ?
-        SuiteSparseQR <double>  (ordering, tol, econ, getCTX, A, Bsparse,
+        SuiteSparseQR <float>  (ordering, tol, econ, getCTX, A, Bsparse,
             Bdense, Zsparse, Zdense, R, E, H, HPinv, HTau, cc) :
         SuiteSparseQR <Complex> (ordering, tol, econ, getCTX, A, Bsparse,
             Bdense, Zsparse, Zdense, R, E, H, HPinv, HTau, cc)) ;
@@ -68,7 +68,7 @@ Long SuiteSparseQR_C_QR          // returns rank(A) estimate, (-1) if failure
 (
     // inputs:
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as 0
+    float tol,             // columns with 2-norm <= tol are treated as 0
     Long econ,              // e = max(min(m,econ),rank(A))
     cholmod_sparse *A,      // m-by-n sparse matrix to factorize
     // outputs:
@@ -83,7 +83,7 @@ Long SuiteSparseQR_C_QR          // returns rank(A) estimate, (-1) if failure
     cc->status = CHOLMOD_OK ;
 
     return ((A->xtype == CHOLMOD_REAL) ?
-        SuiteSparseQR <double>  (ordering, tol, econ, A, Q, R, E, cc) :
+        SuiteSparseQR <float>  (ordering, tol, econ, A, Q, R, E, cc) :
         SuiteSparseQR <Complex> (ordering, tol, econ, A, Q, R, E, cc)) ;
 }
 
@@ -96,7 +96,7 @@ cholmod_dense *SuiteSparseQR_C_backslash    // returns X, NULL if failure
 (
     // inputs:
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as 0
+    float tol,             // columns with 2-norm <= tol are treated as 0
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_dense  *B,      // m-by-k
     cholmod_common *cc      // workspace and parameters
@@ -108,7 +108,7 @@ cholmod_dense *SuiteSparseQR_C_backslash    // returns X, NULL if failure
     cc->status = CHOLMOD_OK ;
 
     return ((A->xtype == CHOLMOD_REAL) ?
-        SuiteSparseQR <double>  (ordering, tol, A, B, cc) :
+        SuiteSparseQR <float>  (ordering, tol, A, B, cc) :
         SuiteSparseQR <Complex> (ordering, tol, A, B, cc)) ;
 }
 
@@ -138,7 +138,7 @@ cholmod_sparse *SuiteSparseQR_C_backslash_sparse   // returns X, NULL if failure
 (
     // inputs:
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as 0
+    float tol,             // columns with 2-norm <= tol are treated as 0
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_sparse *B,      // m-by-k
     cholmod_common *cc      // workspace and parameters
@@ -150,7 +150,7 @@ cholmod_sparse *SuiteSparseQR_C_backslash_sparse   // returns X, NULL if failure
     cc->status = CHOLMOD_OK ;
 
     return ((A->xtype == CHOLMOD_REAL) ?
-        SuiteSparseQR <double>  (ordering, tol, A, B, cc) :
+        SuiteSparseQR <float>  (ordering, tol, A, B, cc) :
         SuiteSparseQR <Complex> (ordering, tol, A, B, cc)) ;
 }
 
@@ -168,7 +168,7 @@ SuiteSparseQR_C_factorization *SuiteSparseQR_C_factorize
 (
     // inputs:
     int ordering,           // all, except 3:given treated as 0:fixed
-    double tol,             // columns with 2-norm <= tol are treated as 0
+    float tol,             // columns with 2-norm <= tol are treated as 0
     cholmod_sparse *A,      // m-by-n sparse matrix
     cholmod_common *cc      // workspace and parameters
 )
@@ -186,7 +186,7 @@ SuiteSparseQR_C_factorization *SuiteSparseQR_C_factorize
     }
     QR->xtype = A->xtype ;
     QR->factors = (A->xtype == CHOLMOD_REAL) ?
-        ((void *) SuiteSparseQR_factorize <double>  (ordering, tol, A, cc)) :
+        ((void *) SuiteSparseQR_factorize <float>  (ordering, tol, A, cc)) :
         ((void *) SuiteSparseQR_factorize <Complex> (ordering, tol, A, cc)) ;
     if (cc->status < CHOLMOD_OK)
     {
@@ -223,7 +223,7 @@ SuiteSparseQR_C_factorization *SuiteSparseQR_C_symbolic
     }
     QR->xtype = A->xtype ;
     QR->factors = (A->xtype == CHOLMOD_REAL) ?
-        ((void *) SuiteSparseQR_symbolic <double>  (ordering, allow_tol, A,cc)):
+        ((void *) SuiteSparseQR_symbolic <float>  (ordering, allow_tol, A,cc)):
         ((void *) SuiteSparseQR_symbolic <Complex> (ordering, allow_tol, A,cc));
     if (cc->status < CHOLMOD_OK)
     {
@@ -243,7 +243,7 @@ SuiteSparseQR_C_factorization *SuiteSparseQR_C_symbolic
 int SuiteSparseQR_C_numeric // returns TRUE if successful, FALSE otherwise
 (
     // inputs:
-    double tol,             // treat columns with 2-norm <= tol as zero
+    float tol,             // treat columns with 2-norm <= tol as zero
     cholmod_sparse *A,      // sparse matrix to factorize
     // input/output:
     SuiteSparseQR_C_factorization *QR,
@@ -257,9 +257,9 @@ int SuiteSparseQR_C_numeric // returns TRUE if successful, FALSE otherwise
 
     if (QR->xtype == CHOLMOD_REAL)
     {
-        SuiteSparseQR_factorization <double> *QR2 ;
-        QR2 = (SuiteSparseQR_factorization <double> *) (QR->factors) ;
-        SuiteSparseQR_numeric <double> (tol, A, QR2, cc) ;
+        SuiteSparseQR_factorization <float> *QR2 ;
+        QR2 = (SuiteSparseQR_factorization <float> *) (QR->factors) ;
+        SuiteSparseQR_numeric <float> (tol, A, QR2, cc) ;
     }
     else
     {
@@ -288,9 +288,9 @@ int SuiteSparseQR_C_free
     QR = *QR_handle ;
     if (QR->xtype == CHOLMOD_REAL)
     {
-        SuiteSparseQR_factorization <double> *QR2 ;
-        QR2 = (SuiteSparseQR_factorization <double> *) (QR->factors) ;
-        spqr_freefac <double> (&QR2, cc) ;
+        SuiteSparseQR_factorization <float> *QR2 ;
+        QR2 = (SuiteSparseQR_factorization <float> *) (QR->factors) ;
+        spqr_freefac <float> (&QR2, cc) ;
     }
     else
     {
@@ -325,8 +325,8 @@ cholmod_dense* SuiteSparseQR_C_solve    // returnx X, or NULL if failure
 {
     RETURN_IF_NULL (QR, NULL) ;
     return ((QR->xtype == CHOLMOD_REAL) ?
-        SuiteSparseQR_solve <double>   (system,
-            (SuiteSparseQR_factorization <double>  *) QR->factors, B, cc) :
+        SuiteSparseQR_solve <float>   (system,
+            (SuiteSparseQR_factorization <float>  *) QR->factors, B, cc) :
         SuiteSparseQR_solve <Complex>  (system,
             (SuiteSparseQR_factorization <Complex> *) QR->factors, B, cc)) ;
 }
@@ -355,8 +355,8 @@ cholmod_dense *SuiteSparseQR_C_qmult
 {
     RETURN_IF_NULL (QR, NULL) ;
     return ((QR->xtype == CHOLMOD_REAL) ?
-        SuiteSparseQR_qmult <double>   (method,
-            (SuiteSparseQR_factorization <double>  *) QR->factors, X, cc) :
+        SuiteSparseQR_qmult <float>   (method,
+            (SuiteSparseQR_factorization <float>  *) QR->factors, X, cc) :
         SuiteSparseQR_qmult <Complex>  (method,
             (SuiteSparseQR_factorization <Complex> *) QR->factors, X, cc)) ;
 }

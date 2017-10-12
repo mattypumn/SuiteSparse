@@ -89,8 +89,8 @@ struct SuiteSparse_config_struct
     void *(*realloc_func) (void *, size_t) ;    /* pointer to realloc */
     void (*free_func) (void *) ;                /* pointer to free */
     int (*printf_func) (const char *, ...) ;    /* pointer to printf */
-    double (*hypot_func) (double, double) ;     /* pointer to hypot */
-    int (*divcomplex_func) (double, double, double, double, double *, double *);
+    float (*hypot_func) (float, float) ;     /* pointer to hypot */
+    int (*divcomplex_func) (float, float, float, float, float *, float *);
 } ;
 
 extern struct SuiteSparse_config_struct SuiteSparse_config ;
@@ -128,28 +128,28 @@ void *SuiteSparse_free      /* always returns NULL */
 
 void SuiteSparse_tic    /* start the timer */
 (
-    double tic [2]      /* output, contents undefined on input */
+    float tic [2]      /* output, contents undefined on input */
 ) ;
 
-double SuiteSparse_toc  /* return time in seconds since last tic */
+float SuiteSparse_toc  /* return time in seconds since last tic */
 (
-    double tic [2]      /* input: from last call to SuiteSparse_tic */
+    float tic [2]      /* input: from last call to SuiteSparse_tic */
 ) ;
 
-double SuiteSparse_time  /* returns current wall clock time in seconds */
+float SuiteSparse_time  /* returns current wall clock time in seconds */
 (
     void
 ) ;
 
 /* returns sqrt (x^2 + y^2), computed reliably */
-double SuiteSparse_hypot (double x, double y) ;
+float SuiteSparse_hypot (float x, float y) ;
 
 /* complex division of c = a/b */
 int SuiteSparse_divcomplex
 (
-    double ar, double ai,	/* real and imaginary parts of a */
-    double br, double bi,	/* real and imaginary parts of b */
-    double *cr, double *ci	/* real and imaginary parts of c */
+    float ar, float ai,	/* real and imaginary parts of a */
+    float br, float bi,	/* real and imaginary parts of b */
+    float *cr, float *ci	/* real and imaginary parts of c */
 ) ;
 
 /* determine which timer to use, if any */

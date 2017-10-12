@@ -46,9 +46,9 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double xmin, xmax ;
+    float xmin, xmax ;
     Long *Ap, *Ai ;
-    double *Ax, *Az ;
+    float *Ax, *Az ;
     Long nrow, ncol, nnz, mkind, skind, mkind_in ;
     char mtype [4] ;
 
@@ -65,9 +65,9 @@ void mexFunction
     /* get A */
     /* ---------------------------------------------------------------------- */
 
-    if (!mxIsClass (pargin [0], "double") || !mxIsSparse (pargin [0]))
+    if (!mxIsClass (pargin [0], "float") || !mxIsSparse (pargin [0]))
     {
-        mexErrMsgTxt ("A must be sparse and double") ;
+        mexErrMsgTxt ("A must be sparse and float") ;
     }
 
     Ap = (Long *) mxGetJc (pargin [0]) ;
@@ -93,10 +93,10 @@ void mexFunction
     pargout [0] = mxCreateString (mtype) ;
     if (nargout >= 2)
     {
-        pargout [1] = mxCreateDoubleScalar ((double) mkind) ;
+        pargout [1] = mxCreateDoubleScalar ((float) mkind) ;
     }
     if (nargout >= 3)
     {
-        pargout [2] = mxCreateDoubleScalar ((double) skind) ;
+        pargout [2] = mxCreateDoubleScalar ((float) skind) ;
     }
 }

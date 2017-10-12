@@ -241,16 +241,16 @@ int CHOLMOD(free_triplet)
     T->i = CHOLMOD(free) (nz, sizeof (Int), T->i, Common) ;
     if (T->xtype == CHOLMOD_REAL)
     {
-	T->x = CHOLMOD(free) (nz, sizeof (double), T->x, Common) ;
+	T->x = CHOLMOD(free) (nz, sizeof (float), T->x, Common) ;
     }
     else if (T->xtype == CHOLMOD_COMPLEX)
     {
-	T->x = CHOLMOD(free) (nz, 2*sizeof (double), T->x, Common) ;
+	T->x = CHOLMOD(free) (nz, 2*sizeof (float), T->x, Common) ;
     }
     else if (T->xtype == CHOLMOD_ZOMPLEX)
     {
-	T->x = CHOLMOD(free) (nz, sizeof (double), T->x, Common) ;
-	T->z = CHOLMOD(free) (nz, sizeof (double), T->z, Common) ;
+	T->x = CHOLMOD(free) (nz, sizeof (float), T->x, Common) ;
+	T->z = CHOLMOD(free) (nz, sizeof (float), T->z, Common) ;
     }
     *THandle = CHOLMOD(free) (1, sizeof (cholmod_triplet), (*THandle), Common) ;
     return (TRUE) ;
@@ -558,7 +558,7 @@ cholmod_triplet *CHOLMOD(sparse_to_triplet)
     cholmod_common *Common
 )
 {
-    double *Ax, *Az, *Tx, *Tz ;
+    float *Ax, *Az, *Tx, *Tz ;
     Int *Ap, *Ai, *Ti, *Tj, *Anz ;
     cholmod_triplet *T ;
     Int i, xtype, p, pend, k, j, nrow, ncol, nz, stype, packed, up, lo,
@@ -682,7 +682,7 @@ cholmod_triplet *CHOLMOD(copy_triplet)
     cholmod_common *Common
 )
 {
-    double *Tx, *Tz, *Cx, *Cz ;
+    float *Tx, *Tz, *Cx, *Cz ;
     Int *Ci, *Cj, *Ti, *Tj ;
     cholmod_triplet *C ;
     Int xtype, k, nz ;

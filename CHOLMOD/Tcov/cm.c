@@ -55,11 +55,11 @@
 /* === global variables ===================================================== */
 /* ========================================================================== */
 
-double zero [2], one [2], minusone [2] ;
+float zero [2], one [2], minusone [2] ;
 cholmod_common Common, *cm ;
 cholmod_dense *M1 ;
 Int dot = 0 ;
-double Zero [2] ;
+float Zero [2] ;
 
 
 /* ========================================================================== */
@@ -171,11 +171,11 @@ Int nrand (Int n)
 /* === xrand ================================================================ */
 /* ========================================================================== */
 
-/* return a random double between 0 and x */
+/* return a random float between 0 and x */
 
-double xrand (double range)
+float xrand (float range)
 {
-    return ((range * (double) (my_rand ( ))) / MY_RAND_MAX) ;
+    return ((range * (float) (my_rand ( ))) / MY_RAND_MAX) ;
 }
 
 
@@ -250,7 +250,7 @@ cholmod_triplet *read_triplet
 )
 {
     cholmod_triplet *T ;
-    double *Tx, *Tz ;
+    float *Tx, *Tz ;
     long long x1, x2, x3, x4, x5 ;
     Int *Ti, *Tj ;
     Int n, j, k, nrow, ncol, nz, stype, arrowhead, tridiag_plus_denserow,
@@ -432,7 +432,7 @@ cholmod_triplet *read_triplet
 	{
 	    for (k = 0 ; k < nz ; k++)
 	    {
-		if (fscanf (f,""ID" "ID" %lg %lg\n", Ti+k, Tj+k, Tx+k, Tz+k)
+		if (fscanf (f,""ID" "ID" %g %g\n", Ti+k, Tj+k, Tx+k, Tz+k)
 		    == EOF)
 		{
 		    ERROR (CHOLMOD_INVALID, "Error reading triplet matrix\n") ;
@@ -443,7 +443,7 @@ cholmod_triplet *read_triplet
 	{
 	    for (k = 0 ; k < nz ; k++)
 	    {
-		if (fscanf (f, ""ID" "ID" %lg\n", Ti+k, Tj+k, Tx+k) == EOF)
+		if (fscanf (f, ""ID" "ID" %g\n", Ti+k, Tj+k, Tx+k) == EOF)
 		{
 		    ERROR (CHOLMOD_INVALID, "Error reading triplet matrix\n") ;
 		}
@@ -487,7 +487,7 @@ cholmod_triplet *read_triplet
 cholmod_dense *zeros (Int nrow, Int ncol, Int d, Int xtype)
 {
     cholmod_dense *X ;
-    double *Xx, *Xz ;
+    float *Xx, *Xz ;
     Int i, nz ;
     X = CHOLMOD(allocate_dense) (nrow, ncol, d, xtype, cm) ;
     if (X == NULL)
@@ -534,7 +534,7 @@ cholmod_dense *zeros (Int nrow, Int ncol, Int d, Int xtype)
 
 cholmod_dense *xtrue (Int nrow, Int ncol, Int d, Int xtype)
 {
-    double *x, *z ;
+    float *x, *z ;
     cholmod_dense *X ;
     Int j, i ;
     X = zeros (nrow, ncol, d, xtype) ;
@@ -563,7 +563,7 @@ cholmod_dense *xtrue (Int nrow, Int ncol, Int d, Int xtype)
 	    for (i = 0 ; i < nrow ; i++)
 	    {
 		x [2*(i+j*d)  ] = i+j*d + 1 ;
-		x [2*(i+j*d)+1] = ((double) (j+i*d + 1))/10 ;
+		x [2*(i+j*d)+1] = ((float) (j+i*d + 1))/10 ;
 	    }
 	}
     }
@@ -574,7 +574,7 @@ cholmod_dense *xtrue (Int nrow, Int ncol, Int d, Int xtype)
 	    for (i = 0 ; i < nrow ; i++)
 	    {
 		x [i+j*d] = i+j*d + 1 ;
-		z [i+j*d] = ((double) (j+i*d + 1))/10 ;
+		z [i+j*d] = ((float) (j+i*d + 1))/10 ;
 	    }
 	}
     }
@@ -639,9 +639,9 @@ cholmod_dense *rhs (cholmod_sparse *A, Int nrhs, Int d)
 
 /* compute r = norm (A*x-b)/norm(b) or r = norm (A*A'*x-b)/norm(b) */
 
-double resid (cholmod_sparse *A, cholmod_dense *X, cholmod_dense *B)
+float resid (cholmod_sparse *A, cholmod_dense *X, cholmod_dense *B)
 {
-    double r, bnorm ;
+    float r, bnorm ;
     cholmod_dense *R, *X2, *B2 ;
     cholmod_sparse *C, *A2 ;
     Int d, n, nrhs, xtype ;
@@ -773,9 +773,9 @@ double resid (cholmod_sparse *A, cholmod_dense *X, cholmod_dense *B)
 
 /* compute r = norm (A*x-b)/norm(b) or r = norm (A*A'*x-b)/norm(b) */
 
-double resid_sparse (cholmod_sparse *A, cholmod_sparse *X, cholmod_sparse *B)
+float resid_sparse (cholmod_sparse *A, cholmod_sparse *X, cholmod_sparse *B)
 {
-    double r, bnorm ;
+    float r, bnorm ;
     cholmod_sparse *R, *W, *AT, *W2 ;
     cholmod_dense *X2, *B2 ;
     Int n, nrhs, xtype ;
@@ -859,10 +859,10 @@ double resid_sparse (cholmod_sparse *A, cholmod_sparse *X, cholmod_sparse *B)
 
 /* r = norm (A1*A2*A3*x - b) /  norm (b) */
 
-double resid3 (cholmod_sparse *A1, cholmod_sparse *A2, cholmod_sparse *A3,
+float resid3 (cholmod_sparse *A1, cholmod_sparse *A2, cholmod_sparse *A3,
     cholmod_dense *X, cholmod_dense *B)
 {
-    double r, bnorm ;
+    float r, bnorm ;
     cholmod_dense *R, *W1, *W2, *X2, *B2 ;
     cholmod_sparse *C1, *C2, *C3 ;
     Int n, nrhs, d, xtype ;
@@ -1023,13 +1023,13 @@ double resid3 (cholmod_sparse *A1, cholmod_sparse *A2, cholmod_sparse *A3,
  * the same thing.
  */
 
-double pnorm (cholmod_dense *X, Int *P, cholmod_dense *B, Int inv)
+float pnorm (cholmod_dense *X, Int *P, cholmod_dense *B, Int inv)
 {
     cholmod_dense *R, *X2, *B2 ;
     cholmod_factor *L ;
-    double *xx, *xz, *bx, *bz, *rx, *rz ;
+    float *xx, *xz, *bx, *bz, *rx, *rz ;
     Int *Pinv, *Perm ;
-    double rnorm, r ;
+    float rnorm, r ;
     Int i, j, k, n, nrhs, xtype, ok, save, lxtype ;
 
     if (X == NULL || P == NULL || B == NULL)
@@ -1152,7 +1152,7 @@ double pnorm (cholmod_dense *X, Int *P, cholmod_dense *B, Int inv)
 
 void prune_row (cholmod_sparse *A, Int k)
 {
-    double *Ax ;
+    float *Ax ;
     Int *Ap, *Ai ;
     Int ncol, p, i, j, nz ;
 
@@ -1200,9 +1200,9 @@ void prune_row (cholmod_sparse *A, Int k)
 /* === do_matrix =========================================================== */
 /* ========================================================================== */
 
-double do_matrix (cholmod_sparse *A)
+float do_matrix (cholmod_sparse *A)
 {
-    double err, maxerr = 0 ;
+    float err, maxerr = 0 ;
     Int print, precise, maxprint, minprint, nmethods ;
 
     if (A == NULL)
@@ -1360,10 +1360,10 @@ int main (int argc, char **argv)
     cholmod_triplet *T ;
     cholmod_sparse *A, *C, *AT ;
     char *s ;
-    double err = 0, maxerr = 0 ;
+    float err = 0, maxerr = 0 ;
     Int n = 0, nmin = 0, nrow = 0, ncol = 0, save ;
     int singular, do_memory, i, do_nantests, ok ;
-    double v = CHOLMOD_VERSION, tic [2], t ;
+    float v = CHOLMOD_VERSION, tic [2], t ;
     int version [3] ;
     char *p ;
     const char* env_use_gpu;
@@ -1485,7 +1485,7 @@ int main (int argc, char **argv)
 
     if (M1 != NULL)
     {
-	((double *) (M1->x)) [0] = -1 ;
+	((float *) (M1->x)) [0] = -1 ;
     }
 
     /* ---------------------------------------------------------------------- */

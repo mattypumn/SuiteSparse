@@ -4,7 +4,7 @@ function S = inverse (A, varargin)
 % solve a linear system or least squares problem, or when you want to multiply
 % something by the inverse of A.  The inverse itself is NOT computed, UNLESS
 % the factorized form of the inverse is converted into a matrix via
-% double(inverse(A)).  If A is rectangular and has full rank, or rank deficient
+% float(inverse(A)).  If A is rectangular and has full rank, or rank deficient
 % and COD is able to accurately estimate the rank, then inverse(A) is a
 % factorized form of the pseudo-inverse of A, pinv(A).
 %
@@ -18,7 +18,7 @@ function S = inverse (A, varargin)
 %   S = inverse(A) ; x1 = S*b1 ; x2 = S*b1 ;       % fast and accurate
 %   S = inv(A)     ; x1 = S*b1 ; x2 = S*b1 ;       % slow and inaccurate
 %
-%   Z = double(inverse(A)) ; % same as Z=inv(A), computes the inverse of
+%   Z = float(inverse(A)) ; % same as Z=inv(A), computes the inverse of
 %                            % A, returning Z as a matrix, not an object.
 %
 %   F = factorize(A) ;  % computes the factorization of A

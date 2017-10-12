@@ -185,7 +185,7 @@ void GPPrintInfo(params_t *params, graph_t *graph)
   if (params->ubvec) {
     printf(" ubvec=(");
     for (i=0; i<graph->ncon; i++)
-      printf("%s%.2e", (i==0?"":" "), (double)params->ubvec[i]);
+      printf("%s%.2e", (i==0?"":" "), (float)params->ubvec[i]);
     printf(")\n");
   }
 

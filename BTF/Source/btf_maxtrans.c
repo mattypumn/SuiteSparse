@@ -141,8 +141,8 @@ static Int augment
     Int Istack [ ],     /* size n.  Row index stack. */
     Int Jstack [ ],     /* size n.  Column index stack. */
     Int Pstack [ ],     /* size n.  Keeps track of position in adjacency list */
-    double *work,       /* work performed by the depth-first-search */
-    double maxwork      /* maximum work allowed */
+    float *work,       /* work performed by the depth-first-search */
+    float maxwork      /* maximum work allowed */
 )
 {
     /* local variables, but "global" to all DFS levels: */
@@ -299,11 +299,11 @@ Int BTF(maxtrans)   /* returns # of columns in the matching */
     Int ncol,
     Int Ap [ ],     /* size ncol+1 */
     Int Ai [ ],     /* size nz = Ap [ncol] */
-    double maxwork, /* do at most maxwork*nnz(A) work; no limit if <= 0.  This
+    float maxwork, /* do at most maxwork*nnz(A) work; no limit if <= 0.  This
                      * work limit excludes the O(nnz(A)) cheap-match phase. */
 
     /* --- output --- */
-    double *work,   /* work = -1 if maxwork > 0 and the total work performed
+    float *work,   /* work = -1 if maxwork > 0 and the total work performed
                      * reached the maximum of maxwork*nnz(A)).
                      * Otherwise, work = the total work performed. */
 

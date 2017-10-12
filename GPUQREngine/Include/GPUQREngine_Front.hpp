@@ -33,9 +33,9 @@ public:
     bool isColMajor;    // default:F
     Int ldn;            // user-specified desired leading dim
 
-    double *F;          // Front data
-    double *gpuF;       // The frontal matrix on the GPU.
-    double *cpuR;       // The cpu location of the R factor.
+    float *F;          // Front data
+    float *gpuF;       // The frontal matrix on the GPU.
+    float *cpuR;       // The cpu location of the R factor.
 
     FrontState state;   // The front factorization state
 
@@ -85,7 +85,7 @@ public:
     ~Front()
     {
         // for the sparse case, F is NULL on the CPU
-        F = (double *) SuiteSparse_free (F) ;
+        F = (float *) SuiteSparse_free (F) ;
     }
 
     bool isAllocated

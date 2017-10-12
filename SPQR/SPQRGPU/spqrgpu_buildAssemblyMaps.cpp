@@ -17,7 +17,7 @@ void spqrgpu_buildAssemblyMaps
     Long *Sleft,
     Long *Sp,
     Long *Sj,
-    double *Sx,
+    float *Sx,
     Long *Fm,
     Long *Cm,
     Long *Childp,

@@ -13,9 +13,9 @@ int umfpack_di_report_matrix
     int n_col,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     int col_form,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_dl_report_matrix
@@ -24,9 +24,9 @@ SuiteSparse_long umfpack_dl_report_matrix
     SuiteSparse_long n_col,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     SuiteSparse_long col_form,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 int umfpack_zi_report_matrix
@@ -35,9 +35,9 @@ int umfpack_zi_report_matrix
     int n_col,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ], const double Az [ ],
+    const float Ax [ ], const float Az [ ],
     int col_form,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_zl_report_matrix
@@ -46,26 +46,26 @@ SuiteSparse_long umfpack_zl_report_matrix
     SuiteSparse_long n_col,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ], const double Az [ ],
+    const float Ax [ ], const float Az [ ],
     SuiteSparse_long col_form,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     int n_row, n_col, *Ap, *Ai, status ;
-    double *Ax, Control [UMFPACK_CONTROL] ;
+    float *Ax, Control [UMFPACK_CONTROL] ;
     status = umfpack_di_report_matrix (n_row, n_col, Ap, Ai, Ax, 1, Control) ;
 or:
     status = umfpack_di_report_matrix (n_row, n_col, Ap, Ai, Ax, 0, Control) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long n_row, n_col, *Ap, *Ai, status ;
-    double *Ax, Control [UMFPACK_CONTROL] ;
+    float *Ax, Control [UMFPACK_CONTROL] ;
     status = umfpack_dl_report_matrix (n_row, n_col, Ap, Ai, Ax, 1, Control) ;
 or:
     status = umfpack_dl_report_matrix (n_row, n_col, Ap, Ai, Ax, 0, Control) ;
@@ -74,7 +74,7 @@ complex int Syntax:
 
     #include "umfpack.h"
     int n_row, n_col, *Ap, *Ai, status ;
-    double *Ax, *Az, Control [UMFPACK_CONTROL] ;
+    float *Ax, *Az, Control [UMFPACK_CONTROL] ;
     status = umfpack_zi_report_matrix (n_row, n_col, Ap, Ai, Ax, Az, 1,
         Control) ;
 or:
@@ -85,7 +85,7 @@ complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long n_row, n_col, *Ap, *Ai, status ;
-    double *Ax, Control [UMFPACK_CONTROL] ;
+    float *Ax, Control [UMFPACK_CONTROL] ;
     status = umfpack_zl_report_matrix (n_row, n_col, Ap, Ai, Ax, Az, 1,
 	Control) ;
 or:
@@ -150,7 +150,7 @@ Arguments:
 	Ai [(Ap [j]) ... (Ap [j+1]-1)]. Column indices must be in the range 0
 	to n_col-1 (the matrix is 0-based).
 
-    double Ax [nz] ;	Input argument, not modified, of size nz = Ap [n].
+    float Ax [nz] ;	Input argument, not modified, of size nz = Ap [n].
 			Size 2*nz for packed complex case.
 
 	The numerical values of the sparse matrix A.
@@ -170,7 +170,7 @@ Arguments:
 
 	No numerical values are printed if Ax is NULL.
 
-    double Az [nz] ;	Input argument, not modified, for complex versions.
+    float Az [nz] ;	Input argument, not modified, for complex versions.
 
 	The imaginary values of the sparse matrix A.   See the description
 	of Ax, above.
@@ -184,9 +184,9 @@ Arguments:
 	The matrix is in row-oriented form if form is col_form is false (0).
 	Otherwise, the matrix is in column-oriented form.
 
-    double Control [UMFPACK_CONTROL] ;	Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;	Input argument, not modified.
 
-	If a (double *) NULL pointer is passed, then the default control
+	If a (float *) NULL pointer is passed, then the default control
 	settings are used.  Otherwise, the settings are determined from the
 	Control array.  See umfpack_*_defaults on how to fill the Control
 	array with the default settings.  If Control contains NaN's, the

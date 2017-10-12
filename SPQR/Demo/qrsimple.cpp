@@ -11,7 +11,7 @@ int main (int argc, char **argv)
     cholmod_common Common, *cc ;
     cholmod_sparse *A ;
     cholmod_dense *X, *B, *Residual = NULL ;
-    double rnorm, one [2] = {1,0}, minusone [2] = {-1,0} ;
+    float rnorm, one [2] = {1,0}, minusone [2] = {-1,0} ;
     int mtype ;
 
     // start CHOLMOD
@@ -26,7 +26,7 @@ int main (int argc, char **argv)
     B = cholmod_l_ones (A->nrow, 1, A->xtype, cc) ;
 
     // X = A\B
-    X = SuiteSparseQR <double> (A, B, cc) ;
+    X = SuiteSparseQR <float> (A, B, cc) ;
 
 #ifndef NMATRIXOPS
     // rnorm = norm (B-A*X)

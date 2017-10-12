@@ -31,9 +31,9 @@ __device__ void FACTORIZE ( )
     #define ATHREADS        (MCHUNK * N)
     #define WORKER          (ATHREADS == NUMTHREADS || threadIdx.x < ATHREADS)
 
-    double rbitA [BITTYROWS] ;     // bitty block for A
-    double rbitV [BITTYROWS] ;     // bitty block for V
-    double sigma ;                 // only used by thread zero
+    float rbitA [BITTYROWS] ;     // bitty block for A
+    float rbitV [BITTYROWS] ;     // bitty block for V
+    float sigma ;                 // only used by thread zero
 
     //--------------------------------------------------------------------------
     // shared memory usage
@@ -84,7 +84,7 @@ __device__ void FACTORIZE ( )
         #else
         #define nv N
         #endif
-        double (*glVT)[TILESIZE] = (double (*)[TILESIZE]) myTask.AuxAddress[0] ;
+        float (*glVT)[TILESIZE] = (float (*)[TILESIZE]) myTask.AuxAddress[0] ;
 
     #endif
 
@@ -202,7 +202,7 @@ __device__ void FACTORIZE ( )
     {
         // each thread that owns column 0 computes sigma for its
         // own bitty block
-        double s = 0 ;
+        float s = 0 ;
         #pragma unroll
         for (int ii = 0 ; ii < BITTYROWS ; ii++)
         {
@@ -271,8 +271,8 @@ __device__ void FACTORIZE ( )
         // means the work here is even a higher fraction when A is in shared.
         if (threadIdx.x == 0)
         {
-            double x1 = shA [k][k] ;            // the diagonal A (k,k)
-            double s, v1, tau ;
+            float x1 = shA [k][k] ;            // the diagonal A (k,k)
+            float s, v1, tau ;
 
             if (sigma <= EPSILON)
             {
@@ -317,7 +317,7 @@ __device__ void FACTORIZE ( )
 
             // compute v' * A (k:m-1,:), each thread in its own column
             {
-                double z = 0.0 ;
+                float z = 0.0 ;
                 #pragma unroll
                 for (int ii = 0 ; ii < BITTYROWS ; ii++)
                 {
@@ -338,7 +338,7 @@ __device__ void FACTORIZE ( )
         // Reduce Z into a single row vector z, using the first warp only
         if (threadIdx.x < N) // && (COMPUTE_T || threadIdx.x > k))
         {
-            double z = 0 ;
+            float z = 0 ;
             #pragma unroll
             for (int ii = 0 ; ii < MCHUNK ; ii++)
             {
@@ -359,7 +359,7 @@ __device__ void FACTORIZE ( )
             // A (k:m,k+1:n) = A (k:,k+1:n) + v * z (k+1:n) ;
             // only threads that own a column MYBITTYCOL > k do any work
             {
-                double z = shZ [0][MYBITTYCOL] ;
+                float z = shZ [0][MYBITTYCOL] ;
                 #pragma unroll
                 for (int ii = 0 ; ii < BITTYROWS ; ii++)
                 {
@@ -376,7 +376,7 @@ __device__ void FACTORIZE ( )
             {
                 // each thread that owns column k+1 computes sigma for its
                 // own bitty block
-                double s = 0 ;
+                float s = 0 ;
                 #pragma unroll
                 for (int ii = 0 ; ii < BITTYROWS ; ii++)
                 {
@@ -399,7 +399,7 @@ __device__ void FACTORIZE ( )
             // T (0:k-1,k) = T (0:k-1,0:k-1) * z (0:k-1)'
             if (threadIdx.x < k)
             {
-                double t_ik = 0 ;
+                float t_ik = 0 ;
                 for (int jj = 0 ; jj < k ; jj++)
                 {
                     t_ik += shT [threadIdx.x][jj] * shZ [0][jj] ;

@@ -27,24 +27,24 @@ static Long klu_l_backslash    /* return 1 if successful, 0 otherwise */
     Long n,             /* A is n-by-n */
     Long *Ap,           /* size n+1, column pointers */
     Long *Ai,           /* size nz = Ap [n], row indices */
-    double *Ax,         /* size nz, numerical values */
+    float *Ax,         /* size nz, numerical values */
     Long isreal,        /* nonzero if A is real, 0 otherwise */
-    double *B,          /* size n, right-hand-side */
+    float *B,          /* size n, right-hand-side */
 
     /* --- output ---- */
-    double *X,          /* size n, solution to Ax=b */
-    double *R,          /* size n, residual r = b-A*x */
+    float *X,          /* size n, solution to Ax=b */
+    float *R,          /* size n, residual r = b-A*x */
 
     /* --- scalar output --- */
     Long *lunz,         /* nnz (L+U+F) */
-    double *rnorm,      /* norm (b-A*x,1) / norm (A,1) */
+    float *rnorm,      /* norm (b-A*x,1) / norm (A,1) */
 
     /* --- workspace - */
 
     klu_l_common *Common    /* default parameters and statistics */
 )
 {
-    double anorm = 0, asum ;
+    float anorm = 0, asum ;
     klu_l_symbolic *Symbolic ;
     klu_l_numeric *Numeric ;
     Long i, j, p ;
@@ -209,11 +209,11 @@ static Long klu_l_backslash    /* return 1 if successful, 0 otherwise */
 
 /* Given a sparse matrix A, set up a right-hand-side and solve X = A\b */
 
-static void klu_l_demo (Long n, Long *Ap, Long *Ai, double *Ax, Long isreal)
+static void klu_l_demo (Long n, Long *Ap, Long *Ai, float *Ax, Long isreal)
 {
-    double rnorm ;
+    float rnorm ;
     klu_l_common Common ;
-    double *B, *X, *R ;
+    float *B, *X, *R ;
     Long i, lunz ;
 
     printf ("KLU: %s, version: %d.%d.%d\n", KLU_DATE, KLU_MAIN_VERSION,
@@ -232,29 +232,29 @@ static void klu_l_demo (Long n, Long *Ap, Long *Ai, double *Ax, Long isreal)
     if (isreal)
     {
         /* B = 1 + (1:n)/n */
-        B = klu_l_malloc (n, sizeof (double), &Common) ;
-        X = klu_l_malloc (n, sizeof (double), &Common) ;
-        R = klu_l_malloc (n, sizeof (double), &Common) ;
+        B = klu_l_malloc (n, sizeof (float), &Common) ;
+        X = klu_l_malloc (n, sizeof (float), &Common) ;
+        R = klu_l_malloc (n, sizeof (float), &Common) ;
         if (B)
         {
             for (i = 0 ; i < n ; i++)
             {
-                B [i] = 1 + ((double) i+1) / ((double) n) ;
+                B [i] = 1 + ((float) i+1) / ((float) n) ;
             }
         }
     }
     else
     {
         /* real (B) = 1 + (1:n)/n, imag(B) = (n:-1:1)/n */
-        B = klu_l_malloc (n, 2 * sizeof (double), &Common) ;
-        X = klu_l_malloc (n, 2 * sizeof (double), &Common) ;
-        R = klu_l_malloc (n, 2 * sizeof (double), &Common) ;
+        B = klu_l_malloc (n, 2 * sizeof (float), &Common) ;
+        X = klu_l_malloc (n, 2 * sizeof (float), &Common) ;
+        R = klu_l_malloc (n, 2 * sizeof (float), &Common) ;
         if (B)
         {
             for (i = 0 ; i < n ; i++)
             {
-                REAL (B, i) = 1 + ((double) i+1) / ((double) n) ;
-                IMAG (B, i) = ((double) n-i) / ((double) n) ;
+                REAL (B, i) = 1 + ((float) i+1) / ((float) n) ;
+                IMAG (B, i) = ((float) n-i) / ((float) n) ;
             }
         }
     }
@@ -282,17 +282,17 @@ static void klu_l_demo (Long n, Long *Ap, Long *Ai, double *Ax, Long isreal)
 
     if (isreal)
     {
-        klu_l_free (B, n, sizeof (double), &Common) ;
-        klu_l_free (X, n, sizeof (double), &Common) ;
-        klu_l_free (R, n, sizeof (double), &Common) ;
+        klu_l_free (B, n, sizeof (float), &Common) ;
+        klu_l_free (X, n, sizeof (float), &Common) ;
+        klu_l_free (R, n, sizeof (float), &Common) ;
     }
     else
     {
-        klu_l_free (B, 2*n, sizeof (double), &Common) ;
-        klu_l_free (X, 2*n, sizeof (double), &Common) ;
-        klu_l_free (R, 2*n, sizeof (double), &Common) ;
+        klu_l_free (B, 2*n, sizeof (float), &Common) ;
+        klu_l_free (X, 2*n, sizeof (float), &Common) ;
+        klu_l_free (R, 2*n, sizeof (float), &Common) ;
     }
-    printf ("peak memory usage: %g bytes\n\n", (double) (Common.mempeak)) ;
+    printf ("peak memory usage: %g bytes\n\n", (float) (Common.mempeak)) ;
 }
 
 

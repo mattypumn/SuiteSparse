@@ -8,7 +8,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double s ;
+    float s ;
     cs_dls *S ;
     cs_dl Amatrix, *A ;
     CS_INT m, n, order, *p ;
@@ -24,9 +24,9 @@ void mexFunction
     S = cs_dl_sqr (order, A, 1) ;           /* symbolic QR ordering & analysis*/
     if (!S) mexErrMsgTxt ("cs_sqr failed") ;
     s = S->lnz ;
-    cs_dl_mex_put_double (1, &s, &(pargout [0])) ;          /* return nnz(V) */
+    cs_dl_mex_put_float (1, &s, &(pargout [0])) ;          /* return nnz(V) */
     s = S->unz ;
-    cs_dl_mex_put_double (1, &s, &(pargout [1])) ;          /* return nnz(R) */
+    cs_dl_mex_put_float (1, &s, &(pargout [1])) ;          /* return nnz(R) */
     pargout [2] = cs_dl_mex_put_int (S->parent, n, 1, 0) ;  /* return parent */
     pargout [3] = cs_dl_mex_put_int (S->cp, n, 0, 0) ;      /* return c */
     pargout [4] = cs_dl_mex_put_int (S->leftmost, m, 1, 0) ;/* return leftmost*/

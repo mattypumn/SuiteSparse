@@ -56,8 +56,8 @@ int CHOLMOD(sdmult)
     /* ---- input ---- */
     cholmod_sparse *A,	/* sparse matrix to multiply */
     int transpose,	/* use A if 0, otherwise use A' */
-    double alpha [2],   /* scale factor for A */
-    double beta [2],    /* scale factor for Y */
+    float alpha [2],   /* scale factor for A */
+    float beta [2],    /* scale factor for Y */
     cholmod_dense *X,	/* dense matrix to multiply */
     /* ---- in/out --- */
     cholmod_dense *Y,	/* resulting dense matrix */
@@ -65,7 +65,7 @@ int CHOLMOD(sdmult)
     cholmod_common *Common
 )
 {
-    double *w ;
+    float *w ;
     size_t nx, ny ;
     Int e ;
 
@@ -103,7 +103,7 @@ int CHOLMOD(sdmult)
     e = (A->xtype == CHOLMOD_REAL ? 1:2) ;
     if (A->stype && X->ncol >= 4)
     {
-	w = CHOLMOD(malloc) (nx, 4*e*sizeof (double), Common) ;
+	w = CHOLMOD(malloc) (nx, 4*e*sizeof (float), Common) ;
     }
     if (Common->status < CHOLMOD_OK)
     {
@@ -140,7 +140,7 @@ int CHOLMOD(sdmult)
     /* free workspace */
     /* ---------------------------------------------------------------------- */
 
-    CHOLMOD(free) (4*nx, e*sizeof (double), w, Common) ;
+    CHOLMOD(free) (4*nx, e*sizeof (float), w, Common) ;
     DEBUG (CHOLMOD(dump_dense) (Y, "Y", Common)) ;
     return (TRUE) ;
 }

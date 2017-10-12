@@ -33,7 +33,7 @@ GLOBAL Int UMF_get_memory
     Int do_Fcpos
 )
 {
-    double nsize, bsize, tsize ;
+    float nsize, bsize, tsize ;
     Int i, minsize, newsize, newmem, costly, row, col, *Row_tlen, *Col_tlen,
 	n_row, n_col, *Row_degree, *Col_degree ;
     Unit *mnew, *p ;
@@ -77,7 +77,7 @@ GLOBAL Int UMF_get_memory
     /* determine how much memory is needed for the tuples */
     /* ---------------------------------------------------------------------- */
 
-    nsize = (double) needunits + 2 ;
+    nsize = (float) needunits + 2 ;
     needunits += UMF_tuple_lengths (Numeric, Work, &tsize) ;
     nsize += tsize ;
     needunits += 2 ;	/* add 2, so that newmem >= 2 is true if realloc'd */
@@ -93,11 +93,11 @@ GLOBAL Int UMF_get_memory
     DEBUG0 (("UMF_get_memory: needunits: "ID"\n", needunits)) ;
 
     minsize = Numeric->size + needunits ;
-    nsize += (double) Numeric->size ;
+    nsize += (float) Numeric->size ;
 
-    bsize = ((double) Int_MAX) / sizeof (Unit) - 1 ;
+    bsize = ((float) Int_MAX) / sizeof (Unit) - 1 ;
 
-    newsize = (Int) (UMF_REALLOC_INCREASE * ((double) minsize)) ;
+    newsize = (Int) (UMF_REALLOC_INCREASE * ((float) minsize)) ;
     nsize *= UMF_REALLOC_INCREASE ;
     nsize += 1 ;
 
@@ -145,7 +145,7 @@ GLOBAL Int UMF_get_memory
 	    else
 	    {
 		/* otherwise, reduce the request and keep trying */
-		newsize = (Int) (UMF_REALLOC_REDUCTION * ((double) newsize)) ;
+		newsize = (Int) (UMF_REALLOC_REDUCTION * ((float) newsize)) ;
 		newsize = MAX (minsize, newsize) ;
 	    }
 	}

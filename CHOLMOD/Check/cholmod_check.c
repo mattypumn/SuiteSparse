@@ -157,8 +157,8 @@ static void print_value
 (
     Int print,
     Int xtype,
-    double *Xx,
-    double *Xz,
+    float *Xx,
+    float *Xz,
     Int p,
     cholmod_common *Common)
 {
@@ -197,8 +197,8 @@ static int check_common
     cholmod_common *Common
 )
 {
-    double fl, lnz ;
-    double *Xwork ;
+    float fl, lnz ;
+    float *Xwork ;
     Int *Flag, *Head ;
     SuiteSparse_long mark ;
     Int i, nrow, nmethods, ordering, xworksize, amd_backup, init_print ;
@@ -265,7 +265,7 @@ static int check_common
     P3 ("    sizeof(int):      %d\n", (int) sizeof (int)) ;
     P3 ("    sizeof(SuiteSparse_long):  %d\n", (int) sizeof (SuiteSparse_long));
     P3 ("    sizeof(void *):   %d\n", (int) sizeof (void *)) ;
-    P3 ("    sizeof(double):   %d\n", (int) sizeof (double)) ;
+    P3 ("    sizeof(float):   %d\n", (int) sizeof (float)) ;
     P3 ("    sizeof(Int):      %d (CHOLMOD's basic integer)\n", (int) sizeof (Int)) ;
     P3 ("    sizeof(BLAS_INT): %d (integer used in the BLAS)\n",
 	    (int) sizeof (BLAS_INT)) ;
@@ -281,11 +281,11 @@ static int check_common
 	P2 ("    Update/downdate flop count: %.5g\n", Common->modfl) ;
     }
 
-    P2 ("  memory blocks in use:    %8.0f\n", (double) (Common->malloc_count)) ;
+    P2 ("  memory blocks in use:    %8.0f\n", (float) (Common->malloc_count)) ;
     P2 ("  memory in use (MB):      %8.1f\n", 
-	(double) (Common->memory_inuse) / 1048576.) ;
+	(float) (Common->memory_inuse) / 1048576.) ;
     P2 ("  peak memory usage (MB):  %8.1f\n", 
-	(double) (Common->memory_usage) / 1048576.) ;
+	(float) (Common->memory_usage) / 1048576.) ;
 
     /* ---------------------------------------------------------------------- */
     /* primary control parameters and related ordering statistics */
@@ -501,17 +501,17 @@ static int check_common
 
     P4 ("  grow0: memory reallocation: % .5g\n", Common->grow0) ;
     P4 ("  grow1: memory reallocation: % .5g\n", Common->grow1) ;
-    P4 ("  grow2: memory reallocation: %g\n", (double) (Common->grow2)) ;
+    P4 ("  grow2: memory reallocation: %g\n", (float) (Common->grow2)) ;
 
     P4 ("%s", "  nrelax, zrelax:  supernodal amalgamation rule:\n") ;
     P4 ("%s", "    s = # columns in two adjacent supernodes\n") ;
     P4 ("%s", "    z = % of zeros in new supernode if they are merged.\n") ;
     P4 ("%s", "    Two supernodes are merged if") ;
     P4 (" (s <= %g) or (no new zero entries) or\n",
-	    (double) (Common->nrelax [0])) ;
-    P4 ("    (s <= %g and ",  (double) (Common->nrelax [1])) ;
+	    (float) (Common->nrelax [0])) ;
+    P4 ("    (s <= %g and ",  (float) (Common->nrelax [1])) ;
     P4 ("z < %.5g%%) or",      Common->zrelax [0] * 100) ;
-    P4 (" (s <= %g and ",     (double) (Common->nrelax [2])) ;
+    P4 (" (s <= %g and ",     (float) (Common->nrelax [2])) ;
     P4 ("z < %.5g%%) or",      Common->zrelax [1] * 100) ;
     P4 (" (z < %.5g%%)\n",     Common->zrelax [2] * 100) ;
 
@@ -606,28 +606,28 @@ int CHOLMOD(gpu_stats)
     cholmod_common *Common      /* input */
 )
 {
-    double cpu_time, gpu_time ;
+    float cpu_time, gpu_time ;
     int print ;
 
     RETURN_IF_NULL_COMMON (FALSE) ;
     print = Common->print ;
 
     P2 ("%s", "\nCHOLMOD GPU/CPU statistics:\n") ;
-    P2 ("SYRK  CPU calls %12.0f", (double) Common->CHOLMOD_CPU_SYRK_CALLS) ;
+    P2 ("SYRK  CPU calls %12.0f", (float) Common->CHOLMOD_CPU_SYRK_CALLS) ;
     P2 (" time %12.4e\n", Common->CHOLMOD_CPU_SYRK_TIME) ;
-    P2 ("      GPU calls %12.0f", (double) Common->CHOLMOD_GPU_SYRK_CALLS) ;
+    P2 ("      GPU calls %12.0f", (float) Common->CHOLMOD_GPU_SYRK_CALLS) ;
     P2 (" time %12.4e\n", Common->CHOLMOD_GPU_SYRK_TIME) ;
-    P2 ("GEMM  CPU calls %12.0f", (double) Common->CHOLMOD_CPU_GEMM_CALLS) ;
+    P2 ("GEMM  CPU calls %12.0f", (float) Common->CHOLMOD_CPU_GEMM_CALLS) ;
     P2 (" time %12.4e\n", Common->CHOLMOD_CPU_GEMM_TIME) ;
-    P2 ("      GPU calls %12.0f", (double) Common->CHOLMOD_GPU_GEMM_CALLS) ;
+    P2 ("      GPU calls %12.0f", (float) Common->CHOLMOD_GPU_GEMM_CALLS) ;
     P2 (" time %12.4e\n", Common->CHOLMOD_GPU_GEMM_TIME) ;
-    P2 ("POTRF CPU calls %12.0f", (double) Common->CHOLMOD_CPU_POTRF_CALLS) ;
+    P2 ("POTRF CPU calls %12.0f", (float) Common->CHOLMOD_CPU_POTRF_CALLS) ;
     P2 (" time %12.4e\n", Common->CHOLMOD_CPU_POTRF_TIME) ;
-    P2 ("      GPU calls %12.0f", (double) Common->CHOLMOD_GPU_POTRF_CALLS) ;
+    P2 ("      GPU calls %12.0f", (float) Common->CHOLMOD_GPU_POTRF_CALLS) ;
     P2 (" time %12.4e\n", Common->CHOLMOD_GPU_POTRF_TIME) ;
-    P2 ("TRSM  CPU calls %12.0f", (double) Common->CHOLMOD_CPU_TRSM_CALLS) ;
+    P2 ("TRSM  CPU calls %12.0f", (float) Common->CHOLMOD_CPU_TRSM_CALLS) ;
     P2 (" time %12.4e\n", Common->CHOLMOD_CPU_TRSM_TIME) ;
-    P2 ("      GPU calls %12.0f", (double) Common->CHOLMOD_GPU_TRSM_CALLS) ;
+    P2 ("      GPU calls %12.0f", (float) Common->CHOLMOD_GPU_TRSM_CALLS) ;
     P2 (" time %12.4e\n", Common->CHOLMOD_GPU_TRSM_TIME) ;
 
     cpu_time = Common->CHOLMOD_CPU_SYRK_TIME + Common->CHOLMOD_CPU_TRSM_TIME +
@@ -666,7 +666,7 @@ static SuiteSparse_long check_sparse
     cholmod_common *Common
 )
 {
-    double *Ax, *Az ;
+    float *Ax, *Az ;
     Int *Ap, *Ai, *Anz ;
     Int nrow, ncol, nzmax, sorted, packed, j, p, pend, i, nz, ilast,
 	space, init_print, dnz, count, xtype ;
@@ -753,7 +753,7 @@ static SuiteSparse_long check_sparse
 
     switch (A->dtype)
     {
-	case CHOLMOD_DOUBLE:  P4 ("%s", ", double\n") ;	       break ;
+	case CHOLMOD_DOUBLE:  P4 ("%s", ", float\n") ;	       break ;
 	case CHOLMOD_SINGLE:  ERR ("float unsupported") ;
 	default:	      ERR ("unknown dtype") ;
     }
@@ -952,7 +952,7 @@ static int check_dense
     cholmod_common *Common
 )
 {
-    double *Xx, *Xz ;
+    float *Xx, *Xz ;
     Int i, j, d, nrow, ncol, nzmax, nz, init_print, count, xtype ;
     const char *type = "dense" ;
 
@@ -1008,7 +1008,7 @@ static int check_dense
 
     switch (X->dtype)
     {
-	case CHOLMOD_DOUBLE:  P4 ("%s", ", double\n") ;	       break ;
+	case CHOLMOD_DOUBLE:  P4 ("%s", ", float\n") ;	       break ;
 	case CHOLMOD_SINGLE:  ERR ("single unsupported") ;
 	default:	      ERR ("unknown dtype") ;
     }
@@ -1494,7 +1494,7 @@ static int check_factor
     cholmod_common *Common
 )
 {
-    double *Lx, *Lz ;
+    float *Lx, *Lz ;
     Int *Lp, *Li, *Lnz, *Lnext, *Lprev, *Perm, *ColCount, *Lpi, *Lpx, *Super,
 	*Ls ;
     Int n, nzmax, j, p, pend, i, nz, ordering, space, is_monotonic, minor,
@@ -1559,7 +1559,7 @@ static int check_factor
 
     switch (L->dtype)
     {
-	case CHOLMOD_DOUBLE:  P4 ("%s", ", double\n") ;	       break ;
+	case CHOLMOD_DOUBLE:  P4 ("%s", ", float\n") ;	       break ;
 	case CHOLMOD_SINGLE:  ERR ("single unsupported") ;
 	default:	      ERR ("unknown dtype") ;
     }
@@ -2061,7 +2061,7 @@ static int check_triplet
     cholmod_common *Common
 )
 {
-    double *Tx, *Tz ;
+    float *Tx, *Tz ;
     Int *Ti, *Tj ;
     Int i, j, p, nrow, ncol, nzmax, nz, xtype, init_print, count ;
     const char *type = "triplet" ;
@@ -2135,7 +2135,7 @@ static int check_triplet
 
     switch (T->dtype)
     {
-	case CHOLMOD_DOUBLE:  P4 ("%s", ", double\n") ;	       break ;
+	case CHOLMOD_DOUBLE:  P4 ("%s", ", float\n") ;	       break ;
 	case CHOLMOD_SINGLE:  ERR ("single unsupported") ;
 	default:	      ERR ("unknown dtype") ;
     }
@@ -2456,7 +2456,7 @@ void CHOLMOD(dump_real)
 {
     /* dump an nrow-by-ncol real dense matrix */
     SuiteSparse_long i, j ;
-    double x, z ;
+    float x, z ;
     if (CHOLMOD(dump) < -1)
     {
 	/* no checks if debug level is -2 or less */
@@ -2498,7 +2498,7 @@ void CHOLMOD(dump_real)
 void CHOLMOD(dump_super)
 (
     SuiteSparse_long s,
-    Int *Super, Int *Lpi, Int *Ls, Int *Lpx, double *Lx,
+    Int *Super, Int *Lpi, Int *Ls, Int *Lpx, float *Lx,
     int xentry,
     cholmod_common *Common
 )
@@ -2552,8 +2552,8 @@ int CHOLMOD(dump_mem)
     if (diff != 0)
     {
 	PRINT0 (("mem: %-15s peak %10g inuse %10g should %10g\n",
-	    where, (double) Common->memory_usage, (double) Common->memory_inuse,
-	    (double) should)) ;
+	    where, (float) Common->memory_usage, (float) Common->memory_inuse,
+	    (float) should)) ;
 	PRINT0 (("mem: %s diff %ld !\n", where, diff)) ;
     }
     return (diff == 0) ;
@@ -2637,7 +2637,7 @@ int CHOLMOD(dump_partition)
 int CHOLMOD(dump_work) (int flag, int head, SuiteSparse_long wsize,
     cholmod_common *Common)
 {
-    double *W ;
+    float *W ;
     Int *Flag, *Head ;
     Int k, nrow, mark ;
 
@@ -2661,7 +2661,7 @@ int CHOLMOD(dump_work) (int flag, int head, SuiteSparse_long wsize,
     }
     else
     {
-	/* check on the first wsize doubles in Xwork */
+	/* check on the first wsize floats in Xwork */
 	wsize = MIN (wsize, (Int) (Common->xworksize)) ;
     }
 

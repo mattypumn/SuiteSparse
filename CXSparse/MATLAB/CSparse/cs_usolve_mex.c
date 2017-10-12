@@ -39,7 +39,7 @@ void mexFunction
     if (mxIsSparse (pargin [1]))
     {
         cs_dl Umatrix, Bmatrix, *U, *B, *X ;
-        double *x ;
+        float *x ;
         if (mxIsComplex (pargin [0]) || mxIsComplex (pargin [1]))
         {
             mexErrMsgTxt ("sparse complex case not supported") ;
@@ -49,7 +49,7 @@ void mexFunction
         B = cs_dl_mex_get_sparse (&Bmatrix, 0, 1, pargin [1]) ;/* get sparse b*/
         cs_mex_check (0, n, 1, 0, 1, 1, pargin [1]) ;
         xi = cs_dl_malloc (2*n, sizeof (CS_INT)) ;          /* get workspace */
-        x  = cs_dl_malloc (n, sizeof (double)) ;
+        x  = cs_dl_malloc (n, sizeof (float)) ;
         top = cs_dl_spsolve (U, B, 0, xi, x, NULL, 0) ;     /* x = U\b */
         X = cs_dl_spalloc (n, 1, n-top, 1, 0) ;     /* create sparse x*/
         X->p [0] = 0 ;
@@ -71,10 +71,10 @@ void mexFunction
         cs_complex_t *x ;
         U = cs_cl_mex_get_sparse (&Umatrix, 1, pargin [0]) ;    /* get U */
         n = U->n ;
-        x = cs_cl_mex_get_double (n, pargin [1]) ;              /* x = b */
+        x = cs_cl_mex_get_float (n, pargin [1]) ;              /* x = b */
         cs_cl_usolve (U, x) ;                                   /* x = U\x */
         cs_free (U->x) ;
-        pargout [0] = cs_cl_mex_put_double (n, x) ;             /* return x */
+        pargout [0] = cs_cl_mex_put_float (n, x) ;             /* return x */
 #else
         mexErrMsgTxt ("complex matrices not supported") ;
 #endif
@@ -82,11 +82,11 @@ void mexFunction
     else
     {
         cs_dl Umatrix, *U ;
-        double *x, *b ;
+        float *x, *b ;
         U = cs_dl_mex_get_sparse (&Umatrix, 1, 1, pargin [0]) ; /* get U */
         n = U->n ;
-        b = cs_dl_mex_get_double (n, pargin [1]) ;              /* get b */
-        x = cs_dl_mex_put_double (n, b, &(pargout [0])) ;       /* x = b */
+        b = cs_dl_mex_get_float (n, pargin [1]) ;              /* get b */
+        x = cs_dl_mex_put_float (n, b, &(pargout [0])) ;       /* x = b */
         cs_dl_usolve (U, x) ;                                   /* x = U\x */
     }
 }

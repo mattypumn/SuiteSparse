@@ -8,17 +8,17 @@ GLOBAL Int UMF_solve
     Int sys,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
-    double Xx [ ],
-    const double Bx [ ],
+    const float Ax [ ],
+    float Xx [ ],
+    const float Bx [ ],
 #ifdef COMPLEX
-    const double Az [ ],
-    double Xz [ ],
-    const double Bz [ ],
+    const float Az [ ],
+    float Xz [ ],
+    const float Bz [ ],
 #endif
     NumericType *Numeric,
     Int irstep,
-    double Info [UMFPACK_INFO],
+    float Info [UMFPACK_INFO],
     Int Pattern [ ],
-    double SolveWork [ ]
+    float SolveWork [ ]
 ) ;

@@ -19,7 +19,7 @@ mxArray *sfmult_AT_XT_YT    // y = (A'*x')'
 )
 {
     mxArray *Y ;
-    double *Ax, *Az, *Xx, *Xz, *Yx, *Yz, *Wx, *Wz ;
+    float *Ax, *Az, *Xx, *Xz, *Yx, *Yz, *Wx, *Wz ;
     Int *Ap, *Ai ;
     Int m, n, k, k1, i ;
     int Acomplex, Xcomplex, Ycomplex ;

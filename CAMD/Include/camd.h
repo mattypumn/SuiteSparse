@@ -40,8 +40,8 @@ int camd_order              /* returns CAMD_OK, CAMD_OK_BUT_JUMBLED,
     const int Ap [ ],       /* column pointers for A, of size n+1 */
     const int Ai [ ],       /* row indices of A, of size nz = Ap [n] */
     int P [ ],              /* output permutation, of size n */
-    double Control [ ],     /* input Control settings, of size CAMD_CONTROL */
-    double Info [ ],        /* output Info statistics, of size CAMD_INFO */
+    float Control [ ],     /* input Control settings, of size CAMD_CONTROL */
+    float Info [ ],        /* output Info statistics, of size CAMD_INFO */
     const int C [ ]         /* Constraint set of A, of size n; can be NULL */
 ) ;
 
@@ -51,8 +51,8 @@ SuiteSparse_long camd_l_order   /* see above for description of arguments */
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
     SuiteSparse_long P [ ],
-    double Control [ ],
-    double Info [ ],
+    float Control [ ],
+    float Info [ ],
     const SuiteSparse_long C [ ]
 ) ;
 
@@ -63,7 +63,7 @@ SuiteSparse_long camd_l_order   /* see above for description of arguments */
  *          pointers of A.
  *      Ai: an int/SuiteSparse_long array of size nz, containing the row
  *          indices of A, where nz = Ap [n].
- *      Control:  a double array of size CAMD_CONTROL, containing control
+ *      Control:  a float array of size CAMD_CONTROL, containing control
  *          parameters.  Defaults are used if Control is NULL.
  *
  * Output arguments (not defined on input):
@@ -71,7 +71,7 @@ SuiteSparse_long camd_l_order   /* see above for description of arguments */
  *      P: an int/SuiteSparse_long array of size n, containing the output
  *          permutation. If row i is the kth pivot row, then P [k] = i.  In
  *          MATLAB notation, the reordered matrix is A (P,P).
- *      Info: a double array of size CAMD_INFO, containing statistical
+ *      Info: a float array of size CAMD_INFO, containing statistical
  *          information.  Ignored if Info is NULL.
  *
  * On input, the matrix A is stored in column-oriented form.  The row indices
@@ -239,8 +239,8 @@ void camd_2
     int Elen [ ],
     int Degree [ ],
     int W [ ],
-    double Control [ ],
-    double Info [ ],
+    float Control [ ],
+    float Info [ ],
     const int C [ ],
     int BucketSet [ ] 
 ) ;
@@ -260,8 +260,8 @@ void camd_l2
     SuiteSparse_long Elen [ ],
     SuiteSparse_long Degree [ ],
     SuiteSparse_long W [ ],
-    double Control [ ],
-    double Info [ ],
+    float Control [ ],
+    float Info [ ],
     const SuiteSparse_long C [ ],
     SuiteSparse_long BucketSet [ ]
     
@@ -325,16 +325,16 @@ SuiteSparse_long camd_l_cvalid
 /* ------------------------------------------------------------------------- */
 
 /* camd_defaults:  sets the default control settings */
-void camd_defaults   (double Control [ ]) ;
-void camd_l_defaults (double Control [ ]) ;
+void camd_defaults   (float Control [ ]) ;
+void camd_l_defaults (float Control [ ]) ;
 
 /* camd_control: prints the control settings */
-void camd_control    (double Control [ ]) ;
-void camd_l_control  (double Control [ ]) ;
+void camd_control    (float Control [ ]) ;
+void camd_l_control  (float Control [ ]) ;
 
 /* camd_info: prints the statistics */
-void camd_info       (double Info [ ]) ;
-void camd_l_info     (double Info [ ]) ;
+void camd_info       (float Info [ ]) ;
+void camd_l_info     (float Info [ ]) ;
 
 #define CAMD_CONTROL 5      /* size of Control array */
 #define CAMD_INFO 20        /* size of Info array */

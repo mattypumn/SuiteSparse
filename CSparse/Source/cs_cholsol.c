@@ -1,8 +1,8 @@
 #include "cs.h"
 /* x=A\b where A is symmetric positive definite; b overwritten with solution */
-csi cs_cholsol (csi order, const cs *A, double *b)
+csi cs_cholsol (csi order, const cs *A, float *b)
 {
-    double *x ;
+    float *x ;
     css *S ;
     csn *N ;
     csi n, ok ;
@@ -10,7 +10,7 @@ csi cs_cholsol (csi order, const cs *A, double *b)
     n = A->n ;
     S = cs_schol (order, A) ;               /* ordering and symbolic analysis */
     N = cs_chol (A, S) ;                    /* numeric Cholesky factorization */
-    x = cs_malloc (n, sizeof (double)) ;    /* get workspace */
+    x = cs_malloc (n, sizeof (float)) ;    /* get workspace */
     ok = (S && N && x) ;
     if (ok)
     {

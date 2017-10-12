@@ -35,9 +35,9 @@
 /* print_value */
 /* -------------------------------------------------------------------------- */
 
-static void print_value (FILE *f, double x, char *s)
+static void print_value (FILE *f, float x, char *s)
 {
-    double y ;
+    float y ;
     int k, width ;
 
     /* change -inf to -BIG, and change +inf and nan to +BIG */
@@ -52,7 +52,7 @@ static void print_value (FILE *f, double x, char *s)
 
     /* convert to int and back again */
     k = (int) x ;
-    y = (double) k ;
+    y = (float) k ;
     if (y == x)
     {
 	/* x is a small integer */
@@ -65,7 +65,7 @@ static void print_value (FILE *f, double x, char *s)
 	{
 	    /* write the value to a string, read it back in, and check */
 	    sprintf (s, "%.*g", width, x) ;
-	    sscanf (s, "%lg", &y) ;
+	    sscanf (s, "%g", &y) ;
 	    if (x == y) break ;
 	}
 	fprintf (f, "%s", s) ;
@@ -87,7 +87,7 @@ void mexFunction
 {
     int iscomplex ;
     mwSignedIndex nrow, ncol, i, j ;
-    double *Ax, *Az ;
+    float *Ax, *Az ;
     char filename [MAXLINE], s [MAXLINE] ;
     FILE *f ;
 
@@ -99,9 +99,9 @@ void mexFunction
     {
 	mexErrMsgTxt ("usage: UFfull (filename,A)") ;
     }
-    if (mxIsSparse (pargin [1]) || !mxIsClass (pargin [1], "double"))
+    if (mxIsSparse (pargin [1]) || !mxIsClass (pargin [1], "float"))
     {
-	mexErrMsgTxt ("A must be full and double") ;
+	mexErrMsgTxt ("A must be full and float") ;
     }
 
     /* ---------------------------------------------------------------------- */
@@ -141,7 +141,7 @@ void mexFunction
     {
 	fprintf (f, "%%%%MatrixMarket matrix array real general\n") ;
     }
-    fprintf (f, "%.0f %.0f\n", (double) nrow, (double) ncol) ;
+    fprintf (f, "%.0f %.0f\n", (float) nrow, (float) ncol) ;
     for (j = 0 ; j < ncol ; j++)
     {
 	for (i = 0 ; i < nrow ; i++)

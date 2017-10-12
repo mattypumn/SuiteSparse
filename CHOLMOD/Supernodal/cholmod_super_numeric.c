@@ -43,7 +43,7 @@
  * in the same supernode), as are all subsequent supernodes.
  *
  * workspace: Flag (nrow), Head (nrow+1), Iwork (2*nrow + 5*nsuper).
- *	Allocates temporary space of size L->maxcsize * sizeof(double)
+ *	Allocates temporary space of size L->maxcsize * sizeof(float)
  *	(twice that for the complex/zomplex case).
  *
  * If L is supernodal symbolic on input, it is converted to a supernodal numeric
@@ -99,7 +99,7 @@ int CHOLMOD(super_numeric)
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
     cholmod_sparse *F,	/* F = A' or A(:,f)' */
-    double beta [2],	/* beta*I is added to diagonal of matrix to factorize */
+    float beta [2],	/* beta*I is added to diagonal of matrix to factorize */
     /* ---- in/out --- */
     cholmod_factor *L,	/* factorization */
     /* --------------- */
@@ -183,7 +183,7 @@ int CHOLMOD(super_numeric)
     nrow = A->nrow ;
     n = nrow ;
 
-    PRINT1 (("nsuper "ID" maxcsize %g\n", nsuper, (double) maxcsize)) ;
+    PRINT1 (("nsuper "ID" maxcsize %g\n", nsuper, (float) maxcsize)) ;
     ASSERT (nsuper >= 0 && maxcsize > 0) ;
 
     /* w = 2*n + 5*nsuper */

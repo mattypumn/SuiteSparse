@@ -117,7 +117,7 @@ int main (void)
     /* order the matrix.  Note that this destroys A and overwrites p */
     /* ====================================================================== */
 
-    ok = ccolamd_l (A_NROW, A_NCOL, ALEN, A, p, (double *) NULL, stats, NULL) ;
+    ok = ccolamd_l (A_NROW, A_NCOL, ALEN, A, p, (float *) NULL, stats, NULL) ;
     ccolamd_l_report (stats) ;
 
     if (!ok)
@@ -157,7 +157,7 @@ int main (void)
     /* order the matrix B.  Note that this does not modify B or q. */
     /* ====================================================================== */
 
-    ok = csymamd_l (B_N, B, q, perm, (double *) NULL, stats, &calloc, &free,
+    ok = csymamd_l (B_N, B, q, perm, (float *) NULL, stats, &calloc, &free,
 	    NULL, -1) ;
     csymamd_l_report (stats) ;
 

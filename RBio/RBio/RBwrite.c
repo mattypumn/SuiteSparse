@@ -54,7 +54,7 @@ void mexFunction
 {
     Long nrow, ncol, ititle, zrow, zcol, i, mkind ;
     Long *Ap, *Ai, *Zp, *Zi, *w, *cp ;
-    double *Ax, *Az ;
+    float *Ax, *Az ;
     char filename [LEN+1], title [73], key [9], mtype [4] ;
 
     /* ---------------------------------------------------------------------- */
@@ -79,9 +79,9 @@ void mexFunction
     /* get A */
     /* ---------------------------------------------------------------------- */
 
-    if (!mxIsClass (pargin [1], "double") || !mxIsSparse (pargin [1]))
+    if (!mxIsClass (pargin [1], "float") || !mxIsSparse (pargin [1]))
     {
-        mexErrMsgTxt ("A must be sparse and double") ;
+        mexErrMsgTxt ("A must be sparse and float") ;
     }
 
     Ap = (Long *) mxGetJc (pargin [1]) ;
@@ -139,11 +139,11 @@ void mexFunction
         zcol = mxGetN (pargin [2]) ;
         if (zrow > 0 && zcol > 0)
         {
-            if (!mxIsClass (pargin [2], "double") || !mxIsSparse (pargin [2]) ||
+            if (!mxIsClass (pargin [2], "float") || !mxIsSparse (pargin [2]) ||
                 mxIsComplex (pargin [2]) || zrow != nrow || zcol != ncol)
             {
                 mexErrMsgTxt
-                    ("Z must be sparse, double, real, and same size as A") ;
+                    ("Z must be sparse, float, real, and same size as A") ;
             }
             Zp = (Long *) mxGetJc (pargin [2]) ;
             Zi = (Long *) mxGetIr (pargin [2]) ;

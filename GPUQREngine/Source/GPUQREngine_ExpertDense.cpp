@@ -62,11 +62,11 @@ QREngineResultCode GPUQREngine
 
     // calloc pagelocked space on CPU, and calloc space on the GPU
     Workspace *wsMongoF = Workspace::allocate(FSize,    // CPU and GPU
-        sizeof(double), true, true, true, true);
+        sizeof(float), true, true, true, true);
 
     // calloc pagelocked space on the CPU.  Nothing on the GPU
     Workspace *wsMongoR = Workspace::allocate(RSize,    // CPU
-        sizeof(double), true, true, false, true);
+        sizeof(float), true, true, false, true);
 
     /* Cleanup and return if we ran out of memory. */
     if(!wsMongoF || !wsMongoR)
@@ -82,16 +82,16 @@ QREngineResultCode GPUQREngine
     {
         // Set the front pointers; make the copy from user data into front data.
         Front *front = &(fronts[f]);
-        front->F    = CPU_REFERENCE(wsMongoF, double*) + FOffset;
-        front->gpuF = GPU_REFERENCE(wsMongoF, double*) + FOffset;
-        front->cpuR = CPU_REFERENCE(wsMongoR, double*) + ROffset;
+        front->F    = CPU_REFERENCE(wsMongoF, float*) + FOffset;
+        front->gpuF = GPU_REFERENCE(wsMongoF, float*) + FOffset;
+        front->cpuR = CPU_REFERENCE(wsMongoR, float*) + ROffset;
         FOffset += front->getNumFrontValues();
         ROffset += front->getNumRValues();
 
         /* COPY USER DATA (user's F to our F) */
         Front *userFront = &(userFronts[f]);
-        double *userF = userFront->F;
-        double *F = front->F;
+        float *userF = userFront->F;
+        float *F = front->F;
         Int m = userFront->fm;
         Int n = userFront->fn;
         bool isColMajor = userFront->isColMajor;
@@ -136,8 +136,8 @@ QREngineResultCode GPUQREngine
     for(int f=0; f<numFronts; f++)
     {
         Front *userFront = &(userFronts[f]);
-        double *R = (&fronts[f])->cpuR;
-        double *userR = userFront->cpuR;
+        float *R = (&fronts[f])->cpuR;
+        float *userR = userFront->cpuR;
         Int m = userFront->fm;
         Int n = userFront->fn;
         Int rank = userFront->rank;
@@ -201,7 +201,7 @@ Int *GPUQREngine_FindStaircase
     Int fm = front->fm;
     Int fn = front->fn;
 
-    double *F = front->F;
+    float *F = front->F;
     Int *Stair = (Int*) SuiteSparse_malloc(fn, sizeof(Int));
     if(!F || !Stair) return NULL;
 

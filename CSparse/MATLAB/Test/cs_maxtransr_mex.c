@@ -62,7 +62,7 @@ void mexFunction
 )
 {
     cs *A, Amatrix ;
-    double *x ;
+    float *x ;
     csi i, m, n, *imatch, *jmatch ;
 
     if (nargout > 1 || nargin != 1)

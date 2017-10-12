@@ -147,12 +147,12 @@ size_t colamd_l_recommended	/* returns recommended value of Alen, */
 
 void colamd_set_defaults	/* sets default parameters */
 (				/* knobs argument is modified on output */
-    double knobs [COLAMD_KNOBS]	/* parameter settings for colamd */
+    float knobs [COLAMD_KNOBS]	/* parameter settings for colamd */
 ) ;
 
 void colamd_l_set_defaults	/* sets default parameters */
 (				/* knobs argument is modified on output */
-    double knobs [COLAMD_KNOBS]	/* parameter settings for colamd */
+    float knobs [COLAMD_KNOBS]	/* parameter settings for colamd */
 ) ;
 
 int colamd			/* returns (1) if successful, (0) otherwise*/
@@ -162,7 +162,7 @@ int colamd			/* returns (1) if successful, (0) otherwise*/
     int Alen,			/* size of the array A */
     int A [],			/* row indices of A, of size Alen */
     int p [],			/* column pointers of A, of size n_col+1 */
-    double knobs [COLAMD_KNOBS],/* parameter settings for colamd */
+    float knobs [COLAMD_KNOBS],/* parameter settings for colamd */
     int stats [COLAMD_STATS]	/* colamd output statistics and error codes */
 ) ;
 
@@ -173,7 +173,7 @@ SuiteSparse_long colamd_l       /* returns (1) if successful, (0) otherwise*/
     SuiteSparse_long Alen,      /* size of the array A */
     SuiteSparse_long A [],      /* row indices of A, of size Alen */
     SuiteSparse_long p [],      /* column pointers of A, of size n_col+1 */
-    double knobs [COLAMD_KNOBS],/* parameter settings for colamd */
+    float knobs [COLAMD_KNOBS],/* parameter settings for colamd */
     SuiteSparse_long stats [COLAMD_STATS]   /* colamd output statistics
                                              * and error codes */
 ) ;
@@ -184,7 +184,7 @@ int symamd				/* return (1) if OK, (0) otherwise */
     int A [],				/* row indices of A */
     int p [],				/* column pointers of A */
     int perm [],			/* output permutation, size n_col+1 */
-    double knobs [COLAMD_KNOBS],	/* parameters (uses defaults if NULL) */
+    float knobs [COLAMD_KNOBS],	/* parameters (uses defaults if NULL) */
     int stats [COLAMD_STATS],		/* output statistics and error codes */
     void * (*allocate) (size_t, size_t),
     					/* pointer to calloc (ANSI C) or */
@@ -200,7 +200,7 @@ SuiteSparse_long symamd_l               /* return (1) if OK, (0) otherwise */
     SuiteSparse_long A [],              /* row indices of A */
     SuiteSparse_long p [],              /* column pointers of A */
     SuiteSparse_long perm [],           /* output permutation, size n_col+1 */
-    double knobs [COLAMD_KNOBS],	/* parameters (uses defaults if NULL) */
+    float knobs [COLAMD_KNOBS],	/* parameters (uses defaults if NULL) */
     SuiteSparse_long stats [COLAMD_STATS],  /* output stats and error codes */
     void * (*allocate) (size_t, size_t),
     					/* pointer to calloc (ANSI C) or */

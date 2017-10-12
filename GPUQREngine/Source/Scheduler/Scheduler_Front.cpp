@@ -109,7 +109,7 @@ bool Scheduler::pullFrontData
     }
 
     /* Surgically transfer the data across the D2H stream. */
-    Workspace wsR = Workspace(numValuesToPull, sizeof(double));
+    Workspace wsR = Workspace(numValuesToPull, sizeof(float));
     wsR.assign(front->cpuR, front->gpuF);
     wsR.transfer(cudaMemcpyDeviceToHost, false, memoryStreamD2H);
     wsR.assign(NULL, NULL);
@@ -171,13 +171,13 @@ void Scheduler::debugDumpFront(Front *front)
 {
     Workspace *wsFront =
         Workspace::allocate (front->getNumFrontValues(),     // CPU, DEBUG ONLY
-        sizeof(double), false, true, false, false);
-    double *F = CPU_REFERENCE(wsFront, double*);
+        sizeof(float), false, true, false, false);
+    float *F = CPU_REFERENCE(wsFront, float*);
     Int fm = front->fm;
     Int fn = front->fn;
     wsFront->assign(wsFront->cpu(), front->gpuF);
     wsFront->transfer(cudaMemcpyDeviceToHost);
-    printf("--- %g ---\n", (double) (front->fidg));
+    printf("--- %g ---\n", (float) (front->fidg));
 
 //  for(Int i=0; i<fm; i++)
 //  {

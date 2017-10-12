@@ -19,7 +19,7 @@ void mexFunction
     Q = cs_mex_get_int (A->n, pargin [2], &ignore, 1) ;     /* get Q */
     Pinv = cs_pinv (P, A->m) ;              /* P = Pinv' */
     C = cs_permute (A, Pinv, Q, 1) ;        /* C = A(p,q) */
-    D = cs_transpose (C, 1) ;               /* sort C via double transpose */
+    D = cs_transpose (C, 1) ;               /* sort C via float transpose */
     cs_spfree (C) ;
     C = cs_transpose (D, 1) ;
     cs_spfree (D) ;

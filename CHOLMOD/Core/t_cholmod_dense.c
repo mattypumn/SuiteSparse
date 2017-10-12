@@ -24,7 +24,7 @@ static cholmod_dense *TEMPLATE (cholmod_sparse_to_dense)
     cholmod_common *Common
 )
 {
-    double *Ax, *Xx, *Az, *Xz ;
+    float *Ax, *Xx, *Az, *Xz ;
     Int *Ap, *Ai, *Anz ;
     cholmod_dense *X ;
     Int i, j, p, pend, nrow, ncol, packed ;
@@ -130,7 +130,7 @@ static cholmod_sparse *TEMPLATE (cholmod_dense_to_sparse)
     cholmod_common *Common
 )
 {
-    double *Xx, *Cx, *Xz, *Cz ;
+    float *Xx, *Cx, *Xz, *Cz ;
     Int *Ci, *Cp ;
     cholmod_sparse *C ;
     Int i, j, p, d, nrow, ncol, nz ;
@@ -223,7 +223,7 @@ static int TEMPLATE (cholmod_copy_dense2)
     cholmod_dense *Y	/* copy of matrix X */
 )
 {
-    double *Xx, *Xz, *Yx, *Yz ;
+    float *Xx, *Xz, *Yx, *Yz ;
     Int i, j, nrow, ncol, dy, dx ;
 
     /* ---------------------------------------------------------------------- */

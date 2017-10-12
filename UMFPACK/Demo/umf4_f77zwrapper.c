@@ -104,7 +104,7 @@ static void make_filename (Int filenum, char *prefix, char *filename)
 
 /* call umf4zdef (control) */
 
-void umf4zdef_ (double Control [UMFPACK_CONTROL])
+void umf4zdef_ (float Control [UMFPACK_CONTROL])
 {
     UMFPACK_defaults (Control) ;
 }
@@ -115,7 +115,7 @@ void umf4zdef_ (double Control [UMFPACK_CONTROL])
 
 /* call umf4zpcon (control) */
 
-void umf4zpcon_ (double Control [UMFPACK_CONTROL])
+void umf4zpcon_ (float Control [UMFPACK_CONTROL])
 {
     fflush (stdout) ;
     UMFPACK_report_control (Control) ;
@@ -129,8 +129,8 @@ void umf4zpcon_ (double Control [UMFPACK_CONTROL])
 /* call umf4zsym (m, n, Ap, Ai, Ax, Az, symbolic, control, info) */
 
 void umf4zsym_ (Int *m, Int *n, Int Ap [ ], Int Ai [ ],
-    double Ax [ ], double Az [ ], void **Symbolic,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+    float Ax [ ], float Az [ ], void **Symbolic,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_symbolic (*m, *n, Ap, Ai, Ax, Az, Symbolic, Control, Info) ;
 }
@@ -141,9 +141,9 @@ void umf4zsym_ (Int *m, Int *n, Int Ap [ ], Int Ai [ ],
 
 /* call umf4znum (Ap, Ai, Ax, Az, symbolic, numeric, control, info) */
 
-void umf4znum_ (Int Ap [ ], Int Ai [ ], double Ax [ ], double Az [ ],
+void umf4znum_ (Int Ap [ ], Int Ai [ ], float Ax [ ], float Az [ ],
     void **Symbolic, void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_numeric (Ap, Ai, Ax, Az, *Symbolic, Numeric, Control, Info);
 }
@@ -154,9 +154,9 @@ void umf4znum_ (Int Ap [ ], Int Ai [ ], double Ax [ ], double Az [ ],
 
 /* call umf4zsolr (sys, Ap, Ai, Ax, Az, x, xz, b, bz, numeric, control, info) */
 
-void umf4zsolr_ (Int *sys, Int Ap [ ], Int Ai [ ], double Ax [ ], double Az [ ],
-    double x [ ], double xz [ ], double b [ ], double bz [ ], void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4zsolr_ (Int *sys, Int Ap [ ], Int Ai [ ], float Ax [ ], float Az [ ],
+    float x [ ], float xz [ ], float b [ ], float bz [ ], void **Numeric,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_solve (*sys, Ap, Ai, Ax, Az, x, xz, b, bz,
 	*Numeric, Control, Info) ;
@@ -168,13 +168,13 @@ void umf4zsolr_ (Int *sys, Int Ap [ ], Int Ai [ ], double Ax [ ], double Az [ ],
 
 /* call umf4zsol (sys, x, xz, b, bz, numeric, control, info) */
 
-void umf4zsol_ (Int *sys, double x [ ], double xz [ ], double b [ ],
-    double bz [ ], void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4zsol_ (Int *sys, float x [ ], float xz [ ], float b [ ],
+    float bz [ ], void **Numeric,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     Control [UMFPACK_IRSTEP] = 0 ;
-    (void) UMFPACK_solve (*sys, (Int *) NULL, (Int *) NULL, (double *) NULL,
-	(double *) NULL, x, xz, b, bz, *Numeric, Control, Info) ;
+    (void) UMFPACK_solve (*sys, (Int *) NULL, (Int *) NULL, (float *) NULL,
+	(float *) NULL, x, xz, b, bz, *Numeric, Control, Info) ;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -183,7 +183,7 @@ void umf4zsol_ (Int *sys, double x [ ], double xz [ ], double b [ ],
 
 /* call umf4zscal (x, xz, b, bz, numeric, status) */
 
-void umf4zscal_ (double x [ ], double xz [ ], double b [ ], double bz [ ],
+void umf4zscal_ (float x [ ], float xz [ ], float b [ ], float bz [ ],
     void **Numeric, Int *status)
 {
     *status = UMFPACK_scale (x, xz, b, bz, *Numeric) ;
@@ -195,7 +195,7 @@ void umf4zscal_ (double x [ ], double xz [ ], double b [ ], double bz [ ],
 
 /* call umf4zpinf (control) */
 
-void umf4zpinf_ (double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4zpinf_ (float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     fflush (stdout) ;
     UMFPACK_report_info (Control, Info) ;
@@ -288,7 +288,7 @@ void umf4zlsym_ (void **Symbolic, Int *filenum, Int *status)
 
 /* call umf4zdef (control) */
 
-void umf4zdef (double Control [UMFPACK_CONTROL])
+void umf4zdef (float Control [UMFPACK_CONTROL])
 {
     UMFPACK_defaults (Control) ;
 }
@@ -299,7 +299,7 @@ void umf4zdef (double Control [UMFPACK_CONTROL])
 
 /* call umf4zpcon (control) */
 
-void umf4zpcon (double Control [UMFPACK_CONTROL])
+void umf4zpcon (float Control [UMFPACK_CONTROL])
 {
     fflush (stdout) ;
     UMFPACK_report_control (Control) ;
@@ -313,8 +313,8 @@ void umf4zpcon (double Control [UMFPACK_CONTROL])
 /* call umf4zsym (m, n, Ap, Ai, Ax, Az, symbolic, control, info) */
 
 void umf4zsym (Int *m, Int *n, Int Ap [ ], Int Ai [ ],
-    double Ax [ ], double Az [ ], void **Symbolic,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+    float Ax [ ], float Az [ ], void **Symbolic,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_symbolic (*m, *n, Ap, Ai, Ax, Az, Symbolic, Control, Info) ;
 }
@@ -325,9 +325,9 @@ void umf4zsym (Int *m, Int *n, Int Ap [ ], Int Ai [ ],
 
 /* call umf4znum (Ap, Ai, Ax, Az, symbolic, numeric, control, info) */
 
-void umf4znum (Int Ap [ ], Int Ai [ ], double Ax [ ], double Az [ ],
+void umf4znum (Int Ap [ ], Int Ai [ ], float Ax [ ], float Az [ ],
     void **Symbolic, void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_numeric (Ap, Ai, Ax, Az, *Symbolic, Numeric, Control, Info);
 }
@@ -338,9 +338,9 @@ void umf4znum (Int Ap [ ], Int Ai [ ], double Ax [ ], double Az [ ],
 
 /* call umf4zsolr (sys, Ap, Ai, Ax, Az, x, xz, b, bz, numeric, control, info) */
 
-void umf4zsolr (Int *sys, Int Ap [ ], Int Ai [ ], double Ax [ ], double Az [ ],
-    double x [ ], double xz [ ], double b [ ], double bz [ ], void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4zsolr (Int *sys, Int Ap [ ], Int Ai [ ], float Ax [ ], float Az [ ],
+    float x [ ], float xz [ ], float b [ ], float bz [ ], void **Numeric,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     (void) UMFPACK_solve (*sys, Ap, Ai, Ax, Az, x, xz, b, bz,
 	*Numeric, Control, Info) ;
@@ -352,13 +352,13 @@ void umf4zsolr (Int *sys, Int Ap [ ], Int Ai [ ], double Ax [ ], double Az [ ],
 
 /* call umf4zsol (sys, x, xz, b, bz, numeric, control, info) */
 
-void umf4zsol (Int *sys, double x [ ], double xz [ ], double b [ ],
-    double bz [ ], void **Numeric,
-    double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4zsol (Int *sys, float x [ ], float xz [ ], float b [ ],
+    float bz [ ], void **Numeric,
+    float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     Control [UMFPACK_IRSTEP] = 0 ;
-    (void) UMFPACK_solve (*sys, (Int *) NULL, (Int *) NULL, (double *) NULL,
-	(double *) NULL, x, xz, b, bz, *Numeric, Control, Info) ;
+    (void) UMFPACK_solve (*sys, (Int *) NULL, (Int *) NULL, (float *) NULL,
+	(float *) NULL, x, xz, b, bz, *Numeric, Control, Info) ;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -367,7 +367,7 @@ void umf4zsol (Int *sys, double x [ ], double xz [ ], double b [ ],
 
 /* call umf4zscal (x, xz, b, bz, numeric, status) */
 
-void umf4zscal (double x [ ], double xz [ ], double b [ ], double bz [ ],
+void umf4zscal (float x [ ], float xz [ ], float b [ ], float bz [ ],
     void **Numeric, Int *status)
 {
     *status = UMFPACK_scale (x, xz, b, bz, *Numeric) ;
@@ -379,7 +379,7 @@ void umf4zscal (double x [ ], double xz [ ], double b [ ], double bz [ ],
 
 /* call umf4zpinf (control) */
 
-void umf4zpinf (double Control [UMFPACK_CONTROL], double Info [UMFPACK_INFO])
+void umf4zpinf (float Control [UMFPACK_CONTROL], float Info [UMFPACK_INFO])
 {
     fflush (stdout) ;
     UMFPACK_report_info (Control, Info) ;

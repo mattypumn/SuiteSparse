@@ -160,14 +160,14 @@ for nrhs = 1:3
 
             % test for scalars
             for s = [1 42 3-2i]
-                E = s\B  - double (s\F) ; err = check_error (err, norm (E,1)) ;
-                E = B/s  - double (F/s) ; err = check_error (err, norm (E,1)) ;
+                E = s\B  - float (s\F) ; err = check_error (err, norm (E,1)) ;
+                E = B/s  - float (F/s) ; err = check_error (err, norm (E,1)) ;
 %               E = B.*s - F.*s ;       err = check_error (err, norm (E,1)) ;
 %               E = s.*B - s.*F ;       err = check_error (err, norm (E,1)) ;
 %               E = s.\B - s.\F ;       err = check_error (err, norm (E,1)) ;
 %               E = B./s - F./s ;       err = check_error (err, norm (E,1)) ;
-                E = B*s  - double (F*s) ; err = check_error (err, norm (E,1)) ;
-                E = s*B  - double (s*F) ; err = check_error (err, norm (E,1)) ;
+                E = B*s  - float (F*s) ; err = check_error (err, norm (E,1)) ;
+                E = s*B  - float (s*F) ; err = check_error (err, norm (E,1)) ;
             end
 
         end
@@ -238,10 +238,10 @@ for nrhs = 1:3
         err = check_resid (err, anorm, A, x', b', spcheck) ;
 
         %------------------------------------------------------------------
-        % test double
+        % test float
         %------------------------------------------------------------------
 
-        Y = double (inverse (A)) ;
+        Y = float (inverse (A)) ;
         if (m == n)
             Z = inv (A) ;
         else
@@ -407,7 +407,7 @@ for nrhs = 1:3
         % test inverse
         %------------------------------------------------------------------
 
-        Y = double (inverse (inverse (A))) ;
+        Y = float (inverse (inverse (A))) ;
         e = norm (A-Y,1) ;
         if (e > 0)
             error ('inverse error') ;
@@ -461,7 +461,7 @@ err = check_error (e, err) ;
 function x = mtx (x)
 % make sure that x is a matrix.  It might be a factorization.
 if (isobject (x))
-    x = double (x) ;
+    x = float (x) ;
 end
 
 %--------------------------------------------------------------------------

@@ -9,7 +9,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double *Tx ;
+    float *Tx ;
     cs *A, *C, *T ;
     csi k, m, n, nz, *Ti, *Tj ;
     if (nargout > 1 || nargin != 3)

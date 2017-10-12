@@ -45,8 +45,8 @@ cholmod_sparse *CHOLMOD(aat)
     cholmod_common *Common
 )
 {
-    double fjt ;
-    double *Ax, *Fx, *Cx, *W ;
+    float fjt ;
+    float *Ax, *Fx, *Cx, *W ;
     Int *Ap, *Anz, *Ai, *Fp, *Fi, *Cp, *Ci, *Flag ;
     cholmod_sparse *C, *F ;
     Int packed, j, i, pa, paend, pf, pfend, n, mark, cnz, t, p, values, diag,

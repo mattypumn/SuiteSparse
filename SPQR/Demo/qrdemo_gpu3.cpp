@@ -20,7 +20,7 @@ int main (int argc, char **argv)
     int mtype ;
     long m, n, rnk ;
     size_t total_mem, available_mem ;
-    double t ;
+    float t ;
 
     printf ("\nqrdemo_gpu3: Testing SPQR on the CPU:\n") ;
     printf ("This is the same test as qrdemo_gpu2, "
@@ -43,7 +43,7 @@ int main (int argc, char **argv)
         printf ("no GPU available\n") ;
     }
     printf ("available GPU memory: %g MB, warmup time: %g\n",
-        (double) (cc->gpuMemorySize) / (1024 * 1024), t) ;
+        (float) (cc->gpuMemorySize) / (1024 * 1024), t) ;
 
     // A = mread (stdin) ; read in the sparse matrix A
     const char *filename = argv[1];
@@ -68,14 +68,14 @@ int main (int argc, char **argv)
     // B = ones (m,1), a dense right-hand-side of the same type as A
     B = cholmod_l_ones (m, 1, A->xtype, cc) ;
 
-    double tol = SPQR_NO_TOL ;
+    float tol = SPQR_NO_TOL ;
     long econ = 0 ;
 
     // [Q,R,E] = qr (A), but discard Q
-    // SuiteSparseQR <double> (ordering, tol, econ, A, &R, &E, cc) ;
+    // SuiteSparseQR <float> (ordering, tol, econ, A, &R, &E, cc) ;
 
     // [C,R,E] = qr (A,b), but discard Q
-    SuiteSparseQR <double> (ordering, tol, econ, A, B, &C, &R, &E, cc) ;
+    SuiteSparseQR <float> (ordering, tol, econ, A, B, &C, &R, &E, cc) ;
 
     // now R'*R-A(:,E)'*A(:,E) should be epsilon
     // and C = Q'*b.  The solution to the least-squares problem

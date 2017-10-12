@@ -349,7 +349,7 @@ template <typename Entry> cholmod_dense *SuiteSparseQR_qmult
 
 // =============================================================================
 
-template cholmod_dense *SuiteSparseQR_qmult <double>
+template cholmod_dense *SuiteSparseQR_qmult <float>
 (
     // inputs, not modified
     int method,             // 0,1,2,3
@@ -701,7 +701,7 @@ template <typename Entry> cholmod_sparse *SuiteSparseQR_qmult
 
 // =============================================================================
 
-template cholmod_sparse *SuiteSparseQR_qmult <double>
+template cholmod_sparse *SuiteSparseQR_qmult <float>
 (
     // inputs, not modified
     int method,                 // 0,1,2,3

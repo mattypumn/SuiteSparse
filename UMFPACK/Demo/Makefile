@@ -63,14 +63,14 @@ umfpack_simple: umfpack_simple.c
 
 # but do this via brute-force, so we can use just a single Makefile:
 
-# double-precision, int verion:
+# float-precision, int verion:
 umfpack_di_demo.c: umfpack_xx_demo.c umfpack_di_demo.sed
 	- sed -f umfpack_di_demo.sed < umfpack_xx_demo.c > umfpack_di_demo.c
 
 umfpack_di_demo: umfpack_di_demo.c
 	$(C) -o umfpack_di_demo umfpack_di_demo.c $(LIBS)
 
-# double-precision, SuiteSparse_long verion:
+# float-precision, SuiteSparse_long verion:
 umfpack_dl_demo.c: umfpack_xx_demo.c umfpack_dl_demo.sed
 	- sed -f umfpack_dl_demo.sed < umfpack_xx_demo.c > umfpack_dl_demo.c
 

@@ -46,8 +46,8 @@
 
 #define SCALAR_IS_NAN(x) ((x) != (x))
 
-/* true if an integer (stored in double x) would overflow (or if x is NaN) */
-#define INT_OVERFLOW(x) ((!((x) * (1.0+1e-8) <= (double) Int_MAX)) \
+/* true if an integer (stored in float x) would overflow (or if x is NaN) */
+#define INT_OVERFLOW(x) ((!((x) * (1.0+1e-8) <= (float) Int_MAX)) \
                         || SCALAR_IS_NAN (x))
 
 #undef TRUE
@@ -113,7 +113,7 @@ size_t KLU_kernel   /* final size of LU on output */
     /* inputs, not modified on output */
     Int k1,             /* the block of A is from k1 to k2-1 */
     Int PSinv [ ],      /* inverse of P from symbolic factorization */
-    double Rs [ ],      /* scale factors for A */
+    float Rs [ ],      /* scale factors for A */
 
     /* inputs, modified on output */
     Int Offp [ ],   /* off-diagonal matrix (modified by this routine) */
@@ -131,7 +131,7 @@ size_t KLU_kernel_factor            /* 0 if failure, size of LU if OK */
     Int Ai [ ],     /* size nz = Ap [n], row indices for A */
     Entry Ax [ ],   /* size nz, values of A */
     Int Q [ ],      /* size n, optional column permutation */
-    double Lsize,   /* initial size of L and U */
+    float Lsize,   /* initial size of L and U */
 
     /* outputs, not defined on input */
     Unit **p_LU,        /* row indices and values of L and U */
@@ -151,7 +151,7 @@ size_t KLU_kernel_factor            /* 0 if failure, size of LU if OK */
     /* inputs, not modified on output */
     Int k1,             /* the block of A is from k1 to k2-1 */
     Int PSinv [ ],      /* inverse of P from symbolic factorization */
-    double Rs [ ],      /* scale factors for A */
+    float Rs [ ],      /* scale factors for A */
 
     /* inputs, modified on output */
     Int Offp [ ],   /* off-diagonal matrix (modified by this routine) */

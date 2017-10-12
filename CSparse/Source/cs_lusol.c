@@ -1,8 +1,8 @@
 #include "cs.h"
 /* x=A\b where A is unsymmetric; b overwritten with solution */
-csi cs_lusol (csi order, const cs *A, double *b, double tol)
+csi cs_lusol (csi order, const cs *A, float *b, float tol)
 {
-    double *x ;
+    float *x ;
     css *S ;
     csn *N ;
     csi n, ok ;
@@ -10,7 +10,7 @@ csi cs_lusol (csi order, const cs *A, double *b, double tol)
     n = A->n ;
     S = cs_sqr (order, A, 0) ;              /* ordering and symbolic analysis */
     N = cs_lu (A, S, tol) ;                 /* numeric LU factorization */
-    x = cs_malloc (n, sizeof (double)) ;    /* get workspace */
+    x = cs_malloc (n, sizeof (float)) ;    /* get workspace */
     ok = (S && N && x) ;
     if (ok)
     {

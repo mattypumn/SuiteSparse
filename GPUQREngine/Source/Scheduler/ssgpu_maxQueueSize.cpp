@@ -9,7 +9,7 @@ size_t ssgpu_maxQueueSize       // return size of scheduler queue
 )
 {
     size_t maxQueueSize ;
-    size_t tileSizeBytes = TILESIZE * TILESIZE * sizeof(double);
+    size_t tileSizeBytes = TILESIZE * TILESIZE * sizeof(float);
     if (gpuMemorySize <= 1)
     {
         // GPU memory size not specified, use minimal amount.

@@ -17,7 +17,7 @@
 #define MIN(a,b) (((a) < (b)) ? (a) : (b))
 
 #define MXFREE(a) { \
-    double *ptr ; \
+    float *ptr ; \
     ptr = (a) ; \
     if (ptr != NULL) mxFree (ptr) ; \
 }
@@ -154,18 +154,18 @@ mxArray *sfmult_AT_XT_YT    // returns y = (A'*x')'
 void sfmult_AN_XN_YT_2	// y = (A*x)'  where x is n-by-2, and y is 2-by-m
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// 2-by-m
-    double *Yz,		// 2-by-m if Y is complex
+    float *Yx,		// 2-by-m
+    float *Yz,		// 2-by-m if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// n-by-2
-    const double *Xz,	// n-by-2 if X complex
+    const float *Xx,	// n-by-2
+    const float *Xz,	// n-by-2 if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -174,18 +174,18 @@ void sfmult_AN_XN_YT_2	// y = (A*x)'  where x is n-by-2, and y is 2-by-m
 void sfmult_AN_XN_YT_3	// y = (A*x)'	x is n-by-3, and y is 3-by-m (ldy = 4)
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// 3-by-m
-    double *Yz,		// 3-by-m if Y is complex
+    float *Yx,		// 3-by-m
+    float *Yz,		// 3-by-m if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// n-by-3
-    const double *Xz,	// n-by-3 if X complex
+    const float *Xx,	// n-by-3
+    const float *Xz,	// n-by-3 if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -194,18 +194,18 @@ void sfmult_AN_XN_YT_3	// y = (A*x)'	x is n-by-3, and y is 3-by-m (ldy = 4)
 void sfmult_AN_XN_YT_4	// y = (A*x)'	x is n-by-4, and y is 4-by-m
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// 4-by-m
-    double *Yz,		// 4-by-m if Y is complex
+    float *Yx,		// 4-by-m
+    float *Yz,		// 4-by-m if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// n-by-4
-    const double *Xz,	// n-by-4 if X complex
+    const float *Xx,	// n-by-4
+    const float *Xz,	// n-by-4 if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -218,18 +218,18 @@ void sfmult_AN_XN_YT_4	// y = (A*x)'	x is n-by-4, and y is 4-by-m
 void sfmult_AN_XT_YT_2	// y = (A*x')'	x is 2-by-n, and y is 2-by-m
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// 2-by-m
-    double *Yz,		// 2-by-m if Y is complex
+    float *Yx,		// 2-by-m
+    float *Yz,		// 2-by-m if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// 2-by-n with leading dimension k
-    const double *Xz,	// 2-by-n with leading dimension k if X complex
+    const float *Xx,	// 2-by-n with leading dimension k
+    const float *Xz,	// 2-by-n with leading dimension k if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -239,18 +239,18 @@ void sfmult_AN_XT_YT_2	// y = (A*x')'	x is 2-by-n, and y is 2-by-m
 void sfmult_AN_XT_YT_3	// y = (A*x')'	x is 3-by-n, and y is 3-by-m (ldy = 4)
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// 3-by-m
-    double *Yz,		// 3-by-m if Y is complex
+    float *Yx,		// 3-by-m
+    float *Yz,		// 3-by-m if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// 3-by-n with leading dimension k
-    const double *Xz,	// 3-by-n with leading dimension k if X complex
+    const float *Xx,	// 3-by-n with leading dimension k
+    const float *Xz,	// 3-by-n with leading dimension k if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -260,18 +260,18 @@ void sfmult_AN_XT_YT_3	// y = (A*x')'	x is 3-by-n, and y is 3-by-m (ldy = 4)
 void sfmult_AN_XT_YT_4 // y = (A*x')'	x is 4-by-n, and y is 4-by-m
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// 4-by-m
-    double *Yz,		// 4-by-m if Y is complex
+    float *Yx,		// 4-by-m
+    float *Yz,		// 4-by-m if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// 4-by-n with leading dimension k
-    const double *Xz,	// 4-by-n with leading dimension k if X complex
+    const float *Xx,	// 4-by-n with leading dimension k
+    const float *Xz,	// 4-by-n with leading dimension k if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -285,18 +285,18 @@ void sfmult_AN_XT_YT_4 // y = (A*x')'	x is 4-by-n, and y is 4-by-m
 void sfmult_AT_XT_YN_2	// y = A'*x'	x is 2-by-m, and y is n-by-2
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// n-by-2
-    double *Yz,		// n-by-2 if Y is complex
+    float *Yx,		// n-by-2
+    float *Yz,		// n-by-2 if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// 2-by-m
-    const double *Xz,	// 2-by-m if X complex
+    const float *Xx,	// 2-by-m
+    const float *Xz,	// 2-by-m if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -305,18 +305,18 @@ void sfmult_AT_XT_YN_2	// y = A'*x'	x is 2-by-m, and y is n-by-2
 void sfmult_AT_XT_YN_3	// y = A'*x'	x is 3-by-m, and y is n-by-3 (ldx = 4)
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// n-by-3
-    double *Yz,		// n-by-3 if Y is complex
+    float *Yx,		// n-by-3
+    float *Yz,		// n-by-3 if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// 3-by-m
-    const double *Xz,	// 3-by-m if X complex
+    const float *Xx,	// 3-by-m
+    const float *Xz,	// 3-by-m if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -325,18 +325,18 @@ void sfmult_AT_XT_YN_3	// y = A'*x'	x is 3-by-m, and y is n-by-3 (ldx = 4)
 void sfmult_AT_XT_YN_4	// y = A'*x'	x is 4-by-m, and y is n-by-4
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// n-by-4
-    double *Yz,		// n-by-4 if Y is complex
+    float *Yx,		// n-by-4
+    float *Yz,		// n-by-4 if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// 4-by-m
-    const double *Xz,	// 4-by-m if X complex
+    const float *Xx,	// 4-by-m
+    const float *Xz,	// 4-by-m if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -349,18 +349,18 @@ void sfmult_AT_XT_YN_4	// y = A'*x'	x is 4-by-m, and y is n-by-4
 void sfmult_AT_XT_YT_2	// y = (A'*x')'	x is 2-by-m, and y is 2-by-n
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// 2-by-n with leading dimension k
-    double *Yz,		// 2-by-n with leading dimension k if Y is complex
+    float *Yx,		// 2-by-n with leading dimension k
+    float *Yz,		// 2-by-n with leading dimension k if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// 2-by-m
-    const double *Xz,	// 2-by-m if X complex
+    const float *Xx,	// 2-by-m
+    const float *Xz,	// 2-by-m if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -370,18 +370,18 @@ void sfmult_AT_XT_YT_2	// y = (A'*x')'	x is 2-by-m, and y is 2-by-n
 void sfmult_AT_XT_YT_3	// y = (A'*x')'	x is 3-by-m, and y is 3-by-n (ldx = 4)
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// 3-by-n with leading dimension k
-    double *Yz,		// 3-by-n with leading dimension k if Y is complex
+    float *Yx,		// 3-by-n with leading dimension k
+    float *Yz,		// 3-by-n with leading dimension k if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// 3-by-m
-    const double *Xz,	// 3-by-m if X complex
+    const float *Xx,	// 3-by-m
+    const float *Xz,	// 3-by-m if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -391,18 +391,18 @@ void sfmult_AT_XT_YT_3	// y = (A'*x')'	x is 3-by-m, and y is 3-by-n (ldx = 4)
 void sfmult_AT_XT_YT_4	// y = (A'*x')'	x is 4-by-m, and y is 4-by-n
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// 4-by-n with leading dimension k
-    double *Yz,		// 4-by-n with leading dimension k if Y is complex
+    float *Yx,		// 4-by-n with leading dimension k
+    float *Yz,		// 4-by-n with leading dimension k if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// 4-by-m
-    const double *Xz,	// 4-by-m if X complex
+    const float *Xx,	// 4-by-m
+    const float *Xz,	// 4-by-m if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -416,18 +416,18 @@ void sfmult_AT_XT_YT_4	// y = (A'*x')'	x is 4-by-m, and y is 4-by-n
 void sfmult_xA		// y = (A'*x')' = x*A, x is k-by-m, and y is k-by-n
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// k-by-n
-    double *Yz,		// k-by-n if Y is complex
+    float *Yx,		// k-by-n
+    float *Yz,		// k-by-n if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// k-by-m
-    const double *Xz,	// k-by-m if X complex
+    const float *Xx,	// k-by-m
+    const float *Xz,	// k-by-m if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -441,18 +441,18 @@ void sfmult_xA		// y = (A'*x')' = x*A, x is k-by-m, and y is k-by-n
 void sfmult_AN_x_1	// y = A*x	x is n-by-1 unit stride, y is m-by-1
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// m-by-1
-    double *Yz,		// m-by-1 if Y is complex
+    float *Yx,		// m-by-1
+    float *Yz,		// m-by-1 if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// n-by-1
-    const double *Xz,	// n-by-1 if X complex
+    const float *Xx,	// n-by-1
+    const float *Xz,	// n-by-1 if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -461,18 +461,18 @@ void sfmult_AN_x_1	// y = A*x	x is n-by-1 unit stride, y is m-by-1
 void sfmult_AT_x_1	// y = A'*x	x is m-by-1, y is n-by-1
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// n-by-1
-    double *Yz,		// n-by-1 if Y is complex
+    float *Yx,		// n-by-1
+    float *Yz,		// n-by-1 if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// m-by-1
-    const double *Xz,	// m-by-1 if X complex
+    const float *Xx,	// m-by-1
+    const float *Xz,	// m-by-1 if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -485,18 +485,18 @@ void sfmult_AT_x_1	// y = A'*x	x is m-by-1, y is n-by-1
 void sfmult_AN_xk_1	// y = A*x	x is n-by-1 non-unit stride, y is m-by-1
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// m-by-1
-    double *Yz,		// m-by-1 if Y is complex
+    float *Yx,		// m-by-1
+    float *Yz,		// m-by-1 if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// n-by-1
-    const double *Xz,	// n-by-1 if X complex
+    const float *Xx,	// n-by-1
+    const float *Xz,	// n-by-1 if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -506,18 +506,18 @@ void sfmult_AN_xk_1	// y = A*x	x is n-by-1 non-unit stride, y is m-by-1
 void sfmult_AT_xk_1	// y = A'*x	x is m-by-1, y is n-by-1 non-unit stride
 (
     // --- outputs, not initialized on input:
-    double *Yx,		// n-by-1
-    double *Yz,		// n-by-1 if Y is complex
+    float *Yx,		// n-by-1
+    float *Yz,		// n-by-1 if Y is complex
 
     // --- inputs, not modified:
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// m-by-1
-    const double *Xz,	// m-by-1 if X complex
+    const float *Xx,	// m-by-1
+    const float *Xz,	// m-by-1 if X complex
     int ac,		// true: use conj(A), otherwise use A
     int xc,		// true: use conj(X), otherwise use X
     int yc		// true: compute conj(Y), otherwise compute Y
@@ -548,8 +548,8 @@ void sfmult_walloc	    // allocate workspace
     Int k,
     Int m,
     // --- outputs, not initialized on input:
-    double **Wx,	    // real part (first k*m doubles)
-    double **Wz		    // imaginary part (next k*m doubles)
+    float **Wx,	    // real part (first k*m floats)
+    float **Wz		    // imaginary part (next k*m floats)
 ) ;
 
 void sfmult_invalid (void) ;

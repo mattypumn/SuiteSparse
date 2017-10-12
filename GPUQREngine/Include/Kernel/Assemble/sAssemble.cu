@@ -4,7 +4,7 @@
 
 __device__ void sassemble ( )
 {
-    double *F = myTask.F;
+    float *F = myTask.F;
     SEntry *S = (SEntry*) myTask.AuxAddress[0];
 //  int Scount = myTask.extra[0];
     int pstart = myTask.extra[1];

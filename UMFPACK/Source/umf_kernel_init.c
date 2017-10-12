@@ -43,12 +43,12 @@ PRIVATE Int packsp	/* returns new value of pnew */
     Int *p_len,		/* ptr to length of old pattern on input,
 			   new pattern on output */
     Int drop,		/* TRUE if small nonzero entries are to be dropped */
-    double droptol,	/* the drop tolerance */
+    float droptol,	/* the drop tolerance */
     Unit *Memory	/* contains the sparse vector on input and output */
 )
 {
     Entry x ;
-    double s ;
+    float s ;
     Entry *Bx, *Bx2 ;
     Int p, i, len, len_new, *Bi, *Bi2 ;
 
@@ -140,9 +140,9 @@ GLOBAL Int UMF_kernel_init
 (
     const Int Ap [ ],		/* user's input matrix (not modified) */
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
     NumericType *Numeric,
     WorkType *Work,
@@ -154,9 +154,9 @@ GLOBAL Int UMF_kernel_init
     /* ---------------------------------------------------------------------- */
 
     Entry x, pivot_value ;
-    double unused = 0, rsmin, rsmax, rs, droptol ;
+    float unused = 0, rsmin, rsmax, rs, droptol ;
     Entry *D, *C, *Lval, **Rpx ;
-    double *Rs ;
+    float *Rs ;
     Int row, k, oldcol, size, e, p1, p2, p, nz, *Rows, *Cols, *E, i, *Upos,
 	*Lpos, n_row, n_col, *Wp, *Cperm_init, *Frpos, *Fcpos, *Row_degree, nn,
 	*Row_tlen, *Col_degree, *Col_tlen, oldrow, newrow, ilast, *Wrp,
@@ -374,7 +374,7 @@ GLOBAL Int UMF_kernel_init
 	    for (p = p1 ; p < p2 ; p++)
 	    {
 		Entry aij ;
-		double value ;
+		float value ;
 		row = Ai [p] ;
 		if (row <= ilast || row >= n_row)
 		{

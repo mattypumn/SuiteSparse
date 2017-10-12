@@ -15,7 +15,7 @@
 template <typename Entry> int spqr_1fixed
 (
     // inputs, not modified
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     cholmod_sparse *A,      // m-by-n sparse matrix
 
@@ -301,10 +301,10 @@ template <typename Entry> int spqr_1fixed
 
 // =============================================================================
 
-template int spqr_1fixed <double>
+template int spqr_1fixed <float>
 (
     // inputs, not modified
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     cholmod_sparse *A,      // m-by-n sparse matrix
 
@@ -333,7 +333,7 @@ template int spqr_1fixed <double>
 template int spqr_1fixed <Complex>
 (
     // inputs, not modified
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     cholmod_sparse *A,      // m-by-n sparse matrix
 

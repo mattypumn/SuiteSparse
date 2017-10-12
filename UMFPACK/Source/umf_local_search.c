@@ -117,7 +117,7 @@ GLOBAL Int UMF_local_search
     /* local variables */
     /* ---------------------------------------------------------------------- */
 
-    double relax1 ;
+    float relax1 ;
     Entry *Flblock, *Fublock, *Fs, *Fcblock, *C, *Wx, *Wy, *Fu, *Flublock,
 	*Flu ;
     Int pos, nrows, *Cols, *Rows, e, f, status, max_cdeg, fnzeros, nb, j, col,
@@ -803,9 +803,9 @@ GLOBAL Int UMF_local_search
 	    /* There are fnpiv pivots currently in the front.  This one
 	     * will be the (fnpiv+1)st pivot, if it is extended. */
 
-	    /* RELAX2 parameter uses a double relop, but ignore NaN case: */
+	    /* RELAX2 parameter uses a float relop, but ignore NaN case: */
 	    do_update = fnpiv > 0 &&
-		(((double) fnzeros) / ((double) new_LUsize)) > RELAX2 ;
+		(((float) fnzeros) / ((float) new_LUsize)) > RELAX2 ;
 
 	    DEBUG2 (("do_update "ID"\n", do_update))
 
@@ -889,15 +889,15 @@ GLOBAL Int UMF_local_search
 	    /* if relax = 0: no extra zeros allowed */
 	    /* if relax = +inf: always amalgamate */
 
-	    /* relax parameter uses a double relop, but ignore NaN case: */
+	    /* relax parameter uses a float relop, but ignore NaN case: */
 	    if (extra_zeros == 0)
 	    {
 		do_extend = TRUE ;
 	    }
 	    else
 	    {
-		do_extend = ((double) extra_zeros) <
-		   (relax1 * (double) relaxed_front) ;
+		do_extend = ((float) extra_zeros) <
+		   (relax1 * (float) relaxed_front) ;
 	    }
 
 	    if (do_extend)
@@ -920,9 +920,9 @@ GLOBAL Int UMF_local_search
 
 		DEBUG2 (("new_LUsize "ID"\n", new_LUsize)) ;
 
-		/* RELAX3 parameter uses a double relop, ignore NaN case: */
+		/* RELAX3 parameter uses a float relop, ignore NaN case: */
 		do_update = fnpiv > 0 &&
-		    (((double) fnzeros) / ((double) new_LUsize)) > RELAX3 ;
+		    (((float) fnzeros) / ((float) new_LUsize)) > RELAX3 ;
 		DEBUG2 (("do_update "ID"\n", do_update))
 
 	    }
@@ -1236,15 +1236,15 @@ GLOBAL Int UMF_local_search
 	    }
 	    else
 	    {
-		/* relax parameter uses a double relop, but ignore NaN case: */
+		/* relax parameter uses a float relop, but ignore NaN case: */
 		if (extra_zeros == 0)
 		{
 		    do_extend = TRUE ;
 		}
 		else
 		{
-		    do_extend = ((double) extra_zeros) <
-		       (relax1 * (double) relaxed_front) ;
+		    do_extend = ((float) extra_zeros) <
+		       (relax1 * (float) relaxed_front) ;
 		}
 	    }
 
@@ -1268,9 +1268,9 @@ GLOBAL Int UMF_local_search
 
 		DEBUG2 (("new_LUsize "ID"\n", new_LUsize)) ;
 
-		/* RELAX3 parameter uses a double relop, ignore NaN case: */
+		/* RELAX3 parameter uses a float relop, ignore NaN case: */
 		do_update = fnpiv > 0 &&
-		    (((double) fnzeros) / ((double) new_LUsize)) > RELAX3 ;
+		    (((float) fnzeros) / ((float) new_LUsize)) > RELAX3 ;
 		DEBUG2 (("do_update "ID"\n", do_update))
 	    }
 	    else
@@ -1422,15 +1422,15 @@ GLOBAL Int UMF_local_search
 	    }
 	    else
 	    {
-		/* relax parameter uses a double relop, but ignore NaN case: */
+		/* relax parameter uses a float relop, but ignore NaN case: */
 		if (extra_zeros == 0)
 		{
 		    do_extend = TRUE ;
 		}
 		else
 		{
-		    do_extend = ((double) extra_zeros) <
-		       (relax1 * (double) relaxed_front) ;
+		    do_extend = ((float) extra_zeros) <
+		       (relax1 * (float) relaxed_front) ;
 		}
 	    }
 
@@ -1454,9 +1454,9 @@ GLOBAL Int UMF_local_search
 
 		DEBUG2 (("new_LUsize "ID"\n", new_LUsize)) ;
 
-		/* RELAX3 parameter uses a double relop, ignore NaN case: */
+		/* RELAX3 parameter uses a float relop, ignore NaN case: */
 		do_update = fnpiv > 0 &&
-		    (((double) fnzeros) / ((double) new_LUsize)) > RELAX3 ;
+		    (((float) fnzeros) / ((float) new_LUsize)) > RELAX3 ;
 		DEBUG2 (("do_update "ID"\n", do_update))
 	    }
 	    else

@@ -17,14 +17,14 @@
 PRIVATE void print_value
 (
     Int i,
-    const double Xx [ ],
-    const double Xz [ ],    /* used for complex case only */
+    const float Xx [ ],
+    const float Xz [ ],    /* used for complex case only */
     Int scalar		    /* if true, then print real part only */
 )
 {
     Entry xi ;
     /* if Xz is null, then X is in "merged" format (compatible with Entry, */
-    /* and ANSI C99 double _Complex type). */
+    /* and ANSI C99 float _Complex type). */
     PRINTF (("    "ID" :", INDEX (i))) ;
     if (scalar)
     {
@@ -45,8 +45,8 @@ PRIVATE void print_value
 GLOBAL Int UMF_report_vector
 (
     Int n,
-    const double Xx [ ],
-    const double Xz [ ],
+    const float Xx [ ],
+    const float Xz [ ],
     Int prl,
     Int user,
     Int scalar

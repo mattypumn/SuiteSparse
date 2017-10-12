@@ -1,10 +1,10 @@
 #include "cs.h"
 /* solve Gx=b(:,k), where G is either upper (lo=0) or lower (lo=1) triangular */
-csi cs_spsolve (cs *G, const cs *B, csi k, csi *xi, double *x, const csi *pinv,
+csi cs_spsolve (cs *G, const cs *B, csi k, csi *xi, float *x, const csi *pinv,
     csi lo)
 {
     csi j, J, p, q, px, top, n, *Gp, *Gi, *Bp, *Bi ;
-    double *Gx, *Bx ;
+    float *Gx, *Bx ;
     if (!CS_CSC (G) || !CS_CSC (B) || !xi || !x) return (-1) ;
     Gp = G->p ; Gi = G->i ; Gx = G->x ; n = G->n ;
     Bp = B->p ; Bi = B->i ; Bx = B->x ;

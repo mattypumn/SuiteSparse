@@ -345,32 +345,32 @@ size_t gk_fwritefilebin(char *fname, size_t n, float *a)
 
 /*************************************************************************/
 /*! This function reads the contents of a binary file and returns it in the
-    form of an array of double.
+    form of an array of float.
     \param fname is the name of the file
     \param r_nlines is the number of lines in the file. If it is NULL,
            this information is not returned.
 */
 /*************************************************************************/
-double *gk_dreadfilebin(char *fname, ssize_t *r_nelmnts)
+float *gk_dreadfilebin(char *fname, ssize_t *r_nelmnts)
 {
   ssize_t fsize, nelmnts;
-  double *array=NULL;
+  float *array=NULL;
   FILE *fpin;
 
   *r_nelmnts = -1;
 
   fsize = (ssize_t) gk_getfsize(fname);
-  if (fsize%sizeof(double) != 0) {
-    gk_errexit(SIGERR, "The size of the file is not in multiples of sizeof(double).\n");
+  if (fsize%sizeof(float) != 0) {
+    gk_errexit(SIGERR, "The size of the file is not in multiples of sizeof(float).\n");
     return NULL;
   }
 
-  nelmnts = fsize/sizeof(double);
+  nelmnts = fsize/sizeof(float);
   array = gk_dmalloc(nelmnts, "gk_dreadfilebin: array");
 
   fpin = gk_fopen(fname, "rb", "gk_dreadfilebin");
   
-  if (fread(array, sizeof(double), nelmnts, fpin) != nelmnts) {
+  if (fread(array, sizeof(float), nelmnts, fpin) != nelmnts) {
     gk_errexit(SIGERR, "Failed to read the number of words requested. %zd\n", nelmnts);
     gk_free((void **)&array, LTERM);
     return NULL;

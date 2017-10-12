@@ -73,8 +73,8 @@ void Scheduler::render
             case DONE:               strcpy(fillcolor,"\"green\""); break;
         }
 
-        double height = MAX(0.10, 2.0 * ((double) front->fm / (double) fmMax));
-        double width = MAX(0.10, 2.0 * ((double) front->fn / (double) fnMax));
+        float height = MAX(0.10, 2.0 * ((float) front->fm / (float) fmMax));
+        float width = MAX(0.10, 2.0 * ((float) front->fn / (float) fnMax));
         fprintf(output, "%ld [fillcolor=%s,width=%f,height=%f];\n",
             fg, fillcolor, width, height);
     }

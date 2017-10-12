@@ -20,11 +20,11 @@
 
 GLOBAL void CAMD_defaults
 (
-    double Control [ ]
+    float Control [ ]
 )
 {
     Int i ;
-    if (Control != (double *) NULL)
+    if (Control != (float *) NULL)
     {
 	for (i = 0 ; i < CAMD_CONTROL ; i++)
 	{

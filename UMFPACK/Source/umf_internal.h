@@ -106,7 +106,7 @@
 #endif
 
 /* -------------------------------------------------------------------------- */
-/* Real/complex and int/SuiteSparse_long definitions, double relops */
+/* Real/complex and int/SuiteSparse_long definitions, float relops */
 /* -------------------------------------------------------------------------- */
 
 #include "umf_version.h"
@@ -135,7 +135,7 @@
 /* -------------------------------------------------------------------------- */
 
 #define GET_CONTROL(i,default) \
-    ((Control != (double *) NULL) ? \
+    ((Control != (float *) NULL) ? \
 	(SCALAR_IS_NAN (Control [i]) ? default : Control [i]) \
 	: default)
 
@@ -161,7 +161,7 @@
 
 /* Note: this is not defined if alpha is NaN or Inf: */
 #define UMFPACK_DENSE_DEGREE_THRESHOLD(alpha,n) \
-    ((Int) MAX (16.0, (alpha) * 16.0 * sqrt ((double) (n))))
+    ((Int) MAX (16.0, (alpha) * 16.0 * sqrt ((float) (n))))
 
 /* -------------------------------------------------------------------------- */
 /* PRINTF */
@@ -209,8 +209,8 @@
 /* Memory space definitions */
 /* -------------------------------------------------------------------------- */
 
-/* for memory alignment - assume double has worst case alignment */
-typedef double Align ;
+/* for memory alignment - assume float has worst case alignment */
+typedef float Align ;
 
 /* get number of bytes required to hold n items of a type: */
 /* note that this will not overflow, because sizeof (type) is always */
@@ -223,8 +223,8 @@ typedef double Align ;
 /* get number of Units required to hold n items of a type: */
 #define UNITS(type,n) (CEILING (BYTES (type, n), sizeof (Unit)))
 
-/* same as DUNITS, but use double instead of int to avoid overflow */
-#define DUNITS(type,n) (ceil (BYTES (type, (double) n) / sizeof (Unit)))
+/* same as DUNITS, but use float instead of int to avoid overflow */
+#define DUNITS(type,n) (ceil (BYTES (type, (float) n) / sizeof (Unit)))
 
 union Unit_union
 {	/* memory is allocated in multiples of Unit */
@@ -282,7 +282,7 @@ typedef union Unit_union Unit ;
 
 typedef struct	/* NumericType */
 {
-    double
+    float
 	flops,		/* "true" flop count */
 	relpt,		/* relative pivot tolerance used */
 	relpt2,		/* relative pivot tolerance used for sym. */
@@ -335,7 +335,7 @@ typedef struct	/* NumericType */
 	*D ;		/* D [i] is the diagonal entry of U */
 
     Int do_recip ;
-    double *Rs ;	/* scale factors for the rows of A and b */
+    float *Rs ;	/* scale factors for the rows of A and b */
 			/* do_recip FALSE: Divide row i by Rs [i] */
 			/* do_recip TRUE:  Multiply row i by Rs [i] */
 
@@ -645,7 +645,7 @@ typedef struct	/* WorkType */
 typedef struct	/* SymbolicType */
 {
 
-    double
+    float
 	num_mem_usage_est,	/* estimated max Numeric->Memory size */
 	num_mem_size_est,	/* estimated final Numeric->Memory size */
 	peak_sym_usage,		/* peak Symbolic and SymbolicWork usage */

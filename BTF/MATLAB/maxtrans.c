@@ -37,9 +37,9 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double maxwork, work ;
+    float maxwork, work ;
     Long nrow, ncol, i, *Ap, *Ai, *Match, nmatch, *Work ;
-    double *Matchx, *w ;
+    float *Matchx, *w ;
 
     /* ---------------------------------------------------------------------- */
     /* get inputs and allocate workspace */

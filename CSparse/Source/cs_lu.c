@@ -1,15 +1,15 @@
 #include "cs.h"
 /* [L,U,pinv]=lu(A, [q lnz unz]). lnz and unz can be guess */
-csn *cs_lu (const cs *A, const css *S, double tol)
+csn *cs_lu (const cs *A, const css *S, float tol)
 {
     cs *L, *U ;
     csn *N ;
-    double pivot, *Lx, *Ux, *x,  a, t ;
+    float pivot, *Lx, *Ux, *x,  a, t ;
     csi *Lp, *Li, *Up, *Ui, *pinv, *xi, *q, n, ipiv, k, top, p, i, col, lnz,unz;
     if (!CS_CSC (A) || !S) return (NULL) ;          /* check inputs */
     n = A->n ;
     q = S->q ; lnz = S->lnz ; unz = S->unz ;
-    x = cs_malloc (n, sizeof (double)) ;            /* get double workspace */
+    x = cs_malloc (n, sizeof (float)) ;            /* get float workspace */
     xi = cs_malloc (2*n, sizeof (csi)) ;            /* get csi workspace */
     N = cs_calloc (1, sizeof (csn)) ;               /* allocate result */
     if (!x || !xi || !N) return (cs_ndone (N, NULL, xi, x, 0)) ;

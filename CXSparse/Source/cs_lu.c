@@ -1,11 +1,11 @@
 #include "cs.h"
 /* [L,U,pinv]=lu(A, [q lnz unz]). lnz and unz can be guess */
-csn *cs_lu (const cs *A, const css *S, double tol)
+csn *cs_lu (const cs *A, const css *S, float tol)
 {
     cs *L, *U ;
     csn *N ;
     CS_ENTRY pivot, *Lx, *Ux, *x ;
-    double a, t ;
+    float a, t ;
     CS_INT *Lp, *Li, *Up, *Ui, *pinv, *xi, *q, n, ipiv, k, top, p, i, col, lnz,unz;
     if (!CS_CSC (A) || !S) return (NULL) ;          /* check inputs */
     n = A->n ;

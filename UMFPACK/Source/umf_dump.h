@@ -64,9 +64,9 @@ GLOBAL void UMF_dump_packed_memory
 
 GLOBAL void UMF_dump_col_matrix
 (
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
     const Int Ai [ ],
     const Int Ap [ ],
@@ -113,7 +113,7 @@ GLOBAL void UMF_dump_diagonal_map
 
 GLOBAL EXTERN Int UMF_debug ;
 GLOBAL EXTERN Int UMF_allocfail ;
-GLOBAL EXTERN double UMF_gprob ;
+GLOBAL EXTERN float UMF_gprob ;
 
 #define DEBUGk(k,params) { if (UMF_debug >= (k)) { PRINTF (params) ; } }
 

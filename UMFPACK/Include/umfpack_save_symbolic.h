@@ -32,7 +32,7 @@ SuiteSparse_long umfpack_zl_save_symbolic
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     int status ;
@@ -40,7 +40,7 @@ double int Syntax:
     void *Symbolic ;
     status = umfpack_di_save_symbolic (Symbolic, filename) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long status ;

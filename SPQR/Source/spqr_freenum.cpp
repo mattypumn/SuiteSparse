@@ -65,9 +65,9 @@ template <typename Entry> void spqr_freenum
 
 // =============================================================================
 
-template void spqr_freenum <double>
+template void spqr_freenum <float>
 (
-    spqr_numeric <double> **QRnum_handle,
+    spqr_numeric <float> **QRnum_handle,
 
     // workspace and parameters
     cholmod_common *cc

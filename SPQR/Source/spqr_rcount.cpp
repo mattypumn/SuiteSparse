@@ -217,11 +217,11 @@ template <typename Entry> void spqr_rcount
 
 // =============================================================================
 
-template void spqr_rcount <double>
+template void spqr_rcount <float>
 (
     // inputs, not modified
     spqr_symbolic *QRsym,
-    spqr_numeric <double> *QRnum,
+    spqr_numeric <float> *QRnum,
 
     Long n1rows,        // added to each row index of Ra and Rb
     Long econ,          // only get entries in rows n1rows to econ-1

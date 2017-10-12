@@ -102,11 +102,11 @@ int btf_maxtrans    /* returns # of columns matched */
     int ncol,
     int Ap [ ],     /* size ncol+1 */
     int Ai [ ],     /* size nz = Ap [ncol] */
-    double maxwork, /* maximum amount of work to do is maxwork*nnz(A); no limit
+    float maxwork, /* maximum amount of work to do is maxwork*nnz(A); no limit
                      * if <= 0 */
 
     /* --- output, not defined on input --- */
-    double *work,   /* work = -1 if maxwork > 0 and the total work performed
+    float *work,   /* work = -1 if maxwork > 0 and the total work performed
                      * reached the maximum of maxwork*nnz(A).
                      * Otherwise, work = the total work performed. */
 
@@ -119,7 +119,7 @@ int btf_maxtrans    /* returns # of columns matched */
 
 /* long integer version (all "int" parameters become "SuiteSparse_long") */
 SuiteSparse_long btf_l_maxtrans (SuiteSparse_long, SuiteSparse_long,
-    SuiteSparse_long *, SuiteSparse_long *, double, double *,
+    SuiteSparse_long *, SuiteSparse_long *, float, float *,
     SuiteSparse_long *, SuiteSparse_long *) ;
 
 
@@ -199,11 +199,11 @@ int btf_order       /* returns number of blocks found */
     int n,          /* A is n-by-n in compressed column form */
     int Ap [ ],     /* size n+1 */
     int Ai [ ],     /* size nz = Ap [n] */
-    double maxwork, /* do at most maxwork*nnz(A) work in the maximum
+    float maxwork, /* do at most maxwork*nnz(A) work in the maximum
                      * transversal; no limit if <= 0 */
 
     /* --- output, not defined on input --- */
-    double *work,   /* return value from btf_maxtrans */
+    float *work,   /* return value from btf_maxtrans */
     int P [ ],      /* size n, row permutation */
     int Q [ ],      /* size n, column permutation */
     int R [ ],      /* size n+1.  block b is in rows/cols R[b] ... R[b+1]-1 */
@@ -214,7 +214,7 @@ int btf_order       /* returns number of blocks found */
 ) ;
 
 SuiteSparse_long btf_l_order (SuiteSparse_long, SuiteSparse_long *,
-    SuiteSparse_long *, double , double *, SuiteSparse_long *,
+    SuiteSparse_long *, float , float *, SuiteSparse_long *,
     SuiteSparse_long *, SuiteSparse_long *, SuiteSparse_long *,
     SuiteSparse_long *) ;
 

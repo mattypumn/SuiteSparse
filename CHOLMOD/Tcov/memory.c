@@ -143,7 +143,7 @@ void test_memory_handler ( void )
 
 void memory_tests (cholmod_triplet *T)
 {
-    double err ;
+    float err ;
     cholmod_sparse *A ;
     Int trial ;
     size_t count, inuse ;

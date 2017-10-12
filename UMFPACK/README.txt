@@ -239,7 +239,7 @@ Files and directories in the UMFPACK distribution:
     umf_mem_init_memoryspace.[ch]	initialize Numeric->Memory
     umf_realloc.[ch]		realloc memory
     umf_report_perm.[ch]	print a permutation vector
-    umf_report_vector.[ch]	print a double vector
+    umf_report_vector.[ch]	print a float vector
     umf_row_search.[ch]		look for a pivot row
     umf_scale.[ch]		scale the pivot column
     umf_scale_column.[ch]	move pivot row & column into place, log P and Q
@@ -345,7 +345,7 @@ Files and directories in the UMFPACK distribution:
 
     umf4hb64.f			64-bit version of umf4hb.f
 
-    simple_compile		a single command that compiles the double/int
+    simple_compile		a single command that compiles the float/int
 				version of UMFPACK (useful prototype for
 				Microsoft Visual Studio project)
 

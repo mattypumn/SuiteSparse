@@ -64,7 +64,7 @@
 /* Note that c cannot be the same variable as a or b */
 #define DIV(cx,cz,ax,az,bx,bz) \
 { \
-    double r, den ; \
+    float r, den ; \
     if (ABS (bx) >= ABS (bz)) \
     { \
         r = bz / bx ; \
@@ -109,8 +109,8 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double ukk, lkk, rs, s, lik, uik, x [4], offik, z, ukkz, lkkz, sz, wx, wz ;
-    double *X, *B, *Xz, *Xx, *Bx, *Bz, *A, *Ax, *Az, *Lx, *Ux, *Rs, *Offx, *Wx,
+    float ukk, lkk, rs, s, lik, uik, x [4], offik, z, ukkz, lkkz, sz, wx, wz ;
+    float *X, *B, *Xz, *Xx, *Bx, *Bz, *A, *Ax, *Az, *Lx, *Ux, *Rs, *Offx, *Wx,
         *Uz, *Lz, *Offz, *Wz, *W, *Xi, *Bi ;
     Long *Ap, *Ai, *Lp, *Li, *Up, *Ui, *P, *Q, *R, *Rp, *Ri, *Offp, *Offi ;
     char *operator ;
@@ -358,7 +358,7 @@ void mexFunction
         if (A_complex)
         {
             /* A is complex */
-            A = mxMalloc (nz * 2 * sizeof (double)) ;
+            A = mxMalloc (nz * 2 * sizeof (float)) ;
             for (k = 0 ; k < nz ; k++)
             {
                 A [2*k  ] = Ax [k] ;        /* real part */
@@ -490,7 +490,7 @@ void mexFunction
                 /* A is complex, but B might be real */
                 /* ---------------------------------------------------------- */
 
-                X = mxMalloc (n * nrhs * 2 * sizeof (double)) ;
+                X = mxMalloc (n * nrhs * 2 * sizeof (float)) ;
                 Bx = mxGetPr (B_matlab) ;
                 Bz = mxGetPi (B_matlab) ;
 
@@ -555,7 +555,7 @@ void mexFunction
                 {
 
                     /* solve in chunks of 4 columns at a time */
-                    W = mxMalloc (n * MAX (nrhs,4) * sizeof (double)) ;
+                    W = mxMalloc (n * MAX (nrhs,4) * sizeof (float)) ;
                     X = mxGetPr (pargout [0]) ;
                     B = mxGetPr (B_matlab) ;
                     Xi = mxGetPi (pargout [0]) ;
@@ -859,8 +859,8 @@ void mexFunction
                 Bz = mxGetPi (B_matlab) ;
 
                 /* get workspace */
-                Wx = mxMalloc (n * sizeof (double)) ;
-                Wz = mxMalloc (n * sizeof (double)) ;
+                Wx = mxMalloc (n * sizeof (float)) ;
+                Wz = mxMalloc (n * sizeof (float)) ;
 
                 /* ---------------------------------------------------------- */
                 /* do just one row/column of the right-hand-side at a time */
@@ -1224,7 +1224,7 @@ void mexFunction
                     /* ------------------------------------------------------ */
 
                     /* get workspace */
-                    Wx = mxMalloc (n * sizeof (double)) ;
+                    Wx = mxMalloc (n * sizeof (float)) ;
 
                     for (chunk = 0 ; chunk < nrhs ; chunk++)
                     {
@@ -1350,7 +1350,7 @@ void mexFunction
                     /* ------------------------------------------------------ */
 
                     /* get workspace */
-                    Wx = mxMalloc (n * MAX (4, nrhs) * sizeof (double)) ;
+                    Wx = mxMalloc (n * MAX (4, nrhs) * sizeof (float)) ;
 
                     for (chunk = 0 ; chunk < nrhs ; chunk += 4)
                     {

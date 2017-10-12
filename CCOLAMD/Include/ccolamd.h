@@ -131,12 +131,12 @@ size_t ccolamd_l_recommended	/* returns recommended value of Alen, */
 
 void ccolamd_set_defaults	/* sets default parameters */
 (				/* knobs argument is modified on output */
-    double knobs [CCOLAMD_KNOBS]	/* parameter settings for ccolamd */
+    float knobs [CCOLAMD_KNOBS]	/* parameter settings for ccolamd */
 ) ;
 
 void ccolamd_l_set_defaults	/* sets default parameters */
 (				/* knobs argument is modified on output */
-    double knobs [CCOLAMD_KNOBS]	/* parameter settings for ccolamd */
+    float knobs [CCOLAMD_KNOBS]	/* parameter settings for ccolamd */
 ) ;
 
 int ccolamd			/* returns (1) if successful, (0) otherwise*/
@@ -146,7 +146,7 @@ int ccolamd			/* returns (1) if successful, (0) otherwise*/
     int Alen,			/* size of the array A */
     int A [ ],			/* row indices of A, of size Alen */
     int p [ ],			/* column pointers of A, of size n_col+1 */
-    double knobs [CCOLAMD_KNOBS],/* parameter settings for ccolamd */
+    float knobs [CCOLAMD_KNOBS],/* parameter settings for ccolamd */
     int stats [CCOLAMD_STATS],	/* ccolamd output statistics and error codes */
     int cmember [ ]		/* Constraint set of A, of size n_col */
 ) ;
@@ -158,7 +158,7 @@ SuiteSparse_long ccolamd_l      /* as ccolamd w/ SuiteSparse_long integers */
     SuiteSparse_long Alen,
     SuiteSparse_long A [ ],
     SuiteSparse_long p [ ],
-    double knobs [CCOLAMD_KNOBS],
+    float knobs [CCOLAMD_KNOBS],
     SuiteSparse_long stats [CCOLAMD_STATS],
     SuiteSparse_long cmember [ ]
 ) ;
@@ -169,7 +169,7 @@ int csymamd			/* return (1) if OK, (0) otherwise */
     int A [ ],			/* row indices of A */
     int p [ ],			/* column pointers of A */
     int perm [ ],		/* output permutation, size n_col+1 */
-    double knobs [CCOLAMD_KNOBS],/* parameters (uses defaults if NULL) */
+    float knobs [CCOLAMD_KNOBS],/* parameters (uses defaults if NULL) */
     int stats [CCOLAMD_STATS],	/* output statistics and error codes */
     void * (*allocate) (size_t, size_t), /* pointer to calloc (ANSI C) or */
 				/* mxCalloc (for MATLAB mexFunction) */
@@ -185,7 +185,7 @@ SuiteSparse_long csymamd_l      /* as csymamd, w/ SuiteSparse_long integers */
     SuiteSparse_long A [ ],
     SuiteSparse_long p [ ],
     SuiteSparse_long perm [ ],
-    double knobs [CCOLAMD_KNOBS],
+    float knobs [CCOLAMD_KNOBS],
     SuiteSparse_long stats [CCOLAMD_STATS],
     void * (*allocate) (size_t, size_t),
     void (*release) (void *),
@@ -230,7 +230,7 @@ int ccolamd2
     int Alen,			/* size of the array A */
     int A [ ],			/* row indices of A, of size Alen */
     int p [ ],			/* column pointers of A, of size n_col+1 */
-    double knobs [CCOLAMD_KNOBS],/* parameter settings for ccolamd */
+    float knobs [CCOLAMD_KNOBS],/* parameter settings for ccolamd */
     int stats [CCOLAMD_STATS],	/* ccolamd output statistics and error codes */
     /* each Front_ array is of size n_col+1: */
     int Front_npivcol [ ],	/* # pivot cols in each front */
@@ -250,7 +250,7 @@ SuiteSparse_long ccolamd2_l     /* as ccolamd2, w/ SuiteSparse_long integers */
     SuiteSparse_long Alen,
     SuiteSparse_long A [ ],
     SuiteSparse_long p [ ],
-    double knobs [CCOLAMD_KNOBS],
+    float knobs [CCOLAMD_KNOBS],
     SuiteSparse_long stats [CCOLAMD_STATS],
     SuiteSparse_long Front_npivcol [ ],
     SuiteSparse_long Front_nrows [ ],

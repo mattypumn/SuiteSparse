@@ -7,13 +7,13 @@
 /* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
-double umfpack_timer ( void ) ;
+float umfpack_timer ( void ) ;
 
 /*
 Syntax (for all versions: di, dl, zi, and zl):
 
     #include "umfpack.h"
-    double t ;
+    float t ;
     t = umfpack_timer ( ) ;
 
 Purpose:

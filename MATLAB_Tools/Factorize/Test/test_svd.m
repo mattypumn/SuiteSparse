@@ -45,11 +45,11 @@ for st = 0:1
 
     % if B=pinv(A), then A*B*A=A and B*A*B=B
     B = inverse (F) ;
-    Bnorm = norm (double (B), 1) ;
+    Bnorm = norm (float (B), 1) ;
     err = check_err (err, ...
-        norm (double(A*B*A) - A, 1) / (Anorm^2 * Bnorm)) ;
+        norm (float(A*B*A) - A, 1) / (Anorm^2 * Bnorm)) ;
     err = check_err (err, ...
-        norm (double(B*A*B) - double(B), 1) / (Anorm * Bnorm^2)) ;
+        norm (float(B*A*B) - float(B), 1) / (Anorm * Bnorm^2)) ;
 
     for bsparse = 0:1
         b = rand (m, 1) ;
@@ -65,9 +65,9 @@ for st = 0:1
         end
         if (st == 0 || Acond < 1e13)
             % skip this for COD for very ill-conditioned problems
-            x = double (x) ;
-            y = double (y) ;
-            z = double (z) ;
+            x = float (x) ;
+            y = float (y) ;
+            z = float (z) ;
             err = check_err (err, norm (x - y) / (Anorm * norm (x) + norm (b)));
             err = check_err (err, norm (x - z) / (Anorm * norm (x) + norm (b)));
         end
@@ -85,9 +85,9 @@ for st = 0:1
         end
         if (st == 0 || Acond < 1e13)
             % skip this for COD for very ill-conditioned problems
-            x = double (x) ;
-            y = double (y) ;
-            z = double (z) ;
+            x = float (x) ;
+            y = float (y) ;
+            z = float (z) ;
             err = check_err (err, norm (x - y) / (Anorm * norm (x) + norm (b)));
             err = check_err (err, norm (x - z) / (Anorm * norm (x) + norm (b)));
         end

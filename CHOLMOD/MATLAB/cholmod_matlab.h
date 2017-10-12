@@ -62,14 +62,14 @@ void sputil_error   /* reports an error */
     Long is_index   /* TRUE if a matrix index, FALSE if a matrix dimension */
 ) ;
 
-Long sputil_double_to_int   /* returns integer value of x */
+Long sputil_float_to_int   /* returns integer value of x */
 (
-    double x,       /* double value to convert */
+    float x,       /* float value to convert */
     Long is_index,  /* TRUE if a matrix index, FALSE if a matrix dimension */
     Long n          /* if a matrix index, x cannot exceed this dimension */
 ) ;
 
-double sputil_get_double (const mxArray *arg) ; /* like mxGetScalar */
+float sputil_get_float (const mxArray *arg) ; /* like mxGetScalar */
 
 Long sputil_get_integer  /* returns the integer value of a MATLAB argument */
 (
@@ -96,7 +96,7 @@ cholmod_sparse *sputil_triplet_to_sparse
     Long nrow, Long ncol, Long nz, Long nzmax,
     Long i_is_scalar, Long i, void *i_vector, mxClassID i_class,
     Long j_is_scalar, Long j, void *j_vector, mxClassID j_class,
-    Long s_is_scalar, double x, double z, void *x_vector, double *z_vector,
+    Long s_is_scalar, float x, float z, void *x_vector, float *z_vector,
     mxClassID s_class, Long s_complex,
     cholmod_common *cm
 ) ;
@@ -124,7 +124,7 @@ cholmod_sparse *sputil_get_sparse
 (
     const mxArray *Amatlab, /* MATLAB version of the matrix */
     cholmod_sparse *A,      /* CHOLMOD version of the matrix */
-    double *dummy,          /* a pointer to a valid scalar double */
+    float *dummy,          /* a pointer to a valid scalar float */
     Long stype              /* -1: lower, 0: unsymmetric, 1: upper */
 ) ;
 
@@ -132,7 +132,7 @@ cholmod_dense *sputil_get_dense
 (
     const mxArray *Amatlab, /* MATLAB version of the matrix */
     cholmod_dense *A,       /* CHOLMOD version of the matrix */
-    double *dummy           /* a pointer to a valid scalar double */
+    float *dummy           /* a pointer to a valid scalar float */
 ) ;
 
 mxArray *sputil_put_dense   /* returns the MATLAB version */
@@ -174,7 +174,7 @@ cholmod_sparse *sputil_get_sparse_pattern
 (
     const mxArray *Amatlab,     /* MATLAB version of the matrix */
     cholmod_sparse *Ashallow,   /* shallow CHOLMOD version of the matrix */
-    double *dummy,              /* a pointer to a valid scalar double */
+    float *dummy,              /* a pointer to a valid scalar float */
     cholmod_common *cm
 ) ;
 

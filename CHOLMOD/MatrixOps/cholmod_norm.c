@@ -27,16 +27,16 @@
 
 /* Compute the absolute value of a real, complex, or zomplex value */
 
-static double abs_value
+static float abs_value
 (
     int xtype,
-    double *Ax,
-    double *Az,
+    float *Ax,
+    float *Az,
     Int p,
     cholmod_common *Common
 )
 {
-    double s = 0 ;
+    float s = 0 ;
     switch (xtype)
     {
 	case CHOLMOD_PATTERN:
@@ -63,7 +63,7 @@ static double abs_value
 /* === cholmod_norm_dense =================================================== */
 /* ========================================================================== */
 
-double CHOLMOD(norm_dense)
+float CHOLMOD(norm_dense)
 (
     /* ---- input ---- */
     cholmod_dense *X,	/* matrix to compute the norm of */
@@ -72,8 +72,8 @@ double CHOLMOD(norm_dense)
     cholmod_common *Common
 )
 {
-    double xnorm, s, x, z ;
-    double *Xx, *Xz, *W ;
+    float xnorm, s, x, z ;
+    float *Xx, *Xz, *W ;
     Int nrow, ncol, d, i, j, use_workspace, xtype ;
 
     /* ---------------------------------------------------------------------- */
@@ -246,7 +246,7 @@ double CHOLMOD(norm_dense)
 /* === cholmod_norm_sparse ================================================== */
 /* ========================================================================== */
 
-double CHOLMOD(norm_sparse)
+float CHOLMOD(norm_sparse)
 (
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to compute the norm of */
@@ -255,8 +255,8 @@ double CHOLMOD(norm_sparse)
     cholmod_common *Common
 )
 {
-    double anorm, s ;
-    double *Ax, *Az, *W ;
+    float anorm, s ;
+    float *Ax, *Az, *W ;
     Int *Ap, *Ai, *Anz ;
     Int i, j, p, pend, nrow, ncol, packed, xtype ;
 

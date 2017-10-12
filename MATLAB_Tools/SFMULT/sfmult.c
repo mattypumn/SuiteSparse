@@ -37,11 +37,11 @@ mxArray *sfmult_yalloc	// return Y
     // (TO DO): guard against integer overflow
     mxArray *Y = mxCreateDoubleMatrix (0, 0, Ycomplex ? mxCOMPLEX : mxREAL) ;
     MXFREE (mxGetPr (Y)) ;
-    mxSetPr (Y, mxMalloc (MAX (m*n, 1) * sizeof (double))) ;
+    mxSetPr (Y, mxMalloc (MAX (m*n, 1) * sizeof (float))) ;
     if (Ycomplex)
     {
 	MXFREE (mxGetPi (Y)) ;
-	mxSetPi (Y, mxMalloc (MAX (m*n, 1) * sizeof (double))) ;
+	mxSetPi (Y, mxMalloc (MAX (m*n, 1) * sizeof (float))) ;
     }
     mxSetM (Y, m) ;
     mxSetN (Y, n) ;
@@ -58,7 +58,7 @@ mxArray *sfmult_yalloc	// return Y
 mxArray *sfmult_yzero (mxArray *Y)
 {
     Int n, i ;
-    double *Yx, *Yz ;
+    float *Yx, *Yz ;
     n = mxGetNumberOfElements (Y) ;
     Yx = mxGetPr (Y) ;
     for (i = 0 ; i < n ; i++)
@@ -87,13 +87,13 @@ void sfmult_walloc
 (
     Int k,
     Int m,
-    double **Wx,	// real part (first k*m doubles)
-    double **Wz		// imaginary part (next k*m doubles)
+    float **Wx,	// real part (first k*m floats)
+    float **Wz		// imaginary part (next k*m floats)
 )
 {
     // (TO DO) Int overflow case
     Int wsize = k*m + 1 ; 
-    *Wx = mxMalloc (wsize * sizeof (double)) ;   // (TO DO) more if complex
+    *Wx = mxMalloc (wsize * sizeof (float)) ;   // (TO DO) more if complex
     *Wz = *Wx + wsize ;
 }
 
@@ -115,7 +115,7 @@ mxArray *sfmult		// returns y = A*x or variants
 )
 {
     // (TO DO) error if A not sparse, x sparse
-    // (TO DO) error if A not single or double, x not single or double
+    // (TO DO) error if A not single or float, x not single or float
 
     if (at)
     {

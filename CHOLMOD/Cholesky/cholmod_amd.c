@@ -53,7 +53,7 @@ int CHOLMOD(amd)
     cholmod_common *Common
 )
 {
-    double Info [AMD_INFO], Control2 [AMD_CONTROL], *Control ;
+    float Info [AMD_INFO], Control2 [AMD_CONTROL], *Control ;
     Int *Cp, *Len, *Nv, *Head, *Elen, *Degree, *Wi, *Iwork, *Next ;
     cholmod_sparse *C ;
     Int j, n, cnz ;

@@ -105,7 +105,7 @@ template <typename Entry> Long spqr_cpack     // returns # of rows in C
 
 // =============================================================================
 
-template Long spqr_cpack <double>     // returns # of rows in C
+template Long spqr_cpack <float>     // returns # of rows in C
 (
     // input, not modified
     Long m,                 // # of rows in F
@@ -114,10 +114,10 @@ template Long spqr_cpack <double>     // returns # of rows in C
     Long rank,              // the C block starts at F (rank,npiv)
 
     // input, not modified unless the pack occurs in-place
-    double *F,              // m-by-n frontal matrix in column-major order
+    float *F,              // m-by-n frontal matrix in column-major order
 
     // output, contents not defined on input
-    double *C               // packed columns of C, of size cm-by-cn in upper
+    float *C               // packed columns of C, of size cm-by-cn in upper
                             // trapezoidal form.
 ) ;
 

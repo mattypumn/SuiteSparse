@@ -36,7 +36,7 @@ extern "C" {
     }
   }
   
-  __global__ void kernelAddUpdate ( double *d_A, double *devPtrC, 
+  __global__ void kernelAddUpdate ( float *d_A, float *devPtrC, 
 				    Int *d_RelativeMap, 
 				    Int ndrow1, Int ndrow2, 
 				    Int nsrow )
@@ -49,7 +49,7 @@ extern "C" {
     }
   }
   
-  __global__ void kernelAddComplexUpdate ( double *d_A, double *devPtrC, 
+  __global__ void kernelAddComplexUpdate ( float *d_A, float *devPtrC, 
 					   Int *d_RelativeMap, 
 					   Int ndrow1, Int ndrow2, 
 					   Int nsrow )
@@ -63,7 +63,7 @@ extern "C" {
     }
   }
   
-  __global__ void kernelSumA ( double *a1, double *a2, const double alpha, 
+  __global__ void kernelSumA ( float *a1, float *a2, const float alpha, 
 			       int nsrow, int nscol ) {
     int isrow = blockIdx.x * blockDim.x + threadIdx.x;
     int iscol = blockIdx.y * blockDim.y + threadIdx.y;
@@ -73,8 +73,8 @@ extern "C" {
     }
   }
 
-  __global__ void kernelSumComplexA ( double *a1, double *a2, 
-				      const double alpha, int nsrow, 
+  __global__ void kernelSumComplexA ( float *a1, float *a2, 
+				      const float alpha, int nsrow, 
 				      int nscol ) {
     int isrow = blockIdx.x * blockDim.x + threadIdx.x;
     int iscol = blockIdx.y * blockDim.y + threadIdx.y;
@@ -111,7 +111,7 @@ extern "C" {
 
 
   /* ======================================================================== */
-  int addUpdateOnDevice ( double *d_A, double *devPtrC, 
+  int addUpdateOnDevice ( float *d_A, float *devPtrC, 
 			  Int *d_RelativeMap, Int ndrow1, 
 			  Int ndrow2, Int nsrow, 
 			  cudaStream_t* astream )
@@ -137,7 +137,7 @@ extern "C" {
 }
 
   /* ======================================================================== */
-  int addComplexUpdateOnDevice ( double *d_A, double *devPtrC, 
+  int addComplexUpdateOnDevice ( float *d_A, float *devPtrC, 
 				 Int *d_RelativeMap, Int ndrow1, 
 				 Int ndrow2, Int nsrow, 
 				 cudaStream_t* astream )
@@ -162,7 +162,7 @@ extern "C" {
   return 0;
 }
 
-  int sumAOnDevice ( double *a1, double *a2, const double alpha, 
+  int sumAOnDevice ( float *a1, float *a2, const float alpha, 
 		     int nsrow, int nscol )
   {
     dim3 grids;
@@ -176,7 +176,7 @@ extern "C" {
     return 0;
   }
 
-  int sumComplexAOnDevice ( double *a1, double *a2, const double alpha, 
+  int sumComplexAOnDevice ( float *a1, float *a2, const float alpha, 
 			    int nsrow, int nscol )
   {
     dim3 grids;

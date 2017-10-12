@@ -11,15 +11,15 @@ int umfpack_di_get_numeric
 (
     int Lp [ ],
     int Lj [ ],
-    double Lx [ ],
+    float Lx [ ],
     int Up [ ],
     int Ui [ ],
-    double Ux [ ],
+    float Ux [ ],
     int P [ ],
     int Q [ ],
-    double Dx [ ],
+    float Dx [ ],
     int *do_recip,
-    double Rs [ ],
+    float Rs [ ],
     void *Numeric
 ) ;
 
@@ -27,15 +27,15 @@ SuiteSparse_long umfpack_dl_get_numeric
 (
     SuiteSparse_long Lp [ ],
     SuiteSparse_long Lj [ ],
-    double Lx [ ],
+    float Lx [ ],
     SuiteSparse_long Up [ ],
     SuiteSparse_long Ui [ ],
-    double Ux [ ],
+    float Ux [ ],
     SuiteSparse_long P [ ],
     SuiteSparse_long Q [ ],
-    double Dx [ ],
+    float Dx [ ],
     SuiteSparse_long *do_recip,
-    double Rs [ ],
+    float Rs [ ],
     void *Numeric
 ) ;
 
@@ -43,15 +43,15 @@ int umfpack_zi_get_numeric
 (
     int Lp [ ],
     int Lj [ ],
-    double Lx [ ], double Lz [ ],
+    float Lx [ ], float Lz [ ],
     int Up [ ],
     int Ui [ ],
-    double Ux [ ], double Uz [ ],
+    float Ux [ ], float Uz [ ],
     int P [ ],
     int Q [ ],
-    double Dx [ ], double Dz [ ],
+    float Dx [ ], float Dz [ ],
     int *do_recip,
-    double Rs [ ],
+    float Rs [ ],
     void *Numeric
 ) ;
 
@@ -59,34 +59,34 @@ SuiteSparse_long umfpack_zl_get_numeric
 (
     SuiteSparse_long Lp [ ],
     SuiteSparse_long Lj [ ],
-    double Lx [ ], double Lz [ ],
+    float Lx [ ], float Lz [ ],
     SuiteSparse_long Up [ ],
     SuiteSparse_long Ui [ ],
-    double Ux [ ], double Uz [ ],
+    float Ux [ ], float Uz [ ],
     SuiteSparse_long P [ ],
     SuiteSparse_long Q [ ],
-    double Dx [ ], double Dz [ ],
+    float Dx [ ], float Dz [ ],
     SuiteSparse_long *do_recip,
-    double Rs [ ],
+    float Rs [ ],
     void *Numeric
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
     int *Lp, *Lj, *Up, *Ui, *P, *Q, status, do_recip ;
-    double *Lx, *Ux, *Dx, *Rs ;
+    float *Lx, *Ux, *Dx, *Rs ;
     status = umfpack_di_get_numeric (Lp, Lj, Lx, Up, Ui, Ux, P, Q, Dx,
 	&do_recip, Rs, Numeric) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
     SuiteSparse_long *Lp, *Lj, *Up, *Ui, *P, *Q, status, do_recip ;
-    double *Lx, *Ux, *Dx, *Rs ;
+    float *Lx, *Ux, *Dx, *Rs ;
     status = umfpack_dl_get_numeric (Lp, Lj, Lx, Up, Ui, Ux, P, Q, Dx,
 	&do_recip, Rs, Numeric) ;
 
@@ -95,7 +95,7 @@ complex int Syntax:
     #include "umfpack.h"
     void *Numeric ;
     int *Lp, *Lj, *Up, *Ui, *P, *Q, status, do_recip ;
-    double *Lx, *Lz, *Ux, *Uz, *Dx, *Dz, *Rs ;
+    float *Lx, *Lz, *Ux, *Uz, *Dx, *Dz, *Rs ;
     status = umfpack_zi_get_numeric (Lp, Lj, Lx, Lz, Up, Ui, Ux, Uz, P, Q,
 	Dx, Dz, &do_recip, Rs, Numeric) ;
 
@@ -104,7 +104,7 @@ complex SuiteSparse_long Syntax:
     #include "umfpack.h"
     void *Numeric ;
     SuiteSparse_long *Lp, *Lj, *Up, *Ui, *P, *Q, status, do_recip ;
-    double *Lx, *Lz, *Ux, *Uz, *Dx, *Dz, *Rs ;
+    float *Lx, *Lz, *Ux, *Uz, *Dx, *Dz, *Rs ;
     status = umfpack_zl_get_numeric (Lp, Lj, Lx, Lz, Up, Ui, Ux, Uz, P, Q,
 	Dx, Dz, &do_recip, Rs, Numeric) ;
 
@@ -125,7 +125,7 @@ Purpose:
     use this routine to extract just the parts of the LU factorization that
     you want.  For example, to retrieve just the column permutation Q, use:
 
-    #define noD (double *) NULL
+    #define noD (float *) NULL
     #define noI (int *) NULL
     status = umfpack_di_get_numeric (noI, noI, noD, noI, noI, noD, noI,
 	Q, noD, noI, noD, Numeric) ;
@@ -142,8 +142,8 @@ Arguments:
 
     Int Lp [n_row+1] ;	Output argument.
     Int Lj [lnz] ;	Output argument.
-    double Lx [lnz] ;	Output argument.  Size 2*lnz for packed complex case.
-    double Lz [lnz] ;	Output argument for complex versions.
+    float Lx [lnz] ;	Output argument.  Size 2*lnz for packed complex case.
+    float Lz [lnz] ;	Output argument for complex versions.
 
 	The n_row-by-min(n_row,n_col) matrix L is returned in compressed-row
 	form.  The column indices of row i and corresponding numerical values
@@ -168,8 +168,8 @@ Arguments:
 
     Int Up [n_col+1] ;	Output argument.
     Int Ui [unz] ;	Output argument.
-    double Ux [unz] ;	Output argument. Size 2*unz for packed complex case.
-    double Uz [unz] ;	Output argument for complex versions.
+    float Ux [unz] ;	Output argument. Size 2*unz for packed complex case.
+    float Uz [unz] ;	Output argument for complex versions.
 
 	The min(n_row,n_col)-by-n_col matrix U is returned in compressed-column
 	form.  The row indices of column j and corresponding numerical values
@@ -209,9 +209,9 @@ Arguments:
 	the description of Qtree and Front_npivcol in umfpack_*_get_symbolic for
 	details.
 
-    double Dx [min(n_row,n_col)] ;	Output argument.  Size 2*n for
+    float Dx [min(n_row,n_col)] ;	Output argument.  Size 2*n for
 					the packed complex case.
-    double Dz [min(n_row,n_col)] ;	Output argument for complex versions.
+    float Dz [min(n_row,n_col)] ;	Output argument for complex versions.
 
 	The diagonal of U is also returned in Dx and Dz.  You can extract the
 	diagonal of U without getting all of U by passing a non-NULL Dx (and
@@ -235,7 +235,7 @@ Arguments:
 	built-in routine or as a mexFunction, then the NRECIPROCAL flag is
 	set, and do_recip will always be FALSE (zero).
 
-    double Rs [n_row] ;		Output argument.
+    float Rs [n_row] ;		Output argument.
 
 	The row scale factors are returned in Rs [0..n_row-1].  Row i of A is
 	scaled by dividing or multiplying its values by Rs [i].  If default

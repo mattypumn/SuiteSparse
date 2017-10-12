@@ -13,12 +13,12 @@ typedef union sharedMemory
 
         // shared memory for factorize kernel (tile case)
         // size of A must match size of V in apply, below.
-        double A [PANELSIZE * TILESIZE + 1][TILESIZE + PADDING] ;
-        double T [TILESIZE + 1][TILESIZE + PADDING] ;
-        double Z [MAX_MCHUNK][TILESIZE+1] ;
-        double A1 [TILESIZE] ;
-        double V1 [TILESIZE] ;
-        double tau ;
+        float A [PANELSIZE * TILESIZE + 1][TILESIZE + PADDING] ;
+        float T [TILESIZE + 1][TILESIZE + PADDING] ;
+        float Z [MAX_MCHUNK][TILESIZE+1] ;
+        float A1 [TILESIZE] ;
+        float V1 [TILESIZE] ;
+        float tau ;
 
         #undef MAX_MCHUNK
     } factorize ;
@@ -29,8 +29,8 @@ typedef union sharedMemory
 
         // shared memory for block_apply kernels
         // size of V must match size of A in factorize, above.
-        double V [PANELSIZE * TILESIZE + 1][TILESIZE + PADDING] ;
-        double C [TILESIZE][MAX_COL_TILES * TILESIZE + PADDING] ;
+        float V [PANELSIZE * TILESIZE + 1][TILESIZE + PADDING] ;
+        float C [TILESIZE][MAX_COL_TILES * TILESIZE + PADDING] ;
 
         #undef MAX_COL_TILES
     } apply ;

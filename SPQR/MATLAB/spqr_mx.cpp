@@ -109,12 +109,12 @@ void spqr_mx_spumoni
     if (opts->tol <= SPQR_DEFAULT_TOL)
     {
         mexPrintf ("    opts.tol <= %g (use default tolerance)\n",
-            (double) SPQR_DEFAULT_TOL) ;
+            (float) SPQR_DEFAULT_TOL) ;
     }
     else if (opts->tol < 0)
     {
         mexPrintf ("    %g < opts.tol < 0 (use no tolerance)\n",
-            (double) SPQR_DEFAULT_TOL) ;
+            (float) SPQR_DEFAULT_TOL) ;
     }
     else
     {
@@ -206,7 +206,7 @@ void spqr_mx_spumoni
         cc->SPQR_flopcount_bound * (is_complex ? 4 : 1)) ;
     mexPrintf ("    column 2-norm tolerance used: %g\n",  cc->SPQR_tol_used) ;
     mexPrintf ("    actual memory usage: %g (bytes)\n",
-        ((double) cc->memory_usage)) ;
+        ((float) cc->memory_usage)) ;
 
     // Place additional spumoni info here ...
 }
@@ -225,7 +225,7 @@ static int get_option
     const char *field,          // the field to get from the MATLAB struct
 
     // outputs:
-    double *x,                  // double value of the field, if present
+    float *x,                  // float value of the field, if present
     Long *x_present,            // true if x is present
     char **s,                   // char value of the field, if present;
                                 // must be mxFree'd by caller when done
@@ -325,7 +325,7 @@ int spqr_mx_get_options
     cholmod_common *cc
 )
 {
-    double x ;
+    float x ;
     char *s ;
     Long x_present ;
 
@@ -347,7 +347,7 @@ int spqr_mx_get_options
     opts->econ = x_present ? ((Long) x) : m ;
 
     // -------------------------------------------------------------------------
-    // tol: a double with default computed later
+    // tol: a float with default computed later
     // -------------------------------------------------------------------------
 
     get_option (mxopts, "tol", &x, &x_present, NULL, cc) ;
@@ -543,7 +543,7 @@ static int put_values
 (
     Long nz,
     mxArray *A,
-    double *Ax,         // complex case: size 2*nz and freed on return,
+    float *Ax,         // complex case: size 2*nz and freed on return,
                         // real case: size nz, not freed on return.
     Long is_complex,
     cholmod_common *cc
@@ -555,11 +555,11 @@ static int put_values
     {
         // A is complex, stored in interleaved form; split it for MATLAB
         Long k ;
-        double z, *Ax2, *Az2 ;
+        float z, *Ax2, *Az2 ;
         MXFREE (mxGetPi (A)) ;
         // Ax2 and Az2 will never be NULL, even if nz == 0
-        Ax2 = (double *) cholmod_l_malloc (nz, sizeof (double), cc) ;
-        Az2 = (double *) cholmod_l_malloc (nz, sizeof (double), cc) ;
+        Ax2 = (float *) cholmod_l_malloc (nz, sizeof (float), cc) ;
+        Az2 = (float *) cholmod_l_malloc (nz, sizeof (float), cc) ;
         for (k = 0 ; k < nz ; k++)
         {
             Ax2 [k] = Ax [2*k] ;
@@ -574,7 +574,7 @@ static int put_values
         if (imag_all_zero)
         {
             // free the imaginary part, converting A to real
-            cholmod_l_free (1, sizeof (double), Az2, cc) ;
+            cholmod_l_free (1, sizeof (float), Az2, cc) ;
             // the imaginary part can be NULL, for MATLAB
             Az2 = NULL ;
         }
@@ -588,7 +588,7 @@ static int put_values
         if (Ax == NULL)
         {
             // don't give MATLAB a null pointer
-            Ax = (double *) cholmod_l_malloc (1, sizeof (double), cc) ;
+            Ax = (float *) cholmod_l_malloc (1, sizeof (float), cc) ;
         }
         mxSetPr (A, Ax) ;
     }
@@ -626,7 +626,7 @@ mxArray *spqr_mx_put_sparse
     mxSetIr (Amatlab, (mwIndex *) A->i) ;
 
     nz = cholmod_l_nnz (A, cc) ;
-    put_values (nz, Amatlab, (double *) A->x, is_complex, cc) ;
+    put_values (nz, Amatlab, (float *) A->x, is_complex, cc) ;
 
     A->p = NULL ;
     A->i = NULL ;
@@ -647,7 +647,7 @@ mxArray *spqr_mx_put_dense2
 (
     Long m,
     Long n,
-    double *Ax,         // size nz if real; size 2*nz if complex
+    float *Ax,         // size nz if real; size 2*nz if complex
     int is_complex,
     cholmod_common *cc
 )
@@ -689,7 +689,7 @@ mxArray *spqr_mx_put_dense
         mexErrMsgIdAndTxt ("QR:internalError", "internal error!") ;
     }
 
-    Amatlab = spqr_mx_put_dense2 (A->nrow, A->ncol, (double *) A->x,
+    Amatlab = spqr_mx_put_dense2 (A->nrow, A->ncol, (float *) A->x,
         A->xtype != CHOLMOD_REAL, cc) ;
 
     A->x = NULL ;
@@ -717,7 +717,7 @@ mxArray *spqr_mx_put_permutation
 )
 {
     mxArray *Pmatlab ;
-    double *Ex ;
+    float *Ex ;
     Long *Ep, *Ei, j, k ;
 
     if (cc == NULL) return (NULL) ;
@@ -729,7 +729,7 @@ mxArray *spqr_mx_put_permutation
         Ex = mxGetPr (Pmatlab) ;
         for (k = 0 ; k < n ; k++)
         {
-            Ex [k] = (double) ((P ? P [k] : k) + 1) ;
+            Ex [k] = (float) ((P ? P [k] : k) + 1) ;
         }
     }
     else
@@ -762,7 +762,7 @@ mxArray *spqr_mx_put_permutation
 // the input matrix can actually be real, in which case an all-zero imaginary
 // part is created.
 
-double *spqr_mx_merge_if_complex
+float *spqr_mx_merge_if_complex
 (
     // inputs, not modified
     const mxArray *A,
@@ -775,7 +775,7 @@ double *spqr_mx_merge_if_complex
 )
 {
     Long nz, m, n ;
-    double *X, *Xx, *Xz ;
+    float *X, *Xx, *Xz ;
 
     if (cc == NULL) return (NULL) ;
 
@@ -796,7 +796,7 @@ double *spqr_mx_merge_if_complex
     if (make_complex)
     {
         // Note the typecast and sizeof (...) intentionally do not match
-        X = (double *) cholmod_l_malloc (nz, sizeof (Complex), cc) ;
+        X = (float *) cholmod_l_malloc (nz, sizeof (Complex), cc) ;
         for (Long k = 0 ; k < nz ; k++)
         {
             X [2*k  ] = Xx [k] ;
@@ -823,7 +823,7 @@ cholmod_sparse *spqr_mx_get_sparse
 (
     const mxArray *Amatlab, // MATLAB version of the matrix
     cholmod_sparse *A,	    // CHOLMOD version of the matrix
-    double *dummy 	    // a pointer to a valid scalar double
+    float *dummy 	    // a pointer to a valid scalar float
 )
 {
     Long *Ap ;
@@ -856,7 +856,7 @@ cholmod_sparse *spqr_mx_get_sparse
     }
     else
     {
-	// only sparse complex/real double matrices are supported
+	// only sparse complex/real float matrices are supported
         mexErrMsgIdAndTxt ("QR:invalidInput", "matrix type not supported") ;
     }
 
@@ -869,14 +869,14 @@ cholmod_sparse *spqr_mx_get_sparse
 // =============================================================================
 
 // Create a shallow CHOLMOD copy of a MATLAB dense matrix.  No memory is
-// allocated.  Only double (real and zomplex) matrices are supported.  The
+// allocated.  Only float (real and zomplex) matrices are supported.  The
 // resulting matrix B must not be modified.
 
 cholmod_dense *spqr_mx_get_dense
 (
     const mxArray *Amatlab, // MATLAB version of the matrix
     cholmod_dense *A,	    // CHOLMOD version of the matrix
-    double *dummy	    // a pointer to a valid scalar double
+    float *dummy	    // a pointer to a valid scalar float
 )
 {
     A->nrow = mxGetM (Amatlab) ;
@@ -897,7 +897,7 @@ cholmod_dense *spqr_mx_get_dense
     }
     else
     {
-	// only full double matrices supported
+	// only full float matrices supported
         mexErrMsgIdAndTxt ("QR:invalidInput", "matrix type not supported") ;
     }
     A->xtype = mxIsComplex (Amatlab) ? CHOLMOD_ZOMPLEX : CHOLMOD_REAL ;
@@ -946,12 +946,12 @@ void spqr_mx_get_usage
     }
     if (is_complex)
     {
-        usage += nzmax * sizeof (double) * 2 ;
+        usage += nzmax * sizeof (float) * 2 ;
         count += 2 ;
     }
     else
     {
-        usage += nzmax * sizeof (double) ;
+        usage += nzmax * sizeof (float) ;
         count += 1 ;
     }
     *p_usage = usage ;
@@ -979,8 +979,8 @@ char *spqr_mx_id (int line)
 mxArray *spqr_mx_info       // return a struct with info statistics
 (
     cholmod_common *cc,
-    double t,               // total time, < 0 if not computed
-    double flops            // flop count, < 0 if not computed
+    float t,               // total time, < 0 if not computed
+    float flops            // flop count, < 0 if not computed
 )
 {
     Long ninfo ;
@@ -1022,7 +1022,7 @@ mxArray *spqr_mx_info       // return a struct with info statistics
     for (Long k = 0 ; k <= 6 ; k++)
     {
         mxSetFieldByNumber (s, 0, k,
-            mxCreateDoubleScalar ((double) cc->SPQR_istat [k])) ;
+            mxCreateDoubleScalar ((float) cc->SPQR_istat [k])) ;
     }
 
     // get the ordering used.  Note that "default", "best", and "cholmod"
@@ -1056,7 +1056,7 @@ mxArray *spqr_mx_info       // return a struct with info statistics
     mxSetFieldByNumber (s, 0, 7, ord) ;
 
     mxSetFieldByNumber (s, 0, 8,
-        mxCreateDoubleScalar ((double) cc->memory_usage)) ;
+        mxCreateDoubleScalar ((float) cc->memory_usage)) ;
     mxSetFieldByNumber (s, 0, 9,
         mxCreateDoubleScalar (cc->SPQR_flopcount_bound)) ;
     mxSetFieldByNumber (s, 0, 10, mxCreateDoubleScalar (cc->SPQR_tol_used)) ;
@@ -1068,7 +1068,7 @@ mxArray *spqr_mx_info       // return a struct with info statistics
     }
     else
     {
-        mxSetFieldByNumber (s, 0, 11, mxCreateDoubleScalar ((double) nthreads));
+        mxSetFieldByNumber (s, 0, 11, mxCreateDoubleScalar ((float) nthreads));
     }
 
     mxSetFieldByNumber (s, 0, 12, mxCreateDoubleScalar (cc->SPQR_norm_E_fro)) ;

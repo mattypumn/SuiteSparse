@@ -1,6 +1,6 @@
 #! /usr/bin/perl
 # Constructs the CXSparse package from CSparse, adding four different sets of
-# functions (int/cs_long_t, and double/complex).  Backward compatible
+# functions (int/cs_long_t, and float/complex).  Backward compatible
 # with CSparse.  No MATLAB interface is provided for CXSparse, however.
 #
 # To create CXSparse from CSparse, the ./CXSparse directory should not (yet)
@@ -132,22 +132,22 @@ foreach my $fff ( @demo_files )
 		s/cs_ci\.h/cs.h/ ;
 		# fabs becomes cabs
 		s/fabs/cabs/g;
-		# change double to cs_complex_t
-		s/\bdouble\b/cs_complex_t/g;
-		# (double) typecasts stay double
-		s/\(cs_complex_t\) /(double) /g;
-		# tic, toc, tol, and norm are double, not cs_complex_t
-		s/cs_complex_t norm/double norm/;
-		s/cs_complex_t tic/double tic/;
-		s/cs_complex_t toc \(cs_complex_t/double toc (double/;
-		s/cs_complex_t s = tic/double s = tic/;
-		s/cs_complex_t tol/double tol/;
-		# cumsum, S->lnz, S->unz are double
-		s/cs_complex_t lnz/double lnz/;
-		s/cs_complex_t unz/double unz/;
-		s/cs_complex_t cs_cumsum/double cs_cumsum/;
-		# local variable declarations that stay double
-		s/,  / ;\n    double / ;
+		# change float to cs_complex_t
+		s/\bfloat\b/cs_complex_t/g;
+		# (float) typecasts stay float
+		s/\(cs_complex_t\) /(float) /g;
+		# tic, toc, tol, and norm are float, not cs_complex_t
+		s/cs_complex_t norm/float norm/;
+		s/cs_complex_t tic/float tic/;
+		s/cs_complex_t toc \(cs_complex_t/float toc (float/;
+		s/cs_complex_t s = tic/float s = tic/;
+		s/cs_complex_t tol/float tol/;
+		# cumsum, S->lnz, S->unz are float
+		s/cs_complex_t lnz/float lnz/;
+		s/cs_complex_t unz/float unz/;
+		s/cs_complex_t cs_cumsum/float cs_cumsum/;
+		# local variable declarations that stay float
+		s/,  / ;\n    float / ;
 		print OUT $_;
 	    }
 	    close (IN);
@@ -172,22 +172,22 @@ foreach my $fff ( @demo_files )
 		s/cs_cl\.h/cs.h/ ;
 		# fabs becomes cabs
 		s/fabs/cabs/g;
-		# change double to cs_complex_t
-		s/\bdouble\b/cs_complex_t/g;
-		# (double) typecasts stay double
-		s/\(cs_complex_t\) /(double) /g;
-		# tic, toc, tol, and norm are double, not cs_complex_t
-		s/cs_complex_t norm/double norm/;
-		s/cs_complex_t tic/double tic/;
-		s/cs_complex_t toc \(cs_complex_t/double toc (double/;
-		s/cs_complex_t s = tic/double s = tic/;
-		s/cs_complex_t tol/double tol/;
-		# cumsum, S->lnz, S->unz are double
-		s/cs_complex_t lnz/double lnz/;
-		s/cs_complex_t unz/double unz/;
-		s/cs_complex_t cs_cumsum/double cs_cumsum/;
-		# local variable declarations that stay double
-		s/,  / ;\n    double / ;
+		# change float to cs_complex_t
+		s/\bfloat\b/cs_complex_t/g;
+		# (float) typecasts stay float
+		s/\(cs_complex_t\) /(float) /g;
+		# tic, toc, tol, and norm are float, not cs_complex_t
+		s/cs_complex_t norm/float norm/;
+		s/cs_complex_t tic/float tic/;
+		s/cs_complex_t toc \(cs_complex_t/float toc (float/;
+		s/cs_complex_t s = tic/float s = tic/;
+		s/cs_complex_t tol/float tol/;
+		# cumsum, S->lnz, S->unz are float
+		s/cs_complex_t lnz/float lnz/;
+		s/cs_complex_t unz/float unz/;
+		s/cs_complex_t cs_cumsum/float cs_cumsum/;
+		# local variable declarations that stay float
+		s/,  / ;\n    float / ;
 		print OUT $_;
 	    }
 	    close (IN);
@@ -243,18 +243,18 @@ foreach my $file ( @src_files )
 		# change csi to CS_INT
 		s/\bcsi\b/CS_INT/g;
 
-		# change double to CS_ENTRY
-		s/\bdouble\b/CS_ENTRY/g;
+		# change float to CS_ENTRY
+		s/\bfloat\b/CS_ENTRY/g;
 
-		# (double) and (double *) typecasts stay double,
-		# tol and vnz for cs_vcount stays double
-		s/\(CS_ENTRY\) /(double) /g;
-		s/\(CS_ENTRY \*\) /(double \*) /;
-		s/CS_ENTRY tol/double tol/;
-		s/CS_ENTRY \*vnz/double \*vnz/;
+		# (float) and (float *) typecasts stay float,
+		# tol and vnz for cs_vcount stays float
+		s/\(CS_ENTRY\) /(float) /g;
+		s/\(CS_ENTRY \*\) /(float \*) /;
+		s/CS_ENTRY tol/float tol/;
+		s/CS_ENTRY \*vnz/float \*vnz/;
 
-		# local variable declarations that stay double
-		s/,  / ;\n    double / ;
+		# local variable declarations that stay float
+		s/,  / ;\n    float / ;
 
 		#---------------------------------------------------------------
 		# Special cases.  Some undo changes made above.
@@ -263,7 +263,7 @@ foreach my $file ( @src_files )
 		# cs_mex.c
 		if ($fbase =~ /cs_mex/)
 		{
-		    s/matrix must be CS_ENTRY/matrix must be double/;
+		    s/matrix must be CS_ENTRY/matrix must be float/;
 		    s/A->p =/A->p = (CS_INT *)/;
 		    s/A->i =/A->i = (CS_INT *)/;
 		    s/, A->p/, (mwIndex *) A->p/;
@@ -273,7 +273,7 @@ foreach my $file ( @src_files )
 		# fix comments in cs_add_mex.c and cs_permute_mex.c
 		if ($fbase =~ /cs_add_mex/ || $fbase =~ /cs_permute_mex/)
 		{
-		    s/via CS_ENTRY transpose/via double transpose/;
+		    s/via CS_ENTRY transpose/via float transpose/;
 		}
 
 		# cs_chol
@@ -287,13 +287,13 @@ foreach my $file ( @src_files )
 		# cs_norm
 		if ($fbase =~ /cs_norm/)
 		{
-		    s/^CS_ENTRY cs_norm/double cs_norm/;
+		    s/^CS_ENTRY cs_norm/float cs_norm/;
 		}
 
 		# cs_cumsum
 		if ($fbase =~ /cs_cumsum/)
 		{
-		    s/CS_ENTRY/double/;
+		    s/CS_ENTRY/float/;
 		}
 
 		# cs_transpose
@@ -311,14 +311,14 @@ foreach my $file ( @src_files )
 		# cs_qr
 		if ($fbase =~ /cs_qr/)
 		{
-		    s/n, sizeof \(CS_ENTRY\)/n, sizeof (double)/;
+		    s/n, sizeof \(CS_ENTRY\)/n, sizeof (float)/;
 		}
 
 		# cs_happly
 		if ($fbase =~ /cs_happly/)
 		{
 		    s/^(.*tau.*)(Vx\s*\[p\])/$1CS_CONJ ($2)/;
-		    s/CS_ENTRY beta/double beta/;
+		    s/CS_ENTRY beta/float beta/;
 		}
 
 		# cs_ltsolve

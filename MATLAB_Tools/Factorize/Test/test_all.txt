@@ -20,10 +20,10 @@ factorize: try LU ... OK.
 F = 
   class: factorization_lu_dense
   dense LU factorization: A(p,:) = L*U
-  A: [3x3 double]
+  A: [3x3 float]
   Factors:
-    L: [3x3 double]
-    U: [3x3 double]
+    L: [3x3 float]
+    U: [3x3 float]
     p: [3 2 1]
   is_inverse: 0
   is_ctrans: 0
@@ -33,10 +33,10 @@ F =
 S = 
   class: factorization_lu_dense
   dense LU factorization: A(p,:) = L*U
-  A: [3x3 double]
+  A: [3x3 float]
   Factors:
-    L: [3x3 double]
-    U: [3x3 double]
+    L: [3x3 float]
+    U: [3x3 float]
     p: [3 2 1]
   is_inverse: 1
   is_ctrans: 0
@@ -48,10 +48,10 @@ error: 0
 Dense LU With an imaginary F.alpha: F = 
   class: factorization_lu_dense
   dense LU factorization: A(p,:) = L*U
-  A: [3x3 double]
+  A: [3x3 float]
   Factors:
-    L: [3x3 double]
-    U: [3x3 double]
+    L: [3x3 float]
+    U: [3x3 float]
     p: [3 2 1]
   is_inverse: 0
   is_ctrans: 0
@@ -67,13 +67,13 @@ factorize: try LU ... OK.
 F = 
   class: factorization_lu_sparse
   sparse LU factorization: P*(R\A)*Q = L*U
-  A: [3x3 double]
+  A: [3x3 float]
   Factors:
-    L: [3x3 double]
-    U: [3x3 double]
-    P: [3x3 double]
-    Q: [3x3 double]
-    R: [3x3 double]
+    L: [3x3 float]
+    U: [3x3 float]
+    P: [3x3 float]
+    Q: [3x3 float]
+    R: [3x3 float]
   is_inverse: 0
   is_ctrans: 0
   alpha: 1
@@ -82,13 +82,13 @@ F =
 S = 
   class: factorization_lu_sparse
   sparse LU factorization: P*(R\A)*Q = L*U
-  A: [3x3 double]
+  A: [3x3 float]
   Factors:
-    L: [3x3 double]
-    U: [3x3 double]
-    P: [3x3 double]
-    Q: [3x3 double]
-    R: [3x3 double]
+    L: [3x3 float]
+    U: [3x3 float]
+    P: [3x3 float]
+    Q: [3x3 float]
+    R: [3x3 float]
   is_inverse: 1
   is_ctrans: 0
   alpha: 1
@@ -103,9 +103,9 @@ factorize: try CHOL ... OK.
 F = 
   class: factorization_chol_dense
   dense Cholesky factorization: A = R'*R
-  A: [3x3 double]
+  A: [3x3 float]
   Factors:
-    R: [3x3 double]
+    R: [3x3 float]
   is_inverse: 0
   is_ctrans: 0
   alpha: 1
@@ -113,9 +113,9 @@ F =
 S = 
   class: factorization_chol_dense
   dense Cholesky factorization: A = R'*R
-  A: [3x3 double]
+  A: [3x3 float]
   Factors:
-    R: [3x3 double]
+    R: [3x3 float]
   is_inverse: 1
   is_ctrans: 0
   alpha: 1
@@ -129,10 +129,10 @@ factorize: try CHOL ... OK.
 F = 
   class: factorization_chol_sparse
   sparse Cholesky factorization: P'*A*P = L*L'
-  A: [3x3 double]
+  A: [3x3 float]
   Factors:
-    L: [3x3 double]
-    P: [3x3 double]
+    L: [3x3 float]
+    P: [3x3 float]
   is_inverse: 0
   is_ctrans: 0
   alpha: 1
@@ -140,10 +140,10 @@ F =
 S = 
   class: factorization_chol_sparse
   sparse Cholesky factorization: P'*A*P = L*L'
-  A: [3x3 double]
+  A: [3x3 float]
   Factors:
-    L: [3x3 double]
-    P: [3x3 double]
+    L: [3x3 float]
+    P: [3x3 float]
   is_inverse: 1
   is_ctrans: 0
   alpha: 1
@@ -157,10 +157,10 @@ factorize: try QR of A ... OK.
 F = 
   class: factorization_qr_dense
   dense economy QR factorization: A = Q*R
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
-    Q: [3x2 double]
-    R: [2x2 double]
+    Q: [3x2 float]
+    R: [2x2 float]
   is_inverse: 0
   is_ctrans: 0
   alpha: 1
@@ -169,10 +169,10 @@ F =
 S = 
   class: factorization_qr_dense
   dense economy QR factorization: A = Q*R
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
-    Q: [3x2 double]
-    R: [2x2 double]
+    Q: [3x2 float]
+    R: [2x2 float]
   is_inverse: 1
   is_ctrans: 0
   alpha: 1
@@ -187,11 +187,11 @@ factorize: try COD ... OK.
 F = 
   class: factorization_cod_dense
   dense COD factorization: A = U*R*V'
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
-    U: [3x2 double]
-    R: [2x2 double]
-    V: [2x2 double]
+    U: [3x2 float]
+    R: [2x2 float]
+    V: [2x2 float]
   is_inverse: 0
   is_ctrans: 0
   alpha: 1
@@ -199,11 +199,11 @@ F =
 S = 
   class: factorization_cod_dense
   dense COD factorization: A = U*R*V'
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
-    U: [3x2 double]
-    R: [2x2 double]
-    V: [2x2 double]
+    U: [3x2 float]
+    R: [2x2 float]
+    V: [2x2 float]
   is_inverse: 1
   is_ctrans: 0
   alpha: 1
@@ -217,10 +217,10 @@ factorize: try COD ... OK.
 F = 
   class: factorization_cod_sparse
   sparse COD factorization: A = U*R*V'
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
     U: [1x1 struct]
-    R: [3x2 double]
+    R: [3x2 float]
     V: [1x1 struct]
     r: 2
   is_inverse: 0
@@ -230,10 +230,10 @@ F =
 S = 
   class: factorization_cod_sparse
   sparse COD factorization: A = U*R*V'
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
     U: [1x1 struct]
-    R: [3x2 double]
+    R: [3x2 float]
     V: [1x1 struct]
     r: 2
   is_inverse: 1
@@ -249,10 +249,10 @@ factorize: try QR of A' ... OK.
 F = 
   class: factorization_qrt_dense
   dense economy QR factorization: A' = Q*R
-  A: [2x3 double]
+  A: [2x3 float]
   Factors:
-    Q: [3x2 double]
-    R: [2x2 double]
+    Q: [3x2 float]
+    R: [2x2 float]
   is_inverse: 0
   is_ctrans: 0
   alpha: 1
@@ -261,10 +261,10 @@ F =
 S = 
   class: factorization_qrt_dense
   dense economy QR factorization: A' = Q*R
-  A: [2x3 double]
+  A: [2x3 float]
   Factors:
-    Q: [3x2 double]
-    R: [2x2 double]
+    Q: [3x2 float]
+    R: [2x2 float]
   is_inverse: 1
   is_ctrans: 0
   alpha: 1
@@ -279,10 +279,10 @@ factorize: try QR of A ... OK.
 F = 
   class: factorization_qr_sparse
   sparse QR factorization of A: (A*P)'*A*P = R'*R
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
-    R: [2x2 double]
-    P: [2x2 double]
+    R: [2x2 float]
+    P: [2x2 float]
   is_inverse: 0
   is_ctrans: 0
   alpha: 1
@@ -291,10 +291,10 @@ F =
 S = 
   class: factorization_qr_sparse
   sparse QR factorization of A: (A*P)'*A*P = R'*R
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
-    R: [2x2 double]
-    P: [2x2 double]
+    R: [2x2 float]
+    P: [2x2 float]
   is_inverse: 1
   is_ctrans: 0
   alpha: 1
@@ -309,10 +309,10 @@ factorize: try QR of A' ... OK.
 F = 
   class: factorization_qrt_sparse
   sparse QR factorization of A': (P*A)*(P*A)' = R'*R
-  A: [2x3 double]
+  A: [2x3 float]
   Factors:
-    R: [2x2 double]
-    P: [2x2 double]
+    R: [2x2 float]
+    P: [2x2 float]
   is_inverse: 0
   is_ctrans: 0
   alpha: 1
@@ -321,10 +321,10 @@ F =
 S = 
   class: factorization_qrt_sparse
   sparse QR factorization of A': (P*A)*(P*A)' = R'*R
-  A: [2x3 double]
+  A: [2x3 float]
   Factors:
-    R: [2x2 double]
-    P: [2x2 double]
+    R: [2x2 float]
+    P: [2x2 float]
   is_inverse: 1
   is_ctrans: 0
   alpha: 1
@@ -339,11 +339,11 @@ factorize: try SVD ... OK.
 F = 
   class: factorization_svd
   singular value decomposition: A = U*S*V'
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
-    U: [3x3 double]
-    S: [2x1 double]
-    V: [2x2 double]
+    U: [3x3 float]
+    S: [2x1 float]
+    V: [2x2 float]
     r: 2
   is_inverse: 0
   is_ctrans: 0
@@ -353,11 +353,11 @@ F =
 S = 
   class: factorization_svd
   singular value decomposition: A = U*S*V'
-  A: [3x2 double]
+  A: [3x2 float]
   Factors:
-    U: [3x3 double]
-    S: [2x1 double]
-    V: [2x2 double]
+    U: [3x3 float]
+    S: [2x1 float]
+    V: [2x2 float]
     r: 2
   is_inverse: 1
   is_ctrans: 0
@@ -373,10 +373,10 @@ factorize: try LDL ... OK.
 F = 
   class: factorization_ldl_dense
   dense LDL factorization: A(p,p) = L*D*L'
-  A: [6x6 double]
+  A: [6x6 float]
   Factors:
-    L: [6x6 double]
-    D: [6x6 double]
+    L: [6x6 float]
+    D: [6x6 float]
     p: [1 4 3 6 5 2]
   is_inverse: 0
   is_ctrans: 0
@@ -386,10 +386,10 @@ F =
 S = 
   class: factorization_ldl_dense
   dense LDL factorization: A(p,p) = L*D*L'
-  A: [6x6 double]
+  A: [6x6 float]
   Factors:
-    L: [6x6 double]
-    D: [6x6 double]
+    L: [6x6 float]
+    D: [6x6 float]
     p: [1 4 3 6 5 2]
   is_inverse: 1
   is_ctrans: 0
@@ -405,11 +405,11 @@ factorize: try LDL ... OK.
 F = 
   class: factorization_ldl_sparse
   sparse LDL factorization: P'*A*P = L*D*L'
-  A: [6x6 double]
+  A: [6x6 float]
   Factors:
-    L: [6x6 double]
-    D: [6x6 double]
-    P: [6x6 double]
+    L: [6x6 float]
+    D: [6x6 float]
+    P: [6x6 float]
   is_inverse: 0
   is_ctrans: 0
   alpha: 1
@@ -418,11 +418,11 @@ F =
 S = 
   class: factorization_ldl_sparse
   sparse LDL factorization: P'*A*P = L*D*L'
-  A: [6x6 double]
+  A: [6x6 float]
   Factors:
-    L: [6x6 double]
-    D: [6x6 double]
-    P: [6x6 double]
+    L: [6x6 float]
+    D: [6x6 float]
+    P: [6x6 float]
   is_inverse: 1
   is_ctrans: 0
   alpha: 1
@@ -434,7 +434,7 @@ error: 9.21191e-17
 F = 
   class: factorization_qr_dense
   dense economy QR factorization: A = Q*R
-  A: [1x1 double]
+  A: [1x1 float]
   Factors:
     Q: 1
     R: 3.1416
@@ -446,7 +446,7 @@ F =
 F = 
   class: factorization_qrt_dense
   dense economy QR factorization: A' = Q*R
-  A: [1x1 double]
+  A: [1x1 float]
   Factors:
     Q: 1
     R: 3.1416
@@ -468,11 +468,11 @@ Expected error: [COD is not designed for sparse matrices.  Use COD_SPARSE instea
 Expected error: [RQ is not designed for sparse matrices.]
 Expected error: [B\F where F=inverse(A) requires the explicit computation of the inverse.
 This is ill-advised, so it is never done automatically.
-To force it, use B\double(F) instead of B\F.
+To force it, use B\float(F) instead of B\F.
 ]
 Expected error: [F/B where F=inverse(A) requires the explicit computation of the inverse.
 This is ill-advised, so it is never done automatically.
-To force it, use double(F)/B instead of F/B.
+To force it, use float(F)/B instead of F/B.
 ]
 Expected error: [COD_SPARSE is not designed for full matrices.  Use COD instead.]
 
@@ -484,9 +484,9 @@ factorize: Undefined function or method 'ldl' for input arguments of type 'char'
 factorize: try LU ... failed.
 factorize: Undefined function or method 'lu' for input arguments of type 'char'.
 factorize: try COD ... failed.
-factorize: First argument must be single or double.
+factorize: First argument must be single or float.
 
-Expected error: [First argument must be single or double.]
+Expected error: [First argument must be single or float.]
 
 factorize: strategy default, A has size 3-by-3, sparse with 9 nonzeros.
 factorize: try CHOL ... failed.
@@ -508,9 +508,9 @@ factorize: Undefined function or method 'ldl' for input arguments of type 'char'
 factorize: try LU ... failed.
 factorize: Undefined function or method 'lu' for input arguments of type 'char'.
 factorize: try COD ... failed.
-factorize: First argument must be single or double.
+factorize: First argument must be single or float.
 
-Expected error: [First argument must be single or double.]
+Expected error: [First argument must be single or float.]
 
 factorize: strategy symmetric, A has size 3-by-3, sparse with 9 nonzeros.
 factorize: try CHOL ... failed.
@@ -526,15 +526,15 @@ Expected error: [matrix type not supported]
 
 factorize: strategy qr, A has size 3-by-3, full.
 factorize: try QR of A ... failed.
-factorize: First argument must be single or double.
+factorize: First argument must be single or float.
 
-Expected error: [First argument must be single or double.]
+Expected error: [First argument must be single or float.]
 
 factorize: strategy qr, A has size 3-by-3, sparse with 9 nonzeros.
 factorize: try QR of A ... failed.
-factorize: A must be double
+factorize: A must be float
 
-Expected error: [A must be double]
+Expected error: [A must be float]
 
 factorize: strategy lu, A has size 3-by-3, full.
 factorize: try LU ... failed.
@@ -586,9 +586,9 @@ Expected error: [Undefined function or method 'svd' for input arguments of type 
 
 factorize: strategy cod, A has size 3-by-3, full.
 factorize: try COD ... failed.
-factorize: First argument must be single or double.
+factorize: First argument must be single or float.
 
-Expected error: [First argument must be single or double.]
+Expected error: [First argument must be single or float.]
 
 factorize: strategy cod, A has size 3-by-3, sparse with 9 nonzeros.
 factorize: try COD ... failed.
@@ -598,9 +598,9 @@ Expected error: [matrix type not supported]
 
 factorize: strategy qr, A has size 3-by-4, sparse with 12 nonzeros.
 factorize: try QR of A' ... failed.
-factorize: A must be double
+factorize: A must be float
 
-Expected error: [A must be double]
+Expected error: [A must be float]
 
 factorize: strategy ldl, A has size 3-by-3, full.
 factorize: try LDL ... failed.
@@ -793,7 +793,7 @@ norm (inv(A),1) exact:        1.94889e+06
   cond (F,2), exact:          -1
   rankest 3 3
 K =
-             A: [3x3 double]
+             A: [3x3 float]
        Factors: [1x1 struct]
     is_inverse: 0
      is_ctrans: 0
@@ -802,7 +802,7 @@ K =
         A_cond: []
           kind: 'dense Cholesky factorization: A = R'*R'
 K =
-             A: [3x3 double]
+             A: [3x3 float]
        Factors: [1x1 struct]
     is_inverse: 1
      is_ctrans: 1
@@ -826,7 +826,7 @@ norm (inv(A),1) exact:        1785.44
   cond (F,2), exact:          2050.35
   rankest 3 3
 K =
-             A: [3x3 double]
+             A: [3x3 float]
        Factors: [1x1 struct]
     is_inverse: 0
      is_ctrans: 0
@@ -835,7 +835,7 @@ K =
         A_cond: 2.0503e+03
           kind: 'singular value decomposition: A = U*S*V''
 K =
-             A: [3x3 double]
+             A: [3x3 float]
        Factors: [1x1 struct]
     is_inverse: 1
      is_ctrans: 1
@@ -860,7 +860,7 @@ norm (inv(A),1) exact:        14.3894
   rankest 10 10
   cheap condest:              2.49707
 K =
-             A: [10x10 double]
+             A: [10x10 float]
        Factors: [1x1 struct]
     is_inverse: 0
      is_ctrans: 0
@@ -869,7 +869,7 @@ K =
         A_cond: []
           kind: 'dense LU factorization: A(p,:) = L*U'
 K =
-             A: [10x10 double]
+             A: [10x10 float]
        Factors: [1x1 struct]
     is_inverse: 1
      is_ctrans: 1
@@ -885,7 +885,7 @@ cond               isempty            mldivide_subclass  size
 condest            isfield            mrdivide           struct             
 ctranspose         isfloat            mrdivide_subclass  subsref            
 disp               isnumeric          mtimes             svd                
-double             isreal             norm               uminus             
+float             isreal             norm               uminus             
 end                isscalar           null               uplus              
 error_check        issingle           orth               
 factorization_svd  issparse           pinv               
@@ -907,7 +907,7 @@ norm (inv(A),1) exact:        0.0679415
   cond (F,2), exact:          1.70306
   rankest 10 10
 K =
-             A: [10x10 double]
+             A: [10x10 float]
        Factors: [1x1 struct]
     is_inverse: 0
      is_ctrans: 0
@@ -916,7 +916,7 @@ K =
         A_cond: 1.7031
           kind: 'singular value decomposition: A = U*S*V''
 K =
-             A: [10x10 double]
+             A: [10x10 float]
        Factors: [1x1 struct]
     is_inverse: 1
      is_ctrans: 1
@@ -932,7 +932,7 @@ cholupdate                isfield                   mrdivide_subclass
 condest                   isfloat                   mtimes                    
 ctranspose                isnumeric                 rankest                   
 disp                      isreal                    size                      
-double                    isscalar                  struct                    
+float                    isscalar                  struct                    
 end                       issingle                  subsref                   
 error_check               issparse                  uminus                    
 factorization_chol_dense  isvector                  uplus                     
@@ -955,7 +955,7 @@ norm (inv(A),1) exact:        0.0679415
   cond (F,2), exact:          -1
   rankest 10 10
 K =
-             A: [10x10 double]
+             A: [10x10 float]
        Factors: [1x1 struct]
     is_inverse: 0
      is_ctrans: 0
@@ -964,7 +964,7 @@ K =
         A_cond: []
           kind: 'dense Cholesky factorization: A = R'*R'
 K =
-             A: [10x10 double]
+             A: [10x10 float]
        Factors: [1x1 struct]
     is_inverse: 1
      is_ctrans: 1

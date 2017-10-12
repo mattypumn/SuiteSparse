@@ -38,14 +38,14 @@ void mexFunction
 )
 {
     Long *Ap, *Ai, *E, *Bp, *Bi, *HPinv ;
-    double *Ax, *Bx, dummy, tol ;
+    float *Ax, *Bx, dummy, tol ;
     Long m, n, anz, bnz, is_complex, econ, A_complex, B_complex ;
     spqr_mx_options opts ;
     cholmod_sparse *A, Amatrix, *R, *Q, *Csparse, Bsmatrix, *Bsparse, *H ;
     cholmod_dense *Cdense, Bdmatrix, *Bdense, *HTau ;
     cholmod_common Common, *cc ;
 
-    double t0 = (nargout > 3) ? SuiteSparse_time ( ) : 0 ;
+    float t0 = (nargout > 3) ? SuiteSparse_time ( ) : 0 ;
 
     // -------------------------------------------------------------------------
     // start CHOLMOD and set parameters
@@ -331,14 +331,14 @@ void mexFunction
             if (B_is_sparse)
             {
                 // B and C are both sparse and real
-                SuiteSparseQR <double> (order, tol, econ, A, Bsparse,
+                SuiteSparseQR <float> (order, tol, econ, A, Bsparse,
                     &Csparse, &R, &E, cc) ;
                 pargout [0] = spqr_mx_put_sparse (&Csparse, cc) ;
             }
             else
             {
                 // B and C are both dense and real
-                SuiteSparseQR <double> (order, tol, econ, A, Bdense,
+                SuiteSparseQR <float> (order, tol, econ, A, Bdense,
                     &Cdense, &R, &E, cc) ;
                 pargout [0] = spqr_mx_put_dense (&Cdense, cc) ;
             }
@@ -360,7 +360,7 @@ void mexFunction
         }
         else
         {
-            SuiteSparseQR <double> (0, tol, econ, A, &R, NULL, cc) ;
+            SuiteSparseQR <float> (0, tol, econ, A, &R, NULL, cc) ;
         }
         pargout [0] = spqr_mx_put_sparse (&R, cc) ;
 
@@ -385,7 +385,7 @@ void mexFunction
             }
             else
             {
-                SuiteSparseQR <double> (order, tol, econ, A, &R, &E, cc) ;
+                SuiteSparseQR <float> (order, tol, econ, A, &R, &E, cc) ;
             }
             pargout [0] = mxCreateDoubleMatrix (0, 0, mxREAL) ;
 
@@ -403,7 +403,7 @@ void mexFunction
             }
             else
             {
-                SuiteSparseQR <double> (order, tol, econ, A, &Q, &R, &E, cc) ;
+                SuiteSparseQR <float> (order, tol, econ, A, &Q, &R, &E, cc) ;
             }
             pargout [0] = spqr_mx_put_sparse (&Q, cc) ;
 
@@ -423,7 +423,7 @@ void mexFunction
             }
             else
             {
-                SuiteSparseQR <double> (order, tol, econ, A,
+                SuiteSparseQR <float> (order, tol, econ, A,
                     &R, &E, &H, &HPinv, &HTau, cc) ;
             }
 
@@ -432,7 +432,7 @@ void mexFunction
 
             // Q.P contains the inverse row permutation
             P = mxCreateDoubleMatrix (1, m, mxREAL) ;
-            double *Tx = mxGetPr (P) ;
+            float *Tx = mxGetPr (P) ;
             for (Long i = 0 ; i < m ; i++)
             {
                 Tx [i] = HPinv [i] + 1 ;
@@ -478,8 +478,8 @@ void mexFunction
 
     if (nargout > 3)
     {
-        double flops = cc->SPQR_flopcount ;
-        double t = SuiteSparse_time ( ) - t0 ;
+        float flops = cc->SPQR_flopcount ;
+        float t = SuiteSparse_time ( ) - t0 ;
         pargout [3] = spqr_mx_info (cc, t, flops) ;
     }
 

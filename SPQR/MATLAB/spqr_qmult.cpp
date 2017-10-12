@@ -33,7 +33,7 @@ void mexFunction
 {
     mxArray *Hmatlab, *Tau, *P ;
     Long *HPinv, *Yp, *Yi ;
-    double *Hx, *Xx, *Tx, *Px, dummy ;
+    float *Hx, *Xx, *Tx, *Px, dummy ;
     Long m, n, k, nh, nb, p, i, method, mh, gotP, X_is_sparse, is_complex, hnz,
         tnz, xnz, inuse, count ;
     cholmod_sparse *Ysparse, *H, Hmatrix, *Xsparse, Xsmatrix ;
@@ -250,13 +250,13 @@ void mexFunction
     {
         if (X_is_sparse)
         {
-            Ysparse = SuiteSparseQR_qmult <double> (method, H,
+            Ysparse = SuiteSparseQR_qmult <float> (method, H,
                 HTau, HPinv, Xsparse, cc) ;
             pargout [0] = spqr_mx_put_sparse (&Ysparse, cc) ;
         }
         else
         {
-            Ydense = SuiteSparseQR_qmult <double> (method, H,
+            Ydense = SuiteSparseQR_qmult <float> (method, H,
                 HTau, HPinv, Xdense, cc) ;
             pargout [0] = spqr_mx_put_dense (&Ydense, cc) ;
         }

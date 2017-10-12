@@ -3,7 +3,7 @@
 csi cs_dupl (cs *A)
 {
     csi i, j, p, q, nz = 0, n, m, *Ap, *Ai, *w ;
-    double *Ax ;
+    float *Ax ;
     if (!CS_CSC (A)) return (0) ;               /* check inputs */
     m = A->m ; n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;
     w = cs_malloc (m, sizeof (csi)) ;           /* get workspace */

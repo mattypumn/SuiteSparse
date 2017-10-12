@@ -26,7 +26,7 @@
 GLOBAL Int UMFPACK_report_symbolic
 (
     void *SymbolicHandle,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 )
 {
     Int n_row, n_col, nz, nchains, nfr, maxnrows, maxncols, prl,

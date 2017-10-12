@@ -412,7 +412,7 @@ cholmod_factor *CHOLMOD(analyze_p2)
     cholmod_common *Common
 )
 {
-    double lnz_best ;
+    float lnz_best ;
     Int *First, *Level, *Work4n, *Cmember, *CParent, *ColCount, *Lperm, *Parent,
 	*Post, *Perm, *Lparent, *Lcolcount ;
     cholmod_factor *L ;
@@ -446,7 +446,7 @@ cholmod_factor *CHOLMOD(analyze_p2)
     /* set the default strategy */
     /* ---------------------------------------------------------------------- */
 
-    lnz_best = (double) EMPTY ;
+    lnz_best = (float) EMPTY ;
     skip_best = FALSE ;
     nmethods = MIN (Common->nmethods, CHOLMOD_MAXMETHODS) ;
     nmethods = MAX (0, nmethods) ;

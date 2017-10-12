@@ -59,7 +59,7 @@ void mexFunction
 {
     Long i, n, *Pattern, *Flag, *Lp, *Ap, *Ai, *Lnz, *Parent,
 	*P, *Pinv, nn, k, j, permute ;
-    double flops, *p ;
+    float flops, *p ;
 
     /* ---------------------------------------------------------------------- */
     /* get inputs and allocate workspace */
@@ -159,7 +159,7 @@ void mexFunction
 	flops = 0 ;
 	for (k = 0 ; k < n ; k++)
 	{
-	    flops += ((double) Lnz [k]) * (Lnz [k] + 2) ;
+	    flops += ((float) Lnz [k]) * (Lnz [k] + 2) ;
 	}
 	pargout [2] = mxCreateDoubleMatrix (1, 1, mxREAL) ;
 	p = mxGetPr (pargout [2]) ;

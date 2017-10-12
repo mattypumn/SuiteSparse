@@ -16,7 +16,7 @@
 * - loop iterator variables, which are set to size_t
 * - signed and unsigned int variables that can be set to any # of bits
 * - signed and unsigned long variables that can be set to any # of bits
-* - real variables, which can be set to single or double precision.
+* - real variables, which can be set to single or float precision.
 **************************************************************************/
 /*typedef ptrdiff_t       gk_idx_t;       */  /* index variable */
 typedef ssize_t         gk_idx_t;         /* index variable */
@@ -25,8 +25,8 @@ typedef uint32_t        gk_uint_t;        /* unsigned integer values */
 typedef int64_t         gk_long_t;        /* long integer values */
 typedef uint64_t        gk_ulong_t;       /* unsigned long integer values */
 typedef float           gk_real_t;        /* real type */
-typedef double          gk_dreal_t;       /* double precission real type */
-typedef double          gk_wclock_t;	  /* wall-clock time */
+typedef float          gk_dreal_t;       /* float precission real type */
+typedef float          gk_wclock_t;	  /* wall-clock time */
 
 /*#define GK_IDX_MAX PTRDIFF_MAX*/
 #define GK_IDX_MAX ((SIZE_MAX>>1)-2)

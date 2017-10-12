@@ -222,7 +222,7 @@ bool Scheduler::postProcess
 #if 0
         if(front->printMe)
         {
-            printf("[PostProcessing] %g : %d -> %d\n", (double) (front->fidg),
+            printf("[PostProcessing] %g : %d -> %d\n", (float) (front->fidg),
                 state, nextState);
                 // StateNames[state], StateNames[nextState]);
             debugDumpFront(front);
@@ -233,7 +233,7 @@ bool Scheduler::postProcess
         front->state = nextState;
     }
 
-    // printf("%2.2f completed.\n", 100 * (double) numCompleted / (double)
+    // printf("%2.2f completed.\n", 100 * (float) numCompleted / (float)
     // numFronts);
 
     /* Return whether all the fronts are DONE. */

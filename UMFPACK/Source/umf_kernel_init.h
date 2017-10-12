@@ -7,9 +7,9 @@ GLOBAL Int UMF_kernel_init
 (
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
     NumericType *Numeric,
     WorkType *Work,

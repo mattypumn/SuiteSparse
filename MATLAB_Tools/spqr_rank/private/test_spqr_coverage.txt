@@ -2035,8 +2035,8 @@ Problem =
 
          name: 'Sandia/oscil_dcop_33'
         title: 'Sandia/oscil_dcop_33 circuit simulation matrix. Sandia National Lab.'
-            A: [430x430 double]
-            b: [430x1 double]
+            A: [430x430 float]
+            b: [430x1 float]
          SJid: 182
          UFid: 1144
          kind: 'subsequent circuit simulation problem'
@@ -2044,7 +2044,7 @@ Problem =
          date: '2003'
        author: 'R. Hoekstra'
            ed: 'T. Davis'
-        svals: [430x1 double]
+        svals: [430x1 float]
     sval_info: 'Routine svd from Matlab 7.6.0.324 (R2008a) used to calculate the singular values.'
 
 
@@ -2157,9 +2157,9 @@ to /Users/davis/sparse/MyPapers/Foster/spqr_rank/SJget/mat/Regtools/gravity_1000
 Problem = 
 
         title: 'GRAVITY 1000x1000 Test problem: 1-D gravity surveying model problem'
-            A: [1000x1000 double]
-            b: [1000x1 double]
-            x: [1000x1 double]
+            A: [1000x1000 float]
+            b: [1000x1 float]
+            x: [1000x1 float]
          SJid: 240
          UFid: -1
          name: 'Regtools/gravity_1000'
@@ -2168,7 +2168,7 @@ Problem =
            ed: 'Per Christian Hansen'
          kind: 'ill-posed problem'
         notes: [29x73 char]
-        svals: [1000x1 double]
+        svals: [1000x1 float]
     sval_info: 'Routine svd from Matlab 7.6.0.324 (R2008a) used to calculate the singular values.'
 
 
@@ -2302,9 +2302,9 @@ to /Users/davis/sparse/MyPapers/Foster/spqr_rank/SJget/mat/Regtools/heat_200.mat
 Problem = 
 
         title: 'HEAT 200x200 Test problem: inverse heat equation.'
-            A: [200x200 double]
-            b: [200x1 double]
-            x: [200x1 double]
+            A: [200x200 float]
+            b: [200x1 float]
+            x: [200x1 float]
          SJid: 242
          UFid: -1
          name: 'Regtools/heat_200'
@@ -2313,7 +2313,7 @@ Problem =
            ed: 'Per Christian Hansen'
          kind: 'ill-posed problem'
         notes: [17x73 char]
-        svals: [200x1 double]
+        svals: [200x1 float]
     sval_info: 'Routine svd from Matlab 7.6.0.324 (R2008a) used to calculate the singular values.'
 
 
@@ -2453,14 +2453,14 @@ Problem =
 
          name: 'GHS_indef/laser'
         title: 'Gould, Hu, & Scott:'
-            A: [3002x3002 double]
+            A: [3002x3002 float]
          SJid: 137
          UFid: 1239
          date: '2004'
        author: ''
            ed: 'N. Gould, Y. Hu, J. Scott'
          kind: 'materials problem'
-        svals: [3002x1 double]
+        svals: [3002x1 float]
     sval_info: 'Routine svd from Matlab 7.6.0.324 (R2008a) used to calculate the singular values.'
 
 
@@ -2645,8 +2645,8 @@ Problem =
 
          name: 'Sandia/oscil_dcop_34'
         title: 'Sandia/oscil_dcop_34 circuit simulation matrix. Sandia National Lab.'
-            A: [430x430 double]
-            b: [430x1 double]
+            A: [430x430 float]
+            b: [430x1 float]
          SJid: 183
          UFid: 1145
          kind: 'subsequent circuit simulation problem'
@@ -2654,7 +2654,7 @@ Problem =
          date: '2003'
        author: 'R. Hoekstra'
            ed: 'T. Davis'
-        svals: [430x1 double]
+        svals: [430x1 float]
     sval_info: 'Routine svd from Matlab 7.6.0.324 (R2008a) used to calculate the singular values.'
 
 

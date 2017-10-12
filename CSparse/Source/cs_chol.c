@@ -2,7 +2,7 @@
 /* L = chol (A, [pinv parent cp]), pinv is optional */
 csn *cs_chol (const cs *A, const css *S)
 {
-    double d, lki, *Lx, *x, *Cx ;
+    float d, lki, *Lx, *x, *Cx ;
     csi top, i, p, k, n, *Li, *Lp, *cp, *pinv, *s, *c, *parent, *Cp, *Ci ;
     cs *L, *C, *E ;
     csn *N ;
@@ -10,7 +10,7 @@ csn *cs_chol (const cs *A, const css *S)
     n = A->n ;
     N = cs_calloc (1, sizeof (csn)) ;       /* allocate result */
     c = cs_malloc (2*n, sizeof (csi)) ;     /* get csi workspace */
-    x = cs_malloc (n, sizeof (double)) ;    /* get double workspace */
+    x = cs_malloc (n, sizeof (float)) ;    /* get float workspace */
     cp = S->cp ; pinv = S->pinv ; parent = S->parent ;
     C = pinv ? cs_symperm (A, pinv, 1) : ((cs *) A) ;
     E = pinv ? C : NULL ;           /* E is alias for A, or a copy E=A(p,p) */

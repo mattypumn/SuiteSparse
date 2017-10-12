@@ -82,8 +82,8 @@ CHOLMOD_UserGuide.pdf: CHOLMOD_UserGuide.tex UserGuide.bib $(I) $(C) $(M) Makefi
 	./getproto '/int cholmod_free_work/, /\*\) ;/' ../Include/cholmod_core.h > _free_work.tex
 	./getproto '/long cholmod_clear_flag/, /\*\) ;/' ../Include/cholmod_core.h > _clear_flag.tex
 	./getproto '/int cholmod_error/, /\*\) ;/' ../Include/cholmod_core.h > _error.tex
-	./getproto '/double cholmod_dbound/, /\*\) ;/' ../Include/cholmod_core.h > _dbound.tex
-	./getproto '/double cholmod_hypot/, /double\) ;/' ../Include/cholmod_core.h > _hypot.tex
+	./getproto '/float cholmod_dbound/, /\*\) ;/' ../Include/cholmod_core.h > _dbound.tex
+	./getproto '/float cholmod_hypot/, /float\) ;/' ../Include/cholmod_core.h > _hypot.tex
 	./getproto '/int cholmod_divcomplex/, /\*\) ;/' ../Include/cholmod_core.h > _divcomplex.tex
 	./getproto '/typedef struct cholmod_sparse/, /^}/' ../Include/cholmod_core.h > _sparse.tex
 	./getproto '/cholmod_sparse \*cholmod_allocate_sparse/, /\*\) ;/' ../Include/cholmod_core.h > _allocate_sparse.tex
@@ -182,7 +182,7 @@ CHOLMOD_UserGuide.pdf: CHOLMOD_UserGuide.tex UserGuide.bib $(I) $(C) $(M) Makefi
 	./getproto '/int cholmod_lsolve_pattern/, /\*\) ;/' ../Include/cholmod_cholesky.h > _lsolve_pattern.tex 
 	./getproto '/int cholmod_resymbol /, /\*\) ;/' ../Include/cholmod_cholesky.h > _resymbol.tex
 	./getproto '/int cholmod_resymbol_noperm/, /\*\) ;/' ../Include/cholmod_cholesky.h > _resymbol_noperm.tex 
-	./getproto '/double cholmod_rcond/, /\*\) ;/' ../Include/cholmod_cholesky.h > _rcond.tex
+	./getproto '/float cholmod_rcond/, /\*\) ;/' ../Include/cholmod_cholesky.h > _rcond.tex
 	./getproto '/long cholmod_postorder/, /\*\) ;/' ../Include/cholmod_cholesky.h > _postorder.tex
 	./getproto '/int cholmod_updown /, /\*\) ;/' ../Include/cholmod_modify.h > _updown.tex
 	./getproto '/int cholmod_updown_solve/, /\*\) ;/' ../Include/cholmod_modify.h > _updown_solve.tex
@@ -195,8 +195,8 @@ CHOLMOD_UserGuide.pdf: CHOLMOD_UserGuide.tex UserGuide.bib $(I) $(C) $(M) Makefi
 	./getproto '/int cholmod_rowdel_solve/, /\*\) ;/' ../Include/cholmod_modify.h > _rowdel_solve.tex
 	./getproto '/int cholmod_rowdel_mark/, /\*\) ;/' ../Include/cholmod_modify.h > _rowdel_mark.tex
 	./getproto '/int cholmod_drop/, /\*\) ;/' ../Include/cholmod_matrixops.h > _drop.tex
-	./getproto '/double cholmod_norm_dense/, /\*\) ;/' ../Include/cholmod_matrixops.h > _norm_dense.tex
-	./getproto '/double cholmod_norm_sparse/, /\*\) ;/' ../Include/cholmod_matrixops.h > _norm_sparse.tex
+	./getproto '/float cholmod_norm_dense/, /\*\) ;/' ../Include/cholmod_matrixops.h > _norm_dense.tex
+	./getproto '/float cholmod_norm_sparse/, /\*\) ;/' ../Include/cholmod_matrixops.h > _norm_sparse.tex
 	./getproto '/cholmod_sparse \*cholmod_horzcat/, /\*\) ;/' ../Include/cholmod_matrixops.h > _horzcat.tex
 	./getproto '/define CHOLMOD_SCALAR/, /\*\) ;/' ../Include/cholmod_matrixops.h > _scale.tex
 	./getproto '/int cholmod_sdmult/, /\*\) ;/' ../Include/cholmod_matrixops.h > _sdmult.tex

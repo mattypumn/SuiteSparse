@@ -9,18 +9,18 @@ GLOBAL Int UMF_transpose
     Int n_col,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     const Int P [ ],
     const Int Q [ ],
     Int nq,
     Int Rp [ ],
     Int Ri [ ],
-    double Rx [ ],
+    float Rx [ ],
     Int W [ ],
     Int check
 #ifdef COMPLEX
-    , const double Az [ ]
-    , double Rz [ ]
+    , const float Az [ ]
+    , float Rz [ ]
     , Int do_conjugate
 #endif
 ) ;

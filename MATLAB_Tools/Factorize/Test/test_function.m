@@ -69,7 +69,7 @@ if (m == 10)
 end
 
 G = factorize (A, strategy) ;
-any_nans = any (any (isnan (F.A))) || any (any (isnan (double (inverse (F))))) ;
+any_nans = any (any (isnan (F.A))) || any (any (isnan (float (inverse (F))))) ;
 if (~any_nans)
     assert ( isequal (F, G)) ;
     assert (~isequal (F, inverse (F))) ;
@@ -97,7 +97,7 @@ if (min (m,n) < 2 || m == 10)
 
     if (~any_nans)
         assert (ismethod (F, 'abs')) ;    assert (isequal (abs (F), abs (F.A)));
-        assert (ismethod (F, 'double')) ; assert (isequal (A, double (F))) ;
+        assert (ismethod (F, 'float')) ; assert (isequal (A, float (F))) ;
     end
 
     assert (ismethod (F, 'isfield')) ;
@@ -110,7 +110,7 @@ if (min (m,n) < 2 || m == 10)
     assert (~isfield (F, 'anthing_else')) ;
 
     assert (ismethod (F, 'isa')) ;
-    assert ( isa (F, 'double')) ;
+    assert ( isa (F, 'float')) ;
     assert (~isa (F, 'logical')) ;
     assert (~isa (F, 'char')) ;
     assert (~isa (F, 'single')) ;

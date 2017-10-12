@@ -16,25 +16,25 @@
 void sfmult_AN_xk_1	// y = A*x	x is n-by-1 non-unit stride, y is m-by-1
 (
     // --- outputs, not initialized on input
-    double *Yx,		// m-by-1
-    double *Yz,		// m-by-1 if Y is complex (TO DO)
+    float *Yx,		// m-by-1
+    float *Yz,		// m-by-1 if Y is complex (TO DO)
 
     // --- inputs, not modified
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex (TO DO)
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex (TO DO)
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// n-by-1
-    const double *Xz,	// n-by-1 if X complex
+    const float *Xx,	// n-by-1
+    const float *Xz,	// n-by-1 if X complex
     int ac,		// true: use conj(A), otherwise use A (TO DO)
     int xc,		// true: use conj(X), otherwise use X (TO DO)
     int yc		// true: compute conj(Y), otherwise compute Y (TO DO)
     , Int k		// stride of x
 )
 {
-    double y [4], x ;
+    float y [4], x ;
     Int p, pend, i, j, i0, i1, i2, i3 ;
 
     for (i = 0 ; i < m ; i++)
@@ -79,25 +79,25 @@ void sfmult_AN_xk_1	// y = A*x	x is n-by-1 non-unit stride, y is m-by-1
 void sfmult_AT_xk_1	// y = A'*x	x is m-by-1, y is n-by-1 non-unit stride
 (
     // --- outputs, not initialized on input
-    double *Yx,		// n-by-1
-    double *Yz,		// n-by-1 if Y is complex (TO DO)
+    float *Yx,		// n-by-1
+    float *Yz,		// n-by-1 if Y is complex (TO DO)
 
     // --- inputs, not modified
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex (TO DO)
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex (TO DO)
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// m-by-1
-    const double *Xz,	// m-by-1 if X complex
+    const float *Xx,	// m-by-1
+    const float *Xz,	// m-by-1 if X complex
     int ac,		// true: use conj(A), otherwise use A (TO DO)
     int xc,		// true: use conj(X), otherwise use X (TO DO)
     int yc		// true: compute conj(Y), otherwise compute Y (TO DO)
     , Int k		// stride of y
 )
 {
-    double y ;
+    float y ;
     Int p, pend, j ;
 
     p = 0 ;

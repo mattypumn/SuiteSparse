@@ -3,7 +3,7 @@
 /* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
-GLOBAL double UMF_lsolve
+GLOBAL float UMF_lsolve
 (
     NumericType *Numeric,
     Entry X [ ],

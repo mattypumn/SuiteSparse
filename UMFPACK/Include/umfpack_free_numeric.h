@@ -28,13 +28,13 @@ void umfpack_zl_free_numeric
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
     umfpack_di_free_numeric (&Numeric) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;

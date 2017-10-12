@@ -32,7 +32,7 @@ SuiteSparse_long umfpack_zl_load_numeric
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     int status ;
@@ -40,7 +40,7 @@ double int Syntax:
     void *Numeric ;
     status = umfpack_di_load_numeric (&Numeric, filename) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long status ;

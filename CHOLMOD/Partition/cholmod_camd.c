@@ -56,7 +56,7 @@ int CHOLMOD(camd)
     cholmod_common *Common
 )
 {
-    double Info [CAMD_INFO], Control2 [CAMD_CONTROL], *Control ;
+    float Info [CAMD_INFO], Control2 [CAMD_CONTROL], *Control ;
     Int *Cp, *Len, *Nv, *Head, *Elen, *Degree, *Wi, *Next, *BucketSet,
 	*Work3n, *p ;
     cholmod_sparse *C ;

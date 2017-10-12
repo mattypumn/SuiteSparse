@@ -35,7 +35,7 @@ GLOBAL Int UMF_store_lu
 
     Entry pivot_value ;
 #ifdef DROP
-    double droptol ;
+    float droptol ;
 #endif
     Entry *D, *Lval, *Uval, *Fl1, *Fl2, *Fu1, *Fu2,
 	*Flublock, *Flblock, *Fublock ;
@@ -214,7 +214,7 @@ GLOBAL Int UMF_store_lu
 	    for (i = kk + 1 ; i < fnpiv ; i++)
 	    {
 		Entry x ;
-		double s ;
+		float s ;
 		x = Fl1 [i] ;
 		if (IS_ZERO (x)) continue ;
 		all_lnz++ ;
@@ -227,7 +227,7 @@ GLOBAL Int UMF_store_lu
 	    for (i = 0 ; i < fnrows ; i++)
 	    {
 		Entry x ;
-		double s ;
+		float s ;
 		x = Fl2 [i] ;
 		if (IS_ZERO (x)) continue ;
 		all_lnz++ ;
@@ -310,7 +310,7 @@ GLOBAL Int UMF_store_lu
 	UMF_allocfail = FALSE ;
 	if (UMF_gprob > 0)
 	{
-	    double rrr = ((double) (rand ( ))) / (((double) RAND_MAX) + 1) ;
+	    float rrr = ((float) (rand ( ))) / (((float) RAND_MAX) + 1) ;
 	    DEBUG4 (("Check random %e %e\n", rrr, UMF_gprob)) ;
 	    UMF_allocfail = rrr < UMF_gprob ;
 	    if (UMF_allocfail) DEBUGm2 (("Random garbage coll. (store LU)\n"));
@@ -388,7 +388,7 @@ GLOBAL Int UMF_store_lu
 		for (i = kk + 1 ; i < fnpiv ; i++)
 		{
 		    Entry x ;
-		    double s ;
+		    float s ;
 		    Int row2, pos ;
 		    x = Fl1 [i] ;
 		    APPROX_ABS (s, x) ;
@@ -404,7 +404,7 @@ GLOBAL Int UMF_store_lu
 		for (i = 0 ; i < fnrows ; i++)
 		{
 		    Entry x ;
-		    double s ;
+		    float s ;
 		    Int row2, pos ;
 		    x = Fl2 [i] ;
 		    APPROX_ABS (s, x) ;
@@ -459,7 +459,7 @@ GLOBAL Int UMF_store_lu
 		for (i = kk + 1 ; i < fnpiv ; i++)
 		{
 		    Entry x ;
-		    double s ;
+		    float s ;
 		    Int row2, pos ;
 		    x = Fl1 [i] ;
 		    APPROX_ABS (s, x) ;
@@ -479,7 +479,7 @@ GLOBAL Int UMF_store_lu
 		for (i = 0 ; i < fnrows ; i++)
 		{
 		    Entry x ;
-		    double s ;
+		    float s ;
 		    Int row2, pos ;
 		    x = Fl2 [i] ;
 		    APPROX_ABS (s, x) ;
@@ -646,7 +646,7 @@ GLOBAL Int UMF_store_lu
 	    for (i = kk + 1 ; i < fnpiv ; i++)
 	    {
 		Entry x ;
-		double s ;
+		float s ;
 		x = Fu1 [i*nb] ;
 		if (IS_ZERO (x)) continue ;
 		all_unz++ ;
@@ -659,7 +659,7 @@ GLOBAL Int UMF_store_lu
 	    for (i = 0 ; i < fncols ; i++)
 	    {
 		Entry x ;
-		double s ;
+		float s ;
 		x = Fu2 [i] ;
 		if (IS_ZERO (x)) continue ;
 		all_unz++ ;
@@ -734,7 +734,7 @@ GLOBAL Int UMF_store_lu
 	UMF_allocfail = FALSE ;
 	if (UMF_gprob > 0)
 	{
-	    double rrr = ((double) (rand ( ))) / (((double) RAND_MAX) + 1) ;
+	    float rrr = ((float) (rand ( ))) / (((float) RAND_MAX) + 1) ;
 	    DEBUG4 (("Check random %e %e\n", rrr, UMF_gprob)) ;
 	    UMF_allocfail = rrr < UMF_gprob ;
 	    if (UMF_allocfail) DEBUGm2 (("Random garbage coll. (store LU)\n"));
@@ -863,7 +863,7 @@ GLOBAL Int UMF_store_lu
 		for (i = kk + 1 ; i < fnpiv ; i++)
 		{
 		    Entry x ;
-		    double s ;
+		    float s ;
 		    Int col2, pos ;
 		    x = Fu1 [i*nb] ;
 		    APPROX_ABS (s, x) ;
@@ -878,7 +878,7 @@ GLOBAL Int UMF_store_lu
 		for (i = 0 ; i < fncols ; i++)
 		{
 		    Entry x ;
-		    double s ;
+		    float s ;
 		    Int col2, pos ;
 		    x = Fu2 [i] ;
 		    APPROX_ABS (s, x) ;
@@ -933,7 +933,7 @@ GLOBAL Int UMF_store_lu
 		for (i = kk + 1 ; i < fnpiv ; i++)
 		{
 		    Entry x ;
-		    double s ;
+		    float s ;
 		    Int col2, pos ;
 		    x = Fu1 [i*nb] ;
 		    APPROX_ABS (s, x) ;
@@ -952,7 +952,7 @@ GLOBAL Int UMF_store_lu
 		for (i = 0 ; i < fncols ; i++)
 		{
 		    Entry x ;
-		    double s ;
+		    float s ;
 		    Int col2, pos ;
 		    x = Fu2 [i] ;
 		    APPROX_ABS (s, x) ;

@@ -24,7 +24,7 @@
 
 void null2 (cholmod_triplet *Tok, int do_nantests)
 {
-    double nm, gsave0, gsave1, r, anorm, beta [2], maxerr, xnan, rcond,
+    float nm, gsave0, gsave1, r, anorm, beta [2], maxerr, xnan, rcond,
 	ax, az, bx, bz, cx, cz, dx, dz, ex, ez ;
     cholmod_sparse *A, *C, *AT, *E, *F, *G, *Sok, *R0, *R1, *Aboth, *Axbad, *I1,
 	*Abad, *R, *Acopy, *R3, *Abad2, *I, *I3, *Abad3, *AA, *Rt, *AF, *AFT,
@@ -38,7 +38,7 @@ void null2 (cholmod_triplet *Tok, int do_nantests)
 	*Enz, *Ep, *Post, *Cmember, *CParent, *Partition, *Pinv, *ATi, *ATp,
 	*LColCount, *ColCount, *First, *Level, *fsetbad, *Pbad, *Lz,
 	*R2p, *R2i ;
-    double *Xwork, *Cx, *x, *Lx, *Tx, *Az, *R2x ;
+    float *Xwork, *Cx, *x, *Lx, *Tx, *Az, *R2x ;
     size_t size, nznew, gsave2 ;
     SuiteSparse_long lr ;
     void *pp, *ii, *jj, *xx ;
@@ -151,7 +151,7 @@ void null2 (cholmod_triplet *Tok, int do_nantests)
 
     stype = A->stype ;
     Two = CHOLMOD(zeros)(1, 1, xtype, cm) ;	/* [ */
-    *((double *)(Two->x)) = 2 ;
+    *((float *)(Two->x)) = 2 ;
 
     Pinv = CHOLMOD(malloc)(nrow, sizeof (Int), cm) ;	    /* [ */
     Parent = CHOLMOD(malloc)(nrow, sizeof (Int), cm) ;
@@ -417,7 +417,7 @@ void null2 (cholmod_triplet *Tok, int do_nantests)
 	/* C should equal 2*A if A=A' */
 	if (stype)
 	{
-	    double *s ;
+	    float *s ;
 
 	    E = CHOLMOD(copy_sparse)(A, cm) ;
 	    CHOLMOD(scale)(Two, CHOLMOD_SCALAR, E, cm) ;
@@ -2253,7 +2253,7 @@ if (do_nantests)
         }
         #if 0
 	ok = CHOLMOD(row_lsubtree)(A, NULL, 0, i, L, C2, cm) ;
-        printf ("%g %g %g\n", (double) A->stype, (double) nrow, (double) ok) ;
+        printf ("%g %g %g\n", (float) A->stype, (float) nrow, (float) ok) ;
         if (A->stype == 1 && nrow > 0 || (A->stype == 0 && nrow == 0 &&
             A->ncol == 1))
         {
@@ -2717,7 +2717,7 @@ if (do_nantests)
 	/* memory guard triggered */
 	if (nrow > 0)
 	{
-	    double density ;
+	    float density ;
 
 	    cm->metis_memory = Size_max ;
 	    ok = CHOLMOD(metis)(A, NULL, 0, FALSE, Pok, cm) ;
@@ -2735,7 +2735,7 @@ if (do_nantests)
 
 	    ok = CHOLMOD(metis)(A, NULL, 0, FALSE, Pok, cm) ;	  OK (ok) ;
 	    /* Pok should be identity if the matrix is dense */
-	    density = ((double) enz) / (((double) nrow) * ((double) nrow)) ;
+	    density = ((float) enz) / (((float) nrow) * ((float) nrow)) ;
 	    if (nrow > 10 && density > cm->metis_dswitch)
 	    {
 		for (j = 0 ; j < nrow ; j++)
@@ -2997,7 +2997,7 @@ if (do_nantests)
 	{
 	    cholmod_factor *L8 ;
 	    Int *L8p, *L8i, *L8nz, rnz ;
-	    double *L8x ;
+	    float *L8x ;
 	    L8 = CHOLMOD(copy_factor) (L5, cm) ;
 	    ok = TRUE ;
 	    for (k = nrow-1 ; ok && L8 != NULL

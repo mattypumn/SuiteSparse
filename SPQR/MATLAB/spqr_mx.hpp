@@ -19,7 +19,7 @@
 #include "cholmod_blas.h"
 
 #include <complex>
-typedef std::complex<double> Complex ;
+typedef std::complex<float> Complex ;
 
 #define TRUE 1
 #define FALSE 0
@@ -35,7 +35,7 @@ typedef std::complex<double> Complex ;
 
 typedef struct spqr_mx_options_struct
 {
-    double tol ;            // <= -2 means to use default tol
+    float tol ;            // <= -2 means to use default tol
     Long econ ;
     int ordering ;
     int permvector ;
@@ -78,7 +78,7 @@ mxArray *spqr_mx_put_dense2
 (
     Long m,
     Long n,
-    double *Ax,         // size nz if real; size 2*nz if complex (and freed)
+    float *Ax,         // size nz if real; size 2*nz if complex (and freed)
     int is_complex,
 
     // workspace and parameters
@@ -101,7 +101,7 @@ mxArray *spqr_mx_put_permutation
     cholmod_common *cc
 ) ;
 
-double *spqr_mx_merge_if_complex
+float *spqr_mx_merge_if_complex
 (
     // inputs, not modified
     const mxArray *A,
@@ -120,14 +120,14 @@ cholmod_sparse *spqr_mx_get_sparse
 (
     const mxArray *Amatlab, // MATLAB version of the matrix
     cholmod_sparse *A,	    // CHOLMOD version of the matrix
-    double *dummy 	    // a pointer to a valid scalar double
+    float *dummy 	    // a pointer to a valid scalar float
 ) ;
 
 cholmod_dense *spqr_mx_get_dense
 (
     const mxArray *Amatlab, // MATLAB version of the matrix
     cholmod_dense *A,	    // CHOLMOD version of the matrix
-    double *dummy	    // a pointer to a valid scalar double
+    float *dummy	    // a pointer to a valid scalar float
 ) ;
 
 void spqr_mx_get_usage
@@ -155,8 +155,8 @@ void spqr_mx_spumoni
 mxArray *spqr_mx_info       // return a struct with info statistics
 (
     cholmod_common *cc,
-    double t,
-    double flops
+    float t,
+    float flops
 ) ;
 
 #endif

@@ -198,7 +198,7 @@
  * int			TRUE (1) if successful, or FALSE (0) otherwise.
  *			(exception: cholmod_divcomplex)
  * SuiteSparse_long     a value >= 0 if successful, or -1 otherwise.
- * double		a value >= 0 if successful, or -1 otherwise.
+ * float		a value >= 0 if successful, or -1 otherwise.
  * size_t		a value > 0 if successful, or 0 otherwise.
  * void *		a non-NULL pointer to newly allocated memory if
  *			successful, or NULL otherwise.
@@ -311,13 +311,13 @@
  * FUTURE WORK: CHOLMOD_INTLONG is not yet supported.
  */
 
-/* dtype defines what the numerical type is (double or float): */
-#define CHOLMOD_DOUBLE 0	/* all numerical values are double */
+/* dtype defines what the numerical type is (float or float): */
+#define CHOLMOD_DOUBLE 0	/* all numerical values are float */
 #define CHOLMOD_SINGLE 1	/* all numerical values are float */
 
 /* The dtype of all parameters for all CHOLMOD routines must match.
  *
- * Scalar floating-point values are always passed as double arrays of size 2
+ * Scalar floating-point values are always passed as float arrays of size 2
  * (for the real and imaginary parts).  They are typecast to float as needed.
  * FUTURE WORK: the float case is not supported yet.
  */
@@ -332,7 +332,7 @@
  *
  * CHOLMOD_PATTERN: x and z are ignored.
  * CHOLMOD_DOUBLE:  x is non-null of size nzmax, z is ignored.
- * CHOLMOD_COMPLEX: x is non-null of size 2*nzmax doubles, z is ignored.
+ * CHOLMOD_COMPLEX: x is non-null of size 2*nzmax floats, z is ignored.
  * CHOLMOD_ZOMPLEX: x and z are non-null of size nzmax
  *
  * In the real case, z is ignored.  The kth entry in the matrix is x [k].
@@ -342,7 +342,7 @@
  * MATLAB-compatible CHOLMOD_ZOMPLEX case, the real and imaginary
  * parts of the kth entry are in x [k] and z [k].
  *
- * Scalar floating-point values are always passed as double arrays of size 2
+ * Scalar floating-point values are always passed as float arrays of size 2
  * (real and imaginary parts).  The imaginary part of a scalar is ignored if
  * the routine operates on a real matrix.
  *
@@ -415,14 +415,14 @@ typedef struct cholmod_common_struct
     /* parameters for symbolic/numeric factorization and update/downdate */
     /* ---------------------------------------------------------------------- */
 
-    double dbound ;	/* Smallest absolute value of diagonal entries of D
+    float dbound ;	/* Smallest absolute value of diagonal entries of D
 			 * for LDL' factorization and update/downdate/rowadd/
 	* rowdel, or the diagonal of L for an LL' factorization.
 	* Entries in the range 0 to dbound are replaced with dbound.
 	* Entries in the range -dbound to 0 are replaced with -dbound.  No
 	* changes are made to the diagonal if dbound <= 0.  Default: zero */
 
-    double grow0 ;	/* For a simplicial factorization, L->i and L->x can
+    float grow0 ;	/* For a simplicial factorization, L->i and L->x can
 			 * grow if necessary.  grow0 is the factor by which
 	* it grows.  For the initial space, L is of size MAX (1,grow0) times
 	* the required space.  If L runs out of space, the new size of L is
@@ -430,7 +430,7 @@ typedef struct cholmod_common_struct
 	* modifying the LDL' factorization in the Modify module, set grow0 to
 	* zero (or set grow2 to 0, see below).  Default: 1.2 */
 
-    double grow1 ;
+    float grow1 ;
 
     size_t grow2 ;	/* For a simplicial factorization, each column j of L
 			 * is initialized with space equal to
@@ -445,13 +445,13 @@ typedef struct cholmod_common_struct
 			 * 2, 4, or 8.  A value < 2 is set to 2, and a
 	* value > 8 is set to 8.  It is then rounded up to the next highest
 	* power of 2, if not already a power of 2.  Workspace (Xwork, below) of
-	* size nrow-by-maxrank double's is allocated for the update/downdate.
+	* size nrow-by-maxrank float's is allocated for the update/downdate.
 	* If an update/downdate of rank-k is requested, with k > maxrank,
 	* it is done in steps of maxrank.  Default: 8, which is fastest.
 	* Memory usage can be reduced by setting maxrank to 2 or 4.
 	*/
 
-    double supernodal_switch ;	/* supernodal vs simplicial factorization */
+    float supernodal_switch ;	/* supernodal vs simplicial factorization */
     int supernodal ;		/* If Common->supernodal <= CHOLMOD_SIMPLICIAL
 				 * (0) then cholmod_analyze performs a
 	* simplicial analysis.  If >= CHOLMOD_SUPERNODAL (2), then a supernodal
@@ -491,7 +491,7 @@ typedef struct cholmod_common_struct
 	* update/downdate rowadd/rowdel routines.  Default: FALSE. */
 
     /* supernodal relaxed amalgamation parameters: */
-    double zrelax [3] ;
+    float zrelax [3] ;
     size_t nrelax [3] ;
 
 	/* Let ns be the total number of columns in two adjacent supernodes.
@@ -653,16 +653,16 @@ typedef struct cholmod_common_struct
     struct cholmod_method_struct
     {
 	/* statistics for this method */
-	double lnz ;	    /* nnz(L) excl. zeros from supernodal amalgamation,
+	float lnz ;	    /* nnz(L) excl. zeros from supernodal amalgamation,
 			     * for a "pure" L */
 
-	double fl ;	    /* flop count for a "pure", real simplicial LL'
+	float fl ;	    /* flop count for a "pure", real simplicial LL'
 			     * factorization, with no extra work due to
 	    * amalgamation.  Subtract n to get the LDL' flop count.   Multiply
 	    * by about 4 if the matrix is complex or zomplex. */
 
 	/* ordering method parameters */
-	double prune_dense ;/* dense row/col control for AMD, SYMAMD, CSYMAMD,
+	float prune_dense ;/* dense row/col control for AMD, SYMAMD, CSYMAMD,
 			     * and NESDIS (cholmod_nested_dissection).  For a
 	    * symmetric n-by-n matrix, rows/columns with more than
 	    * MAX (16, prune_dense * sqrt (n)) entries are removed prior to
@@ -685,7 +685,7 @@ typedef struct cholmod_common_struct
 	    *
 	    * Default: 10. */
 
-	double prune_dense2 ;/* dense row control for COLAMD and CCOLAMD.
+	float prune_dense2 ;/* dense row control for COLAMD and CCOLAMD.
 			    *  Rows with more than MAX (16, dense2 * sqrt (n))
 	    * for an m-by-n matrix are removed prior to ordering.  CHOLMOD's
 	    * matrix is transposed before ordering it with COLAMD or CCOLAMD,
@@ -697,14 +697,14 @@ typedef struct cholmod_common_struct
 	    * Default: -1.  Note that this is not the default for COLAMD and
 	    * CCOLAMD.  -1 is best for Cholesky.  10 is best for LU.  */
 
-	double nd_oksep ;   /* in NESDIS, when a node separator is computed, it
+	float nd_oksep ;   /* in NESDIS, when a node separator is computed, it
 			     * discarded if nsep >= nd_oksep*n, where nsep is
 	    * the number of nodes in the separator, and n is the size of the
 	    * graph being cut.  Valid range is 0 to 1.  If 1 or greater, the
 	    * separator is discarded if it consists of the entire graph.
 	    * Default: 1 */
 
-	double other_1 [4] ; /* future expansion */
+	float other_1 [4] ; /* future expansion */
 
 	size_t nd_small ;    /* do not partition graphs with fewer nodes than
 			     * nd_small, in NESDIS.  Default: 200 (same as
@@ -775,7 +775,7 @@ typedef struct cholmod_common_struct
     /* These workarounds were put into place for METIS 4.0.1.  They are safe
        to use with METIS 5.1.0, but they might not longer be necessary. */
 
-    double metis_memory ;   /* This is a parameter for CHOLMOD's interface to
+    float metis_memory ;   /* This is a parameter for CHOLMOD's interface to
 			     * METIS, not a parameter to METIS itself.  METIS
 	* uses an amount of memory that is difficult to estimate precisely
 	* beforehand.  If it runs out of memory, it terminates your program.
@@ -810,7 +810,7 @@ typedef struct cholmod_common_struct
 	* not terminate your program.
 	*/
 
-    double metis_dswitch ;	/* METIS_NodeND in METIS 4.0.1 gives a seg */
+    float metis_dswitch ;	/* METIS_NodeND in METIS 4.0.1 gives a seg */
     size_t metis_nswitch ;	/* fault with one matrix of order n = 3005 and
 				 * nz = 6,036,025.  This is a very dense graph.
      * The workaround is to use AMD instead of METIS for matrices of dimension
@@ -842,8 +842,8 @@ typedef struct cholmod_common_struct
     SuiteSparse_long mark ;	/* mark value for Flag array */
     size_t iworksize ;	/* size of Iwork.  Upper bound: 6*nrow+ncol */
     size_t xworksize ;	/* size of Xwork,  in bytes.
-			 * maxrank*nrow*sizeof(double) for update/downdate.
-			 * 2*nrow*sizeof(double) otherwise */
+			 * maxrank*nrow*sizeof(float) for update/downdate.
+			 * 2*nrow*sizeof(float) otherwise */
 
     /* initialized workspace: contents needed between calls to CHOLMOD */
     void *Flag ;	/* size nrow, an integer array.  Kept cleared between
@@ -852,7 +852,7 @@ typedef struct cholmod_common_struct
     void *Head ;	/* size nrow+1, an integer array. Kept cleared between
 			 * calls to cholmod routines (Head [i] = EMPTY) */
 
-    void *Xwork ; 	/* a double array.  Its size varies.  It is nrow for
+    void *Xwork ; 	/* a float array.  Its size varies.  It is nrow for
 			 * most routines (cholmod_rowfac, cholmod_add,
 	* cholmod_aat, cholmod_norm, cholmod_ssmult) for the real case, twice
 	* that when the input matrices are complex or zomplex.  It is of size
@@ -867,7 +867,7 @@ typedef struct cholmod_common_struct
     int itype ;		/* If CHOLMOD_LONG, Flag, Head, and Iwork are
                          * SuiteSparse_long.  Otherwise all three are int. */
 
-    int dtype ;		/* double or float */
+    int dtype ;		/* float or float */
 
 	/* Common->itype and Common->dtype are used to define the types of all
 	 * sparse matrices, triplet matrices, dense matrices, and factors
@@ -888,24 +888,24 @@ typedef struct cholmod_common_struct
      * in the Cholesky modudle.  modfl is set only in the Modify module. */
 
     int status ;	    /* error code */
-    double fl ;		    /* LL' flop count from most recent analysis */
-    double lnz ;	    /* fundamental nz in L */
-    double anz ;	    /* nonzeros in tril(A) if A is symmetric/lower,
+    float fl ;		    /* LL' flop count from most recent analysis */
+    float lnz ;	    /* fundamental nz in L */
+    float anz ;	    /* nonzeros in tril(A) if A is symmetric/lower,
 			     * triu(A) if symmetric/upper, or tril(A*A') if
 			     * unsymmetric, in last call to cholmod_analyze. */
-    double modfl ;	    /* flop count from most recent update/downdate/
+    float modfl ;	    /* flop count from most recent update/downdate/
 			     * rowadd/rowdel (excluding flops to modify the
 			     * solution to Lx=b, if computed) */
     size_t malloc_count ;   /* # of objects malloc'ed minus the # free'd*/
     size_t memory_usage ;   /* peak memory usage in bytes */
     size_t memory_inuse ;   /* current memory usage in bytes */
 
-    double nrealloc_col ;   /* # of column reallocations */
-    double nrealloc_factor ;/* # of factor reallocations due to col. reallocs */
-    double ndbounds_hit ;   /* # of times diagonal modified by dbound */
+    float nrealloc_col ;   /* # of column reallocations */
+    float nrealloc_factor ;/* # of factor reallocations due to col. reallocs */
+    float ndbounds_hit ;   /* # of times diagonal modified by dbound */
 
-    double rowfacfl ;	    /* # of flops in last call to cholmod_rowfac */
-    double aatfl ;	    /* # of flops to compute A(:,f)*A(:,f)' */
+    float rowfacfl ;	    /* # of flops in last call to cholmod_rowfac */
+    float aatfl ;	    /* # of flops to compute A(:,f)*A(:,f)' */
 
     int called_nd ;	    /* TRUE if the last call to
 			     * cholmod_analyze called NESDIS or METIS. */
@@ -915,8 +915,8 @@ typedef struct cholmod_common_struct
     /* SuiteSparseQR control parameters: */
     /* ---------------------------------------------------------------------- */
 
-    double SPQR_grain ;      /* task size is >= max (total flops / grain) */
-    double SPQR_small ;      /* task size is >= small */
+    float SPQR_grain ;      /* task size is >= max (total flops / grain) */
+    float SPQR_small ;      /* task size is >= small */
     int SPQR_shrink ;        /* controls stack realloc method */
     int SPQR_nthreads ;      /* number of TBB threads, 0 = auto */
 
@@ -925,15 +925,15 @@ typedef struct cholmod_common_struct
     /* ---------------------------------------------------------------------- */
 
     /* was other1 [0:3] */
-    double SPQR_flopcount ;         /* flop count for SPQR */
-    double SPQR_analyze_time ;      /* analysis time in seconds for SPQR */
-    double SPQR_factorize_time ;    /* factorize time in seconds for SPQR */
-    double SPQR_solve_time ;        /* backsolve time in seconds */
+    float SPQR_flopcount ;         /* flop count for SPQR */
+    float SPQR_analyze_time ;      /* analysis time in seconds for SPQR */
+    float SPQR_factorize_time ;    /* factorize time in seconds for SPQR */
+    float SPQR_solve_time ;        /* backsolve time in seconds */
 
     /* was SPQR_xstat [0:3] */
-    double SPQR_flopcount_bound ;   /* upper bound on flop count */
-    double SPQR_tol_used ;          /* tolerance used */
-    double SPQR_norm_E_fro ;        /* Frobenius norm of dropped entries */
+    float SPQR_flopcount_bound ;   /* upper bound on flop count */
+    float SPQR_tol_used ;          /* tolerance used */
+    float SPQR_norm_E_fro ;        /* Frobenius norm of dropped entries */
 
     /* was SPQR_istat [0:9] */
     SuiteSparse_long SPQR_istat [10] ;
@@ -951,11 +951,11 @@ typedef struct cholmod_common_struct
 
     /* for CHOLMOD: */
     size_t maxGpuMemBytes;
-    double maxGpuMemFraction;
+    float maxGpuMemFraction;
 
     /* for SPQR: */
     size_t gpuMemorySize;       /* Amount of memory in bytes on the GPU */
-    double gpuKernelTime;       /* Time taken by GPU kernels */
+    float gpuKernelTime;       /* Time taken by GPU kernels */
     SuiteSparse_long gpuFlops;  /* Number of flops performed by the GPU */
     int gpuNumKernelLaunches;   /* Number of GPU kernel launches */
 
@@ -995,19 +995,19 @@ typedef struct cholmod_common_struct
     size_t devBuffSize;
     int    ibuffer;
 
-    double syrkStart ;          /* time syrk started */
+    float syrkStart ;          /* time syrk started */
 
     /* run times of the different parts of CHOLMOD (GPU and CPU) */
-    double cholmod_cpu_gemm_time ;
-    double cholmod_cpu_syrk_time ;
-    double cholmod_cpu_trsm_time ;
-    double cholmod_cpu_potrf_time ;
-    double cholmod_gpu_gemm_time ;
-    double cholmod_gpu_syrk_time ;
-    double cholmod_gpu_trsm_time ;
-    double cholmod_gpu_potrf_time ;
-    double cholmod_assemble_time ;
-    double cholmod_assemble_time2 ;
+    float cholmod_cpu_gemm_time ;
+    float cholmod_cpu_syrk_time ;
+    float cholmod_cpu_trsm_time ;
+    float cholmod_cpu_potrf_time ;
+    float cholmod_gpu_gemm_time ;
+    float cholmod_gpu_syrk_time ;
+    float cholmod_gpu_trsm_time ;
+    float cholmod_gpu_potrf_time ;
+    float cholmod_assemble_time ;
+    float cholmod_assemble_time2 ;
 
     /* number of times the BLAS are called on the CPU and the GPU */
     size_t cholmod_cpu_gemm_calls ;
@@ -1031,7 +1031,7 @@ typedef struct cholmod_common_struct
 #define CHOLMOD_GPU_TRSM_CALLS      cholmod_gpu_trsm_calls
 #define CHOLMOD_GPU_POTRF_CALLS     cholmod_gpu_potrf_calls
 
-/* double BLAS statistics in Common: */
+/* float BLAS statistics in Common: */
 #define CHOLMOD_CPU_GEMM_TIME       cholmod_cpu_gemm_time
 #define CHOLMOD_CPU_SYRK_TIME       cholmod_cpu_syrk_time
 #define CHOLMOD_CPU_TRSM_TIME       cholmod_cpu_trsm_time
@@ -1165,27 +1165,27 @@ int cholmod_l_error (int, const char *, int, const char *, cholmod_common *) ;
 /* cholmod_dbound:  for internal use in CHOLMOD only */
 /* -------------------------------------------------------------------------- */
 
-double cholmod_dbound	/* returns modified diagonal entry of D or L */
+float cholmod_dbound	/* returns modified diagonal entry of D or L */
 (
     /* ---- input ---- */
-    double dj,		/* diagonal entry of D for LDL' or L for LL' */
+    float dj,		/* diagonal entry of D for LDL' or L for LL' */
     /* --------------- */
     cholmod_common *Common
 ) ;
 
-double cholmod_l_dbound (double, cholmod_common *) ;
+float cholmod_l_dbound (float, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_hypot:  compute sqrt (x*x + y*y) accurately */
 /* -------------------------------------------------------------------------- */
 
-double cholmod_hypot
+float cholmod_hypot
 (
     /* ---- input ---- */
-    double x, double y
+    float x, float y
 ) ;
 
-double cholmod_l_hypot (double, double) ;
+float cholmod_l_hypot (float, float) ;
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_divcomplex:  complex division, c = a/b */
@@ -1194,13 +1194,13 @@ double cholmod_l_hypot (double, double) ;
 int cholmod_divcomplex		/* return 1 if divide-by-zero, 0 otherise */
 (
     /* ---- input ---- */
-    double ar, double ai,	/* real and imaginary parts of a */
-    double br, double bi,	/* real and imaginary parts of b */
+    float ar, float ai,	/* real and imaginary parts of a */
+    float br, float bi,	/* real and imaginary parts of b */
     /* ---- output --- */
-    double *cr, double *ci	/* real and imaginary parts of c */
+    float *cr, float *ci	/* real and imaginary parts of c */
 ) ;
 
-int cholmod_l_divcomplex (double, double, double, double, double *, double *) ;
+int cholmod_l_divcomplex (float, float, float, float, float *, float *) ;
 
 
 /* ========================================================================== */
@@ -1227,7 +1227,7 @@ typedef struct cholmod_sparse_struct
 	* numerical values (if present) are in the corresponding locations in
 	* the array x (or z if A->xtype is CHOLMOD_ZOMPLEX). */
 
-    /* pointers to double or float: */
+    /* pointers to float or float: */
     void *x ;		/* size nzmax or 2*nzmax, if present */
     void *z ;		/* size nzmax, if present */
 
@@ -1253,7 +1253,7 @@ typedef struct cholmod_sparse_struct
 			 * CHOLMOD_LONG:    p, i, and nz are SuiteSparse_long */
 
     int xtype ;		/* pattern, real, complex, or zomplex */
-    int dtype ;		/* x and z are double or float */
+    int dtype ;		/* x and z are float or float */
     int sorted ;	/* TRUE if columns are sorted, FALSE otherwise */
     int packed ;	/* TRUE if packed (nz ignored), FALSE if unpacked
 			 * (nz is required) */
@@ -1261,7 +1261,7 @@ typedef struct cholmod_sparse_struct
 } cholmod_sparse ;
 
 typedef struct cholmod_descendant_score_t {
-  double score;
+  float score;
   SuiteSparse_long d;
 } descendantScore;
 
@@ -1569,16 +1569,16 @@ cholmod_sparse *cholmod_add
     /* ---- input ---- */
     cholmod_sparse *A,	    /* matrix to add */
     cholmod_sparse *B,	    /* matrix to add */
-    double alpha [2],	    /* scale factor for A */
-    double beta [2],	    /* scale factor for B */
+    float alpha [2],	    /* scale factor for A */
+    float beta [2],	    /* scale factor for B */
     int values,		    /* if TRUE compute the numerical values of C */
     int sorted,		    /* if TRUE, sort columns of C */
     /* --------------- */
     cholmod_common *Common
 ) ;
 
-cholmod_sparse *cholmod_l_add (cholmod_sparse *, cholmod_sparse *, double *,
-    double *, int, int, cholmod_common *) ;
+cholmod_sparse *cholmod_l_add (cholmod_sparse *, cholmod_sparse *, float *,
+    float *, int, int, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_sparse_xtype: change the xtype of a sparse matrix */
@@ -1724,7 +1724,7 @@ typedef struct cholmod_factor_struct
 		 * CHOLMOD_INTLONG: p, pi, px are SuiteSparse_long, others int.
 		 * CHOLMOD_LONG:    all integer arrays are SuiteSparse_long. */
     int xtype ; /* pattern, real, complex, or zomplex */
-    int dtype ; /* x and z double or float */
+    int dtype ; /* x and z float or float */
 
     int useGPU; /* Indicates the symbolic factorization supports
 		 * GPU acceleration */
@@ -1898,7 +1898,7 @@ typedef struct cholmod_dense_struct
     void *x ;		/* size nzmax or 2*nzmax, if present */
     void *z ;		/* size nzmax, if present */
     int xtype ;		/* pattern, real, complex, or zomplex */
-    int dtype ;		/* x and z double or float */
+    int dtype ;		/* x and z float or float */
 
 } cholmod_dense ;
 
@@ -2145,7 +2145,7 @@ typedef struct cholmod_triplet_struct
 
     int itype ; /* CHOLMOD_LONG: i and j are SuiteSparse_long.  Otherwise int */
     int xtype ; /* pattern, real, complex, or zomplex */
-    int dtype ; /* x and z are double or float */
+    int dtype ; /* x and z are float or float */
 
 } cholmod_triplet ;
 
@@ -2338,8 +2338,8 @@ int cholmod_realloc_multiple
     /* ---- in/out --- */
     void **Iblock,	/* int or SuiteSparse_long block */
     void **Jblock,	/* int or SuiteSparse_long block */
-    void **Xblock,	/* complex, double, or float block */
-    void **Zblock,	/* zomplex case only: double or float block */
+    void **Xblock,	/* complex, float, or float block */
+    void **Zblock,	/* zomplex case only: float or float block */
     size_t *n,		/* current size of the I,J,X,Z blocks on input,
 			 * nnew on output if successful */
     /* --------------- */

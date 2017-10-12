@@ -11,7 +11,7 @@ include ../SuiteSparse_config/SuiteSparse_config.mk
 
 all:
 	( cd Lib ; $(MAKE) )
-	( cd Demo ; $(MAKE) )
+# 	( cd Demo ; $(MAKE) )
 
 library:
 	( cd Lib ; $(MAKE) )

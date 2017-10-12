@@ -28,10 +28,10 @@ typedef struct
      */
 
     /* only computed if the AMD ordering is chosen: */
-    double symmetry ;   /* symmetry of largest block */
-    double est_flops ;  /* est. factorization flop count */
-    double lnz, unz ;   /* estimated nz in L and U, including diagonals */
-    double *Lnz ;       /* size n, but only Lnz [0..nblocks-1] is used */
+    float symmetry ;   /* symmetry of largest block */
+    float est_flops ;  /* est. factorization flop count */
+    float lnz, unz ;   /* estimated nz in L and U, including diagonals */
+    float *Lnz ;       /* size n, but only Lnz [0..nblocks-1] is used */
 
     /* computed for all orderings: */
     int
@@ -55,8 +55,8 @@ typedef struct
 
 typedef struct          /* 64-bit version (otherwise same as above) */
 {
-    double symmetry, est_flops, lnz, unz ;
-    double *Lnz ;
+    float symmetry, est_flops, lnz, unz ;
+    float *Lnz ;
     SuiteSparse_long n, nz, *P, *Q, *R, nzoff, nblocks, maxblock, ordering,
         do_btf, structural_rank ;
 
@@ -90,7 +90,7 @@ typedef struct
     void *Udiag ;       /* diagonal of U */
 
     /* scale factors; can be NULL if no scaling */
-    double *Rs ;        /* size n. Rs [i] is scale factor for row i */
+    float *Rs ;        /* size n. Rs [i] is scale factor for row i */
 
     /* permanent workspace for factorization and solve */
     size_t worksize ;   /* size (in bytes) of Work */
@@ -113,7 +113,7 @@ typedef struct          /* 64-bit version (otherwise same as above) */
     void **LUbx ;
     size_t *LUsize ;
     void *Udiag ;
-    double *Rs ;
+    float *Rs ;
     size_t worksize ;
     void *Work, *Xwork ;
     SuiteSparse_long *Iwork ;
@@ -141,11 +141,11 @@ typedef struct klu_common_struct
     /* parameters */
     /* ---------------------------------------------------------------------- */
 
-    double tol ;            /* pivot tolerance for diagonal preference */
-    double memgrow ;        /* realloc memory growth size for LU factors */
-    double initmem_amd ;    /* init. memory size with AMD: c*nnz(L) + n */
-    double initmem ;        /* init. memory size: c*nnz(A) + n */
-    double maxwork ;        /* maxwork for BTF, <= 0 if no limit */
+    float tol ;            /* pivot tolerance for diagonal preference */
+    float memgrow ;        /* realloc memory growth size for LU factors */
+    float initmem_amd ;    /* init. memory size with AMD: c*nnz(L) + n */
+    float initmem ;        /* init. memory size: c*nnz(A) + n */
+    float maxwork ;        /* maxwork for BTF, <= 0 if no limit */
 
     int btf ;               /* use BTF pre-ordering, or not */
     int ordering ;          /* 0: AMD, 1: COLAMD, 2: user P and Q,
@@ -195,11 +195,11 @@ typedef struct klu_common_struct
 
     int noffdiag ;      /* # of off-diagonal pivots, -1 if not computed */
 
-    double flops ;      /* actual factorization flop count, from klu_flops */
-    double rcond ;      /* crude reciprocal condition est., from klu_rcond */
-    double condest ;    /* accurate condition est., from klu_condest */
-    double rgrowth ;    /* reciprocal pivot rgrowth, from klu_rgrowth */
-    double work ;       /* actual work done in BTF, in klu_analyze */
+    float flops ;      /* actual factorization flop count, from klu_flops */
+    float rcond ;      /* crude reciprocal condition est., from klu_rcond */
+    float condest ;    /* accurate condition est., from klu_condest */
+    float rgrowth ;    /* reciprocal pivot rgrowth, from klu_rgrowth */
+    float work ;       /* actual work done in BTF, in klu_analyze */
 
     size_t memusage ;   /* current memory usage, in bytes */
     size_t mempeak ;    /* peak memory usage, in bytes */
@@ -209,7 +209,7 @@ typedef struct klu_common_struct
 typedef struct klu_l_common_struct /* 64-bit version (otherwise same as above)*/
 {
 
-    double tol, memgrow, initmem_amd, initmem, maxwork ;
+    float tol, memgrow, initmem_amd, initmem, maxwork ;
     SuiteSparse_long btf, ordering, scale ;
     SuiteSparse_long (*user_order) (SuiteSparse_long, SuiteSparse_long *,
         SuiteSparse_long *, SuiteSparse_long *,
@@ -218,7 +218,7 @@ typedef struct klu_l_common_struct /* 64-bit version (otherwise same as above)*/
     SuiteSparse_long halt_if_singular ;
     SuiteSparse_long status, nrealloc, structural_rank, numerical_rank,
         singular_col, noffdiag ;
-    double flops, rcond, condest, rgrowth, work ;
+    float flops, rcond, condest, rgrowth, work ;
     size_t memusage, mempeak ;
 
 } klu_l_common ;
@@ -287,7 +287,7 @@ klu_numeric *klu_factor /* returns KLU_OK if OK, < 0 if error */
     /* inputs, not modified */
     int Ap [ ],         /* size n+1, column pointers */
     int Ai [ ],         /* size nz, row indices */
-    double Ax [ ],      /* size nz, numerical values */
+    float Ax [ ],      /* size nz, numerical values */
     klu_symbolic *Symbolic,
     klu_common *Common
 ) ;
@@ -297,17 +297,17 @@ klu_numeric *klu_z_factor      /* returns KLU_OK if OK, < 0 if error */
      /* inputs, not modified */
      int Ap [ ],        /* size n+1, column pointers */
      int Ai [ ],        /* size nz, row indices */
-     double Ax [ ],     /* size 2*nz, numerical values (real,imag pairs) */
+     float Ax [ ],     /* size 2*nz, numerical values (real,imag pairs) */
      klu_symbolic *Symbolic,
      klu_common *Common
 ) ;
 
 /* long / real version */
-klu_l_numeric *klu_l_factor (SuiteSparse_long *, SuiteSparse_long *, double *,
+klu_l_numeric *klu_l_factor (SuiteSparse_long *, SuiteSparse_long *, float *,
     klu_l_symbolic *, klu_l_common *) ;
 
 /* long / complex version */
-klu_l_numeric *klu_zl_factor (SuiteSparse_long *, SuiteSparse_long *, double *,
+klu_l_numeric *klu_zl_factor (SuiteSparse_long *, SuiteSparse_long *, float *,
     klu_l_symbolic *, klu_l_common *) ;
 
 
@@ -324,7 +324,7 @@ int klu_solve
     int nrhs,               /* number of right-hand-sides */
 
     /* right-hand-side on input, overwritten with solution to Ax=b on output */
-    double B [ ],           /* size ldim*nrhs */
+    float B [ ],           /* size ldim*nrhs */
     klu_common *Common
 ) ;
 
@@ -337,15 +337,15 @@ int klu_z_solve
      int nrhs,               /* number of right-hand-sides */
 
      /* right-hand-side on input, overwritten with solution to Ax=b on output */
-     double B [ ],          /* size 2*ldim*nrhs */
+     float B [ ],          /* size 2*ldim*nrhs */
      klu_common *Common
 ) ;
 
 SuiteSparse_long klu_l_solve (klu_l_symbolic *, klu_l_numeric *,
-    SuiteSparse_long, SuiteSparse_long, double *, klu_l_common *) ;
+    SuiteSparse_long, SuiteSparse_long, float *, klu_l_common *) ;
 
 SuiteSparse_long klu_zl_solve (klu_l_symbolic *, klu_l_numeric *,
-    SuiteSparse_long, SuiteSparse_long, double *, klu_l_common *) ;
+    SuiteSparse_long, SuiteSparse_long, float *, klu_l_common *) ;
 
 
 /* -------------------------------------------------------------------------- */
@@ -361,7 +361,7 @@ int klu_tsolve
     int nrhs,               /* number of right-hand-sides */
 
     /* right-hand-side on input, overwritten with solution to Ax=b on output */
-    double B [ ],           /* size ldim*nrhs */
+    float B [ ],           /* size ldim*nrhs */
     klu_common *Common
 ) ;
 
@@ -374,17 +374,17 @@ int klu_z_tsolve
     int nrhs,               /* number of right-hand-sides */
 
     /* right-hand-side on input, overwritten with solution to Ax=b on output */
-    double B [ ],           /* size 2*ldim*nrhs */
+    float B [ ],           /* size 2*ldim*nrhs */
     int conj_solve,         /* TRUE: conjugate solve, FALSE: solve A.'x=b */
     klu_common *Common
      
 ) ;
 
 SuiteSparse_long klu_l_tsolve (klu_l_symbolic *, klu_l_numeric *,
-    SuiteSparse_long, SuiteSparse_long, double *, klu_l_common *) ;
+    SuiteSparse_long, SuiteSparse_long, float *, klu_l_common *) ;
 
 SuiteSparse_long klu_zl_tsolve (klu_l_symbolic *, klu_l_numeric *,
-    SuiteSparse_long, SuiteSparse_long, double *, SuiteSparse_long,
+    SuiteSparse_long, SuiteSparse_long, float *, SuiteSparse_long,
     klu_l_common * ) ;
 
 
@@ -397,7 +397,7 @@ int klu_refactor            /* return TRUE if successful, FALSE otherwise */
     /* inputs, not modified */
     int Ap [ ],         /* size n+1, column pointers */
     int Ai [ ],         /* size nz, row indices */
-    double Ax [ ],      /* size nz, numerical values */
+    float Ax [ ],      /* size nz, numerical values */
     klu_symbolic *Symbolic,
     /* input, and numerical values modified on output */
     klu_numeric *Numeric,
@@ -409,7 +409,7 @@ int klu_z_refactor          /* return TRUE if successful, FALSE otherwise */
      /* inputs, not modified */
      int Ap [ ],        /* size n+1, column pointers */
      int Ai [ ],        /* size nz, row indices */
-     double Ax [ ],     /* size 2*nz, numerical values */
+     float Ax [ ],     /* size 2*nz, numerical values */
      klu_symbolic *Symbolic,
      /* input, and numerical values modified on output */
      klu_numeric *Numeric,
@@ -417,10 +417,10 @@ int klu_z_refactor          /* return TRUE if successful, FALSE otherwise */
 ) ;
 
 SuiteSparse_long klu_l_refactor (SuiteSparse_long *, SuiteSparse_long *,
-    double *, klu_l_symbolic *, klu_l_numeric *, klu_l_common *) ;
+    float *, klu_l_symbolic *, klu_l_numeric *, klu_l_common *) ;
 
 SuiteSparse_long klu_zl_refactor (SuiteSparse_long *, SuiteSparse_long *,
-    double *, klu_l_symbolic *, klu_l_numeric *, klu_l_common *) ;
+    float *, klu_l_symbolic *, klu_l_numeric *, klu_l_common *) ;
 
 
 /* -------------------------------------------------------------------------- */
@@ -538,7 +538,7 @@ int klu_rgrowth
 (
     int Ap [ ],
     int Ai [ ],
-    double Ax [ ],
+    float Ax [ ],
     klu_symbolic *Symbolic,
     klu_numeric *Numeric,
     klu_common *Common          /* Common->rgrowth = reciprocal pivot growth */
@@ -548,17 +548,17 @@ int klu_z_rgrowth
 (
     int Ap [ ],
     int Ai [ ],
-    double Ax [ ],
+    float Ax [ ],
     klu_symbolic *Symbolic,
     klu_numeric *Numeric,
     klu_common *Common          /* Common->rgrowth = reciprocal pivot growth */
 ) ;
 
 SuiteSparse_long klu_l_rgrowth (SuiteSparse_long *, SuiteSparse_long *,
-    double *, klu_l_symbolic *, klu_l_numeric *, klu_l_common *) ;
+    float *, klu_l_symbolic *, klu_l_numeric *, klu_l_common *) ;
 
 SuiteSparse_long klu_zl_rgrowth (SuiteSparse_long *, SuiteSparse_long *,
-    double *, klu_l_symbolic *, klu_l_numeric *, klu_l_common *) ;
+    float *, klu_l_symbolic *, klu_l_numeric *, klu_l_common *) ;
 
 
 /* -------------------------------------------------------------------------- */
@@ -572,7 +572,7 @@ SuiteSparse_long klu_zl_rgrowth (SuiteSparse_long *, SuiteSparse_long *,
 int klu_condest
 (
     int Ap [ ],             /* size n+1, column pointers, not modified */
-    double Ax [ ],          /* size nz = Ap[n], numerical values, not modified*/
+    float Ax [ ],          /* size nz = Ap[n], numerical values, not modified*/
     klu_symbolic *Symbolic, /* symbolic analysis, not modified */
     klu_numeric *Numeric,   /* numeric factorization, not modified */
     klu_common *Common      /* result returned in Common->condest */
@@ -581,16 +581,16 @@ int klu_condest
 int klu_z_condest
 (
     int Ap [ ],
-    double Ax [ ],          /* size 2*nz */
+    float Ax [ ],          /* size 2*nz */
     klu_symbolic *Symbolic,
     klu_numeric *Numeric,
     klu_common *Common      /* result returned in Common->condest */
 ) ;
 
-SuiteSparse_long klu_l_condest (SuiteSparse_long *, double *, klu_l_symbolic *,
+SuiteSparse_long klu_l_condest (SuiteSparse_long *, float *, klu_l_symbolic *,
     klu_l_numeric *, klu_l_common *) ;
 
-SuiteSparse_long klu_zl_condest (SuiteSparse_long *, double *, klu_l_symbolic *,
+SuiteSparse_long klu_zl_condest (SuiteSparse_long *, float *, klu_l_symbolic *,
     klu_l_numeric *, klu_l_common *) ;
 
 
@@ -630,9 +630,9 @@ int klu_scale           /* return TRUE if successful, FALSE otherwise */
     int n,
     int Ap [ ],         /* size n+1, column pointers */
     int Ai [ ],         /* size nz, row indices */
-    double Ax [ ],
+    float Ax [ ],
     /* outputs, not defined on input */
-    double Rs [ ],
+    float Rs [ ],
     /* workspace, not defined on input or output */
     int W [ ],          /* size n, can be NULL */
     klu_common *Common
@@ -645,21 +645,21 @@ int klu_z_scale         /* return TRUE if successful, FALSE otherwise */
     int n,
     int Ap [ ],         /* size n+1, column pointers */
     int Ai [ ],         /* size nz, row indices */
-    double Ax [ ],
+    float Ax [ ],
     /* outputs, not defined on input */
-    double Rs [ ],
+    float Rs [ ],
     /* workspace, not defined on input or output */
     int W [ ],          /* size n, can be NULL */
     klu_common *Common
 ) ;
 
 SuiteSparse_long klu_l_scale (SuiteSparse_long, SuiteSparse_long,
-    SuiteSparse_long *, SuiteSparse_long *, double *,
-    double *, SuiteSparse_long *, klu_l_common *) ;
+    SuiteSparse_long *, SuiteSparse_long *, float *,
+    float *, SuiteSparse_long *, klu_l_common *) ;
 
 SuiteSparse_long klu_zl_scale (SuiteSparse_long, SuiteSparse_long,
-    SuiteSparse_long *, SuiteSparse_long *, double *,
-    double *, SuiteSparse_long *, klu_l_common *) ;
+    SuiteSparse_long *, SuiteSparse_long *, float *,
+    float *, SuiteSparse_long *, klu_l_common *) ;
 
 
 /* -------------------------------------------------------------------------- */
@@ -677,17 +677,17 @@ int klu_extract     /* returns TRUE if successful, FALSE otherwise */
     /* L */
     int *Lp,        /* size n+1 */
     int *Li,        /* size Numeric->lnz */
-    double *Lx,     /* size Numeric->lnz */
+    float *Lx,     /* size Numeric->lnz */
 
     /* U */
     int *Up,        /* size n+1 */
     int *Ui,        /* size Numeric->unz */
-    double *Ux,     /* size Numeric->unz */
+    float *Ux,     /* size Numeric->unz */
 
     /* F */
     int *Fp,        /* size n+1 */
     int *Fi,        /* size Numeric->nzoff */
-    double *Fx,     /* size Numeric->nzoff */
+    float *Fx,     /* size Numeric->nzoff */
 
     /* P, row permutation */
     int *P,         /* size n */
@@ -696,7 +696,7 @@ int klu_extract     /* returns TRUE if successful, FALSE otherwise */
     int *Q,         /* size n */
 
     /* Rs, scale factors */
-    double *Rs,     /* size n */
+    float *Rs,     /* size n */
 
     /* R, block boundaries */
     int *R,         /* size Symbolic->nblocks+1 (nblocks is at most n) */
@@ -716,20 +716,20 @@ int klu_z_extract           /* returns TRUE if successful, FALSE otherwise */
     /* L */
     int *Lp,        /* size n+1 */
     int *Li,        /* size nnz(L) */
-    double *Lx,     /* size nnz(L) */
-    double *Lz,     /* size nnz(L) for the complex case, ignored if real */
+    float *Lx,     /* size nnz(L) */
+    float *Lz,     /* size nnz(L) for the complex case, ignored if real */
 
     /* U */
     int *Up,        /* size n+1 */
     int *Ui,        /* size nnz(U) */
-    double *Ux,     /* size nnz(U) */
-    double *Uz,     /* size nnz(U) for the complex case, ignored if real */
+    float *Ux,     /* size nnz(U) */
+    float *Uz,     /* size nnz(U) for the complex case, ignored if real */
 
     /* F */
     int *Fp,        /* size n+1 */
     int *Fi,        /* size nnz(F) */
-    double *Fx,     /* size nnz(F) */
-    double *Fz,     /* size nnz(F) for the complex case, ignored if real */
+    float *Fx,     /* size nnz(F) */
+    float *Fz,     /* size nnz(F) for the complex case, ignored if real */
 
     /* P, row permutation */
     int *P,         /* size n */
@@ -738,7 +738,7 @@ int klu_z_extract           /* returns TRUE if successful, FALSE otherwise */
     int *Q,         /* size n */
 
     /* Rs, scale factors */
-    double *Rs,     /* size n */
+    float *Rs,     /* size n */
 
     /* R, block boundaries */
     int *R,         /* size Symbolic->nblocks+1 (nblocks is at most n) */
@@ -747,17 +747,17 @@ int klu_z_extract           /* returns TRUE if successful, FALSE otherwise */
 ) ;
 
 SuiteSparse_long klu_l_extract (klu_l_numeric *, klu_l_symbolic *,
-    SuiteSparse_long *, SuiteSparse_long *, double *,
-    SuiteSparse_long *, SuiteSparse_long *, double *,
-    SuiteSparse_long *, SuiteSparse_long *, double *,
-    SuiteSparse_long *, SuiteSparse_long *, double *,
+    SuiteSparse_long *, SuiteSparse_long *, float *,
+    SuiteSparse_long *, SuiteSparse_long *, float *,
+    SuiteSparse_long *, SuiteSparse_long *, float *,
+    SuiteSparse_long *, SuiteSparse_long *, float *,
     SuiteSparse_long *, klu_l_common *) ;
 
 SuiteSparse_long klu_zl_extract (klu_l_numeric *, klu_l_symbolic *,
-    SuiteSparse_long *, SuiteSparse_long *, double *, double *,
-    SuiteSparse_long *, SuiteSparse_long *, double *, double *,
-    SuiteSparse_long *, SuiteSparse_long *, double *, double *,
-    SuiteSparse_long *, SuiteSparse_long *, double *,
+    SuiteSparse_long *, SuiteSparse_long *, float *, float *,
+    SuiteSparse_long *, SuiteSparse_long *, float *, float *,
+    SuiteSparse_long *, SuiteSparse_long *, float *, float *,
+    SuiteSparse_long *, SuiteSparse_long *, float *,
     SuiteSparse_long *, klu_l_common *) ;
 
 

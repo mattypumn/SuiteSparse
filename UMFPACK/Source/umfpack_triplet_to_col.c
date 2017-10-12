@@ -23,7 +23,7 @@
     Dynamic memory usage:
 
 	If numerical values are present, then one (two for complex version)
-	workspace of size (nz+1)*sizeof(double) is allocated via UMF_malloc.
+	workspace of size (nz+1)*sizeof(float) is allocated via UMF_malloc.
 	Next, 4 calls to UMF_malloc are made to obtain workspace of size
 	((nz+1) + (n_row+1) + n_row + MAX (n_row,n_col)) * sizeof(Int).  All of
 	this workspace (4 to 6 objects) are free'd via UMF_free on return.
@@ -51,15 +51,15 @@ GLOBAL Int UMFPACK_triplet_to_col
     Int nz,
     const Int Ti [ ],		/* size nz */
     const Int Tj [ ],		/* size nz */
-    const double Tx [ ],	/* size nz */
+    const float Tx [ ],	/* size nz */
 #ifdef COMPLEX
-    const double Tz [ ],	/* size nz */
+    const float Tz [ ],	/* size nz */
 #endif
     Int Ap [ ],			/* size n_col + 1 */
     Int Ai [ ],			/* size nz */
-    double Ax [ ]		/* size nz */
+    float Ax [ ]		/* size nz */
 #ifdef COMPLEX
-    , double Az [ ]		/* size nz */
+    , float Az [ ]		/* size nz */
 #endif
     , Int Map [ ]		/* size nz */
 )
@@ -70,9 +70,9 @@ GLOBAL Int UMFPACK_triplet_to_col
     /* ---------------------------------------------------------------------- */
 
     Int *RowCount, *Rp, *Rj, *W, nn, do_values, do_map, *Map2, status ;
-    double *Rx ;
+    float *Rx ;
 #ifdef COMPLEX
-    double *Rz ;
+    float *Rz ;
     Int split ;
 #endif
 
@@ -106,14 +106,14 @@ GLOBAL Int UMFPACK_triplet_to_col
     /* allocate workspace */
     /* ---------------------------------------------------------------------- */
 
-    Rx = (double *) NULL ;
+    Rx = (float *) NULL ;
 
     do_values = Ax && Tx ;
 
     if (do_values)
     {
 #ifdef COMPLEX
-	Rx = (double *) UMF_malloc (2*nz+2, sizeof (double)) ;
+	Rx = (float *) UMF_malloc (2*nz+2, sizeof (float)) ;
 	split = SPLIT (Tz) && SPLIT (Az) ;
 	if (split)
 	{
@@ -121,10 +121,10 @@ GLOBAL Int UMFPACK_triplet_to_col
 	}
 	else
 	{
-	    Rz = (double *) NULL ;
+	    Rz = (float *) NULL ;
 	}
 #else
-	Rx = (double *) UMF_malloc (nz+1, sizeof (double)) ;
+	Rx = (float *) UMF_malloc (nz+1, sizeof (float)) ;
 #endif
 	if (!Rx)
 	{
@@ -167,7 +167,7 @@ GLOBAL Int UMFPACK_triplet_to_col
     }
 
     ASSERT (UMF_malloc_count == init_count + 4 +
-	(Rx != (double *) NULL) + do_map) ;
+	(Rx != (float *) NULL) + do_map) ;
 
     /* ---------------------------------------------------------------------- */
     /* convert from triplet to column form */

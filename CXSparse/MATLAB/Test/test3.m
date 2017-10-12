@@ -20,7 +20,7 @@ for i = f
     Prob = UFget (i) ;
     disp (Prob) ;
 
-    for cmplex = 0:double(~ispc)
+    for cmplex = 0:float(~ispc)
 
         A = Prob.A ;
         [m n] = size (A) ;

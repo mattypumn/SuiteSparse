@@ -168,7 +168,7 @@ int CHOLMOD(super_symbolic2)
     cholmod_common *Common
 )
 {
-    double zrelax0, zrelax1, zrelax2, xxsize ;
+    float zrelax0, zrelax1, zrelax2, xxsize ;
     Int *Wi, *Wj, *Super, *Snz, *Ap, *Ai, *Flag, *Head, *Ls, *Lpi, *Lpx, *Fnz,
 	*Sparent, *Anz, *SuperMap, *Merged, *Nscol, *Zeros, *Fp, *Fj,
 	*ColCount, *Lpi2, *Lsuper, *Iwork ;
@@ -182,7 +182,7 @@ int CHOLMOD(super_symbolic2)
     const char* env_max_bytes;
     size_t max_bytes;
     const char* env_max_fraction;
-    double max_fraction;
+    float max_fraction;
 
     /* ---------------------------------------------------------------------- */
     /* check inputs */
@@ -424,7 +424,7 @@ int CHOLMOD(super_symbolic2)
 	    /* Data size of 16 bytes must be assumed for case of PATTERN */
 	    || (for_whom == CHOLMOD_ANALYZE_FOR_CHOLESKY && L->useGPU && 
 		 (j-Super[nfsuper-1]+1) * 
-		 ColCount[Super[nfsuper-1]] * sizeof(double) * 2 >= 
+		 ColCount[Super[nfsuper-1]] * sizeof(float) * 2 >= 
 		 Common->devBuffSize)
 #endif
 	    )
@@ -487,7 +487,7 @@ int CHOLMOD(super_symbolic2)
 
     for (s = nfsuper-2 ; s >= 0 ; s--)
     {
-        double lnz1 ;
+        float lnz1 ;
 
 	/* should supernodes s and s+1 merge into a new node s? */
 	PRINT1 (("\n========= Check relax of s "ID" and s+1 "ID"\n", s, s+1)) ;
@@ -524,7 +524,7 @@ int CHOLMOD(super_symbolic2)
 	PRINT2 (("ns "ID" nscol0 "ID" nscol1 "ID"\n", ns, nscol0, nscol1)) ;
 
 	totzeros = Zeros [s+1] ;	/* current # of zeros in s+1 */
-	lnz1 = (double) (Snz [s+1]) ;	/* # entries in leading column of s+1 */
+	lnz1 = (float) (Snz [s+1]) ;	/* # entries in leading column of s+1 */
 
 	/* determine if supernodes s and s+1 should merge */
 	if (ns <= nrelax0)
@@ -534,9 +534,9 @@ int CHOLMOD(super_symbolic2)
 	}
 	else
 	{
-	    /* use double to avoid integer overflow */
-	    double lnz0 = Snz [s] ;	/* # entries in leading column of s */
-	    double xnewzeros = nscol0 * (lnz1 + nscol0 - lnz0) ;
+	    /* use float to avoid integer overflow */
+	    float lnz0 = Snz [s] ;	/* # entries in leading column of s */
+	    float xnewzeros = nscol0 * (lnz1 + nscol0 - lnz0) ;
 
 	    /* use Int for the final update of Zeros [s] below */
 	    newzeros = nscol0 * (Snz [s+1] + nscol0 - Snz [s]) ;
@@ -552,12 +552,12 @@ int CHOLMOD(super_symbolic2)
 	    else
 	    {
 		/* # of zeros if merged */
-		double xtotzeros = ((double) totzeros) + xnewzeros ;
+		float xtotzeros = ((float) totzeros) + xnewzeros ;
 
 		/* xtotsize: total size of merged supernode, if merged: */
-		double xns = (double) ns ;
-		double xtotsize  = (xns * (xns+1) / 2) + xns * (lnz1 - nscol1) ;
-		double z = xtotzeros / xtotsize ;
+		float xns = (float) ns ;
+		float xtotsize  = (xns * (xns+1) / 2) + xns * (lnz1 - nscol1) ;
+		float z = xtotzeros / xtotsize ;
 
 		Int totsize ;
 		totsize  = (ns * (ns+1) / 2) + ns * (Snz [s+1] - nscol1) ;
@@ -574,7 +574,7 @@ int CHOLMOD(super_symbolic2)
 		merge = ((ns <= nrelax1 && z < zrelax0) ||
 			 (ns <= nrelax2 && z < zrelax1) ||
 					  (z < zrelax2)) &&
-			(xtotsize < Int_max / sizeof (double)) ;
+			(xtotsize < Int_max / sizeof (float)) ;
 
 	    }
 	}
@@ -583,8 +583,8 @@ int CHOLMOD(super_symbolic2)
 	if ( for_whom == CHOLMOD_ANALYZE_FOR_CHOLESKY && L->useGPU ) {
 	  /* Ensure that the aggregated supernode fits in the device 
 	     supernode buffers */
-	  double xns = (double) ns;
-	  if ( ((xns * xns) + xns * (lnz1 - nscol1))*sizeof(double)*2  >= 
+	  float xns = (float) ns;
+	  if ( ((xns * xns) + xns * (lnz1 - nscol1))*sizeof(float)*2  >= 
 	       Common->devBuffSize ) {
 	    merge = FALSE;
 	  }
@@ -670,8 +670,8 @@ int CHOLMOD(super_symbolic2)
         if (find_xsize)
         {
             xsize += nscol * nsrow ;
-            /* also compute xsize in double to guard against Int overflow */
-            xxsize += ((double) nscol) * ((double) nsrow) ;
+            /* also compute xsize in float to guard against Int overflow */
+            xxsize += ((float) nscol) * ((float) nsrow) ;
         }
 	if (ssize < 0 ||(find_xsize && xxsize > Int_max))
 	{

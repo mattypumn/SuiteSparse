@@ -49,9 +49,9 @@ template <typename Entry> void spqr_freefac
 
 // =============================================================================
 
-template void spqr_freefac <double>
+template void spqr_freefac <float>
 (
-    SuiteSparseQR_factorization <double> **QR_handle,
+    SuiteSparseQR_factorization <float> **QR_handle,
 
     // workspace and parameters
     cholmod_common *cc

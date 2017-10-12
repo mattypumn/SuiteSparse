@@ -44,16 +44,16 @@ void mexFunction
     Long *A ;                   /* row indices of input matrix A */
     Long *perm ;                /* column ordering of M and ordering of A */
     Long *cmember ;             /* csymamd's copy of the constraint set */
-    double *in_cmember ;        /* input constraint set */
+    float *in_cmember ;        /* input constraint set */
     Long *p ;                   /* column pointers of input matrix A */
     Long cslen ;                /* size of constraint set */
     Long n_col ;                /* number of columns of A */
     Long n_row ;                /* number of rows of A */
     Long full ;                 /* TRUE if input matrix full, FALSE if sparse */
-    double knobs [CCOLAMD_KNOBS] ; /* csymamd user-controllable parameters */
-    double *out_perm ;          /* output permutation vector */
-    double *out_stats ;         /* output stats vector */
-    double *in_knobs ;          /* input knobs vector */
+    float knobs [CCOLAMD_KNOBS] ; /* csymamd user-controllable parameters */
+    float *out_perm ;          /* output permutation vector */
+    float *out_stats ;         /* output stats vector */
+    float *in_knobs ;          /* input knobs vector */
     Long i ;                    /* loop counter */
     mxArray *Ainput ;           /* input matrix handle */
     Long spumoni ;              /* verbosity variable */

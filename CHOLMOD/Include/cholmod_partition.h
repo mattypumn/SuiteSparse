@@ -153,7 +153,7 @@ SuiteSparse_long cholmod_collapse_septree
     /* ---- input ---- */
     size_t n,		/* # of nodes in the graph */
     size_t ncomponents,	/* # of nodes in the separator tree (must be <= n) */
-    double nd_oksep,    /* collapse if #sep >= nd_oksep * #nodes in subtree */
+    float nd_oksep,    /* collapse if #sep >= nd_oksep * #nodes in subtree */
     size_t nd_small,    /* collapse if #nodes in subtree < nd_small */
     /* ---- in/out --- */
     int *CParent,	/* size ncomponents; from cholmod_nested_dissection */
@@ -162,7 +162,7 @@ SuiteSparse_long cholmod_collapse_septree
     cholmod_common *Common
 ) ;
 
-SuiteSparse_long cholmod_l_collapse_septree (size_t, size_t, double, size_t,
+SuiteSparse_long cholmod_l_collapse_septree (size_t, size_t, float, size_t,
     SuiteSparse_long *, SuiteSparse_long *, cholmod_common *) ;
 
 #endif

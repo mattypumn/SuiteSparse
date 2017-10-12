@@ -23,8 +23,8 @@
 // Use a global variable, to compute Inf.  This could be done with
 // #define INF (1./0.), but the overzealous g++ compiler complains
 // about divide-by-zero.
-double xx = 1 ;
-double yy = 0 ;         
+float xx = 1 ;
+float yy = 0 ;         
 #define INF (xx / yy)
 #define CHECK_NAN(x) (((x) < 0) || ((x) != (x)) ? INF : (x))
 
@@ -38,9 +38,9 @@ extern "C" {
 void qrtest_C
 (
     cholmod_sparse *A,
-    double anorm,
-    double errs [5],
-    double maxresid [2][2],
+    float anorm,
+    float errs [5],
+    float maxresid [2][2],
     cholmod_common *cc
 ) ;
 }
@@ -406,7 +406,7 @@ template <typename Entry> cholmod_dense *SPQR_min2norm
 (
     // arguments for SuiteSparseQR_min2norm: 
     int ordering,
-    double tol,
+    float tol,
     cholmod_sparse *A,
     cholmod_dense *B,
     cholmod_common *cc,
@@ -449,7 +449,7 @@ template <typename Entry> cholmod_sparse *SPQR_min2norm
 (
     // arguments for SuiteSparseQR_min2norm: 
     int ordering,
-    double tol,
+    float tol,
     cholmod_sparse *A,
     cholmod_sparse *B,
     cholmod_common *cc,
@@ -493,7 +493,7 @@ template <typename Entry> SuiteSparseQR_factorization <Entry> *SPQR_factorize
 (
     // arguments for SuiteSparseQR_factorize: 
     int ordering,
-    double tol,
+    float tol,
     cholmod_sparse *A,
     cholmod_common *cc,
 
@@ -690,7 +690,7 @@ template <typename Entry> Long SPQR_qr
 (
     // arguments for SuiteSparseQR: 
     int ordering,
-    double tol,
+    float tol,
     Long econ,
     Long getCTX,
     cholmod_sparse *A,
@@ -791,13 +791,13 @@ Long nrand (Long n)       // return a random Long between 0 and n-1
     return ((n <= 0) ? 0 : (my_rand ( ) % n)) ;
 }
 
-double xrand ( )        // return a random double between -1 and 1
+float xrand ( )        // return a random float between -1 and 1
 {
-    double x = ((double) my_rand ( )) / MY_RAND_MAX ;
+    float x = ((float) my_rand ( )) / MY_RAND_MAX ;
     return (2*x-1) ;
 }
 
-double erand (double range)
+float erand (float range)
 {
     return (range * xrand ( )) ;
 }
@@ -821,12 +821,12 @@ Complex erand (Complex range)
 
 // return real part of a scalar x
 
-inline double getreal (double x)
+inline float getreal (float x)
 {
     return (x) ;
 }
 
-inline double getreal (Complex x)
+inline float getreal (Complex x)
 {
     return (x.real ( )) ;
 }
@@ -836,12 +836,12 @@ inline double getreal (Complex x)
 // =============================================================================
 
 // return imaginary part of a scalar x
-inline double getimag (double x)        // x is an unused parameter
+inline float getimag (float x)        // x is an unused parameter
 {
     return (0) ;
 }
 
-inline double getimag (Complex x)
+inline float getimag (Complex x)
 {
     return (x.imag ( )) ;
 }
@@ -895,11 +895,11 @@ cholmod_sparse *sparse_split
 
     Long *Ap = (Long *) A->p ;
     Long *Ai = (Long *) A->i ;
-    double *Ax = (double *) A->x ;
+    float *Ax = (float *) A->x ;
 
     Long *Cp = (Long *) C->p ;
     Long *Ci = (Long *) C->i ;
-    double *Cx = (double *) C->x ;
+    float *Cx = (float *) C->x ;
 
     Long n = A->ncol ;
 
@@ -962,8 +962,8 @@ int sparse_merge
     // change A from real to complex
     cholmod_l_sparse_xtype (CHOLMOD_COMPLEX, A, cc) ;
 
-    double *Ax = (double *) A->x ;
-    double *Az = (double *) A_imag->x ;
+    float *Ax = (float *) A->x ;
+    float *Az = (float *) A_imag->x ;
 
     // merge in the imaginary part from A_imag into A
     for (Long k = 0 ; k < nz1 ; k++)
@@ -988,7 +988,7 @@ template <typename Entry> cholmod_sparse *sparse_diff
 )
 {
     cholmod_sparse *C ;
-    double one [2] = {1,0}, minusone [2] = {-1,0} ;
+    float one [2] = {1,0}, minusone [2] = {-1,0} ;
 
     if (spqr_type <Entry> ( ) == CHOLMOD_REAL)
     {
@@ -1105,7 +1105,7 @@ template <typename Entry> cholmod_sparse *sparse_multiply
     {
         // cholmod_ssmult and cholmod_add only work for real matrices
         cholmod_sparse *A_real, *A_imag, *B_real, *B_imag, *C_imag, *T1, *T2 ;
-        double one [2] = {1,0}, minusone [2] = {-1,0} ;
+        float one [2] = {1,0}, minusone [2] = {-1,0} ;
 
         A_real = sparse_real (A, cc) ;
         A_imag = sparse_imag (A, cc) ;
@@ -1147,10 +1147,10 @@ template <typename Entry> cholmod_sparse *sparse_multiply
 
 // compute norm (A*x-b,1) for A,x, and b all sparse
 
-template <typename Entry> double sparse_resid
+template <typename Entry> float sparse_resid
 (
     cholmod_sparse *A,
-    double anorm,
+    float anorm,
     cholmod_sparse *X,
     cholmod_sparse *B,
     cholmod_common *cc
@@ -1162,7 +1162,7 @@ template <typename Entry> double sparse_resid
     // Resid = AX - B
     Resid = sparse_diff <Entry> (AX, B, cc) ;
     // resid = norm (Resid,1)
-    double resid = cholmod_l_norm_sparse (Resid, 1, cc) ;
+    float resid = cholmod_l_norm_sparse (Resid, 1, cc) ;
     resid = CHECK_NAN (resid) ;
     cholmod_l_free_sparse (&AX, cc) ;
     cholmod_l_free_sparse (&Resid, cc) ;
@@ -1176,10 +1176,10 @@ template <typename Entry> double sparse_resid
 
 // compute norm (A*x-b,1) for A sparse, x and b dense
 
-template <typename Entry> double dense_resid
+template <typename Entry> float dense_resid
 (
     cholmod_sparse *A,
-    double anorm,
+    float anorm,
     cholmod_dense *X,
     Long nb,
     Entry *Bx,
@@ -1187,7 +1187,7 @@ template <typename Entry> double dense_resid
 )
 {
     cholmod_dense *B, Bmatrix, *Resid ;
-    double one [2] = {1,0}, minusone [2] = {-1,0} ;
+    float one [2] = {1,0}, minusone [2] = {-1,0} ;
 
     B = dense_wrapper (&Bmatrix, A->nrow, nb, Bx) ;
     // Resid = B
@@ -1197,7 +1197,7 @@ template <typename Entry> double dense_resid
     cholmod_l_sdmult (A, FALSE, one, minusone, X, Resid, cc) ;
 
     // resid = norm (Resid,1)
-    double resid = cholmod_l_norm_dense (Resid, 1, cc) ;
+    float resid = cholmod_l_norm_dense (Resid, 1, cc) ;
     resid = CHECK_NAN (resid) ;
     cholmod_l_free_dense (&Resid, cc) ;
     return (CHECK_NAN (resid / anorm)) ;
@@ -1209,7 +1209,7 @@ template <typename Entry> double dense_resid
 
 // compute norm (R'*R - (A(:,P))'*(A(:,P)), 1) / norm (A'*A,1)
 
-template <typename Entry> double check_r_factor
+template <typename Entry> float check_r_factor
 (
     cholmod_sparse *R,
     cholmod_sparse *A,
@@ -1233,7 +1233,7 @@ template <typename Entry> double check_r_factor
     cholmod_l_free_sparse (&CT, cc) ;
     cholmod_l_free_sparse (&C, cc) ;
 
-    double ctcnorm = cholmod_l_norm_sparse (CTC, 1, cc) ;
+    float ctcnorm = cholmod_l_norm_sparse (CTC, 1, cc) ;
     if (ctcnorm == 0) ctcnorm = 1 ;
     ctcnorm = CHECK_NAN (ctcnorm) ;
 
@@ -1243,7 +1243,7 @@ template <typename Entry> double check_r_factor
     cholmod_l_free_sparse (&RTR, cc) ;
 
     // err = norm (D,1)
-    double err = cholmod_l_norm_sparse (D, 1, cc) / ctcnorm ;
+    float err = cholmod_l_norm_sparse (D, 1, cc) / ctcnorm ;
     err = CHECK_NAN (err) ;
 
     cholmod_l_free_sparse (&D, cc) ;
@@ -1257,13 +1257,13 @@ template <typename Entry> double check_r_factor
 
 // compute norm (Q*R - A(:,P)) / norm (A)
 
-template <typename Entry> double check_qr
+template <typename Entry> float check_qr
 (
     cholmod_sparse *Q,
     cholmod_sparse *R,
     cholmod_sparse *A,
     Long *P,
-    double anorm,
+    float anorm,
     cholmod_common *cc
 )
 {
@@ -1281,7 +1281,7 @@ template <typename Entry> double check_qr
     cholmod_l_free_sparse (&C, cc) ;
 
     // err = norm (D,1)
-    double err = cholmod_l_norm_sparse (D, 1, cc) / anorm ;
+    float err = cholmod_l_norm_sparse (D, 1, cc) / anorm ;
     err = CHECK_NAN (err) ;
 
     cholmod_l_free_sparse (&D, cc) ;
@@ -1371,10 +1371,10 @@ template <typename Entry> cholmod_sparse *create_Q
 
 // solve Ax=b using H, R, and E
 
-template <typename Entry> double QRsolve
+template <typename Entry> float QRsolve
 (
     cholmod_sparse *A,
-    double anorm,
+    float anorm,
     Long rank,
     Long method,
     cholmod_sparse *H,
@@ -1386,7 +1386,7 @@ template <typename Entry> double QRsolve
     cholmod_common *cc
 )
 {
-    double one [2] = {1,0}, zero [2] = {0,0}, resid = EMPTY ;
+    float one [2] = {1,0}, zero [2] = {0,0}, resid = EMPTY ;
     Long xtype = spqr_type <Entry> ( ) ;
     Long n = A->ncol ;
     Long m = A->nrow ;
@@ -1451,7 +1451,7 @@ template <typename Entry> double QRsolve
 
 // Test qmult
 
-template <typename Entry> double check_qmult
+template <typename Entry> float check_qmult
 (
     cholmod_sparse *H,
     cholmod_dense *HTau,
@@ -1464,8 +1464,8 @@ template <typename Entry> double check_qmult
     cholmod_dense *Xdense, *Zdense, *Sdense, *Ydense ;
     Long xtype = spqr_type <Entry> ( ) ;
     Entry *X, *Y, *Z, *S ;
-    double err, maxerr = 0 ;
-    double one [2] = {1,0}, zero [2] = {0,0} ;
+    float err, maxerr = 0 ;
+    float one [2] = {1,0}, zero [2] = {0,0} ;
     Entry range = (Entry) 1.0 ;
     Long k ;
 
@@ -1511,7 +1511,7 @@ template <typename Entry> double check_qmult
 
                 for (err = 0, k = 0 ; k < xsize ; k++)
                 {
-                    double e1 = spqr_abs (Y [k] - Z [k], cc) ;
+                    float e1 = spqr_abs (Y [k] - Z [k], cc) ;
                     e1 = CHECK_NAN (e1) ;
                     err = MAX (err, e1) ;
                 }
@@ -1525,7 +1525,7 @@ template <typename Entry> double check_qmult
 
                 for (err = 0, k = 0 ; k < xsize ; k++)
                 {
-                    double e1 = spqr_abs (S [k] - Y [k], cc) ;
+                    float e1 = spqr_abs (S [k] - Y [k], cc) ;
                     e1 = CHECK_NAN (e1) ;
                     err = MAX (err, e1) ;
                 }
@@ -1579,7 +1579,7 @@ template <typename Entry> double check_qmult
 
                 for (err = 0, k = 0 ; k < xsize ; k++)
                 {
-                    double e1 = spqr_abs (Y [k] - Z [k], cc) ;
+                    float e1 = spqr_abs (Y [k] - Z [k], cc) ;
                     e1 = CHECK_NAN (e1) ;
                     err = MAX (err, e1) ;
                 }
@@ -1593,7 +1593,7 @@ template <typename Entry> double check_qmult
 
                 for (err = 0, k = 0 ; k < xsize ; k++)
                 {
-                    double e1 = spqr_abs (S [k] - Y [k], cc) ;
+                    float e1 = spqr_abs (S [k] - Y [k], cc) ;
                     e1 = CHECK_NAN (e1) ;
                     err = MAX (err, e1) ;
                 }
@@ -1661,7 +1661,7 @@ template <typename Entry> double check_qmult
 
 // X = Q'*B has been done, continue with C=R\C and 
 
-template <typename Entry> double check_rc
+template <typename Entry> float check_rc
 (
     Long rank,
     cholmod_sparse *R,
@@ -1669,12 +1669,12 @@ template <typename Entry> double check_rc
     Entry *B,
     cholmod_dense *X,
     Long nrhs,
-    double anorm,
+    float anorm,
     Long *Qfill,
     cholmod_common *cc
 )
 {
-    double resid = EMPTY ;
+    float resid = EMPTY ;
     Long xtype = spqr_type <Entry> ( ) ;
     cholmod_dense *W ;
     Long n, ok ;
@@ -1758,14 +1758,14 @@ template <typename Entry> cholmod_dense *transpose
 template <typename Entry> void qrtest
 (
     cholmod_sparse *A,
-    double errs [5],
+    float errs [5],
     cholmod_common *cc
 )
 {
     cholmod_sparse *H, *I, *R, *Q, *Csparse, *Xsparse, *AT, *Bsparse ;
     cholmod_dense *Cdense, *Xdense, *Bdense, *HTau ; ;
-    double tol = DBL_EPSILON, err, resid, maxerr, maxresid [2][2] ;
-    double tols [ ] = { SPQR_DEFAULT_TOL, -1, 0, DBL_EPSILON } ;
+    float tol = DBL_EPSILON, err, resid, maxerr, maxresid [2][2] ;
+    float tols [ ] = { SPQR_DEFAULT_TOL, -1, 0, DBL_EPSILON } ;
     Long n, m, nz, *HPinv, ntol, *Ai, *Ap, k, *Qfill, rank, nb, *Cp, *Ci, econ,
         which ;
     Entry *B, *Ax, *Cx ;
@@ -1789,7 +1789,7 @@ template <typename Entry> void qrtest
     Ap = (Long *) A->p ;
     Ai = (Long *) A->i ;
     Ax = (Entry *) A->x ;
-    double anorm = cholmod_l_norm_sparse (A, 1, cc) ;
+    float anorm = cholmod_l_norm_sparse (A, 1, cc) ;
     anorm = CHECK_NAN (anorm) ;
     printf ("\n===========================================================\n") ;
     printf ("Matrix: %ld by %ld, nnz(A) = %ld, norm(A,1) = %g\n",
@@ -1868,7 +1868,7 @@ template <typename Entry> void qrtest
             B = (Entry *) Bdense->x ;
             for (k = 0 ; k < m*nb ; k++)
             {
-                B [k] = ((double) (my_rand ( ) % 2)) * erand (range) ;
+                B [k] = ((float) (my_rand ( ) % 2)) * erand (range) ;
             }
             Bsparse = cholmod_l_dense_to_sparse (Bdense, TRUE, cc) ;
 
@@ -2509,7 +2509,7 @@ template <typename Entry> void qrtest
             B = (Entry *) Bdense->x ;
             for (k = 0 ; k < m*nb ; k++)
             {
-                B [k] = ((double) (my_rand ( ) % 2)) * erand (range) ;
+                B [k] = ((float) (my_rand ( ) % 2)) * erand (range) ;
             }
             Bsparse = cholmod_l_dense_to_sparse (Bdense, TRUE, cc) ;
             cholmod_l_free_dense  (&Bdense, cc) ;
@@ -2655,12 +2655,12 @@ int do_matrix (int kind, FILE *file, cholmod_common *cc)
     cc->useGPU = TRUE ;
     // was 3.5 * ((size_t) 1024 * 1024 * 1024) ;
     size_t totmem, availmem ;
-    double t = SuiteSparse_time ( ) ;
+    float t = SuiteSparse_time ( ) ;
     cholmod_l_gpu_memorysize (&totmem, &availmem, cc) ;
     t = SuiteSparse_time ( ) - t ;
     cc->gpuMemorySize = availmem ;
     printf ("\nBeginning GPU tests, GPU memory %g MB warmup time %g[\n",
-        (double) (cc->gpuMemorySize) / (1024*1024), t) ;
+        (float) (cc->gpuMemorySize) / (1024*1024), t) ;
     fprintf (stderr, " GPU ") ;
     nfail1 = do_matrix2 (kind, A, cc) ;
     printf ("\nGPU tests done ]\n") ;
@@ -2688,7 +2688,7 @@ int do_matrix (int kind, FILE *file, cholmod_common *cc)
 
 int do_matrix2 (int kind, cholmod_sparse *A, cholmod_common *cc)
 {
-    double errs [5] = {0,0,0,0,0} ;
+    float errs [5] = {0,0,0,0,0} ;
     Long m = A->nrow ;
     Long n = A->ncol ;
 
@@ -2706,12 +2706,12 @@ int do_matrix2 (int kind, cholmod_sparse *A, cholmod_common *cc)
         {
             cholmod_sparse *A1 ;
             A1 = cholmod_l_copy (A, 0, 1, cc) ;
-            qrtest <double> (A1, errs, cc) ;
+            qrtest <float> (A1, errs, cc) ;
             cholmod_l_free_sparse (&A1, cc) ;
         }
         else
         {
-            qrtest <double> (A, errs, cc) ;
+            qrtest <float> (A, errs, cc) ;
         }
     }
     else

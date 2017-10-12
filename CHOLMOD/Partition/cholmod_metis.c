@@ -128,7 +128,7 @@ static int metis_memory_ok
     cholmod_common *Common
 )
 {
-    double s ;
+    float s ;
     void *p ;
     size_t metis_guard ;
 
@@ -141,11 +141,11 @@ static int metis_memory_ok
     n  = MAX (1, n) ;
     nz = MAX (0, nz) ;
 
-    /* compute in double, to avoid integer overflow */
-    s = GUESS ((double) nz, (double) n) ;
+    /* compute in float, to avoid integer overflow */
+    s = GUESS ((float) nz, (float) n) ;
     s *= Common->metis_memory ;
 
-    if (s * sizeof (idx_t) >= ((double) Size_max))
+    if (s * sizeof (idx_t) >= ((float) Size_max))
     {
 	/* don't even attempt to malloc such a large block */
 	return (FALSE) ;
@@ -505,7 +505,7 @@ int CHOLMOD(metis)
     cholmod_common *Common
 )
 {
-    double d ;
+    float d ;
     Int *Iperm, *Iwork, *Bp, *Bi ;
     idx_t *Mp, *Mi, *Mperm, *Miperm ;
     cholmod_sparse *B ;
@@ -668,7 +668,7 @@ int CHOLMOD(metis)
 	 * alone onmetis program that comes with METIS.  If a future version of
 	 * METIS fixes this problem, then set Common->metis_nswitch to zero.
 	 */
-	d = ((double) nz) / (((double) n) * ((double) n)) ;
+	d = ((float) nz) / (((float) n) * ((float) n)) ;
 	if (n > (Int) (Common->metis_nswitch) && d > Common->metis_dswitch)
 	{
 	    identity = TRUE ;
@@ -699,7 +699,7 @@ int CHOLMOD(metis)
     {
 #ifdef DUMP_GRAPH
 	/* DUMP_GRAPH */ printf ("Calling METIS_NodeND n "ID" nz "ID""
-	"density %g\n", n, nz, ((double) nz) / (((double) n) * ((double) n)));
+	"density %g\n", n, nz, ((float) nz) / (((float) n) * ((float) n)));
 	dumpgraph (Mp, Mi, n, Common) ;
 #endif
 

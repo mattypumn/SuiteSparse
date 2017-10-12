@@ -138,9 +138,9 @@
 //
 //  This function performs about 3*n+2 flops
 
-inline double spqr_private_larfg (Long n, double *X, cholmod_common *cc)
+inline float spqr_private_larfg (Long n, float *X, cholmod_common *cc)
 {
-    double tau = 0 ;
+    float tau = 0 ;
     BLAS_INT N = n, one = 1 ;
     if (CHECK_BLAS_INT && !EQ (N,n))
     {
@@ -148,7 +148,7 @@ inline double spqr_private_larfg (Long n, double *X, cholmod_common *cc)
     }
     if (!CHECK_BLAS_INT || cc->blas_ok)
     {
-        LAPACK_DLARFG (&N, X, X + 1, &one, &tau) ;
+        LAPACK_SLARFG (&N, X, X + 1, &one, &tau) ;
     }
     return (tau) ;
 }
@@ -204,8 +204,8 @@ template <typename Entry> Entry spqr_private_house  // returns tau
 //  If applied to a single column, this function performs 2*n-1 flops to
 //  compute w, and 2*n+1 to apply it to C, for a total of 4*n flops.
 
-inline void spqr_private_larf (Long m, Long n, double *V, double tau,
-    double *C, Long ldc, double *W, cholmod_common *cc)
+inline void spqr_private_larf (Long m, Long n, float *V, float tau,
+    float *C, Long ldc, float *W, cholmod_common *cc)
 {
     BLAS_INT M = m, N = n, LDC = ldc, one = 1 ;
     char left = 'L' ;
@@ -216,7 +216,7 @@ inline void spqr_private_larf (Long m, Long n, double *V, double tau,
     }
     if (!CHECK_BLAS_INT || cc->blas_ok)
     {
-        LAPACK_DLARF (&left, &M, &N, V, &one, &tau, C, &LDC, W) ;
+        LAPACK_SLARF (&left, &M, &N, V, &one, &tau, C, &LDC, W) ;
     }
 }
 
@@ -283,7 +283,7 @@ template <typename Entry> Long spqr_front
     Long m,             // F is m-by-n with leading dimension m
     Long n,
     Long npiv,          // number of pivot columns
-    double tol,         // a column is flagged as dead if its norm is <= tol
+    float tol,         // a column is flagged as dead if its norm is <= tol
     Long ntol,          // apply tol only to first ntol pivot columns
     Long fchunk,        // block size for compact WY Householder reflections,
                         // treated as 1 if fchunk <= 1
@@ -302,14 +302,14 @@ template <typename Entry> Long spqr_front
     Entry *W,           // size b*n, where b = min (fchunk,n,m)
 
     // input/output
-    double *wscale,
-    double *wssq,
+    float *wscale,
+    float *wssq,
 
     cholmod_common *cc
 )
 {
     Entry tau ;
-    double wk ;
+    float wk ;
     Entry *V ;
     Long k, t, g, g1, nv, k1, k2, i, t0, vzeros, mleft, nleft, vsize, minchunk,
         rank ;
@@ -439,13 +439,13 @@ template <typename Entry> Long spqr_front
                 }
                 if ((*wscale) < wk)
                 {
-                    double rr = (*wscale) / wk ;
+                    float rr = (*wscale) / wk ;
                     (*wssq) = 1 + (*wssq) * rr * rr ;
                     (*wscale) = wk ;
                 }
                 else
                 {
-                    double rr = wk / (*wscale) ;
+                    float rr = wk / (*wscale) ;
                     (*wssq) += rr * rr ;
                 }
             }
@@ -588,34 +588,34 @@ template <typename Entry> Long spqr_front
 
 // =============================================================================
 
-template Long spqr_front <double>
+template Long spqr_front <float>
 (
     // input, not modified
     Long m,             // F is m-by-n with leading dimension m
     Long n,
     Long npiv,          // number of pivot columns
-    double tol,         // a column is flagged as dead if its norm is <= tol
+    float tol,         // a column is flagged as dead if its norm is <= tol
     Long ntol,          // apply tol only to first ntol pivot columns
     Long fchunk,        // block size for compact WY Householder reflections,
                         // treated as 1 if fchunk <= 1 (in which case the
                         // unblocked code is used).
 
     // input/output
-    double *F,          // frontal matrix F of size m-by-n
+    float *F,          // frontal matrix F of size m-by-n
     Long *Stair,        // size n, entries F (Stair[k]:m-1, k) are all zero,
                         // and remain zero on output.
     char *Rdead,        // size npiv; all zero on input.  If k is dead,
                         // Rdead [k] is set to 1
 
     // output, not defined on input
-    double *Tau,        // size n, Householder coefficients
+    float *Tau,        // size n, Householder coefficients
 
     // workspace, undefined on input and output
-    double *W,          // size b*n, where b = min (fchunk,n,m)
+    float *W,          // size b*n, where b = min (fchunk,n,m)
 
     // input/output
-    double *wscale,
-    double *wssq,
+    float *wscale,
+    float *wssq,
 
     cholmod_common *cc
 ) ;
@@ -628,7 +628,7 @@ template Long spqr_front <Complex>
     Long m,             // F is m-by-n with leading dimension m
     Long n,
     Long npiv,          // number of pivot columns
-    double tol,         // a column is flagged as dead if its norm is <= tol
+    float tol,         // a column is flagged as dead if its norm is <= tol
     Long ntol,          // apply tol only to first ntol pivot columns
     Long fchunk,        // block size for compact WY Householder reflections,
                         // treated as 1 if fchunk <= 1 (in which case the
@@ -648,8 +648,8 @@ template Long spqr_front <Complex>
     Complex *W,         // size b*n, where b = min (fchunk,n,m)
 
     // input/output
-    double *wscale,
-    double *wssq,
+    float *wscale,
+    float *wssq,
 
     cholmod_common *cc
 ) ;

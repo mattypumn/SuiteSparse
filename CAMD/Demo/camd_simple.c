@@ -16,7 +16,7 @@ int P [5] ;
 int main (void)
 {
     int k ;
-    (void) camd_order (n, Ap, Ai, P, (double *) NULL, (double *) NULL, C) ;
+    (void) camd_order (n, Ap, Ai, P, (float *) NULL, (float *) NULL, C) ;
     for (k = 0 ; k < n ; k++) printf ("P [%d] = %d\n", k, P [k]) ;
     return (0) ;
 }

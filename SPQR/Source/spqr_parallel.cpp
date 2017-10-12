@@ -97,11 +97,11 @@ template <typename Entry> void spqr_parallel
 
 // =============================================================================
 
-template void spqr_parallel <double>
+template void spqr_parallel <float>
 (
     Long ntasks,
     int nthreads,
-    spqr_blob <double> *Blob
+    spqr_blob <float> *Blob
 ) ;
 
 template void spqr_parallel <Complex>

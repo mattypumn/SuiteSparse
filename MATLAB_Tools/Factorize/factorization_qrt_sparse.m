@@ -7,8 +7,8 @@ classdef factorization_qrt_sparse < factorization
 
         function F = factorization_qrt_sparse (A, fail_if_singular)
             %FACTORIZATION_QRT_SPARSE economy sparse QR: (P*A)*(P*A)'=R'*R
-            if (~isa (A, 'double'))
-                error ('FACTORIZE:wrongtype', 'A must be double') ;
+            if (~isa (A, 'float'))
+                error ('FACTORIZE:wrongtype', 'A must be float') ;
             end
             [m, n] = size (A) ;
             if (m >= n)

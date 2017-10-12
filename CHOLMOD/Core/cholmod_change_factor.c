@@ -35,8 +35,8 @@
  *	    is converted to a sparse matrix via cholmod_factor_to_sparse).
  *
  *	    For the complex case, L->x is stored interleaved with real/imag
- *	    parts, and is of size 2*lnz*sizeof(double).  For the zomplex case,
- *	    L->x is of size lnz*sizeof(double) and holds the real part; L->z
+ *	    parts, and is of size 2*lnz*sizeof(float).  For the zomplex case,
+ *	    L->x is of size lnz*sizeof(float) and holds the real part; L->z
  *	    is the same size and holds the imaginary part.
  *
  *	LL':  This is identical to the LDL' form, except that the non-unit
@@ -52,14 +52,14 @@
  *	in this factor type.
  *
  *	For the complex case, L->x is stored interleaved with real/imag parts,
- *	and is of size 2*L->xsize*sizeof(double).  The zomplex supernodal case
+ *	and is of size 2*L->xsize*sizeof(float).  The zomplex supernodal case
  *	is not supported, since it is not compatible with LAPACK and the BLAS.
  *
  * (4) supernodal numeric:  Always an LL' factorization.  L is non-unit
  *      diagonal.  L->x contains the numerical values of the supernodes, as
  *      described above for the supernodal symbolic factor.
  *	For the complex case, L->x is stored interleaved, and is of size
- *	2*L->xsize*sizeof(double).  The zomplex supernodal case is not
+ *	2*L->xsize*sizeof(float).  The zomplex supernodal case is not
  *	supported, since it is not compatible with LAPACK and the BLAS.
  *
  *      FUTURE WORK: support a supernodal LDL' factor.
@@ -346,8 +346,8 @@ static void any_to_simplicial_symbolic
     /* free all but the symbolic analysis (Perm and ColCount) */
     L->p     = CHOLMOD(free) (n1,  sizeof (Int),      L->p,     Common) ;
     L->i     = CHOLMOD(free) (lnz, sizeof (Int),      L->i,     Common) ;
-    L->x     = CHOLMOD(free) (xs,  e*sizeof (double), L->x,     Common) ;
-    L->z     = CHOLMOD(free) (lnz, sizeof (double),   L->z,     Common) ;
+    L->x     = CHOLMOD(free) (xs,  e*sizeof (float), L->x,     Common) ;
+    L->z     = CHOLMOD(free) (lnz, sizeof (float),   L->z,     Common) ;
     L->nz    = CHOLMOD(free) (n,   sizeof (Int),      L->nz,    Common) ;
     L->next  = CHOLMOD(free) (n2,  sizeof (Int),      L->next,  Common) ;
     L->prev  = CHOLMOD(free) (n2,  sizeof (Int),      L->prev,  Common) ;
@@ -383,7 +383,7 @@ static void ll_super_to_super_symbolic
     ASSERT (L->xtype != CHOLMOD_PATTERN && L->is_super && L->is_ll) ;
     DEBUG (CHOLMOD(dump_factor) (L, "start to super symbolic", Common)) ;
     L->x = CHOLMOD(free) (L->xsize,
-	    (L->xtype == CHOLMOD_COMPLEX ? 2 : 1) * sizeof (double), L->x,
+	    (L->xtype == CHOLMOD_COMPLEX ? 2 : 1) * sizeof (float), L->x,
 	    Common) ;
     L->xtype = CHOLMOD_PATTERN ;
     L->dtype = DTYPE ;
@@ -412,8 +412,8 @@ static void simplicial_symbolic_to_simplicial_numeric
     cholmod_common *Common
 )
 {
-    double grow0, grow1, xlen, xlnz ;
-    double *Lx, *Lz ;
+    float grow0, grow1, xlen, xlnz ;
+    float *Lx, *Lz ;
     Int *Li, *Lp, *Lnz, *ColCount ;
     Int n, grow, grow2, p, j, lnz, len, ok, e ;
 
@@ -501,11 +501,11 @@ static void simplicial_symbolic_to_simplicial_numeric
 	    len = MAX (1, len) ;
 	    len = MIN (len, n-j) ;
 
-	    /* compute len in double to avoid integer overflow */
+	    /* compute len in float to avoid integer overflow */
 	    PRINT1 (("ColCount ["ID"] = "ID"\n", j, len)) ;
 	    if (grow)
 	    {
-		xlen = (double) len ;
+		xlen = (float) len ;
 		xlen = grow1 * xlen + grow2 ;
 		xlen = MIN (xlen, n-j) ;
 		len = (Int) xlen ;
@@ -520,10 +520,10 @@ static void simplicial_symbolic_to_simplicial_numeric
 	    if (grow)
 	    {
 		/* add extra space */
-		xlnz = (double) lnz ;
+		xlnz = (float) lnz ;
 		xlnz *= grow0 ;
 		xlnz = MIN (xlnz, Size_max) ;
-		xlnz = MIN (xlnz, ((double) n * (double) n + (double) n) / 2) ;
+		xlnz = MIN (xlnz, ((float) n * (float) n + (float) n) / 2) ;
 		lnz = (Int) xlnz ;
 	    }
 	}
@@ -548,8 +548,8 @@ static void simplicial_symbolic_to_simplicial_numeric
 	L->prev = CHOLMOD(free) (n+2, sizeof (Int),      L->prev, Common) ;
 	L->next = CHOLMOD(free) (n+2, sizeof (Int),      L->next, Common) ;
 	L->i    = CHOLMOD(free) (lnz, sizeof (Int),      L->i, Common) ;
-	L->x    = CHOLMOD(free) (lnz, e*sizeof (double), L->x, Common) ;
-	L->z    = CHOLMOD(free) (lnz, sizeof (double),   L->z, Common) ;
+	L->x    = CHOLMOD(free) (lnz, e*sizeof (float), L->x, Common) ;
+	L->z    = CHOLMOD(free) (lnz, sizeof (float),   L->z, Common) ;
 	PRINT1 (("cannot realloc simplicial numeric\n")) ;
 	return ;	/* out of memory */
     }
@@ -671,9 +671,9 @@ static void change_simplicial_numeric
     cholmod_common *Common
 )
 {
-    double grow0, grow1, xlen, xlnz ;
+    float grow0, grow1, xlen, xlnz ;
     void *newLi, *newLx, *newLz ;
-    double *Lx, *Lz ;
+    float *Lx, *Lz ;
     Int *Lp, *Li, *Lnz ;
     Int make_monotonic, grow2, n, j, lnz, len, grow, ok, make_ll, make_ldl ;
     size_t nzmax0 ;
@@ -727,10 +727,10 @@ static void change_simplicial_numeric
 	    len = Lnz [j] ;
 	    ASSERT (len >= 1 && len <= n-j) ;
 
-	    /* compute len in double to avoid integer overflow */
+	    /* compute len in float to avoid integer overflow */
 	    if (grow)
 	    {
-		xlen = (double) len ;
+		xlen = (float) len ;
 		xlen = grow1 * xlen + grow2 ;
 		xlen = MIN (xlen, n-j) ;
 		len = (Int) xlen ;
@@ -752,10 +752,10 @@ static void change_simplicial_numeric
 
 	if (grow)
 	{
-	    xlnz = (double) lnz ;
+	    xlnz = (float) lnz ;
 	    xlnz *= grow0 ;
 	    xlnz = MIN (xlnz, Size_max) ;
-	    xlnz = MIN (xlnz, ((double) n * (double) n + (double) n) / 2) ;
+	    xlnz = MIN (xlnz, ((float) n * (float) n + (float) n) / 2) ;
 	    lnz = (Int) xlnz ;
 	}
 
@@ -879,7 +879,7 @@ static void ll_super_to_simplicial_numeric
     }
     ASSERT (lnz >= 0) ;
     PRINT1 (("simplicial lnz = "ID"  to_packed: %d  to_ll: %d L->xsize %g\n",
-		lnz, to_ll, to_packed, (double) L->xsize)) ;
+		lnz, to_ll, to_packed, (float) L->xsize)) ;
 
     Li = CHOLMOD(malloc) (lnz, sizeof (Int), Common) ;
     if (Common->status < CHOLMOD_OK)
@@ -950,12 +950,12 @@ static int super_symbolic_to_ll_super
     cholmod_common *Common
 )
 {
-    double *Lx ;
+    float *Lx ;
     Int wentry = (to_xtype == CHOLMOD_REAL) ? 1 : 2 ;
     PRINT1 (("convert super sym to num\n")) ;
     ASSERT (L->xtype == CHOLMOD_PATTERN && L->is_super) ;
-    Lx = CHOLMOD(malloc) (L->xsize, wentry * sizeof (double), Common) ;
-    PRINT1 (("xsize %g\n", (double) L->xsize)) ;
+    Lx = CHOLMOD(malloc) (L->xsize, wentry * sizeof (float), Common) ;
+    PRINT1 (("xsize %g\n", (float) L->xsize)) ;
     if (Common->status < CHOLMOD_OK)
     {
 	return (FALSE) ;	/* out of memory */

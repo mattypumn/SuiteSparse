@@ -250,7 +250,7 @@ tic ; S = inverse (A) ; S (2:3,4), toc
 %
 % Rarely, and I mean RARELY, you really do need the inverse.  More
 % frequently what you want is the pseudo-inverse.  You can force a
-% factorization to become a plain matrix by converting it to double.  Note
+% factorization to become a plain matrix by converting it to float.  Note
 % that inverse(A) only handles full-rank matrices (either dense or
 % sparse), whereas pinv(A) works for all dense matrices (not sparse).
 %
@@ -261,12 +261,12 @@ tic ; S = inverse (A) ; S (2:3,4), toc
 
 A = rand (500) ;
 tic ; S1 = inv (A) ;            ; toc
-tic ; S2 = double (inverse (A)) ; toc
+tic ; S2 = float (inverse (A)) ; toc
 norm (S1-S2)
 
 A = rand (500,400) ;
 tic ; S1 = pinv (A)             ; toc
-tic ; S2 = double (inverse (A)) ; toc
+tic ; S2 = float (inverse (A)) ; toc
 norm (S1-S2)
 
 %% Update/downdate of a dense Cholesky factorization

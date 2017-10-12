@@ -10,41 +10,41 @@
 int umfpack_di_report_symbolic
 (
     void *Symbolic,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_dl_report_symbolic
 (
     void *Symbolic,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 int umfpack_zi_report_symbolic
 (
     void *Symbolic,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_zl_report_symbolic
 (
     void *Symbolic,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     int status ;
     status = umfpack_di_report_symbolic (Symbolic, Control) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     SuiteSparse_long status ;
     status = umfpack_dl_report_symbolic (Symbolic, Control) ;
 
@@ -52,7 +52,7 @@ complex int Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     int status ;
     status = umfpack_zi_report_symbolic (Symbolic, Control) ;
 
@@ -60,7 +60,7 @@ complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     SuiteSparse_long status ;
     status = umfpack_zl_report_symbolic (Symbolic, Control) ;
 
@@ -92,9 +92,9 @@ Arguments:
 	The Symbolic object, which holds the symbolic factorization computed by
 	umfpack_*_*symbolic.
 
-    double Control [UMFPACK_CONTROL] ;	Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;	Input argument, not modified.
 
-	If a (double *) NULL pointer is passed, then the default control
+	If a (float *) NULL pointer is passed, then the default control
 	settings are used.  Otherwise, the settings are determined from the
 	Control array.  See umfpack_*_defaults on how to fill the Control
 	array with the default settings.  If Control contains NaN's, the

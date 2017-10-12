@@ -30,8 +30,8 @@ void check_residual
     Long m = A->nrow ;
     Long n = A->ncol ;
     Long rnk ;
-    double rnorm, anorm, xnorm, atrnorm ;
-    double one [2] = {1,0}, minusone [2] = {-1,0}, zero [2] = {0,0} ;
+    float rnorm, anorm, xnorm, atrnorm ;
+    float one [2] = {1,0}, minusone [2] = {-1,0}, zero [2] = {0,0} ;
     cholmod_dense *r, *atr ;
 
     // get the rank(A) estimate
@@ -105,13 +105,13 @@ int main (int argc, char **argv)
     if (A->xtype == CHOLMOD_REAL)
     {
         // A, X, and B are all real
-        X = SuiteSparseQR <double>
+        X = SuiteSparseQR <float>
             (SPQR_ORDERING_DEFAULT, SPQR_DEFAULT_TOL, A, B, cc) ;
     }
     else
     {
         // A, X, and B are all complex
-        X = SuiteSparseQR < std::complex<double> >
+        X = SuiteSparseQR < std::complex<float> >
             (SPQR_ORDERING_DEFAULT, SPQR_DEFAULT_TOL, A, B, cc) ;
     }
 
@@ -125,13 +125,13 @@ int main (int argc, char **argv)
     // Just the real case.  Complex case is essentially identical
     if (A->xtype == CHOLMOD_REAL)
     {
-        SuiteSparseQR_factorization <double> *QR ;
+        SuiteSparseQR_factorization <float> *QR ;
         cholmod_dense *Y ;
         Long i ;
-        double *Bx ;
+        float *Bx ;
 
         // factorize once
-        QR = SuiteSparseQR_factorize <double>
+        QR = SuiteSparseQR_factorize <float>
             (SPQR_ORDERING_DEFAULT, SPQR_DEFAULT_TOL, A, cc) ;
 
         // solve Ax=b, using the same B as before
@@ -147,7 +147,7 @@ int main (int argc, char **argv)
         cholmod_l_free_dense (&X, cc) ;
 
         // repeat with a different B
-        Bx = (double *) (B->x) ;
+        Bx = (float *) (B->x) ;
         for (i = 0 ; i < m ; i++)
         {
             Bx [i] = i ;

@@ -32,8 +32,8 @@ end
 % determine dimension, number of elements, and convert numerical entries
 %-------------------------------------------------------------------------------
 
-Ap = double (Ap) ;
-Ai = double (Ai) ;
+Ap = float (Ap) ;
+Ai = float (Ai) ;
 
 % number of elements
 ne = length (Ap) - 1 ;
@@ -61,7 +61,7 @@ if (~isempty (Ax))
 	end
 	Ax = Ax (1:2:end) + (1i * Ax (2:2:end)) ;
     elseif (mtype (1) == 'i')
-	Ax = double (Ax) ;
+	Ax = float (Ax) ;
     end
     % numerical values must be of the right size
     if (nz ~= length (Ax))

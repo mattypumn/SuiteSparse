@@ -19,7 +19,7 @@ template <typename Entry> void spqr_kernel // _worker
 
     spqr_symbolic *          QRsym = Blob->QRsym ;
     spqr_numeric <Entry> *   QRnum = Blob->QRnum ;
-    double                   tol = Blob->tol ;
+    float                   tol = Blob->tol ;
     Long                     ntol = Blob->ntol ;
     Long                     fchunk = Blob->fchunk ;
     spqr_work <Entry> *      Work = Blob->Work ;
@@ -124,8 +124,8 @@ template <typename Entry> void spqr_kernel // _worker
     Long    maxfrank = Work [stack].maxfrank ;
 
     // for keeping track of norm(w) for dead column 2-norms
-    double wscale = Work [stack].wscale ;
-    double wssq   = Work [stack].wssq   ;
+    float wscale = Work [stack].wscale ;
+    float wssq   = Work [stack].wssq   ;
 
     // -------------------------------------------------------------------------
     // factorize all the fronts in this task
@@ -336,10 +336,10 @@ template <typename Entry> void spqr_kernel // _worker
 
 // =============================================================================
 
-template void spqr_kernel <double>
+template void spqr_kernel <float>
 (
     Long task,
-    spqr_blob <double> *Blob
+    spqr_blob <float> *Blob
 ) ;
 
 template void spqr_kernel <Complex>

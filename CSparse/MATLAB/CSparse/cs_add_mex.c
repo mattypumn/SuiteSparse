@@ -8,7 +8,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double alpha, beta ;
+    float alpha, beta ;
     cs Amatrix, Bmatrix, *A, *B, *C, *D ;
     if (nargout > 1 || nargin < 2 || nargin > 4)
     {
@@ -20,7 +20,7 @@ void mexFunction
     beta  = (nargin < 4) ? 1 : mxGetScalar (pargin [3]) ;   /* get beta */
     C = cs_add (A,B,alpha,beta) ;       /* C = alpha*A + beta *B */
     cs_dropzeros (C) ;                  /* drop zeros */
-    D = cs_transpose (C, 1) ;           /* sort result via double transpose */
+    D = cs_transpose (C, 1) ;           /* sort result via float transpose */
     cs_spfree (C) ;
     C = cs_transpose (D, 1) ;
     cs_spfree (D) ;

@@ -9,53 +9,53 @@
 
 int umfpack_di_get_determinant
 (
-    double *Mx,
-    double *Ex,
+    float *Mx,
+    float *Ex,
     void *NumericHandle,
-    double User_Info [UMFPACK_INFO]
+    float User_Info [UMFPACK_INFO]
 ) ;
 
 SuiteSparse_long umfpack_dl_get_determinant
 (
-    double *Mx,
-    double *Ex,
+    float *Mx,
+    float *Ex,
     void *NumericHandle,
-    double User_Info [UMFPACK_INFO]
+    float User_Info [UMFPACK_INFO]
 ) ;
 
 int umfpack_zi_get_determinant
 (
-    double *Mx,
-    double *Mz,
-    double *Ex,
+    float *Mx,
+    float *Mz,
+    float *Ex,
     void *NumericHandle,
-    double User_Info [UMFPACK_INFO]
+    float User_Info [UMFPACK_INFO]
 ) ;
 
 SuiteSparse_long umfpack_zl_get_determinant
 (
-    double *Mx,
-    double *Mz,
-    double *Ex,
+    float *Mx,
+    float *Mz,
+    float *Ex,
     void *NumericHandle,
-    double User_Info [UMFPACK_INFO]
+    float User_Info [UMFPACK_INFO]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
     int status ;
-    double Mx, Ex, Info [UMFPACK_INFO] ;
+    float Mx, Ex, Info [UMFPACK_INFO] ;
     status = umfpack_di_get_determinant (&Mx, &Ex, Numeric, Info) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
     SuiteSparse_long status ;
-    double Mx, Ex, Info [UMFPACK_INFO] ;
+    float Mx, Ex, Info [UMFPACK_INFO] ;
     status = umfpack_dl_get_determinant (&Mx, &Ex, Numeric, Info) ;
 
 complex int Syntax:
@@ -63,7 +63,7 @@ complex int Syntax:
     #include "umfpack.h"
     void *Numeric ;
     int status ;
-    double Mx, Mz, Ex, Info [UMFPACK_INFO] ;
+    float Mx, Mz, Ex, Info [UMFPACK_INFO] ;
     status = umfpack_zi_get_determinant (&Mx, &Mz, &Ex, Numeric, Info) ;
 
 complex int Syntax:
@@ -71,7 +71,7 @@ complex int Syntax:
     #include "umfpack.h"
     void *Numeric ;
     SuiteSparse_long status ;
-    double *Mx, *Mz, *Ex, Info [UMFPACK_INFO] ;
+    float *Mx, *Mz, *Ex, Info [UMFPACK_INFO] ;
     status = umfpack_zl_get_determinant (&Mx, &Mz, &Ex, Numeric, Info) ;
 
 packed complex int Syntax:
@@ -92,12 +92,12 @@ Purpose:
     and exponent, and the parts returned separately, in which case Ex is not
     NULL.  The actual determinant is then given by
 
-      double det ;
+      float det ;
       det = Mx * pow (10.0, Ex) ;
 
-    for the double case, or
+    for the float case, or
 
-      double det [2] ;
+      float det [2] ;
       det [0] = Mx * pow (10.0, Ex) ;	    // real part
       det [1] = Mz * pow (10.0, Ex) ;	    // imaginary part
 
@@ -122,9 +122,9 @@ Returns:
 
 Arguments:
 
-    double *Mx ;   Output argument (array of size 1, or size 2 if Mz is NULL)
-    double *Mz ;   Output argument (optional)
-    double *Ex ;   Output argument (optional)
+    float *Mx ;   Output argument (array of size 1, or size 2 if Mz is NULL)
+    float *Mz ;   Output argument (optional)
+    float *Ex ;   Output argument (optional)
 
         The determinant returned in mantissa/exponent form, as discussed above.
 	If Mz is NULL, then both the original and imaginary parts will be
@@ -137,10 +137,10 @@ Arguments:
 	Numeric must point to a valid Numeric object, computed by
 	umfpack_*_numeric.
 
-    double Info [UMFPACK_INFO] ;	Output argument.
+    float Info [UMFPACK_INFO] ;	Output argument.
 
 	Contains information about the calculation of the determinant. If a
-	(double *) NULL pointer is passed, then no statistics are returned in
+	(float *) NULL pointer is passed, then no statistics are returned in
 	Info (this is not an error condition).  The following statistics are
 	computed in umfpack_*_determinant:
 

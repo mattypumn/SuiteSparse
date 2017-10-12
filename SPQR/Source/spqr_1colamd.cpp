@@ -20,7 +20,7 @@ template <typename Entry> int spqr_1colamd  // TRUE if OK, FALSE otherwise
     // inputs, not modified
     int ordering,           // all available, except 0:fixed and 3:given
                             // treated as 1:natural
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     cholmod_sparse *A,      // m-by-n sparse matrix
 
@@ -744,12 +744,12 @@ template <typename Entry> int spqr_1colamd  // TRUE if OK, FALSE otherwise
 
 // =============================================================================
 
-template int spqr_1colamd <double>
+template int spqr_1colamd <float>
 (
     // inputs, not modified
     int ordering,           // all available, except 0:fixed and 3:given
                             // treated as 1:natural
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     cholmod_sparse *A,      // m-by-n sparse matrix
 
@@ -783,7 +783,7 @@ template int spqr_1colamd <Complex>
     // inputs, not modified
     int ordering,           // all available, except 0:fixed and 3:given
                             // treated as 1:natural
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     cholmod_sparse *A,      // m-by-n sparse matrix
 

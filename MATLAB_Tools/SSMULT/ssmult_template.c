@@ -97,7 +97,7 @@
 {
 
 #ifdef ACOMPLEX
-    double azik ;
+    float azik ;
 #endif
 
     /* ---------------------------------------------------------------------- */
@@ -162,10 +162,10 @@
     if (!A_is_diagonal)
     {
 #if defined (ACOMPLEX) || defined (BCOMPLEX)
-        W = mxMalloc (Anrow * 2 * sizeof (double)) ;
+        W = mxMalloc (Anrow * 2 * sizeof (float)) ;
         Wz = W + Anrow ;
 #else
-        W = mxMalloc (Anrow * sizeof (double)) ;
+        W = mxMalloc (Anrow * sizeof (float)) ;
 #endif
     }
 #endif
@@ -370,7 +370,7 @@
 
 #ifndef UNSORTED
                 /* Sort the row indices in C(:,j).  Use Cx as Int workspace.
-                 * This assumes sizeof (Int) < sizeof (double). If blen <= 1,
+                 * This assumes sizeof (Int) < sizeof (float). If blen <= 1,
                  * or if subsequent entries in B(:,j) appended entries onto C,
                  * there is no need to sort C(:,j), assuming A is sorted. */
                 if (needs_sorting)

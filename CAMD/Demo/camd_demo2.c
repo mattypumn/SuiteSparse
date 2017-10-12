@@ -55,7 +55,7 @@ int main (void)
 	/* column 23: */    12, 11, 12, 23 } ;
 
     int P [24], Pinv [24], i, j, k, jnew, p, inew, result ;
-    double Control [CAMD_CONTROL], Info [CAMD_INFO] ;
+    float Control [CAMD_CONTROL], Info [CAMD_INFO] ;
     char A [24][24] ;
     int C [ ] = { 3, 0, 4, 0, 1, 1, 2, 2, 2, 2, 3, 4, 5, 5, 3, 4, 5, 2,
 		    8, 10, 4, 2, 2, 0 } ;

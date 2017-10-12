@@ -47,7 +47,7 @@ PRIVATE Int report_U
 GLOBAL Int UMFPACK_report_numeric
 (
     void *NumericHandle,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 )
 {
     Int prl, *W, nn, n_row, n_col, n_inner, num_fixed_size, numeric_size,
@@ -195,7 +195,7 @@ GLOBAL Int UMFPACK_report_numeric
 	    PRINTF4 (("\nScale factors applied via division\n")) ;
 	}
 	PRINTF4 (("Scale factors, Rs: ")) ;
-	(void) UMF_report_vector (n_row, Numeric->Rs, (double *) NULL,
+	(void) UMF_report_vector (n_row, Numeric->Rs, (float *) NULL,
 	    prl, FALSE, TRUE) ;
     }
     else
@@ -233,7 +233,7 @@ GLOBAL Int UMFPACK_report_numeric
 
     /* The diagonal of U is in "merged" (Entry) form, not "split" form. */
     PRINTF4 (("\ndiagonal of U: ")) ;
-    (void) UMF_report_vector (n_inner, (double *) Numeric->D, (double *) NULL,
+    (void) UMF_report_vector (n_inner, (float *) Numeric->D, (float *) NULL,
 	prl, FALSE, FALSE) ;
 
     (void) UMF_free ((void *) W) ;

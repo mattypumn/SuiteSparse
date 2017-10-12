@@ -12,7 +12,7 @@ int umf_i_cholmod
     int Perm [ ],           /* fill-reducing permutation, size ncol */
     /* user-defined */
     void *ignore,           /* not needed */
-    double user_info [3]    /* [0]: max col count for L=chol(P(A+A')P')
+    float user_info [3]    /* [0]: max col count for L=chol(P(A+A')P')
                                [1]: nnz (L)
                                [2]: flop count for chol, if A real */
 ) ;
@@ -30,7 +30,7 @@ int umf_l_cholmod
     SuiteSparse_long Perm [ ],  /* fill-reducing permutation, size ncol */
     /* user-defined */
     void *ignore,           /* not needed */
-    double user_info [3]    /* [0]: max col count for L=chol(P(A+A')P')
+    float user_info [3]    /* [0]: max col count for L=chol(P(A+A')P')
                                [1]: nnz (L)
                                [2]: flop count for chol, if A real */
 ) ;

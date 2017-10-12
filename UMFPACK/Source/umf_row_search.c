@@ -48,7 +48,7 @@ GLOBAL Int UMF_row_search
     /* local variables */
     /* ---------------------------------------------------------------------- */
 
-    double maxval, toler, toler2, value, pivot [2] ;
+    float maxval, toler, toler2, value, pivot [2] ;
     Int i, row, deg, col, *Frpos, fnrows, *E, j, ncols, *Cols, *Rows,
 	e, f, Wrpflag, *Fcpos, fncols, tpi, max_rdeg, nans_in_col, was_offdiag,
 	diag_row, prefer_diagonal, *Wrp, found, *Diagonal_map ;
@@ -177,7 +177,7 @@ GLOBAL Int UMF_row_search
 	    i = Pos [diag_row] ;
 	    if (i >= 0)
 	    {
-		double a ;
+		float a ;
 		ASSERT (i < cdeg1) ;
 		ASSERT (diag_row == Pattern [i]) ;
 
@@ -214,7 +214,7 @@ GLOBAL Int UMF_row_search
 		/* this is a column in the front */
 		for (i = 0 ; i < cdeg0 ; i++)
 		{
-		    double a ;
+		    float a ;
 		    APPROX_ABS (a, Wxy [i]) ;
 		    ASSERT (!SCALAR_IS_NAN (a)) ;
 		    ASSERT (!SCALAR_IS_NAN (toler)) ;
@@ -247,7 +247,7 @@ GLOBAL Int UMF_row_search
 		}
 		for ( ; i < cdeg1 ; i++)
 		{
-		    double a ;
+		    float a ;
 		    APPROX_ABS (a, Wxy [i]) ;
 		    ASSERT (!SCALAR_IS_NAN (a)) ;
 		    ASSERT (!SCALAR_IS_NAN (toler)) ;
@@ -285,7 +285,7 @@ GLOBAL Int UMF_row_search
 		/* this column is not in the front */
 		for (i = 0 ; i < cdeg1 ; i++)
 		{
-		    double a ;
+		    float a ;
 		    APPROX_ABS (a, Wxy [i]) ;
 		    ASSERT (!SCALAR_IS_NAN (a)) ;
 		    ASSERT (!SCALAR_IS_NAN (toler)) ;

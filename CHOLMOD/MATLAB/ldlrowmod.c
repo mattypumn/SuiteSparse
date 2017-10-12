@@ -46,8 +46,8 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double dummy = 0 ;
-    double *Lx, *Lx2 ;
+    float dummy = 0 ;
+    float *Lx, *Lx2 ;
     Long *Li, *Lp, *Li2, *Lp2, *Lnz2, *ColCount ;
     cholmod_sparse Cmatrix, *C, *Lsparse ;
     cholmod_factor *L ;

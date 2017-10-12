@@ -41,7 +41,7 @@ void mexFunction
     cholmod_sparse *A = NULL, *Z = NULL ;
     cholmod_common Common, *cm ;
     Long *Ap = NULL, *Ai ;
-    double *Ax, *Az = NULL ;
+    float *Ax, *Az = NULL ;
     char filename [MAXLEN] ;
     Long nz, k, is_complex = FALSE, nrow = 0, ncol = 0, allzero ;
     int mtype ;
@@ -133,7 +133,7 @@ void mexFunction
     {
 	if (mtype == CHOLMOD_SPARSE)
 	{
-	    /* A is a sparse real/zomplex double matrix */
+	    /* A is a sparse real/zomplex float matrix */
 	    Z = sputil_extract_zeros (A, cm) ;
 	}
 	else

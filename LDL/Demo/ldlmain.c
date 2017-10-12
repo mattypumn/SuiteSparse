@@ -111,10 +111,10 @@ int main (void)
     /* ---------------------------------------------------------------------- */
 
 #ifdef USE_AMD
-    double Info [AMD_INFO] ;
+    float Info [AMD_INFO] ;
 #endif
-    double r, rnorm, flops, maxrnorm = 0. ;
-    double *Ax, *Lx, *B, *D, *X, *Y ;
+    float r, rnorm, flops, maxrnorm = 0. ;
+    float *Ax, *Lx, *B, *D, *X, *Y ;
     LDL_int matrix, *Ai, *Ap, *Li, *Lp, *P, *Pinv, *Perm, *PermInv, n, i, j, p,
 	nz, *Flag, *Pattern, *Lnz, *Parent, trial, lnz, d, jumbled, ok ;
     FILE *f ;
@@ -175,7 +175,7 @@ int main (void)
         {
             nz = Ap [n] ;
             ALLOC_MEMORY (Ai, LDL_int, nz) ;
-            ALLOC_MEMORY (Ax, double, nz) ;
+            ALLOC_MEMORY (Ax, float, nz) ;
         }
 	for (p = 0 ; ok && p < nz ; p++)
 	{
@@ -183,7 +183,7 @@ int main (void)
 	}
 	for (p = 0 ; ok && p < nz ; p++)
 	{
-	    ok = ok && (fscanf (f, "%lg", &Ax [p]) == 1) ;
+	    ok = ok && (fscanf (f, "%g", &Ax [p]) == 1) ;
 	}
 	for (j = 0 ; ok && j < n  ; j++)
 	{
@@ -210,7 +210,7 @@ int main (void)
 	    FREE_MEMORY (P, LDL_int) ;
 	    FREE_MEMORY (Ap, LDL_int) ;
 	    FREE_MEMORY (Ai, LDL_int) ;
-	    FREE_MEMORY (Ax, double) ;
+	    FREE_MEMORY (Ax, float) ;
 	    FREE_MEMORY (Flag, LDL_int) ;
 	    continue ;
 	}
@@ -226,22 +226,22 @@ int main (void)
 
 #ifdef LDL_LONG
 
-	if (amd_l_order (n, Ap, Ai, P, (double *) NULL, Info) < AMD_OK)
+	if (amd_l_order (n, Ap, Ai, P, (float *) NULL, Info) < AMD_OK)
 	{
 	    printf (PROGRAM ": call to AMD failed\n") ;
 	    EXIT_ERROR ;
 	}
-	amd_l_control ((double *) NULL) ;
+	amd_l_control ((float *) NULL) ;
 	amd_l_info (Info) ;
 
 #else
 
-	if (amd_order (n, Ap, Ai, P, (double *) NULL, Info) < AMD_OK)
+	if (amd_order (n, Ap, Ai, P, (float *) NULL, Info) < AMD_OK)
 	{
 	    printf (PROGRAM ": call to AMD failed\n") ;
 	    EXIT_ERROR ;
 	}
-	amd_control ((double *) NULL) ;
+	amd_control ((float *) NULL) ;
 	amd_info (Info) ;
 
 #endif
@@ -252,14 +252,14 @@ int main (void)
 	/* ------------------------------------------------------------------ */
 
 	ALLOC_MEMORY (Pinv, LDL_int, n) ;
-	ALLOC_MEMORY (Y, double, n) ;
+	ALLOC_MEMORY (Y, float, n) ;
 	ALLOC_MEMORY (Pattern, LDL_int, n) ;
 	ALLOC_MEMORY (Lnz, LDL_int, n) ;
 	ALLOC_MEMORY (Lp, LDL_int, n+1) ;
 	ALLOC_MEMORY (Parent, LDL_int, n) ;
-	ALLOC_MEMORY (D, double, n) ;
-	ALLOC_MEMORY (B, double, n) ;
-	ALLOC_MEMORY (X, double, n) ;
+	ALLOC_MEMORY (D, float, n) ;
+	ALLOC_MEMORY (B, float, n) ;
+	ALLOC_MEMORY (X, float, n) ;
 
 	/* ------------------------------------------------------------------ */
 	/* factorize twice, with and without permutation */
@@ -292,7 +292,7 @@ int main (void)
 	    flops = 0 ;
 	    for (j = 0 ; j < n ; j++)
 	    {
-		flops += ((double) Lnz [j]) * (Lnz [j] + 2) ;
+		flops += ((float) Lnz [j]) * (Lnz [j] + 2) ;
 	    }
 	    printf ("Nz in L: "LDL_ID"  Flop count: %g\n", lnz, flops) ;
 
@@ -301,7 +301,7 @@ int main (void)
 	    /* -------------------------------------------------------------- */
 
 	    ALLOC_MEMORY (Li, LDL_int, lnz) ;
-	    ALLOC_MEMORY (Lx, double, lnz) ;
+	    ALLOC_MEMORY (Lx, float, lnz) ;
 
 	    /* -------------------------------------------------------------- */
 	    /* numeric factorization to get Li, Lx, and D */
@@ -323,7 +323,7 @@ int main (void)
 		/* construct the right-hand-side, B */
 		for (i = 0 ; i < n ; i++)
 		{
-		    B [i] = 1 + ((double) i) / 100 ;
+		    B [i] = 1 + ((float) i) / 100 ;
 		}
 
 		/* solve Ax=b */
@@ -377,7 +377,7 @@ int main (void)
 	    /* -------------------------------------------------------------- */
 
 	    FREE_MEMORY (Li, LDL_int) ;
-	    FREE_MEMORY (Lx, double) ;
+	    FREE_MEMORY (Lx, float) ;
 
 	}
 
@@ -385,17 +385,17 @@ int main (void)
 	FREE_MEMORY (P, LDL_int) ;
 	FREE_MEMORY (Ap, LDL_int) ;
 	FREE_MEMORY (Ai, LDL_int) ;
-	FREE_MEMORY (Ax, double) ;
+	FREE_MEMORY (Ax, float) ;
 	FREE_MEMORY (Pinv, LDL_int) ;
-	FREE_MEMORY (Y, double) ;
+	FREE_MEMORY (Y, float) ;
 	FREE_MEMORY (Flag, LDL_int) ;
 	FREE_MEMORY (Pattern, LDL_int) ;
 	FREE_MEMORY (Lnz, LDL_int) ;
 	FREE_MEMORY (Lp, LDL_int) ;
 	FREE_MEMORY (Parent, LDL_int) ;
-	FREE_MEMORY (D, double) ;
-	FREE_MEMORY (B, double) ;
-	FREE_MEMORY (X, double) ;
+	FREE_MEMORY (D, float) ;
+	FREE_MEMORY (B, float) ;
+	FREE_MEMORY (X, float) ;
     }
 
     printf ("\nLargest residual during all tests: %g\n", maxrnorm) ;

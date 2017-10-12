@@ -12,12 +12,12 @@ int umfpack_di_solve
     int sys,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ],
-    double X [ ],
-    const double B [ ],
+    const float Ax [ ],
+    float X [ ],
+    const float B [ ],
     void *Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 SuiteSparse_long umfpack_dl_solve
@@ -25,12 +25,12 @@ SuiteSparse_long umfpack_dl_solve
     SuiteSparse_long sys,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ],
-    double X [ ],
-    const double B [ ],
+    const float Ax [ ],
+    float X [ ],
+    const float B [ ],
     void *Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 int umfpack_zi_solve
@@ -38,12 +38,12 @@ int umfpack_zi_solve
     int sys,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ], const double Az [ ],
-    double Xx [ ],	 double Xz [ ],
-    const double Bx [ ], const double Bz [ ],
+    const float Ax [ ], const float Az [ ],
+    float Xx [ ],	 float Xz [ ],
+    const float Bx [ ], const float Bz [ ],
     void *Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 SuiteSparse_long umfpack_zl_solve
@@ -51,29 +51,29 @@ SuiteSparse_long umfpack_zl_solve
     SuiteSparse_long sys,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ], const double Az [ ],
-    double Xx [ ],	 double Xz [ ],
-    const double Bx [ ], const double Bz [ ],
+    const float Ax [ ], const float Az [ ],
+    float Xx [ ],	 float Xz [ ],
+    const float Bx [ ], const float Bz [ ],
     void *Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
     int status, *Ap, *Ai, sys ;
-    double *B, *X, *Ax, Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
+    float *B, *X, *Ax, Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
     status = umfpack_di_solve (sys, Ap, Ai, Ax, X, B, Numeric, Control, Info) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
     SuiteSparse_long status, *Ap, *Ai, sys ;
-    double *B, *X, *Ax, Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
+    float *B, *X, *Ax, Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
     status = umfpack_dl_solve (sys, Ap, Ai, Ax, X, B, Numeric, Control, Info) ;
 
 complex int Syntax:
@@ -81,7 +81,7 @@ complex int Syntax:
     #include "umfpack.h"
     void *Numeric ;
     int status, *Ap, *Ai, sys ;
-    double *Bx, *Bz, *Xx, *Xz, *Ax, *Az, Info [UMFPACK_INFO],
+    float *Bx, *Bz, *Xx, *Xz, *Ax, *Az, Info [UMFPACK_INFO],
 	Control [UMFPACK_CONTROL] ;
     status = umfpack_zi_solve (sys, Ap, Ai, Ax, Az, Xx, Xz, Bx, Bz, Numeric,
 	Control, Info) ;
@@ -91,7 +91,7 @@ complex SuiteSparse_long Syntax:
     #include "umfpack.h"
     void *Numeric ;
     SuiteSparse_long status, *Ap, *Ai, sys ;
-    double *Bx, *Bz, *Xx, *Xz, *Ax, *Az, Info [UMFPACK_INFO],
+    float *Bx, *Bz, *Xx, *Xz, *Ax, *Az, Info [UMFPACK_INFO],
 	Control [UMFPACK_CONTROL] ;
     status = umfpack_zl_solve (sys, Ap, Ai, Ax, Az, Xx, Xz, Bx, Bz, Numeric,
 	Control, Info) ;
@@ -149,9 +149,9 @@ Arguments:
 
     Int Ap [n+1] ;	Input argument, not modified.
     Int Ai [nz] ;	Input argument, not modified.
-    double Ax [nz] ;	Input argument, not modified.
+    float Ax [nz] ;	Input argument, not modified.
 			Size 2*nz for packed complex case.
-    double Az [nz] ;	Input argument, not modified, for complex versions.
+    float Az [nz] ;	Input argument, not modified, for complex versions.
 
 	If iterative refinement is requested (Control [UMFPACK_IRSTEP] >= 1,
 	Ax=b, A'x=b, or A.'x=b is being solved, and A is nonsingular), then
@@ -168,11 +168,11 @@ Arguments:
 	and imaginary parts are contained in Ax[0..2*nz-1], with Ax[2*k]
 	and Ax[2*k+1] being the real and imaginary part of the kth entry.
 
-    double X [n] ;	Output argument.
+    float X [n] ;	Output argument.
     or:
-    double Xx [n] ;	Output argument, real part
+    float Xx [n] ;	Output argument, real part
 			Size 2*n for packed complex case.
-    double Xz [n] ;	Output argument, imaginary part.
+    float Xz [n] ;	Output argument, imaginary part.
 
 	The solution to the linear system, where n = n_row = n_col is the
 	dimension of the matrices A, L, and U.
@@ -181,11 +181,11 @@ Arguments:
 	and imaginary parts are returned in Xx[0..2*n-1], with Xx[2*k] and
 	Xx[2*k+1] being the real and imaginary part of the kth entry.
 
-    double B [n] ;	Input argument, not modified.
+    float B [n] ;	Input argument, not modified.
     or:
-    double Bx [n] ;	Input argument, not modified, real part.
+    float Bx [n] ;	Input argument, not modified, real part.
 			Size 2*n for packed complex case.
-    double Bz [n] ;	Input argument, not modified, imaginary part.
+    float Bz [n] ;	Input argument, not modified, imaginary part.
 
 	The right-hand side vector, b, stored as a conventional array of size n
 	(or two arrays of size n for complex versions).  This routine does not
@@ -201,9 +201,9 @@ Arguments:
 	Numeric must point to a valid Numeric object, computed by
 	umfpack_*_numeric.
 
-    double Control [UMFPACK_CONTROL] ;	Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;	Input argument, not modified.
 
-	If a (double *) NULL pointer is passed, then the default control
+	If a (float *) NULL pointer is passed, then the default control
 	settings are used.  Otherwise, the settings are determined from the
 	Control array.  See umfpack_*_defaults on how to fill the Control
 	array with the default settings.  If Control contains NaN's, the
@@ -215,10 +215,10 @@ Arguments:
 	    if A is singular, then the Ap, Ai, Ax, and Az arguments are not
 	    accessed.  Default: 2.
 
-    double Info [UMFPACK_INFO] ;	Output argument.
+    float Info [UMFPACK_INFO] ;	Output argument.
 
 	Contains statistics about the solution factorization.  If a
-	(double *) NULL pointer is passed, then no statistics are returned in
+	(float *) NULL pointer is passed, then no statistics are returned in
 	Info (this is not an error condition).  The following statistics are
 	computed in umfpack_*_solve:
 

@@ -9,7 +9,7 @@ void mexFunction
 )
 {
     csi n, k, *p ;
-    double *x, *b, *xx ;
+    float *x, *b, *xx ;
 
     if (nargout > 1 || nargin != 2)
     {

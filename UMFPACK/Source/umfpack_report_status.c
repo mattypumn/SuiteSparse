@@ -16,7 +16,7 @@
 
 GLOBAL void UMFPACK_report_status
 (
-    const double Control [UMFPACK_CONTROL],
+    const float Control [UMFPACK_CONTROL],
     Int status
 )
 {

@@ -3,7 +3,7 @@
 cs *cs_compress (const cs *T)
 {
     csi m, n, nz, p, k, *Cp, *Ci, *w, *Ti, *Tj ;
-    double *Cx, *Tx ;
+    float *Cx, *Tx ;
     cs *C ;
     if (!CS_TRIPLET (T)) return (NULL) ;                /* check inputs */
     m = T->m ; n = T->n ; Ti = T->i ; Tj = T->p ; Tx = T->x ; nz = T->nz ;

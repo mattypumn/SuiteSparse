@@ -43,13 +43,13 @@ sparse2(s)
 nzmax(ans)  %#ok
 whos
 
-fprintf ('---- double (using the MATLAB "sparse"):\n') ;
+fprintf ('---- float (using the MATLAB "sparse"):\n') ;
 x = rand(4)								    %#ok
 sparse (x > .5)								    %#ok
 nzmax(ans)  %#ok
 whos
 
-fprintf ('---- double (using sparse2):\n') ;
+fprintf ('---- float (using sparse2):\n') ;
 sparse2 (x > .5)							    %#ok
 nzmax(ans)  %#ok
 whos

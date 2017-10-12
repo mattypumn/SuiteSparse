@@ -39,7 +39,7 @@
 #define TOL 1e-3
 
 #define INULL ((Int *) NULL)
-#define DNULL ((double *) NULL)
+#define DNULL ((float *) NULL)
 
 #ifdef COMPLEX
 #define CARG(real,imag) real,imag
@@ -52,7 +52,7 @@
 
 int check_tol ;
 
-static double divide (double x, double y)
+static float divide (float x, float y)
 {
     return (x/y) ;
 }
@@ -70,7 +70,7 @@ int my_ordering
     Int *Ai,
     Int *P,         /* size ncol */
     void *params,
-    double *info
+    float *info
 )
 {
     /* return a valid permutation for use by UMFPACK ... using AMD/COLAMD */
@@ -86,7 +86,7 @@ int my_bad_ordering
     Int *Ai,
     Int *P,         /* size ncol */
     void *params,
-    double *info
+    float *info
 )
 {
     /* return an invalid permutation, for testing */
@@ -102,7 +102,7 @@ int my_bad_ordering
 
 /* the inverse of UMFPACK_DENSE_COUNT: given a col count, find alpha */
 
-static double inv_umfpack_dense (Int d, Int n)
+static float inv_umfpack_dense (Int d, Int n)
 {
     if (d <= 16)
     {
@@ -110,7 +110,7 @@ static double inv_umfpack_dense (Int d, Int n)
     }
     else
     {
-	return (((double) d) / (16 * sqrt ((double) n))) ;
+	return (((float) d) / (16 * sqrt ((float) n))) ;
     }
 }
 
@@ -118,9 +118,9 @@ static double inv_umfpack_dense (Int d, Int n)
 /* ========================================================================== */
 
 
-static void dump_mat (char *name, Int m, Int n, Int Ap [ ], Int Ai [ ], double Ax [ ]
+static void dump_mat (char *name, Int m, Int n, Int Ap [ ], Int Ai [ ], float Ax [ ]
 #ifdef COMPLEX
-	, double Az [ ]
+	, float Az [ ]
 #endif
 	)
 {
@@ -147,7 +147,7 @@ static void dump_mat (char *name, Int m, Int n, Int Ap [ ], Int Ai [ ], double A
 
 /* ========================================================================== */
 
-static void dump_vec (char *name, Int n, double X [ ], double Xz[ ])
+static void dump_vec (char *name, Int n, float X [ ], float Xz[ ])
 {
     Int j ;
     printf ("\n%s = [\n", name) ;
@@ -178,7 +178,7 @@ static void dump_perm (char *name, Int n, Int P [ ])
 /* error: display message and exit */
 /* ========================================================================== */
 
-static void error (char *s, double x)
+static void error (char *s, float x)
 {
     printf ("TEST FAILURE: %s %g   ", s, x) ;
 
@@ -194,23 +194,23 @@ static void error (char *s, double x)
 /* resid: compute the (possibly permuted) residual.  return maxnorm of resid */
 /* ========================================================================== */
 
-static double resid
+static float resid
 (
     Int n,
     Int Ap [ ],
     Int Ai [ ],
-    double Ax [ ],	double Az [ ],
-    double x [ ],	double xz [ ],
-    double b [ ],	double bz [ ],
-    double r [ ],	double rz [ ],
+    float Ax [ ],	float Az [ ],
+    float x [ ],	float xz [ ],
+    float b [ ],	float bz [ ],
+    float r [ ],	float rz [ ],
     Int transpose,
     Int P [ ],
     Int Q [ ],
-    double Wx [ ]	/* size 2*n double workspace */
+    float Wx [ ]	/* size 2*n float workspace */
 )
 {
     Int i, j, k, p ;
-    double norm, ra, *wx, *wz ;
+    float norm, ra, *wx, *wz ;
     Entry bb, xx, aa ;
 
     wx = Wx ;
@@ -441,14 +441,14 @@ static Int irand (Int n)
 }
 
 /* ========================================================================== */
-/* xrand:  return a random double, > 0 and <= 1 */
+/* xrand:  return a random float, > 0 and <= 1 */
 /* ========================================================================== */
 
 /* rand ( ) returns an Integer in the range 0 to RAND_MAX */
 
-static double xrand ( )
+static float xrand ( )
 {
-    return ((1.0 + (double) rand ( )) / (1.0 + (double) RAND_MAX)) ;
+    return ((1.0 + (float) rand ( )) / (1.0 + (float) RAND_MAX)) ;
 }
 
 
@@ -477,35 +477,35 @@ static void randperm (Int n, Int P [ ])
 /* do_solvers:  test Ax=b, etc */
 /* ========================================================================== */
 
-static double do_solvers
+static float do_solvers
 (
     Int n_row,
     Int n_col,
     Int Ap [ ],
     Int Ai [ ],
-    double Ax [ ],		double Az [ ],
-    double b [ ],		double bz [ ],
-    double Control [ ],
-    double Info [ ],
+    float Ax [ ],		float Az [ ],
+    float b [ ],		float bz [ ],
+    float Control [ ],
+    float Info [ ],
     void *Numeric,
     Int Lp [ ],
     Int Li [ ],
-    double Lx [ ],		double Lz [ ],
+    float Lx [ ],		float Lz [ ],
     Int Up [ ],
     Int Ui [ ],
-    double Ux [ ],		double Uz [ ],
+    float Ux [ ],		float Uz [ ],
     Int P [ ],
     Int Q [ ],
-    double x [ ],		double xz [ ],
-    double r [ ],		double rz [ ],
+    float x [ ],		float xz [ ],
+    float r [ ],		float rz [ ],
     Int W [ ],
-    double Wx [ ],
+    float Wx [ ],
     Int split	    /* TRUE if complex variables split, FALSE if merged */
 )
 {
-    double maxrnorm = 0.0, rnorm, xnorm, xa, xaz, *Rb, *Rbz,
+    float maxrnorm = 0.0, rnorm, xnorm, xa, xaz, *Rb, *Rbz,
 	*y, *yz, *Rs, *Cx, *Cz ;
-    double Con [UMFPACK_CONTROL] ;
+    float Con [UMFPACK_CONTROL] ;
     Int *noP = INULL, *noQ = INULL, irstep, orig, i, prl, status, n,
 	s1, s2, do_recip, *Cp, *Ci, nz, scale ;
     Entry bb, xx, xtrue ;
@@ -550,7 +550,7 @@ static double do_solvers
 	nz = MAX (nz, Up [n_col]) ;
 	Cp = (Int *) malloc ((n_col+1) * sizeof (Int)) ;
 	Ci = (Int *) malloc ((nz+1) * sizeof (Int)) ;
-	Cx = (double *) calloc (2*(nz+1) , sizeof (double)) ;
+	Cx = (float *) calloc (2*(nz+1) , sizeof (float)) ;
 	if (split)
 	{
 	    Cz = Cx + nz ;
@@ -645,9 +645,9 @@ static double do_solvers
 	    xnorm = 0. ;
 	    for (i = 0 ; i < n ; i++)
 	    {
-	        REAL_COMPONENT(xtrue) = 1.0 + ((double) i) / ((double) n) ;
+	        REAL_COMPONENT(xtrue) = 1.0 + ((float) i) / ((float) n) ;
 #ifdef COMPLEX
-	        IMAG_COMPONENT(xtrue) = 1.3 - ((double) i) / ((double) n) ;
+	        IMAG_COMPONENT(xtrue) = 1.3 - ((float) i) / ((float) n) ;
 #endif
 		/* --- */
 		/* ASSIGN (xx, x [i] - xtrue, xz[i]-xtruez) ; */
@@ -921,9 +921,9 @@ static double do_solvers
     prl = 999 ;
     */
 
-    Rs  = (double *) malloc (n * sizeof (double)) ;  /* [ */
-    Rb  = (double *) calloc (2*n , sizeof (double)) ;  /* [ */
-    y   = (double *) calloc (2*n , sizeof (double)) ;  /* [ */
+    Rs  = (float *) malloc (n * sizeof (float)) ;  /* [ */
+    Rb  = (float *) calloc (2*n , sizeof (float)) ;  /* [ */
+    y   = (float *) calloc (2*n , sizeof (float)) ;  /* [ */
 
     /* ---------------------------------------------------------------------- */
     /* Ax=b with individual calls */
@@ -945,7 +945,7 @@ static double do_solvers
 	    INULL, INULL, CARG(DNULL,DNULL),
 	    INULL, INULL, CARG(DNULL,DNULL),
 	    INULL, INULL, CARG (DNULL,DNULL), &do_recip, Rs, Numeric) ;
-    if (status != UMFPACK_OK) error ("get Rs failed", (double) status) ; 
+    if (status != UMFPACK_OK) error ("get Rs failed", (float) status) ; 
 
     /*
     printf ("Rs:\n") ;
@@ -959,7 +959,7 @@ static double do_solvers
     /* Rb = R*b */
     /* dump_vec ("b", n, b, bz) ; */
     status = UMFPACK_scale (CARG (Rb, Rbz), CARG (b,bz), Numeric) ;
-    if (status != UMFPACK_OK) error ("Rb failed", (double) status) ; 
+    if (status != UMFPACK_OK) error ("Rb failed", (float) status) ; 
     /* dump_vec ("R*b", n, Rb, Rbz) ; */
 
     /*
@@ -976,13 +976,13 @@ static double do_solvers
     s1 = UMFPACK_solve (UMFPACK_Pt_L, Ap, Ai, CARG(Ax,Az), CARG(y,yz), CARG(Rb,Rbz), Numeric, Control, Info) ;
     if (! (s1 == UMFPACK_OK || s1 == UMFPACK_WARNING_singular_matrix))
     {
-	error ("P'Ly=Rb failed", (double) status) ; 
+	error ("P'Ly=Rb failed", (float) status) ; 
     }
     /* solve UQ'x=y */
     s2 = UMFPACK_solve (UMFPACK_U_Qt, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(y,yz), Numeric, Control, Info) ;
     if (! (s2 == UMFPACK_OK || s2 == UMFPACK_WARNING_singular_matrix))
     {
-	error ("UQ'x=y  failed", (double) status) ; 
+	error ("UQ'x=y  failed", (float) status) ; 
     }
     if (s1 == UMFPACK_OK && s2 == UMFPACK_OK)
     {
@@ -1052,13 +1052,13 @@ static double do_solvers
     s1 = UMFPACK_solve (UMFPACK_Pt_L, Ap, Ai, CARG(Ax,Az), CARG(y,yz), CARG(Rb,Rbz), Numeric, Control, Info) ;
     if (! (s1 == UMFPACK_OK || s1 == UMFPACK_WARNING_singular_matrix))
     {
-	error ("P'Ly=Rb failed", (double) status) ; 
+	error ("P'Ly=Rb failed", (float) status) ; 
     }
     /* solve UQ'x=y */
     s2 = UMFPACK_solve (UMFPACK_U_Qt, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(y,yz), Numeric, Control, Info) ;
     if (! (s2 == UMFPACK_OK || s2 == UMFPACK_WARNING_singular_matrix))
     {
-	error ("UQ'x=y  failed", (double) status) ; 
+	error ("UQ'x=y  failed", (float) status) ; 
     }
     if (s1 == UMFPACK_OK && s2 == UMFPACK_OK)
     {
@@ -1082,12 +1082,12 @@ static double do_solvers
 	s1 = UMFPACK_solve (UMFPACK_Ut, Ap, Ai, CARG(Ax,Az), CARG(y,yz), CARG(b,bz), Numeric, Control, Info) ;
 	if (! (s1 == UMFPACK_OK || s1 == UMFPACK_WARNING_singular_matrix))
 	{
-	    error ("U'y=b failed", (double) status) ; 
+	    error ("U'y=b failed", (float) status) ; 
 	}
 	s2 = UMFPACK_solve (UMFPACK_Lt, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(y,yz), Numeric, Control, Info) ;
 	if (! (s2 == UMFPACK_OK || s2 == UMFPACK_WARNING_singular_matrix))
 	{
-	    error ("L'x=y failed", (double) status) ; 
+	    error ("L'x=y failed", (float) status) ; 
 	}
 
 	/* check using UMFPACK_transpose */
@@ -1137,12 +1137,12 @@ static double do_solvers
 	s1 = UMFPACK_solve (UMFPACK_Uat, Ap, Ai, CARG(Ax,Az), CARG(y,yz), CARG(b,bz), Numeric, Control, Info) ;
 	if (! (s1 == UMFPACK_OK || s1 == UMFPACK_WARNING_singular_matrix))
 	{
-	    error ("U'y=b failed", (double) status) ; 
+	    error ("U'y=b failed", (float) status) ; 
 	}
 	s2 = UMFPACK_solve (UMFPACK_Lat, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(y,yz), Numeric, Control, Info) ;
 	if (! (s2 == UMFPACK_OK || s2 == UMFPACK_WARNING_singular_matrix))
 	{
-	    error ("L'x=y failed", (double) status) ; 
+	    error ("L'x=y failed", (float) status) ; 
 	}
 
 	/* check using UMFPACK_transpose */
@@ -1611,19 +1611,19 @@ static double do_solvers
 /* do_symnum:  factor A once, and then test the solves - return if error */
 /* ========================================================================== */
 
-static double do_symnum
+static float do_symnum
 (
     Int n_row,
     Int n_col,
     Int Ap [ ],
     Int Ai [ ],
-    double Ax [ ],		double Az [ ],
-    double b [ ],		double bz [ ],
-    double Control [ ],
+    float Ax [ ],		float Az [ ],
+    float b [ ],		float bz [ ],
+    float Control [ ],
     Int Qinit [ ],
-    double x [ ],		double xz [ ],
-    double r [ ],		double rz [ ],
-    double Wx [ ],
+    float x [ ],		float xz [ ],
+    float r [ ],		float rz [ ],
+    float Wx [ ],
     Int P [ ],
     Int Q [ ],
     Int Qtree [ ],
@@ -1633,23 +1633,23 @@ static double do_symnum
     Int Up [ ],
     Int save_and_load,
     Int split,	    /* TRUE if complex variables split, FALSE if merged */
-    Int det_check, double det_x, double det_z
+    Int det_check, float det_x, float det_z
 )
 {
     void *Symbolic, *Numeric ;
-    double *Lx, *Ux, *Lz, *Uz, rnorm, *Rs ;
+    float *Lx, *Ux, *Lz, *Uz, rnorm, *Rs ;
     Int *noP = INULL, *noQ = INULL, *Li, *Ui, n, n_inner, n1, do_recip ;
     Int lnz, unz, nz, nn, nfr, nchains, nsparse_col, status ;
     Int *Front_npivots, *Front_parent, *Chain_start, *Chain_maxrows ;
     Int *Chain_maxcols, *Lrowi, *Lrowp, is_singular ;
-    double Info [UMFPACK_INFO], *Lrowx, *Lrowz, *Dx, *Dz ;
+    float Info [UMFPACK_INFO], *Lrowx, *Lrowz, *Dx, *Dz ;
     Int nnrow, nncol, nzud, *Front_1strow, *Front_leftmostdesc, prl, i ;
-    double mind, maxd, rcond ;
+    float mind, maxd, rcond ;
     Entry d ;
-    double da, deterr ;
+    float da, deterr ;
     NumericType *Num ;
     SymbolicType *Sym ;
-    double Mx [2], Mz, Exp ;
+    float Mx [2], Mz, Exp ;
 
 #ifdef COMPLEX
     if (split)
@@ -1856,7 +1856,7 @@ static double do_symnum
     /* ---------------------------------------------------------------------- */
 
     status = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;	/* [ */
-    if (status != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (status != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     is_singular = (status == UMFPACK_WARNING_singular_matrix) ;
 
     UMFPACK_report_status (Control, status) ;
@@ -2076,16 +2076,16 @@ static double do_symnum
     lnz = MAX (lnz,1) ;
     unz = MAX (unz,1) ;
 
-    Rs = (double *) malloc ((n+1) * sizeof (double)) ;	/* [ */
+    Rs = (float *) malloc ((n+1) * sizeof (float)) ;	/* [ */
     Li = (Int *) malloc (lnz * sizeof (Int)) ;		/* [ */
-    Lx = (double *) calloc (2*lnz , sizeof (double)) ;	/* [ */
+    Lx = (float *) calloc (2*lnz , sizeof (float)) ;	/* [ */
     Ui = (Int *) malloc (unz * sizeof (Int)) ;		/* [ */
-    Ux = (double *) calloc (2*unz , sizeof (double)) ;	/* [ */
-    Dx = (double *) calloc (2*n , sizeof (double)) ;	/* [ */
+    Ux = (float *) calloc (2*unz , sizeof (float)) ;	/* [ */
+    Dx = (float *) calloc (2*n , sizeof (float)) ;	/* [ */
 
     Lrowp = (Int *) malloc ((n+1) * sizeof (Int)) ;	/* [ */
     Lrowi = (Int *) malloc (lnz * sizeof (Int)) ;	/* [ */
-    Lrowx = (double *) calloc (2*lnz , sizeof (double)) ;	/* [ */
+    Lrowx = (float *) calloc (2*lnz , sizeof (float)) ;	/* [ */
 
     if (!Li || !Lx || !Ui || !Ux || !Lrowp || !Lrowi || !Lrowx) error ("out of memory (2)\n",0.) ;
 
@@ -2214,24 +2214,24 @@ static double do_symnum
 
 /* exit if an error occurs. otherwise, return the largest residual norm seen. */
 
-static double do_once
+static float do_once
 (
     Int n_row,
     Int n_col,
     Int Ap [ ],
     Int Ai [ ],
-    double Ax [ ],		double Az [ ],
-    double b [ ],		double bz [ ],
-    double Control [ ],
+    float Ax [ ],		float Az [ ],
+    float b [ ],		float bz [ ],
+    float Control [ ],
     Int Qinit [ ],
     Int MemControl [6],
     Int save_and_load,
     Int split,	    /* TRUE if complex variables split, FALSE if merged */
-    Int det_check, double det_x, double det_z
+    Int det_check, float det_x, float det_z
 )
 {
 
-    double *x, rnorm, *r, *Wx, *xz, *rz ;
+    float *x, rnorm, *r, *Wx, *xz, *rz ;
     Int *P, *Q, *Lp, *Up, *W, *Qtree, *Ptree, n ;
 
 #ifdef COMPLEX
@@ -2264,8 +2264,8 @@ static double do_once
     n = MAX (n_row, n_col) ;
     n = MAX (n,1) ;
 
-    r = (double *) calloc (2*n , sizeof (double)) ;	/* [ */
-    x = (double *) calloc (2*n , sizeof (double)) ;	/* [ */
+    r = (float *) calloc (2*n , sizeof (float)) ;	/* [ */
+    x = (float *) calloc (2*n , sizeof (float)) ;	/* [ */
     rz = r + n ;
 
     if (split)
@@ -2279,7 +2279,7 @@ static double do_once
 	xz = DNULL ;
     }
 
-    Wx = (double *) malloc (10*n * sizeof (double)) ;	/* [ */
+    Wx = (float *) malloc (10*n * sizeof (float)) ;	/* [ */
     P = (Int *) malloc (n * sizeof (Int)) ;		/* [ */
     Q = (Int *) malloc (n * sizeof (Int)) ;		/* [ */
     Qtree = (Int *) malloc (n * sizeof (Int)) ;		/* [ */
@@ -2337,22 +2337,22 @@ static double do_once
 
 /* runs do_once with complex variables split, and again with them merged */
 
-static double do_many
+static float do_many
 (
     Int n_row,
     Int n_col,
     Int Ap [ ],
     Int Ai [ ],
-    double Ax [ ],		double Az [ ],
-    double b [ ],		double bz [ ],
-    double Control [ ],
+    float Ax [ ],		float Az [ ],
+    float b [ ],		float bz [ ],
+    float Control [ ],
     Int Qinit [ ],
     Int MemControl [6],
     Int save_and_load,
-    Int det_check, double det_x, double det_z
+    Int det_check, float det_x, float det_z
 )
 {
-    double rnorm, r ;
+    float rnorm, r ;
     Entry *A, *B, a ;
     Int p, i, nz ;
 
@@ -2377,7 +2377,7 @@ static double do_many
     }
 
     /* with complex variables merged */
-    r = do_once (n_row, n_col, Ap, Ai, (double *)A,DNULL, (double *)B,DNULL, Control, Qinit, MemControl, save_and_load, FALSE, det_check, det_x, det_z) ;
+    r = do_once (n_row, n_col, Ap, Ai, (float *)A,DNULL, (float *)B,DNULL, Control, Qinit, MemControl, save_and_load, FALSE, det_check, det_x, det_z) ;
 
     free (A) ;
     free (B) ;
@@ -2402,12 +2402,12 @@ static void bgen
     Int n,
     Int Ap [ ],
     Int Ai [ ],
-    double Ax [ ],	double Az [ ],
-    double b [ ],	double bz [ ]
+    float Ax [ ],	float Az [ ],
+    float b [ ],	float bz [ ]
 )
 {
     Int i, col, p ;
-    double xtrue, xtruez ;
+    float xtrue, xtruez ;
     for (i = 0 ; i < n ; i++)
     {
 	b [i] = 0.0 ;
@@ -2415,9 +2415,9 @@ static void bgen
     }
     for (col = 0 ; col < n ; col++)
     {
-	xtrue = 1.0 + ((double) col) / ((double) n) ;
+	xtrue = 1.0 + ((float) col) / ((float) n) ;
 #ifdef COMPLEX
-	xtruez= 1.3 - ((double) col) / ((double) n) ;
+	xtruez= 1.3 - ((float) col) / ((float) n) ;
 #else
 	xtruez= 0. ;
 #endif
@@ -2439,20 +2439,20 @@ static void bgen
 
 /* return the largest residual norm seen, or exit if error occured */
 
-static double do_matrix
+static float do_matrix
 (
     Int n,
     Int Ap [ ],
     Int Ai [ ],
-    double Ax [ ],	double Az [ ],
+    float Ax [ ],	float Az [ ],
 
-    double Controls [UMFPACK_CONTROL][1000],
+    float Controls [UMFPACK_CONTROL][1000],
     Int Ncontrols [UMFPACK_CONTROL],
     Int MemControl [6],
     Int do_dense
 )
 {
-    double Control [UMFPACK_CONTROL], *b, *bz, maxrnorm, rnorm, tol, init,
+    float Control [UMFPACK_CONTROL], *b, *bz, maxrnorm, rnorm, tol, init,
         psave ;
     Int *colhist, *rowhist, *rowdeg, *noQinit, *Qinit, *cknob, *rknob,
 	c, r, cs, rs, row, col, i, coldeg, p, d, nb, ck, rk, *Head, *Next,
@@ -2555,8 +2555,8 @@ static double do_matrix
     /* compute b assuming xtrue (i) = 1 + i/n */
     /* ---------------------------------------------------------------------- */
 
-    b = (double *) malloc (n * sizeof (double)) ;	/* [ */
-    bz= (double *) calloc (n , sizeof (double)) ;	/* [ */
+    b = (float *) malloc (n * sizeof (float)) ;	/* [ */
+    bz= (float *) calloc (n , sizeof (float)) ;	/* [ */
     if (!b) error ("out of memory (5)",0.) ;
     if (!bz) error ("out of memory (6)",0.) ;
     bgen (n, Ap, Ai, Ax, Az, b, bz) ;
@@ -2695,7 +2695,7 @@ static double do_matrix
 		for (i_nb = 0 ; i_nb < n_nb ; i_nb++)
 		{
 		    nb = (Int) Controls [UMFPACK_BLOCK_SIZE][i_nb] ;
-		    Control [UMFPACK_BLOCK_SIZE] = (double) nb ;
+		    Control [UMFPACK_BLOCK_SIZE] = (float) nb ;
 
 		    for (i_init = 0 ; i_init < n_init ; i_init++)
 		    {
@@ -2750,24 +2750,24 @@ static void matgen_dense
     Int n,
     Int **Ap,
     Int **Ai,
-    double **Ax,	double **Az
+    float **Ax,	float **Az
 )
 {
     Int nz, *Bp, *Bi, *Ti, *Tj, k, i, j, *P, status ;
-    double *Bx, *Tx, *Bz, *Tz ;
+    float *Bx, *Tx, *Bz, *Tz ;
 
     nz = n*n + n ;
 
     /* allocate Bp, Bi, and Bx - but do not free them */
     Bp = (Int *) malloc ((n+1) * sizeof (Int)) ;
     Bi = (Int *) malloc ((nz+1) * sizeof (Int)) ;
-    Bx = (double *) malloc ((nz+1) * sizeof (double)) ;
-    Bz = (double *) calloc ((nz+1) , sizeof (double)) ;
+    Bx = (float *) malloc ((nz+1) * sizeof (float)) ;
+    Bz = (float *) calloc ((nz+1) , sizeof (float)) ;
 
     Ti = (Int *) malloc ((nz+1) * sizeof (Int)) ;		/* [ */
     Tj = (Int *) malloc ((nz+1) * sizeof (Int)) ;		/* [ */
-    Tx = (double *) malloc ((nz+1) * sizeof (double)) ;	/* [ */
-    Tz = (double *) calloc ((nz+1) , sizeof (double)) ;	/* [ */
+    Tx = (float *) malloc ((nz+1) * sizeof (float)) ;	/* [ */
+    Tz = (float *) calloc ((nz+1) , sizeof (float)) ;	/* [ */
     P = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 
     if (!Bp || !Bi || !Bx || !Ti || !Tj || !Tx || !P) error ("out of memory (8)",0.) ;
@@ -2844,24 +2844,24 @@ static void matgen_funky
     Int n,
     Int **Ap,
     Int **Ai,
-    double **Ax,	double **Az
+    float **Ax,	float **Az
 )
 {
     Int nz, *Bp, *Bi, *Ti, *Tj, k, i, j, *P, status ;
-    double *Bx, *Tx, *Bz, *Tz ;
+    float *Bx, *Tx, *Bz, *Tz ;
 
     nz = 4*n + 5 ;
 
     /* allocate Bp, Bi, and Bx - but do not free them */
     Bp = (Int *) malloc ((n+1) * sizeof (Int)) ;
     Bi = (Int *) malloc (nz * sizeof (Int)) ;
-    Bx = (double *) malloc (nz * sizeof (double)) ;
-    Bz = (double *) calloc (nz , sizeof (double)) ;
+    Bx = (float *) malloc (nz * sizeof (float)) ;
+    Bz = (float *) calloc (nz , sizeof (float)) ;
 
     Ti = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
     Tj = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
-    Tx = (double *) malloc (nz * sizeof (double)) ;	/* [ */
-    Tz = (double *) calloc (nz , sizeof (double)) ;	/* [ */
+    Tx = (float *) malloc (nz * sizeof (float)) ;	/* [ */
+    Tz = (float *) calloc (nz , sizeof (float)) ;	/* [ */
     P = (Int *) malloc (n * sizeof (Int)) ;		/* [ */
 
     if (!Bp || !Bi || !Bx || !Ti || !Tj || !Tx || !P) error ("out of memory (9)",0.) ;
@@ -2953,11 +2953,11 @@ static void matgen_band
     Int cdeg,
     Int **Ap,
     Int **Ai,
-    double **Ax,	double **Az
+    float **Ax,	float **Az
 )
 {
     Int nz, *Bp, *Bi, *Ti, *Tj, k, i, j, jlo, jup, j1, i1, k1, status ;
-    double *Bx, *Bz, *Tx, *Tz ;
+    float *Bx, *Bz, *Tx, *Tz ;
 
     /* an upper bound */
     nz = n * (lo + 1 + up) + n + ndrow*rdeg + ndcol*cdeg ;
@@ -2965,13 +2965,13 @@ static void matgen_band
     /* allocate Bp, Bi, and Bx - but do not free them */
     Bp = (Int *) malloc ((n+1) * sizeof (Int)) ;
     Bi = (Int *) malloc (nz * sizeof (Int)) ;
-    Bx = (double *) malloc (nz * sizeof (double)) ;
-    Bz = (double *) calloc (nz , sizeof (double)) ;
+    Bx = (float *) malloc (nz * sizeof (float)) ;
+    Bz = (float *) calloc (nz , sizeof (float)) ;
 
     Ti = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
     Tj = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
-    Tx = (double *) malloc (nz * sizeof (double)) ;	/* [ */
-    Tz = (double *) calloc (nz , sizeof (double)) ;	/* [ */
+    Tx = (float *) malloc (nz * sizeof (float)) ;	/* [ */
+    Tz = (float *) calloc (nz , sizeof (float)) ;	/* [ */
 
     if (!Bp || !Bi || !Bx || !Ti || !Tj || !Tx) error ("out of memory (10)",0.) ;
     if (!Bz || !Tz) error ("out ofmemory", 0.) ;
@@ -3074,12 +3074,12 @@ static void test_col
     Int n,
     Int Bp [ ],
     Int Bi [ ],
-    double Bx [ ],	double Bz [ ],
+    float Bx [ ],	float Bz [ ],
     Int prl
 )
 {
     Int *Ci, *Cj, *Ep, *Ei, k, s, t, i, j, nz, p, status, *Map, *noMap ;
-    double *Cx, *Cz, *Ex, *Ez, z, Control [UMFPACK_CONTROL] ;
+    float *Cx, *Cz, *Ex, *Ez, z, Control [UMFPACK_CONTROL] ;
     noMap = (Int *) NULL ;
 
     printf ("\n\n===== test col -> triplet and triplet -> col\n") ;
@@ -3093,11 +3093,11 @@ static void test_col
 
     Ci = (Int *) malloc ((2*nz+1) * sizeof (Int)) ;		/* [ */
     Cj = (Int *) malloc ((2*nz+1) * sizeof (Int)) ;		/* [ */
-    Cx = (double *) calloc (2*(2*nz+1) , sizeof (double)) ;	/* [ */
+    Cx = (float *) calloc (2*(2*nz+1) , sizeof (float)) ;	/* [ */
     Cz = Cx + (2*nz+1) ;
     Ep = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
     Ei = (Int *) malloc ((2*nz+1) * sizeof (Int)) ;		/* [ */
-    Ex = (double *) calloc (2*(2*nz+1) , sizeof (double)) ;	/* [ */
+    Ex = (float *) calloc (2*(2*nz+1) , sizeof (float)) ;	/* [ */
     Ez = Ex + (2*nz+1) ;
     Map = (Int *) malloc ((2*nz+1) * sizeof (Int)) ;		/* [ */
 
@@ -3514,11 +3514,11 @@ static void matgen_compaction
    Int n,
    Int **Ap,
    Int **Ai,
-   double **Ax,		double **Az
+   float **Ax,		float **Az
 )
 {
     Int nz, *Bp, *Bi, *Ti, *Tj, k, i, j, prl, status ;
-    double *Bx, *Tx, *Bz, *Tz, Control [UMFPACK_INFO] ;
+    float *Bx, *Tx, *Bz, *Tz, Control [UMFPACK_INFO] ;
 
     prl = Control ? Control [UMFPACK_PRL] : UMFPACK_DEFAULT_PRL ; 
     UMFPACK_defaults (Control) ;
@@ -3530,13 +3530,13 @@ static void matgen_compaction
     /* allocate Bp, Bi, and Bx - but do not free them */
     Bp = (Int *) malloc ((n+1) * sizeof (Int)) ;
     Bi = (Int *) malloc (nz * sizeof (Int)) ;
-    Bx = (double *) malloc (nz * sizeof (double)) ;
-    Bz = (double *) calloc (nz , sizeof (double)) ;
+    Bx = (float *) malloc (nz * sizeof (float)) ;
+    Bz = (float *) calloc (nz , sizeof (float)) ;
 
     Ti = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
     Tj = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
-    Tx = (double *) malloc (nz * sizeof (double)) ;	/* [ */ 
-    Tz = (double *) calloc (nz , sizeof (double)) ;	/* [ */ 
+    Tx = (float *) malloc (nz * sizeof (float)) ;	/* [ */ 
+    Tz = (float *) calloc (nz , sizeof (float)) ;	/* [ */ 
     if (!Bp || !Bi || !Bx || !Ti || !Tj || !Tx) error ("out of memory (12)",0.) ;
     if (!Bz || !Tz) error ("out of mery",0.) ;
 
@@ -3641,13 +3641,13 @@ static void matgen_sparse
     Int cdeg,
     Int **Ap,
     Int **Ai,
-    double **Ax,	double **Az,
+    float **Ax,	float **Az,
     Int prl,
     Int has_nans
 )
 {
     Int nz, *Bp, *Bi, *Ti, *Tj, k, i, j, j1, i1, k1, *P, status, *Map, p, *Cp, *Ci, *noMap ;
-    double *Bx, *Tx, *Bz, *Tz, Control [UMFPACK_CONTROL], xnan, xinf, x, *Txx, *Cx ;
+    float *Bx, *Tx, *Bz, *Tz, Control [UMFPACK_CONTROL], xnan, xinf, x, *Txx, *Cx ;
     noMap = (Int *) NULL ;
 
     if (has_nans)
@@ -3666,20 +3666,20 @@ static void matgen_sparse
     /* allocate Bp, Bi, and Bx - but do not free them */
     Bp = (Int *) malloc ((n+1) * sizeof (Int)) ;
     Bi = (Int *) malloc ((nz+1) * sizeof (Int)) ;
-    Bx = (double *) malloc ((nz+1) * sizeof (double)) ;
-    Bz = (double *) calloc ((nz+1) , sizeof (double)) ;
+    Bx = (float *) malloc ((nz+1) * sizeof (float)) ;
+    Bz = (float *) calloc ((nz+1) , sizeof (float)) ;
 
     Ti = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
     Tj = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
-    Tx = (double *) malloc (nz * sizeof (double)) ;	/* [ */
-    Tz = (double *) calloc (nz , sizeof (double)) ;	/* [ */ 
+    Tx = (float *) malloc (nz * sizeof (float)) ;	/* [ */
+    Tz = (float *) calloc (nz , sizeof (float)) ;	/* [ */ 
     P = (Int *) malloc (n * sizeof (Int)) ;		/* [ */
     Map = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
 
-    Txx = (double *) calloc (2*(nz+1) , sizeof (double)) ;	/* [ */ 
+    Txx = (float *) calloc (2*(nz+1) , sizeof (float)) ;	/* [ */ 
     Cp = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
     Ci = (Int *) malloc ((nz+1) * sizeof (Int)) ;		/* [ */
-    Cx = (double *) calloc (2*(nz+1) , sizeof (double)) ;	/* [ */ 
+    Cx = (float *) calloc (2*(nz+1) , sizeof (float)) ;	/* [ */ 
 
     if (!Bp || !Bi || !Bx || !Ti || !Tj || !Tx || !P) error ("out of memory (13)",0.) ;
     if (!Bz || !Tz) error ("out of m",0.) ;
@@ -3892,17 +3892,17 @@ static void matgen_transpose
     Int n,
     Int Ap [ ],
     Int Ai [ ],
-    double Ax [ ],	double Az [ ],
+    float Ax [ ],	float Az [ ],
     Int **Bp,
     Int **Bi,
-    double **Bx,	double **Bz
+    float **Bx,	float **Bz
 )
 {
     Int nz, *P, *Q, *Cp, *Ci, status ;
-    double *Cx, *Cz ;
+    float *Cx, *Cz ;
 
 #ifdef DEBUGGING
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
 #endif
 
     nz = Ap [n] ;
@@ -3911,8 +3911,8 @@ static void matgen_transpose
 
     Cp = (Int *) malloc ((n+1) * sizeof (Int)) ;
     Ci = (Int *) malloc ((nz+1) * sizeof (Int)) ;
-    Cx = (double *) malloc ((nz+1) * sizeof (double)) ;
-    Cz = (double *) calloc ((nz+1) , sizeof (double)) ;
+    Cx = (float *) malloc ((nz+1) * sizeof (float)) ;
+    Cz = (float *) calloc ((nz+1) , sizeof (float)) ;
 
     if (!P || !Q || !Bp || !Bi || !Bx) error ("out of memory (14)",0.) ;
     if (!Cz) error ("out mem", 0.) ;
@@ -3974,16 +3974,16 @@ static void matgen_file
     Int *n_col,
     Int **Ap,
     Int **Ai,
-    double **Ax,	double **Az,
+    float **Ax,	float **Az,
     Int **Qinit,
     Int prl,
-    double *det_x,
-    double *det_z
+    float *det_x,
+    float *det_z
 )
 {
     FILE *f ;
     Int i, j, k, *Ti, *Tj, nr, nc, nz, *Bp, *Bi, *Q, status, isreal, nz1, n ;
-    double x, *Tx, *Bx, *Tz, *Bz, ximag, Control [UMFPACK_CONTROL],
+    float x, *Tx, *Bx, *Tz, *Bz, ximag, Control [UMFPACK_CONTROL],
 	    d_x, d_z, d_real ;
 
     printf ("\nFile: %s\n", filename) ;
@@ -3997,26 +3997,26 @@ static void matgen_file
     nz1 = MAX (nz,1) ;
     Ti = (Int *) malloc (nz1 * sizeof (Int)) ;		/* [ */
     Tj = (Int *) malloc (nz1 * sizeof (Int)) ;		/* [ */
-    Tx = (double *) malloc (nz1 * sizeof (double)) ;	/* [ */
-    Tz = (double *) calloc (nz1 , sizeof (double)) ;	/* [ */
+    Tx = (float *) malloc (nz1 * sizeof (float)) ;	/* [ */
+    Tz = (float *) calloc (nz1 , sizeof (float)) ;	/* [ */
 
     /* allocate Bp, Bi, Bx, and Q - but do not free them */
     Bp = (Int *) malloc ((n+1) * sizeof (Int)) ;
     Bi = (Int *) malloc (nz1 * sizeof (Int)) ;
-    Bx = (double *) malloc (nz1 * sizeof (double)) ;
+    Bx = (float *) malloc (nz1 * sizeof (float)) ;
     Q = (Int *) malloc (n * sizeof (Int)) ;
-    Bz = (double *) calloc (nz1 , sizeof (double)) ;
+    Bz = (float *) calloc (nz1 , sizeof (float)) ;
 
     for (k = 0 ; k < nz ; k++) 
     {
 	if (isreal)
 	{
-	     fscanf (f, ""ID" "ID" %lg\n", &i, &j, &x) ;
+	     fscanf (f, ""ID" "ID" %g\n", &i, &j, &x) ;
 	     ximag = 0. ;
 	}
 	else
 	{
-	     fscanf (f, ""ID" "ID" %lg %lg\n", &i, &j, &x, &ximag) ;
+	     fscanf (f, ""ID" "ID" %g %g\n", &i, &j, &x, &ximag) ;
 	}
 	Ti [k] = i-1 ;	/* convert to 0-based */ 
 	Tj [k] = j-1 ;
@@ -4037,14 +4037,14 @@ static void matgen_file
 
     if (isreal)
     {
-	fscanf (f, "%lg\n", &d_x) ;
+	fscanf (f, "%g\n", &d_x) ;
 	d_z = 0 ;
     }
     else
     {
-	fscanf (f, "%lg %lg\n", &d_x, &d_z) ;
+	fscanf (f, "%g %g\n", &d_x, &d_z) ;
     }
-    fscanf (f, "%lg\n", &d_real) ;
+    fscanf (f, "%g\n", &d_real) ;
     printf ("%s det: %g + (%g)i, real(A): %g\n", filename, d_x, d_z, d_real) ;
 
 #ifdef COMPLEX
@@ -4154,21 +4154,21 @@ static Int matgen_arrow
 /* do_and_free: do a matrix, its random transpose, and then free it */
 /* ========================================================================== */
 
-static double do_and_free
+static float do_and_free
 (
     Int n,
     Int Ap [ ],
     Int Ai [ ],
-    double Ax [ ],	double Az [ ],
+    float Ax [ ],	float Az [ ],
 
-    double Controls [UMFPACK_CONTROL][1000],
+    float Controls [UMFPACK_CONTROL][1000],
     Int Ncontrols [UMFPACK_CONTROL],
     Int MemControl [6],
     Int do_dense
 )
 {
     Int *Bp, *Bi ;
-    double *Bx, *Bz, rnorm1, rnorm2 ;
+    float *Bx, *Bz, rnorm1, rnorm2 ;
 
     /* A */
     rnorm1 = do_matrix (n, Ap, Ai, Ax, Az, Controls, Ncontrols, MemControl, do_dense) ;
@@ -4288,7 +4288,7 @@ static int do_amd_transpose
 /* do_file:  read a matrix from a matrix and call do_many */
 /* ========================================================================== */
 
-static double do_file
+static float do_file
 (
     char *filename,
     Int prl,
@@ -4297,7 +4297,7 @@ static double do_file
 {
     Int n_row, n_col, *Ap, *Ai, *Qinit, n, *P, s, *W, scale, row, col, p,
 	strategy, fixQ ;
-    double *Ax, *Az, Control [UMFPACK_CONTROL], *b, rnorm, *bz, maxrnorm, bad,
+    float *Ax, *Az, Control [UMFPACK_CONTROL], *b, rnorm, *bz, maxrnorm, bad,
 	det_x, det_z ;
 
     UMFPACK_defaults (Control) ;
@@ -4319,15 +4319,15 @@ static double do_file
 	Rp = (Int *) malloc ((n_row+1) * sizeof (Int)) ;	/* [ */
 	Ri = (Int *) malloc ((Ap [n_row]) * sizeof (Int)) ;	/* [ */
 	s = do_amd (n_row, Ap, Ai, P) ;
-	if (s != AMD_OK) error ("amd2", (double) s) ;
+	if (s != AMD_OK) error ("amd2", (float) s) ;
 	s = UMF_report_perm (n_row, P, W, 3, 0) ;
-	if (s != UMFPACK_OK) error ("amd3", (double) s) ;
+	if (s != UMFPACK_OK) error ("amd3", (float) s) ;
 	s = do_amd_transpose (n_row, Ap, Ai, Rp, Ri) ;
-	if (s != AMD_OK) error ("amd4", (double) s) ;
+	if (s != AMD_OK) error ("amd4", (float) s) ;
 	s = do_amd (n_row, Rp, Ri, P) ;
-	if (s != AMD_OK) error ("amd5", (double) s) ;
+	if (s != AMD_OK) error ("amd5", (float) s) ;
 	s = UMF_report_perm (n_row, P, W, 3, 0) ;
-	if (s != UMFPACK_OK) error ("amd6", (double) s) ;
+	if (s != UMFPACK_OK) error ("amd6", (float) s) ;
 	free (Ri) ;  /* ] */
 	free (Rp) ;  /* ] */
 	free (W) ;  /* ] */
@@ -4337,8 +4337,8 @@ static double do_file
     /* do the matrix */
     n = MAX (n_row, n_col) ;
     n = MAX (n,1) ;
-    b = (double *) calloc (n, sizeof (double)) ;	/* [ */
-    bz= (double *) calloc (n, sizeof (double)) ;	/* [ */
+    b = (float *) calloc (n, sizeof (float)) ;	/* [ */
+    bz= (float *) calloc (n, sizeof (float)) ;	/* [ */
 
     if (n_row == n_col)
     {
@@ -4527,7 +4527,7 @@ EXTERN int EF_PROTECT_BELOW  ;
 
 int main (int argc, char **argv)
 {
-    double *Lx, *Ux, *x,  *Cx, *Bx, *Ax, *b, *Ax2,
+    float *Lx, *Ux, *x,  *Cx, *Bx, *Ax, *b, *Ax2,
 	   *Lz, *Uz, *xz, *Cz, *Bz, *Az, *bz,*Az2,
 	rnorm, maxrnorm, *Con, Info [UMFPACK_INFO], *Wx, *Rs, xnan, xinf, ttt,
 	Controls [UMFPACK_CONTROL][1000], Control [UMFPACK_CONTROL],
@@ -4550,7 +4550,7 @@ int main (int argc, char **argv)
     char filename [200] ;
     FILE *f ;
     Int my_params [3], csave ;
-    double my_info [3] ;
+    float my_info [3] ;
 
     /* turn off debugging */
     { f = fopen ("debug.umf", "w") ; fprintf (f, "-45\n") ; fclose (f) ; }
@@ -4812,9 +4812,9 @@ int main (int argc, char **argv)
 
 	/* with no Qinit, out of memory in extend front */
 	s = UMFPACK_symbolic (n_row, n_col, Ap, Ai, CARG(Ax,Az), &Symbolic, Control, Info) ;	/* [ */
-	if (s != UMFPACK_OK) error ("TestMat matrix1 sym", (double) s) ;
+	if (s != UMFPACK_OK) error ("TestMat matrix1 sym", (float) s) ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ; /* [ */
-	if (s != UMFPACK_ERROR_out_of_memory) error ("TestMat matrix1 num", (double) s) ;
+	if (s != UMFPACK_ERROR_out_of_memory) error ("TestMat matrix1 num", (float) s) ;
 	UMFPACK_free_numeric (&Numeric) ;	/* ] */
 	UMFPACK_free_symbolic (&Symbolic) ;	/* ] */
 
@@ -4830,9 +4830,9 @@ int main (int argc, char **argv)
 
 	/* with Qinit, out of memory in create front (2) */
 	s = UMFPACK_qsymbolic (n_row, n_col, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Control, Info) ;	/* [ */
-	if (s != UMFPACK_OK) error ("TestMat matrix10 qsym1", (double) s) ;
+	if (s != UMFPACK_OK) error ("TestMat matrix10 qsym1", (float) s) ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ; /* [ */
-	if (s != UMFPACK_ERROR_out_of_memory) error ("TestMat matrix10 qnum1", (double) s) ;
+	if (s != UMFPACK_ERROR_out_of_memory) error ("TestMat matrix10 qnum1", (float) s) ;
 	UMFPACK_free_numeric (&Numeric) ;	/* ] */
 	UMFPACK_free_symbolic (&Symbolic) ;	/* ] */
 
@@ -4840,9 +4840,9 @@ int main (int argc, char **argv)
 
 	/* with Qinit, out of memory in init front */
 	s = UMFPACK_qsymbolic (n_row, n_col, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Control, Info) ;	/* [ */
-	if (s != UMFPACK_OK) error ("TestMat matrix10 qsym", (double) s) ;
+	if (s != UMFPACK_OK) error ("TestMat matrix10 qsym", (float) s) ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ; /* [ */
-	if (s != UMFPACK_ERROR_out_of_memory) error ("TestMat matrix10 qnum", (double) s) ;
+	if (s != UMFPACK_ERROR_out_of_memory) error ("TestMat matrix10 qnum", (float) s) ;
 	UMFPACK_free_numeric (&Numeric) ;	/* ] */
 	UMFPACK_free_symbolic (&Symbolic) ;	/* ] */
 
@@ -4884,7 +4884,7 @@ int main (int argc, char **argv)
 		info = (aggressive == 2) ? DNULL : Info ;
 		amd_control (Con) ;
 		s = amd_order (n, Ap, Ai, P, Con, info) ;
-		if (s != AMD_OK) error ("amd", (double) s) ;
+		if (s != AMD_OK) error ("amd", (float) s) ;
 		amd_info (info) ;
 
 #else
@@ -4896,7 +4896,7 @@ int main (int argc, char **argv)
 		info = (aggressive == 2) ? DNULL : Info ;
 		amd_l_control (Con) ;
 		s = amd_l_order (n, Ap, Ai, P, Con, info) ;
-		if (s != AMD_OK) error ("amd", (double) s) ;
+		if (s != AMD_OK) error ("amd", (float) s) ;
 		amd_l_info (info) ;
 
 #endif
@@ -4968,8 +4968,8 @@ int main (int argc, char **argv)
 	    printf ("funky matrix, n = "ID"\n", n) ;
 	    matgen_funky (n, &Ap, &Ai, &Ax, &Az) ;	/* [[[[ */
 
-	    b = (double *) malloc (n * sizeof (double)) ;	/* [ */
-	    bz= (double *) calloc (n , sizeof (double)) ;	/* [ */
+	    b = (float *) malloc (n * sizeof (float)) ;	/* [ */
+	    bz= (float *) calloc (n , sizeof (float)) ;	/* [ */
 	    Qinit = (Int *) malloc (n * sizeof (Int)) ;		/* [ */
 	    if (!b) error ("out of memory (15)",0.) ;
 	    if (!bz) error ("out of memory (16)",0.) ;
@@ -5102,7 +5102,7 @@ int main (int argc, char **argv)
 
     matgen_file ("TestMat/matrix1", &n_row, &n_col, &Ap, &Ai, &Ax, &Az, &Qinit, 5, &det_x, &det_z) ;	/* [[[[[ */
     s = UMFPACK_qsymbolic (n_row, n_col, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (!Symbolic || Info [UMFPACK_STATUS] != UMFPACK_OK) error ("p1",0.) ;
@@ -5113,7 +5113,7 @@ int main (int argc, char **argv)
     UMFPACK_report_control (Control) ;
 
     s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     printf ("p1b status: "ID" Numeric handle bad %d\n", s, !Numeric) ;
@@ -5131,7 +5131,7 @@ int main (int argc, char **argv)
     Ap [1] = -1 ;
     printf ("Bad Ap [1] = -1: \n") ;
     s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("zzz1",0.) ;
@@ -5142,7 +5142,7 @@ int main (int argc, char **argv)
     Ai [1] = -1 ;
     printf ("Bad Ai [1] = -1: \n") ;
     s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("zzz2",0.) ;
@@ -5153,7 +5153,7 @@ int main (int argc, char **argv)
     Ai [1] = n_row ;
     printf ("Bad Ai [1] = "ID": \n", n_row) ;
     s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("zzz3",0.) ;
@@ -5169,7 +5169,7 @@ int main (int argc, char **argv)
     printf ("one more entry\n") ;
     matgen_file ("TestMat/matrix2", &n_row2, &n_col2, &Ap2, &Ai2, &Ax2, &Az2, &Qinit2, 5, &det_x, &det_z) ;	/* [[[[[ */
     s = UMFPACK_numeric (Ap2, Ai2, CARG(Ax2,Az2), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("p2",0.) ;
@@ -5183,7 +5183,7 @@ int main (int argc, char **argv)
     /* one less entry */
     matgen_file ("TestMat/matrix3", &n_row2, &n_col2, &Ap2, &Ai2, &Ax2, &Az2, &Qinit2, 5, &det_x, &det_z) ;	/* [[[[[ */
     s = UMFPACK_numeric (Ap2, Ai2, CARG(Ax2,Az2), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("p3",0.) ;
@@ -5196,7 +5196,7 @@ int main (int argc, char **argv)
     /* many more entries */
     matgen_file ("TestMat/matrix4", &n_row2, &n_col2, &Ap2, &Ai2, &Ax2, &Az2, &Qinit2, 5, &det_x, &det_z) ;	/* [[[[[ */
     s = UMFPACK_numeric (Ap2, Ai2, CARG(Ax2,Ax2), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("p4",0.) ;
@@ -5209,7 +5209,7 @@ int main (int argc, char **argv)
     /* some more entries */
     matgen_file ("TestMat/matrix5", &n_row2, &n_col2, &Ap2, &Ai2, &Ax2, &Az2, &Qinit2, 5, &det_x, &det_z) ;	/* [[[[[ */
     s = UMFPACK_numeric (Ap2, Ai2, CARG(Ax2,Az2), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("p5",0.) ;
@@ -5222,7 +5222,7 @@ int main (int argc, char **argv)
     /* same entries - but different pattern */
     matgen_file ("TestMat/matrix6", &n_row2, &n_col2, &Ap2, &Ai2, &Ax2, &Az2, &Qinit2, 5, &det_x, &det_z) ;	/* [[[[[ */
     s = UMFPACK_numeric (Ap2, Ai2, CARG(Ax2,Az2), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("p6",0.) ;
@@ -5235,7 +5235,7 @@ int main (int argc, char **argv)
     /* same entries - but different pattern */
     matgen_file ("TestMat/matrix7", &n_row2, &n_col2, &Ap2, &Ai2, &Ax2, &Az2, &Qinit2, 5, &det_x, &det_z) ;	/* [[[[[ */
     s = UMFPACK_numeric (Ap2, Ai2, CARG(Ax2,Az2), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("p7",0.) ;
@@ -5248,7 +5248,7 @@ int main (int argc, char **argv)
     /* same entries - but different pattern */
     matgen_file ("TestMat/matrix8", &n_row2, &n_col2, &Ap2, &Ai2, &Ax2, &Az2, &Qinit2, 5, &det_x, &det_z) ;	/* [[[[[ */
     s = UMFPACK_numeric (Ap2, Ai2, CARG(Ax2,Az2), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (Numeric || s != UMFPACK_ERROR_different_pattern) error ("p8",0.) ;
@@ -5263,7 +5263,7 @@ int main (int argc, char **argv)
     /* start over, use a bigger matrix */
     matgen_file ("TestMat/matrix10", &n_row, &n_col, &Ap, &Ai, &Ax, &Az, &Qinit, 5, &det_x, &det_z) ;	/* [[[[[ */
     s = UMFPACK_qsymbolic (n_row, n_col, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     UMFPACK_report_status (Control, s) ;
     UMFPACK_report_info (Control, Info) ;
     if (prl > 2) printf ("\nGood matrix10 symbolic, pattern test: ") ;
@@ -5271,7 +5271,7 @@ int main (int argc, char **argv)
     if (!Symbolic || Info [UMFPACK_STATUS] != UMFPACK_OK) error ("p10",0.) ;
     if (s != UMFPACK_OK) error ("p10",0.) ;
     s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;
-    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
     if (!Numeric || s != UMFPACK_OK) error ("p10b",0.) ;
     printf ("Good matrix10matrix10  numeric, pattern test:") ;
     s = UMFPACK_report_numeric (Numeric, Control) ;
@@ -5358,8 +5358,8 @@ int main (int argc, char **argv)
     n = 100 ;
     Control [UMFPACK_PRL] = 4 ;
     Qinit = (Int *) malloc (n * sizeof (Int)) ;			/* [ */
-    b = (double *) malloc (n * sizeof (double)) ;		/* [ */
-    bz= (double *) calloc (n , sizeof (double)) ;		/* [ */
+    b = (float *) malloc (n * sizeof (float)) ;		/* [ */
+    bz= (float *) calloc (n , sizeof (float)) ;		/* [ */
     for (i = 0 ; i < n ; i++) Qinit [i] = i ;
     matgen_compaction (n, &Ap, &Ai, &Ax, &Az) ;					/* [[[[ */
     bgen (n, Ap, Ai, Ax, Az, b, bz) ;
@@ -5383,8 +5383,8 @@ int main (int argc, char **argv)
 
     matgen_file ("TestMat/shl0", &n_row, &n_col, &Ap, &Ai, &Ax, &Az, &Qinit, 5, &det_x, &det_z) ;	/* [[[[[ */
     n = n_row ;
-    b = (double *) malloc (n * sizeof (double)) ;	/* [ */
-    bz= (double *) calloc (n , sizeof (double)) ;	/* [ */
+    b = (float *) malloc (n * sizeof (float)) ;	/* [ */
+    bz= (float *) calloc (n , sizeof (float)) ;	/* [ */
     bgen (n, Ap, Ai, Ax, Az, b, bz) ;
     Control [UMFPACK_PRL] = 5 ;
     Control [UMFPACK_DENSE_ROW] = 0.1 ;
@@ -5496,10 +5496,10 @@ int main (int argc, char **argv)
     Qinit = (Int *) malloc (2*n * sizeof (Int)) ;		/* [ */
     Pinit = (Int *) malloc (2*n * sizeof (Int)) ;		/* [ */
     Qinit2 = (Int *) malloc (2*n * sizeof (Int)) ;		/* [ */
-    b = (double *) malloc (2*n * sizeof (double)) ;		/* [ */
-    bz= (double *) calloc (2*n , sizeof (double)) ;		/* [ */
-    x = (double *) malloc (2*n * sizeof (double)) ;		/* [ */
-    xz= (double *) calloc (2*n , sizeof (double)) ;		/* [ */
+    b = (float *) malloc (2*n * sizeof (float)) ;		/* [ */
+    bz= (float *) calloc (2*n , sizeof (float)) ;		/* [ */
+    x = (float *) malloc (2*n * sizeof (float)) ;		/* [ */
+    xz= (float *) calloc (2*n , sizeof (float)) ;		/* [ */
     Ap2 = (Int *) malloc ((2*n+1) * sizeof (Int)) ;		/* [ */
 
     if (!Qinit || !b || !Ap2 || !Qinit2 || !Pinit)  error ("out of memory (18)",0.) ;
@@ -5533,8 +5533,8 @@ int main (int argc, char **argv)
 	nz = Ap [n] ;
 	Aj = (Int *) malloc ((nz+n+1) * sizeof (Int)) ;		/* [ */
 	Ai2 = (Int *) malloc ((nz+n) * sizeof (Int)) ;		/* [ */
-	Ax2 = (double *) malloc ((nz+n) * sizeof (double)) ;	/* [ */
-	Az2 = (double *) calloc ((nz+n) , sizeof (double)) ;	/* [ */
+	Ax2 = (float *) malloc ((nz+n) * sizeof (float)) ;	/* [ */
+	Az2 = (float *) calloc ((nz+n) , sizeof (float)) ;	/* [ */
 	if (!Aj || !Ai2 || !Ax2 || !Az2)  error ("out of memory (19)",0.) ;
 	Rp = Aj ;
 	Ri = Ai2 ;
@@ -5599,49 +5599,49 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (0, 0, Ap, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_n_nonpositive)) error ("2",0.) ;
 	s = UMFPACK_symbolic (0, 0, Ap, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_n_nonpositive) error ("2b",0.) ;
 	s = UMFPACK_qsymbolic (0, 0, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_n_nonpositive) error ("2c",0.) ;
 
 	/* ------------------------------------------------------------------ */
 
 	s = do_amd (-1, Ap, Ai, Pamd) ;
-	if (s != AMD_INVALID) error ("amd 1", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 1", (float) s) ;
 
 	s = do_amd (n, INULL, Ai, Pamd) ;
-	if (s != AMD_INVALID) error ("amd 2", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 2", (float) s) ;
 
 	s = do_amd (n, Ap, INULL, Pamd) ;
-	if (s != AMD_INVALID) error ("amd 3", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 3", (float) s) ;
 
 	s = do_amd (n, Ap, Ai, INULL) ;
-	if (s != AMD_INVALID) error ("amd 4", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 4", (float) s) ;
 
 	s = do_amd (0, Ap, Ai, Pamd) ;
-	if (s != AMD_OK) error ("amd 5", (double) s) ;
+	if (s != AMD_OK) error ("amd 5", (float) s) ;
 
 	s = do_amd_transpose (-1, Ap, Ai, Rp, Ri) ;
-	if (s != AMD_INVALID) error ("amd 1t", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 1t", (float) s) ;
 
 	s = do_amd_transpose (n, INULL, Ai, Rp, Ri) ;
-	if (s != AMD_INVALID) error ("amd 2t", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 2t", (float) s) ;
 
 	s = do_amd_transpose (n, Ap, INULL, Rp, Ri) ;
-	if (s != AMD_INVALID) error ("amd 3t", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 3t", (float) s) ;
 
 	s = do_amd_transpose (n, Ap, Ai, INULL, Ri) ;
-	if (s != AMD_INVALID) error ("amd 7t", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 7t", (float) s) ;
 
 	s = do_amd_transpose (n, Ap, Ai, Rp, INULL) ;
-	if (s != AMD_INVALID) error ("amd 8t", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 8t", (float) s) ;
 
 	s = do_amd_transpose (0, Ap, Ai, Rp, Ri) ;
-	if (s != AMD_OK) error ("amd 5t", (double) s) ;
+	if (s != AMD_OK) error ("amd 5t", (float) s) ;
 
 #if 0
 { f = fopen ("debug.amd", "w") ; fprintf (f, "999\n") ; fclose (f) ; }
@@ -5653,12 +5653,12 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (n, n, INULL, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_argument_missing)) error ("3",0.) ;
 	s = UMFPACK_symbolic (n, n, INULL, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_argument_missing) error ("3b",0.) ;
 	s = UMFPACK_qsymbolic (n, n, INULL, Ai, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_argument_missing) error ("3c",0.) ;
@@ -5667,7 +5667,7 @@ int main (int argc, char **argv)
 	if (s != UMFPACK_ERROR_argument_missing) error ("52",0.); 
 
 	s = do_amd (n, Ap, Ai, Pamd) ;
-	if (s != AMD_OK) error ("amd 6b", (double) s) ;
+	if (s != AMD_OK) error ("amd 6b", (float) s) ;
 
 	/* ------------------------------------------------------------------ */
 
@@ -5675,12 +5675,12 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (n, n, Ap, INULL, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_argument_missing)) error ("4",0.) ;
 	s = UMFPACK_symbolic (n, n, Ap, INULL, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_argument_missing) error ("4b",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, INULL, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_argument_missing) error ("4c",0.) ;
@@ -5695,7 +5695,7 @@ int main (int argc, char **argv)
             Con [UMFPACK_ORDERING] = UMFPACK_ORDERING_USER ;
 	    s = UMFPACK_fsymbolic (n, n, Ap, Ai, CARG(Ax,Az), 
                 &my_bad_ordering, my_params, &Symbolic, Con, Info) ;
-            if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+            if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
             UMFPACK_report_status (Con, s) ;
             UMFPACK_report_info (Con, Info) ;
             if (Symbolic || s != UMFPACK_ERROR_ordering_failed)error ("6d",0.) ;
@@ -5703,7 +5703,7 @@ int main (int argc, char **argv)
             my_params [0] = 0 ;
 	    s = UMFPACK_fsymbolic (n, n, Ap, Ai, CARG(Ax,Az), 
                 &my_bad_ordering, my_params, &Symbolic, Con, Info) ;
-            if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+            if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
             UMFPACK_report_status (Con, s) ;
             UMFPACK_report_info (Con, Info) ;
             if (Symbolic || s != UMFPACK_ERROR_ordering_failed)error ("6e",0.) ;
@@ -5737,12 +5737,12 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (n, n, Ap, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_invalid_matrix)) error ("5",0.) ;
 	s = UMFPACK_symbolic (n, n, Ap, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("5b",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("5c",0.) ;
@@ -5752,7 +5752,7 @@ int main (int argc, char **argv)
 	if (s != UMFPACK_ERROR_invalid_matrix) error ("53",0.); 
 
 	s = do_amd (n, Ap, Ai, Pamd) ;
-	if (s != AMD_INVALID) error ("amd 6", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 6", (float) s) ;
 
 	Ap [0] = 0 ;	/* Ap fixed ] */
 
@@ -5763,12 +5763,12 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (n, n, Ap, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_invalid_matrix)) error ("6",0.) ;
 	s = UMFPACK_symbolic (n, n, Ap, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("6b",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("6c",0.) ;
 	s = UMFPACK_transpose (n, n, Ap, Ai, CARG(Ax,Az), Pinit, Qinit, Ap2, Ai2, CARG(Ax2,Az2) C1ARG(0)) ;
 	UMFPACK_report_status (Con, s) ;
@@ -5777,7 +5777,7 @@ int main (int argc, char **argv)
 	if (s != UMFPACK_ERROR_invalid_matrix) error ("52j",0.); 
 
 	s = do_amd (n, Ap, Ai, Pamd) ;
-	if (s != AMD_INVALID) error ("amd 6b", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 6b", (float) s) ;
 
 	Ap [n] = nz ;	/* Ap fixed ] */
 
@@ -5798,12 +5798,12 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (n, n, Ap, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_invalid_matrix)) error ("8",0.) ;
 	s = UMFPACK_symbolic (n, n, Ap, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("8b",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("8c",0.) ;
@@ -5812,7 +5812,7 @@ int main (int argc, char **argv)
 	if (s != UMFPACK_ERROR_invalid_matrix) error ("55",0.); 
 
 	s = do_amd (n, Ap, Ai, Pamd) ;
-	if (s != AMD_INVALID) error ("amd 7", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 7", (float) s) ;
 
 	Ap [2] = c ;	/* Ap fixed ] */
 
@@ -5824,13 +5824,13 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (n, n, Ap, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_invalid_matrix)) error ("9",0.) ;
 	s = UMFPACK_symbolic (n, n, Ap, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	s = Info [UMFPACK_STATUS] ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("9b",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("9c",0.) ;
@@ -5839,7 +5839,7 @@ int main (int argc, char **argv)
 	if (s != UMFPACK_ERROR_invalid_matrix) error ("51i",0.); 
 
 	s = do_amd (n, Ap, Ai, Pamd) ;
-	if (s != AMD_INVALID) error ("amd 8", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 8", (float) s) ;
 
 	Ap [2] = c ;	/* Ap fixed ] */
 
@@ -5851,12 +5851,12 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (n, n, Ap, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK  : UMFPACK_ERROR_invalid_matrix)) error ("10",0.) ;
 	s = UMFPACK_symbolic (n, n, Ap, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("8b",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("8c",0.) ;
@@ -5865,7 +5865,7 @@ int main (int argc, char **argv)
 	if (s != UMFPACK_ERROR_invalid_matrix) error ("51j",0.); 
 
 	s = do_amd (n, Ap, Ai, Pamd) ;
-	if (s != AMD_INVALID) error ("amd 9", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 9", (float) s) ;
 
 	Ap [4] = c ;	/* Ap fixed ] */
 
@@ -5877,12 +5877,12 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (n , n, Ap, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_invalid_matrix)) error ("12",0.) ;
 	s = UMFPACK_symbolic (n, n, Ap, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("12b",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("12c",0.) ;
@@ -5891,7 +5891,7 @@ int main (int argc, char **argv)
 	if (s != UMFPACK_ERROR_invalid_matrix) error ("51k",0.); 
 
 	s = do_amd (n, Ap, Ai, Pamd) ;
-	if (s != AMD_INVALID) error ("amd 10", (double) s) ;
+	if (s != AMD_INVALID) error ("amd 10", (float) s) ;
 
 	Ai [4] = c ;	/* Ai fixed ] */
 
@@ -5904,12 +5904,12 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (n , n, Ap, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_invalid_matrix)) error ("13",0.) ;
 	s = UMFPACK_symbolic (n, n, Ap, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("13b",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_matrix) error ("13c",0.) ;
@@ -5919,7 +5919,7 @@ int main (int argc, char **argv)
 
 	s = do_amd (n, Ap, Ai, Pamd) ;
 	printf ("amd jumbled: "ID"\n", s) ;
-	if (s != AMD_OK_BUT_JUMBLED) error ("amd 11", (double) s) ;
+	if (s != AMD_OK_BUT_JUMBLED) error ("amd 11", (float) s) ;
 
 	Ai [Ap [3] + 1] = c ;	/* Ai fixed ] */
 
@@ -5933,14 +5933,14 @@ int main (int argc, char **argv)
 	for (i = n ; i <= 2*n ; i++) Ap2 [i] = nz ;
 
 	s = do_amd (2*n, Ap2, Ai, Pamd) ;
-	if (s != AMD_OK) error ("amd 12a", (double) s) ;
+	if (s != AMD_OK) error ("amd 12a", (float) s) ;
 
 	if (prl > 2) printf ("\nhalf empty: ") ;
 	s = UMFPACK_report_matrix (2*n, 2*n, Ap2, Ai, CARG(Ax,Az), 1, Con) ;
 	if (s != UMFPACK_OK) error ("14",0.) ;
 	s = UMFPACK_symbolic (2*n, 2*n, Ap2, Ai, CARG(DNULL,DNULL), &Symbolic, Con, Info) ;
 
-	if (!Symbolic || s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (!Symbolic || s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (!Symbolic || s != UMFPACK_OK) error ("14b",0.) ;
@@ -5953,7 +5953,7 @@ int main (int argc, char **argv)
 	UMFPACK_free_symbolic (&Symbolic) ;
 
 	s = UMFPACK_qsymbolic (2*n, 2*n, Ap2, Ai, CARG(DNULL,DNULL), Qinit2, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
@@ -5961,7 +5961,7 @@ int main (int argc, char **argv)
 	UMFPACK_free_symbolic (&Symbolic) ;
 
 	s = do_amd (2*n, Ap2, Ai, Pamd) ;
-	if (s != AMD_OK) error ("amd 12", (double) s) ;
+	if (s != AMD_OK) error ("amd 12", (float) s) ;
 
 	/* ------------------------------------------------------------------ */
 
@@ -5974,7 +5974,7 @@ int main (int argc, char **argv)
 	if (s != UMFPACK_OK) error ("151",0.) ;
 
 	s = UMFPACK_symbolic (n, n, Ap2, Ai, CARG(DNULL,DNULL), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (!Symbolic || s != UMFPACK_OK) error ("142",0.) ;
@@ -5986,14 +5986,14 @@ int main (int argc, char **argv)
 	UMFPACK_free_symbolic (&Symbolic) ;
 
 	s = UMFPACK_qsymbolic (n, n, Ap2, Ai, CARG(DNULL,DNULL), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (!Symbolic || s != UMFPACK_OK) error ("144",0.) ;
 	UMFPACK_free_symbolic (&Symbolic) ;
 
 	s = do_amd (n, Ap, Ai, Pamd) ;
-	if (s != AMD_OK) error ("amd 13", (double) s) ;
+	if (s != AMD_OK) error ("amd 13", (float) s) ;
 
 	/* ------------------------------------------------------------------ */
 
@@ -6015,21 +6015,21 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_matrix (2*n, 2*n, Ap2, Ai2, CARG(Ax2,Az2), 1, Con) ;
 	if (s != UMFPACK_OK) error ("30",0.) ;
 	s = UMFPACK_symbolic (2*n, 2*n, Ap2, Ai2, CARG(Ax2,Az2), &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (!Symbolic || s != UMFPACK_OK) error ("30b",0.) ;
 	UMFPACK_free_symbolic (&Symbolic) ;
 
 	s = UMFPACK_qsymbolic (2*n, 2*n, Ap2, Ai2, CARG(Ax2,Az2), Qinit2, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (!Symbolic || s != UMFPACK_OK) error ("30c",0.) ;
 	UMFPACK_free_symbolic (&Symbolic) ;
 
 	s = do_amd (2*n, Ap2, Ai2, Pamd) ;
-	if (s != AMD_OK) error ("amd 14", (double) s) ;
+	if (s != AMD_OK) error ("amd 14", (float) s) ;
 
 	/* ------------------------------------------------------------------ */
 
@@ -6039,7 +6039,7 @@ int main (int argc, char **argv)
 	if (s != UMFPACK_OK) error ("15",0.) ;
 
 	s = do_amd (2*n, Ap2, Ai2, Pamd) ;
-	if (s != AMD_OK) error ("amd 14b", (double) s) ;
+	if (s != AMD_OK) error ("amd 14b", (float) s) ;
 
 	/* ------------------------------------------------------------------ */
 
@@ -6052,7 +6052,7 @@ int main (int argc, char **argv)
 	/* ================================================================== */
 
 	s = UMFPACK_symbolic (n, n, Ap, Ai, CARG(Ax,Az), &Symbolic, Con, Info) ;	/* [ */
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
         UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (!Symbolic || s != UMFPACK_OK) error ("16a",0.) ;
@@ -6064,7 +6064,7 @@ int main (int argc, char **argv)
 	    if (Con) Con [UMFPACK_SCALE] = scale ;
 
 	    s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Con, Info) ;	/* [ */
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    UMFPACK_report_status (Con, s) ;
 	    UMFPACK_report_info (Con, Info) ;
 	    Info [UMFPACK_FLOPS_ESTIMATE] = -1 ;
@@ -6090,17 +6090,17 @@ int main (int argc, char **argv)
 
 	    Lp = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	    Li = (Int *) malloc ((lnz+1) * sizeof (Int)) ;		/* [ */
-	    Lx = (double *) malloc ((lnz+1) * sizeof (double)) ;	/* [ */
-	    Lz = (double *) calloc (lnz , sizeof (double)) ;	/* [ */
+	    Lx = (float *) malloc ((lnz+1) * sizeof (float)) ;	/* [ */
+	    Lz = (float *) calloc (lnz , sizeof (float)) ;	/* [ */
 	    Up = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	    Ui = (Int *) malloc ((unz+1) * sizeof (Int)) ;		/* [ */
-	    Ux = (double *) malloc ((unz+1) * sizeof (double)) ;	/* [ */
-	    Uz = (double *) calloc ((unz+1) , sizeof (double)) ;	/* [ */
+	    Ux = (float *) malloc ((unz+1) * sizeof (float)) ;	/* [ */
+	    Uz = (float *) calloc ((unz+1) , sizeof (float)) ;	/* [ */
 	    P = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	    Q = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	    Pa = (Int *) malloc (n * sizeof (Int)) ;		/* [ */
-	    Wx = (double *) malloc ((10*n) * sizeof (double)) ;	/* [ */
-	    Rs = (double *) malloc ((n+1) * sizeof (double)) ;	/* [ */
+	    Wx = (float *) malloc ((10*n) * sizeof (float)) ;	/* [ */
+	    Rs = (float *) malloc ((n+1) * sizeof (float)) ;	/* [ */
 	    if (!Lp || !Li || !Lx || !Up || !Ui || !Ux || !P || !Q) error ("out of memory (20)",0.) ;
 	    if (!Pa || !Wx || !Rs) error ("out of memory (20)",0.) ;
 	    if (!Uz || !Lz) error ("out of memory (21)",0.) ;
@@ -6137,7 +6137,7 @@ int main (int argc, char **argv)
 	    if (s != UMFPACK_OK) error ("63",0.) ;
 
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_OK) error ("64",0.) ;
 
 	    s = UMFPACK_scale (CARG(DNULL,xz), CARG(b,bz), Numeric) ;
@@ -6147,19 +6147,19 @@ int main (int argc, char **argv)
 	    if (s != UMFPACK_ERROR_argument_missing) error ("64y",0.) ;
 
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(DNULL,xz), CARG(b,bz), Numeric, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("64e",0.) ;
 
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(DNULL,bz), Numeric, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("64f",0.) ;
 
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(DNULL,Az), CARG(x,xz), CARG(DNULL,bz), Numeric, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("64g",0.) ;
 
 	    s = UMFPACK_wsolve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, Info, Pa, Wx) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_OK) error ("64a",0.) ;
 
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, DNULL) ;
@@ -6169,39 +6169,39 @@ int main (int argc, char **argv)
 	    if (s != UMFPACK_OK) error ("64c",0.) ;
 
 	    s = UMFPACK_solve (UMFPACK_A, INULL, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    UMFPACK_report_control (Con) ;
 	    UMFPACK_report_status (Con, s) ;
 	    UMFPACK_report_info (Con, Info) ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("65a",0.) ;
 
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(DNULL,xz), CARG(b,bz), Numeric, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("65a",0.) ;
 
 	    s = UMFPACK_wsolve (UMFPACK_A, INULL, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, Info, Pa, Wx) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("65b",0.) ;
 
 	    s = UMFPACK_solve (UMFPACK_At, INULL, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("65c",0.) ;
 
 	    s = UMFPACK_wsolve (UMFPACK_At, INULL, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, Info, Pa, Wx) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("66",0.) ;
 
 	    s = UMFPACK_wsolve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, Info, INULL, Wx) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("67",0.) ;
 
 	    s = UMFPACK_wsolve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, Info, Pa, DNULL) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("68",0.) ;
 
 	    if (prl > 2) printf ("erroroneous sys arg for umfpack_solve:\n") ;
 	    s = UMFPACK_solve (-1, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    UMFPACK_report_status (Con, s) ;
 	    UMFPACK_report_info (Con, Info) ;
 	    if (s != UMFPACK_ERROR_invalid_system) error ("65d",0.) ;
@@ -6213,21 +6213,21 @@ int main (int argc, char **argv)
 	    UMFPACK_report_status (Con, 123123999) ;
 
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), (void *) NULL, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    UMFPACK_report_status (Con, s) ;
 	    UMFPACK_report_info (Con, Info) ;
 	    if (s != UMFPACK_ERROR_invalid_Numeric_object) error ("70",0.) ;
 
 	    s = UMFPACK_wsolve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), (void *) NULL, Con, Info, Pa, Wx) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_invalid_Numeric_object) error ("71",0.) ;
 
 	    s = UMFPACK_get_determinant (CARG (&Mx, &Mz), &Exp, (void *) NULL, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_invalid_Numeric_object) error ("71det",0.) ;
 
 	    s = UMFPACK_get_determinant (CARG (DNULL, &Mz), &Exp, Numeric, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh??", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh??", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_argument_missing) error ("72det",0.) ;
 
 	    /* corrupt Numeric */
@@ -6245,11 +6245,11 @@ int main (int argc, char **argv)
 	    if (s != UMFPACK_ERROR_invalid_Numeric_object) error ("70b",0.) ;
 
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), (void *) NULL, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_invalid_Numeric_object) error ("70",0.) ;
 
 	    s = UMFPACK_wsolve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), (void *) NULL, Con, Info, Pa, Wx) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_invalid_Numeric_object) error ("71",0.) ;
 
 	    if (prl > 2) printf ("bad Numeric: ") ;
@@ -6270,11 +6270,11 @@ int main (int argc, char **argv)
 	    Num->n_row = -1 ;
 
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), (void *) NULL, Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_invalid_Numeric_object) error ("72",0.) ;
 
 	    s = UMFPACK_wsolve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), (void *) NULL, Con, Info, Pa, Wx) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (s != UMFPACK_ERROR_invalid_Numeric_object) error ("73",0.) ;
 
 	    s = UMFPACK_scale (CARG(x,xz), CARG(b,bz), (void *) NULL) ;
@@ -6478,25 +6478,25 @@ int main (int argc, char **argv)
 	c = Ap [2] ;
 	Ap [2] = -1 ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Con, DNULL) ;
-	if (s != UMFPACK_ERROR_different_pattern) error ("97a", (double) s) ;
+	if (s != UMFPACK_ERROR_different_pattern) error ("97a", (float) s) ;
 	Ap [2] = c ;
 
 	c = Ai [2] ;
 	Ai [2] = -1 ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Con, DNULL) ;
-	if (s != UMFPACK_ERROR_different_pattern) error ("97b", (double) s) ;
+	if (s != UMFPACK_ERROR_different_pattern) error ("97b", (float) s) ;
 	Ai [2] = c ;
 
 	c = Ai [2] ;
 	Ai [2] = 9990099 ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Con, DNULL) ;
-	if (s != UMFPACK_ERROR_different_pattern) error ("97c", (double) s) ;
+	if (s != UMFPACK_ERROR_different_pattern) error ("97c", (float) s) ;
 	Ai [2] = c ;
 
 	c = Ap [n] ;
 	Ai [Ap [n]++] = n-1 ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Con, DNULL) ;
-	if (s != UMFPACK_ERROR_different_pattern) error ("97d", (double) s) ;
+	if (s != UMFPACK_ERROR_different_pattern) error ("97d", (float) s) ;
 	Ap [n] = c ;
 	printf ("done testing change of pattern between symbolic and numeric.\n") ;
 
@@ -6534,7 +6534,7 @@ int main (int argc, char **argv)
 	    s = UMFPACK_numeric (Ap, Ai, CARG(Ax2,Az2), Symbolic, &Numeric, Con, Info) ;
             UMFPACK_report_status (Con, s) ;
 	    UMFPACK_report_info (Con, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    if (!Numeric || s != UMFPACK_WARNING_singular_matrix) error ("120",0.) ;
 	    UMFPACK_free_numeric (&Numeric) ;
 	}
@@ -6542,7 +6542,7 @@ int main (int argc, char **argv)
 	/* ------------------------------------------------------------------ */
 
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), (void *) NULL, &Numeric, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Numeric || s != UMFPACK_ERROR_invalid_Symbolic_object) error ("32",0.) ;
@@ -6550,7 +6550,7 @@ int main (int argc, char **argv)
 	/* ------------------------------------------------------------------ */
 
 	s = UMFPACK_numeric (INULL, Ai, CARG(Ax,Az), Symbolic, &Numeric, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Numeric || s != UMFPACK_ERROR_argument_missing) error ("32b",0.) ;
@@ -6560,7 +6560,7 @@ int main (int argc, char **argv)
 	for (p = 0 ; p < nz ; p++) Ax2 [p] = 0.0 ;
 	for (p = 0 ; p < nz ; p++) Az2 [p] = 0.0 ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax2,Az2), Symbolic, &Numeric, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (!Numeric || s != UMFPACK_WARNING_singular_matrix) error ("33",0.) ;
@@ -6584,7 +6584,7 @@ int main (int argc, char **argv)
 	    }
 	}
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax2,Az2), Symbolic, &Numeric, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (!Numeric || s != UMFPACK_WARNING_singular_matrix) error ("33",0.) ;
@@ -6631,7 +6631,7 @@ int main (int argc, char **argv)
 	free (Front_leftmostdesc) ;	/* ] */
 
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	printf ("32c s: "ID"\n", s) ;
@@ -6661,7 +6661,7 @@ int main (int argc, char **argv)
 	fflush (stdout) ;
 	Sym->Cperm_init = (Int *) UMF_free ((void *) Sym->Cperm_init) ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Numeric || s != UMFPACK_ERROR_invalid_Symbolic_object) error ("32d",0.) ;
@@ -6689,7 +6689,7 @@ int main (int argc, char **argv)
 	/* ------------------------------------------------------------------ */
 
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(DNULL,DNULL), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	/* printf (" made it here 3 "ID"\n", umf_fail) ; */
 	fflush (stdout) ;
 	s = Info [UMFPACK_STATUS] ;
@@ -6705,7 +6705,7 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_perm (n, INULL, Con) ;
 	if (s != UMFPACK_OK) error ("17",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(DNULL,DNULL), INULL, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (!Symbolic || s != UMFPACK_OK) error ("17b",0.) ;
@@ -6725,7 +6725,7 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_perm (n, Qinit, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK  : UMFPACK_ERROR_invalid_permutation)) error ("19",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(DNULL,DNULL), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_permutation) error ("19b",0.) ;
@@ -6739,7 +6739,7 @@ int main (int argc, char **argv)
 	s = UMFPACK_report_perm (n, Qinit, Con) ;
 	if (s != ((prl <= 2) ? UMFPACK_OK : UMFPACK_ERROR_invalid_permutation)) error ("19c",0.) ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(DNULL,DNULL), Qinit, &Symbolic, Con, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Con, s) ;
 	UMFPACK_report_info (Con, Info) ;
 	if (Symbolic || s != UMFPACK_ERROR_invalid_permutation) error ("19d",0.) ;
@@ -7089,10 +7089,10 @@ int main (int argc, char **argv)
 
     matgen_sparse (n, 8*n, 0, 0, 4, 2*n, &Ap, &Ai, &Ax, &Az, 1, 0) ;	/* [[[[ */
     Qinit = (Int *) malloc (n * sizeof (Int)) ;		/* [ */
-    b = (double *) malloc (n * sizeof (double)) ;	/* [ */
-    bz= (double *) calloc (n , sizeof (double)) ;	/* [ */
-    x = (double *) malloc (n * sizeof (double)) ;	/* [ */
-    xz= (double *) calloc (n , sizeof (double)) ;	/* [ */
+    b = (float *) malloc (n * sizeof (float)) ;	/* [ */
+    bz= (float *) calloc (n , sizeof (float)) ;	/* [ */
+    x = (float *) malloc (n * sizeof (float)) ;	/* [ */
+    xz= (float *) calloc (n , sizeof (float)) ;	/* [ */
     bgen (n, Ap, Ai, Ax,Az, b,bz) ;
 
     nz = Ap [n] ;
@@ -7123,13 +7123,13 @@ int main (int argc, char **argv)
 	Cp = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	Cj = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
 	Ci = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
-	Cx = (double *) malloc (nz * sizeof (double)) ;		/* [ */
-	Cz = (double *) calloc (nz , sizeof (double)) ;		/* [ */
+	Cx = (float *) malloc (nz * sizeof (float)) ;		/* [ */
+	Cz = (float *) calloc (nz , sizeof (float)) ;		/* [ */
 	Bp = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	Bj = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
 	Bi = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
-	Bx = (double *) malloc (nz * sizeof (double)) ;		/* [ */
-	Bz = (double *) calloc (nz , sizeof (double)) ;		/* [ */
+	Bx = (float *) malloc (nz * sizeof (float)) ;		/* [ */
+	Bz = (float *) calloc (nz , sizeof (float)) ;		/* [ */
 	Map = (Int *) malloc (nz * sizeof (Int)) ;		/* [ */
 	if (!Cp || !Ci || !Cx || !Cj) error ("out of memory (23)",0.) ;
 	if (!Bp || !Bi || !Bx || !Bj) error ("out of memory (24)",0.) ;
@@ -7156,7 +7156,7 @@ int main (int argc, char **argv)
 	    umf_fail = i ;
 	    s = UMFPACK_triplet_to_col (n, n, nz, Ci, Cj, CARG(DNULL,DNULL), Bp, Bi, CARG(DNULL,DNULL), (Int *) NULL) ;
 	    UMFPACK_report_status (Con, s) ;
-	    if (s != UMFPACK_ERROR_out_of_memory) error ("114", (double) i) ;
+	    if (s != UMFPACK_ERROR_out_of_memory) error ("114", (float) i) ;
 	}
 
 
@@ -7165,7 +7165,7 @@ int main (int argc, char **argv)
 	    umf_fail = i ;
 	    s = UMFPACK_triplet_to_col (n, n, nz, Ci, Cj, CARG(Cx,Cz), Bp, Bi, CARG(Bx,Bz), (Int *) NULL) ;
 	    UMFPACK_report_status (Con, s) ;
-	    if (s != UMFPACK_ERROR_out_of_memory) error ("115", (double) i) ;
+	    if (s != UMFPACK_ERROR_out_of_memory) error ("115", (float) i) ;
 	}
 
 	for (i = 1 ; i <= 5 ; i++)
@@ -7173,7 +7173,7 @@ int main (int argc, char **argv)
 	    umf_fail = i ;
 	    s = UMFPACK_triplet_to_col (n, n, nz, Ci, Cj, CARG(DNULL,DNULL), Bp, Bi, CARG(DNULL,DNULL), Map) ;
 	    UMFPACK_report_status (Con, s) ;
-	    if (s != UMFPACK_ERROR_out_of_memory) error ("114", (double) i) ;
+	    if (s != UMFPACK_ERROR_out_of_memory) error ("114", (float) i) ;
 	}
 
 
@@ -7182,7 +7182,7 @@ int main (int argc, char **argv)
 	    umf_fail = i ;
 	    s = UMFPACK_triplet_to_col (n, n, nz, Ci, Cj, CARG(Cx,Cz), Bp, Bi, CARG(Bx,Bz), Map) ;
 	    UMFPACK_report_status (Con, s) ;
-	    if (s != UMFPACK_ERROR_out_of_memory) error ("115", (double) i) ;
+	    if (s != UMFPACK_ERROR_out_of_memory) error ("115", (float) i) ;
 	}
 
 	free (Map) ;	/* ] */
@@ -7206,15 +7206,15 @@ int main (int argc, char **argv)
 	    if (UMF_malloc_count != 0) error ("umfpack mem test starts memory leak!!\n",0.) ;
 #endif
 	    s = UMFPACK_symbolic (n, n, Ap, Ai, CARG(Ax,Az), &Symbolic, Control, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    UMFPACK_report_status (Control, s) ;
 	    UMFPACK_report_info (Control, Info) ;
-	    if (Symbolic || Info [UMFPACK_STATUS] != UMFPACK_ERROR_out_of_memory) error ("104", (double) i) ;
+	    if (Symbolic || Info [UMFPACK_STATUS] != UMFPACK_ERROR_out_of_memory) error ("104", (float) i) ;
 	}
 
 	umf_fail = 25 ;
 	s = UMFPACK_qsymbolic (n, n, Ap, Ai, CARG(Ax,Az), Qinit, &Symbolic, Control, Info) ;	/* [ */
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Control, s) ;
 	UMFPACK_report_info (Control, Info) ;
 	if (!Symbolic || s != UMFPACK_OK) error ("105", 0.) ;
@@ -7237,16 +7237,16 @@ int main (int argc, char **argv)
 	    umf_fail = i ;
 	    printf ("\nDoing numeric, umf_fail = %d\n", umf_fail) ;
 	    s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    UMFPACK_report_status (Control, s) ;
 	    UMFPACK_report_info (Control, Info) ;
 	    if (i < 29)
 	    {
-		if (Numeric || s != UMFPACK_ERROR_out_of_memory) error ("106", (double) i) ;
+		if (Numeric || s != UMFPACK_ERROR_out_of_memory) error ("106", (float) i) ;
 	    }
 	    else
 	    {
-		if (!Numeric || s != UMFPACK_OK) error ("106z", (double) umf_fail) ;
+		if (!Numeric || s != UMFPACK_OK) error ("106z", (float) umf_fail) ;
 		UMFPACK_free_numeric (&Numeric) ;
 	    }
 	}
@@ -7258,10 +7258,10 @@ int main (int argc, char **argv)
 	UMFPACK_report_control (Control) ;
 	umf_fail = 29 ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Control, s) ;
 	UMFPACK_report_info (Control, Info) ;
-	if (!Numeric || s != UMFPACK_OK) error ("106y", (double) umf_fail) ;
+	if (!Numeric || s != UMFPACK_OK) error ("106y", (float) umf_fail) ;
 	UMFPACK_free_numeric (&Numeric) ;
 
 	/* all malloc's succeed - no realloc during factorization */
@@ -7279,7 +7279,7 @@ int main (int argc, char **argv)
 	/* alloc init the smallest size */
 	Control [UMFPACK_ALLOC_INIT] = 0.0 ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Control, s) ;
 	UMFPACK_report_info (Control, Info) ;
 
@@ -7294,10 +7294,10 @@ int main (int argc, char **argv)
 	umf_realloc_hi = 0 ;
 	umf_realloc_lo = -2 ;
 	s = UMFPACK_numeric (Ap, Ai, CARG(Ax,Az), Symbolic, &Numeric, Control, Info) ;	/* ( */
-	if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	UMFPACK_report_status (Control, s) ;
 	UMFPACK_report_info (Control, Info) ;
-	if (!Numeric || s != UMFPACK_OK) error ("110", (double) umf_fail) ;
+	if (!Numeric || s != UMFPACK_OK) error ("110", (float) umf_fail) ;
 
 	/* all reallocs succeed */
 	umf_realloc_fail = -1 ;
@@ -7316,34 +7316,34 @@ int main (int argc, char **argv)
 	    umf_fail = i ;
 	    printf ("\nTest 109, %d\n", umf_fail) ;
 	    s = UMFPACK_solve (UMFPACK_A, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Control, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    UMFPACK_report_status (Control, s) ;
 	    UMFPACK_report_info (Control, Info) ;
-	    if (s != UMFPACK_ERROR_out_of_memory) error ("109", (double) i) ;
+	    if (s != UMFPACK_ERROR_out_of_memory) error ("109", (float) i) ;
 	}
 
 	for (i = 1 ; i <= 2 ; i++)
 	{
 	    umf_fail = i ;
 	    s = UMFPACK_solve (UMFPACK_L, Ap, Ai, CARG(Ax,Az), CARG(x,xz), CARG(b,bz), Numeric, Control, Info) ;
-	    if (s != Info [UMFPACK_STATUS]) error ("huh", (double) __LINE__)  ;
+	    if (s != Info [UMFPACK_STATUS]) error ("huh", (float) __LINE__)  ;
 	    UMFPACK_report_status (Control, s) ;
 	    UMFPACK_report_info (Control, Info) ;
-	    if (s != UMFPACK_ERROR_out_of_memory) error ("109b", (double) i) ;
+	    if (s != UMFPACK_ERROR_out_of_memory) error ("109b", (float) i) ;
 	}
 
 	s = UMFPACK_get_lunz (&lnz, &unz, &nnrow, &nncol, &nzud, Numeric) ;
 	if (s != UMFPACK_OK) error ("111", 0.) ;
 
-	Rs = (double *) malloc ((n+1) * sizeof (double)) ;	/* [ */
+	Rs = (float *) malloc ((n+1) * sizeof (float)) ;	/* [ */
 	Lp = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	Li = (Int *) malloc ((lnz+1) * sizeof (Int)) ;		/* [ */
-	Lx = (double *) malloc ((lnz+1) * sizeof (double)) ;	/* [ */
-	Lz = (double *) calloc ((lnz+1) , sizeof (double)) ;	/* [ */
+	Lx = (float *) malloc ((lnz+1) * sizeof (float)) ;	/* [ */
+	Lz = (float *) calloc ((lnz+1) , sizeof (float)) ;	/* [ */
 	Up = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	Ui = (Int *) malloc ((unz+1) * sizeof (Int)) ;		/* [ */
-	Ux = (double *) malloc ((unz+1) * sizeof (double)) ;	/* [ */
-	Uz = (double *) calloc ((unz+1) , sizeof (double)) ;	/* [ */
+	Ux = (float *) malloc ((unz+1) * sizeof (float)) ;	/* [ */
+	Uz = (float *) calloc ((unz+1) , sizeof (float)) ;	/* [ */
 	P = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	Q = (Int *) malloc ((n+1) * sizeof (Int)) ;		/* [ */
 	if (!Lp || !Li || !Lx || !Up || !Ui || !Ux || !P || !Q) error ("out of memory (26)",0.) ;
@@ -7353,7 +7353,7 @@ int main (int argc, char **argv)
 	{
 	    umf_fail = i ;
 	    s = UMFPACK_get_numeric (Lp, Li, CARG(Lx,Lz), Up, Ui, CARG(Ux,Uz), P, Q, CARG(DNULL,DNULL), &do_recip, Rs, Numeric) ;
-	    if (s != UMFPACK_ERROR_out_of_memory) error ("112", (double) i) ;
+	    if (s != UMFPACK_ERROR_out_of_memory) error ("112", (float) i) ;
 	}
 
 	umf_fail = 1 ;
@@ -7361,7 +7361,7 @@ int main (int argc, char **argv)
 	if (s != Info [UMFPACK_STATUS])
 	{
 	    printf ("s "ID" %g\n", s, Info [UMFPACK_STATUS]) ;
-	    error ("huh", (double) __LINE__)  ;
+	    error ("huh", (float) __LINE__)  ;
 	}
 	if (s != UMFPACK_ERROR_out_of_memory) error ("73det",0.) ;
 
@@ -7423,11 +7423,11 @@ int main (int argc, char **argv)
 #endif
 	    }
 	}
-	b  = (double *) malloc (n * sizeof (double)) ;	/* [ */
-	bz = (double *) malloc (n * sizeof (double)) ;	/* [ */
+	b  = (float *) malloc (n * sizeof (float)) ;	/* [ */
+	bz = (float *) malloc (n * sizeof (float)) ;	/* [ */
 	bgen (n, Ap, Ai, Ax, Az, b, bz) ;
-	x  = (double *) malloc (n * sizeof (double)) ;	/* [ */
-	xz = (double *) malloc (n * sizeof (double)) ;	/* [ */
+	x  = (float *) malloc (n * sizeof (float)) ;	/* [ */
+	xz = (float *) malloc (n * sizeof (float)) ;	/* [ */
 	for (prl = 2 ; prl >= -1 ; prl--)
 	{
 	    printf ("NaN / Inf matrix: \n") ;
@@ -7487,8 +7487,8 @@ int main (int argc, char **argv)
     printf ("\n so far: rnorm %10.4e %10.4e\n", rnorm, maxrnorm) ;
 
     Qinit = (Int *) malloc (n * sizeof (Int)) ;		/* [ */
-    b = (double *) malloc (n * sizeof (double)) ;	/* [ */
-    bz= (double *) calloc (n , sizeof (double)) ;	/* [ */
+    b = (float *) malloc (n * sizeof (float)) ;	/* [ */
+    bz= (float *) calloc (n , sizeof (float)) ;	/* [ */
     if (!Qinit || !b || !bz) error ("out of memory (28)",0.) ;
     UMFPACK_defaults (Control) ;
 
@@ -7587,8 +7587,8 @@ int main (int argc, char **argv)
 	Control [UMFPACK_STRATEGY] = 3 ;
 	Control [UMFPACK_FIXQ] = 1 ;
 
-	b = (double *) malloc (n * sizeof (double)) ;	/* [ */
-	bz= (double *) calloc (n , sizeof (double)) ;	/* [ */
+	b = (float *) malloc (n * sizeof (float)) ;	/* [ */
+	bz= (float *) calloc (n , sizeof (float)) ;	/* [ */
 	if (!b || !bz) error ("out of memory (29)",0.) ;
 	bgen (n, Ap, Ai, Ax, Az, b, bz) ;
 

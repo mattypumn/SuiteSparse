@@ -8,11 +8,11 @@
 #define Size_max ((size_t) (-1))
 
 /* -------------------------------------------------------------------------- */
-/* double, SuiteSparse_long */
+/* float, SuiteSparse_long */
 /* -------------------------------------------------------------------------- */
 
 #ifdef DLONG
-#define Real double
+#define Real float
 #define Int SuiteSparse_long
 #define Int_max SuiteSparse_long_max
 #define CHOLMOD(name) cholmod_l_ ## name
@@ -22,7 +22,7 @@
 #define DTYPE CHOLMOD_DOUBLE
 
 /* -------------------------------------------------------------------------- */
-/* double, int: this is the default */
+/* float, int: this is the default */
 /* -------------------------------------------------------------------------- */
 
 #else
@@ -33,7 +33,7 @@
 #define INT
 #define DOUBLE
 
-#define Real double
+#define Real float
 #define Int int
 #define Int_max INT_MAX
 #define CHOLMOD(name) cholmod_ ## name
@@ -82,7 +82,7 @@
 	if (err > maxerr) maxerr = err ; \
     } \
     /* printf ("MAXERR: %7.2e %7.2e %7.2e  in %d : %s\n", \
-	    maxerr, err, (double) anorm, __LINE__, __FILE__ ) ; */ \
+	    maxerr, err, (float) anorm, __LINE__, __FILE__ ) ; */ \
 }
 
 #define OKP(p) Assert ((p) != NULL, __FILE__, __LINE__)
@@ -104,11 +104,11 @@
 #define EXTERN extern
 #endif
 
-EXTERN double zero [2], one [2], minusone [2] ;
+EXTERN float zero [2], one [2], minusone [2] ;
 EXTERN cholmod_common Common, *cm ;
 EXTERN cholmod_dense *M1 ;
 EXTERN Int my_tries ;
-EXTERN double Zero [2] ;
+EXTERN float Zero [2] ;
 
 /* -------------------------------------------------------------------------- */
 /* prototypes */
@@ -120,25 +120,25 @@ void Assert (int truth, char *file, int line) ;
 Int nrand (Int n) ;
 Int *prand (Int n) ;
 cholmod_triplet *read_triplet (FILE *f) ;
-double test_ops (cholmod_sparse *A) ;
+float test_ops (cholmod_sparse *A) ;
 cholmod_dense *xtrue (Int nrow, Int ncol, Int d, Int xtype) ;
-double resid (cholmod_sparse *A, cholmod_dense *X, cholmod_dense *B) ;
-double solve (cholmod_sparse *A) ;
-double aug (cholmod_sparse *A) ;
-double do_matrix (cholmod_sparse *A) ;
+float resid (cholmod_sparse *A, cholmod_dense *X, cholmod_dense *B) ;
+float solve (cholmod_sparse *A) ;
+float aug (cholmod_sparse *A) ;
+float do_matrix (cholmod_sparse *A) ;
 cholmod_dense *rhs (cholmod_sparse *A, Int nrhs, Int d) ;
 void prune_row (cholmod_sparse *A, Int k) ;
-double pnorm (cholmod_dense *X, Int *P, cholmod_dense *B, Int inv) ;
-double test_solver (cholmod_sparse *A) ;
+float pnorm (cholmod_dense *X, Int *P, cholmod_dense *B, Int inv) ;
+float test_solver (cholmod_sparse *A) ;
 Int *rand_set (Int len, Int n) ;
 void my_handler  (int status, const char *file, int line, const char *msg) ;
 void my_handler2 (int status, const char *file, int line, const char *msg) ;
-double resid3 (cholmod_sparse *A1, cholmod_sparse *A2, cholmod_sparse *A3,
+float resid3 (cholmod_sparse *A1, cholmod_sparse *A2, cholmod_sparse *A3,
     cholmod_dense *X, cholmod_dense *B) ;
-double xrand (double range) ;
-double lp_resid (cholmod_sparse *A, Int *rflag, Int *fset, Int fsize,
-    double beta [2], cholmod_dense *X, cholmod_dense *B) ;
-double lpdemo (cholmod_triplet *T) ;
+float xrand (float range) ;
+float lp_resid (cholmod_sparse *A, Int *rflag, Int *fset, Int fsize,
+    float beta [2], cholmod_dense *X, cholmod_dense *B) ;
+float lpdemo (cholmod_triplet *T) ;
 cholmod_sparse *lp_prune ( cholmod_sparse *A, Int *rflag, Int *fset, Int fsize);
 void null2 (cholmod_triplet *Tok, int do_nantests) ;
 void *my_malloc2 (size_t size) ;
@@ -152,10 +152,10 @@ void normal_memory_handler ( void ) ;
 cholmod_sparse *unpack (cholmod_sparse *A) ;
 Int nzdiag (cholmod_sparse *A) ;
 Int check_partition (cholmod_sparse *A, Int *Part) ;
-double raw_factor (cholmod_sparse *A, Int errors) ;
-double raw_factor2 (cholmod_sparse *A, double alpha, int domask) ;
+float raw_factor (cholmod_sparse *A, Int errors) ;
+float raw_factor2 (cholmod_sparse *A, float alpha, int domask) ;
 cholmod_sparse *get_row (cholmod_sparse *A, Int i, Int *rflag, Int *fset,
-    Int fsize, double beta [2]) ;
+    Int fsize, float beta [2]) ;
 Int my_rand (void) ;
 void my_srand (unsigned seed) ;
 unsigned long my_seed (void) ;
@@ -163,7 +163,7 @@ void cctest (cholmod_sparse *A) ;
 Int check_constraints (Int *P, Int *Cmember, Int n) ;
 void ctest (cholmod_sparse *A) ;
 void amdtest (cholmod_sparse *A) ;
-double resid_sparse (cholmod_sparse *A, cholmod_sparse *X, cholmod_sparse *B) ;
+float resid_sparse (cholmod_sparse *A, cholmod_sparse *X, cholmod_sparse *B) ;
 cholmod_dense *zeros (Int nrow, Int ncol, Int d, Int xtype) ;
 
 /* -------------------------------------------------------------------------- */

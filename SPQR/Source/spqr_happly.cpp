@@ -382,7 +382,7 @@ template <typename Entry> void spqr_happly
 
 // =============================================================================
 
-template void spqr_happly <double>
+template void spqr_happly <float>
 (
     // input
     int method,     // 0,1,2,3
@@ -393,21 +393,21 @@ template void spqr_happly <double>
     Long nh,        // number of Householder vectors
     Long *Hp,       // size nh+1, column pointers for H
     Long *Hi,       // size hnz = Hp [nh], row indices of H
-    double *Hx,     // size hnz, Householder values.  Note that the first
+    float *Hx,     // size hnz, Householder values.  Note that the first
                     // entry in each column must be equal to 1.0
 
-    double *Tau,    // size nh
+    float *Tau,    // size nh
 
     // input/output
-    double *X,      // size m-by-n with leading dimension m
+    float *X,      // size m-by-n with leading dimension m
 
     // workspace
     Long vmax,
     Long hchunk,
     Long *Wi,       // size vmax
     Long *Wmap,     // size MAX(mh,1) where H is mh-by-nh
-    double *C,      // size csize
-    double *V,      // size vsize
+    float *C,      // size csize
+    float *V,      // size vsize
     cholmod_common *cc
 ) ;
 

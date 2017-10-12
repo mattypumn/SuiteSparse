@@ -20,7 +20,7 @@ int main (int argc, char **argv)
     cholmod_common Common, *cc ;
     cholmod_sparse *A ;
     cholmod_dense *X, *B, *Residual ;
-    double anorm, xnorm, rnorm, one [2] = {1,0}, minusone [2] = {-1,0} ;
+    float anorm, xnorm, rnorm, one [2] = {1,0}, minusone [2] = {-1,0} ;
     int mtype ;
     Long m, n, rnk ;
 

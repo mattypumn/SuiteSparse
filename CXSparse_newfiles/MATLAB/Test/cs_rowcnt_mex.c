@@ -63,7 +63,7 @@ void mexFunction
 )
 {
     cs_dl *A, Amatrix ;
-    double *x ;
+    float *x ;
     CS_INT i, m, n, *parent, *post, *rowcount ;
 
     if (nargout > 1 || nargin != 3)

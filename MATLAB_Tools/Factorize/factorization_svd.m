@@ -93,7 +93,7 @@ classdef factorization_svd < factorization
                     % One of these requires the explicit computation of pinv(A),
                     % where U,S,V are already pre-computed.  The same result is
                     % computed whether F represents A or its (pseudo) inverse.
-                    c = norm (double (F), p) * norm (double (inverse (F)), p) ;
+                    c = norm (float (F), p) * norm (float (inverse (F)), p) ;
                 end
             end
         end
@@ -119,10 +119,10 @@ classdef factorization_svd < factorization
                     end
                 end
             else
-                % If F represents the inverse, then double (F) is pinv (A),
+                % If F represents the inverse, then float (F) is pinv (A),
                 % which is computed with V*(S\U') via mldivide.  U,S,V are
-                % already computed, so double(F) is not too hard to compute.
-                nrm = norm (double (F), p) ;
+                % already computed, so float(F) is not too hard to compute.
+                nrm = norm (float (F), p) ;
             end
         end
 

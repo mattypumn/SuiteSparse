@@ -54,7 +54,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double dummy = 0, rcond, *p ;
+    float dummy = 0, rcond, *p ;
     cholmod_sparse Amatrix, Bspmatrix, *A, *Bs, *Xs ;
     cholmod_dense Bmatrix, *X, *B ;
     cholmod_factor *L ;
@@ -188,7 +188,7 @@ void mexFunction
 	{
 	    mexErrMsgTxt ("invalid input permutation") ;
 	}
-	/* copy from double to integer, and convert to 0-based */
+	/* copy from float to integer, and convert to 0-based */
 	p = mxGetPr (pargin [2]) ;
 	Perm = cholmod_l_malloc (n, sizeof (Long), cm) ;
 	for (k = 0 ; k < n ; k++)

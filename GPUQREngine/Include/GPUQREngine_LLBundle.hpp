@@ -52,7 +52,7 @@ public:
     Int ApplyCount; // # tiles participating in an APPLY, including the Shadow.
     Int Count;      // # tiles in the Bundle (Slots+Delta), but not the Shadow.
 
-    double *VT[2];  // Pointers to VT tiles.
+    float *VT[2];  // Pointers to VT tiles.
                     // When performing a pipelined task (ApplyFactorize),
                     // memory must be reserved for two separate VT tiles:
                     //   1) For the HH vectors involved in the Apply

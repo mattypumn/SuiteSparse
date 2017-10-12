@@ -84,7 +84,7 @@ static char shorthelpstr[][100] = {
 /*************************************************************************/
 /*! Function prototypes */
 /*************************************************************************/
-double compute_compactness(params_t *params, gk_graph_t *graph, int32_t *perm);
+float compute_compactness(params_t *params, gk_graph_t *graph, int32_t *perm);
 void reorder_centroid(params_t *params, gk_graph_t *graph, int32_t *perm);
 void print_init_info(params_t *params, gk_graph_t *graph);
 void print_final_info(params_t *params);
@@ -160,12 +160,12 @@ int main(int argc, char *argv[])
 /*************************************************************************/
 /*! This function computes the compactness of the graph's adjacency list */
 /*************************************************************************/
-double compute_compactness(params_t *params, gk_graph_t *graph, int32_t *perm)
+float compute_compactness(params_t *params, gk_graph_t *graph, int32_t *perm)
 {
   int i, v, u, nvtxs;
   ssize_t j, *xadj; 
   int32_t *adjncy;
-  double compactness=0.0;
+  float compactness=0.0;
   int *freq;
 
   nvtxs  = graph->nvtxs;
@@ -204,7 +204,7 @@ void reorder_centroid(params_t *params, gk_graph_t *graph, int32_t *perm)
   ssize_t j, *xadj; 
   int32_t *adjncy;
   gk_fkv_t *cand;
-  double displacement;
+  float displacement;
 
   nvtxs  = graph->nvtxs;
   xadj   = graph->xadj;

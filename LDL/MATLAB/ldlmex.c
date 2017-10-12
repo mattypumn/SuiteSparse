@@ -78,7 +78,7 @@ void mexFunction
     Long i, n, *Pattern, *Flag, *Li, *Lp, *Ap, *Ai, *Lnz, *Parent, do_chol,
 	nrhs = 0, lnz, do_solve, *P, *Pinv, nn, k, j, permute, *Dp = NULL, *Di,
 	d, do_flops, psrc, pdst ;
-    double *Y, *D, *Lx, *Ax, flops, *X = NULL, *B = NULL, *p ;
+    float *Y, *D, *Lx, *Ax, flops, *X = NULL, *B = NULL, *p ;
 
     /* ---------------------------------------------------------------------- */
     /* get inputs and allocate workspace */
@@ -145,7 +145,7 @@ void mexFunction
     Parent  = (Long *) mxMalloc (nn * sizeof (Long)) ;
 
     /* get workspace */
-    Y       = (double *)  mxMalloc (nn * sizeof (double)) ;
+    Y       = (float *)  mxMalloc (nn * sizeof (float)) ;
     Flag    = (Long *) mxMalloc (nn * sizeof (Long)) ;
     Pattern = (Long *) mxMalloc (nn * sizeof (Long)) ;
     Lnz     = (Long *) mxMalloc (nn * sizeof (Long)) ;
@@ -194,7 +194,7 @@ void mexFunction
 	}
 	else
 	{
-	    D  = (double *) mxMalloc (nn * sizeof (double)) ;
+	    D  = (float *) mxMalloc (nn * sizeof (float)) ;
 	}
 
 	/* return elimination tree (add 1 to change from 0-based to 1-based) */
@@ -214,8 +214,8 @@ void mexFunction
     {
 	/* create L and D as temporary matrices */
 	Li = (Long *)    mxMalloc ((lnz+1) * sizeof (Long)) ;
-	Lx = (double *) mxMalloc ((lnz+1) * sizeof (double)) ;
-	D  = (double *) mxMalloc (nn * sizeof (double)) ;
+	Lx = (float *) mxMalloc ((lnz+1) * sizeof (float)) ;
+	D  = (float *) mxMalloc (nn * sizeof (float)) ;
 
 	/* create solution x */
 	nrhs = mxGetN (pargin [2]) ;
@@ -232,14 +232,14 @@ void mexFunction
 	flops = 0 ;
 	for (k = 0 ; k < n ; k++)
 	{
-	    flops += ((double) Lnz [k]) * (Lnz [k] + 2) ;
+	    flops += ((float) Lnz [k]) * (Lnz [k] + 2) ;
 	}
 	if (do_solve)
 	{
 	    /* add flop count for solve */
 	    for (k = 0 ; k < n ; k++)
 	    {
-		flops += 4 * ((double) Lnz [k]) + 1 ;
+		flops += 4 * ((float) Lnz [k]) + 1 ;
 	    }
 	}
 	pargout [do_flops] = mxCreateDoubleMatrix (1, 1, mxREAL) ;

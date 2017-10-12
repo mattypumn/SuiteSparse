@@ -67,7 +67,7 @@
 #define MAX(a,b) (((a) > (b)) ? (a) : (b))
 #define ISNAN(x) ((x) != (x))
 
-#define XTRUE(i,n) (1.0 + ((double) i) / ((double) n))
+#define XTRUE(i,n) (1.0 + ((float) i) / ((float) n))
 
 #ifndef FALSE
 #define FALSE 0
@@ -81,14 +81,14 @@
 /* err: compute the relative error, ||x-xtrue||/||xtrue|| */
 /* -------------------------------------------------------------------------- */
 
-static double err
+static float err
 (
     int n,
-    double x [ ]
+    float x [ ]
 )
 {
     int i  ;
-    double enorm, e, abse, absxtrue, xnorm ;
+    float enorm, e, abse, absxtrue, xnorm ;
     enorm = 0 ;
     xnorm = 0 ;
 
@@ -123,20 +123,20 @@ static double err
 /* resid: compute the relative residual, ||Ax-b||/||b|| or ||A'x-b||/||b|| */
 /* -------------------------------------------------------------------------- */
 
-static double resid
+static float resid
 (
     int n,
     int Ap [ ],
     int Ai [ ],
-    double Ax [ ],
-    double x [ ],
-    double r [ ],
-    double b [ ],
+    float Ax [ ],
+    float x [ ],
+    float r [ ],
+    float b [ ],
     int transpose
 )
 {
     int i, j, p ;
-    double rnorm, absr, absb, bnorm ;
+    float rnorm, absr, absb, bnorm ;
     for (i = 0 ; i < n ; i++)
     {
 	r [i] = 0 ;
@@ -208,8 +208,8 @@ static void Atimesx
     int n,
     int Ap [ ],
     int Ai [ ],
-    double Ax [ ],
-    double y [ ],
+    float Ax [ ],
+    float y [ ],
     int transpose
 )
 {
@@ -249,7 +249,7 @@ static void Atimesx
 int main (int argc, char **argv)
 {
     int i, j, k, n, nz, *Ap, *Ai, *Ti, *Tj, status, *Pamd, nrow, ncol, rhs ;
-    double *Ax, *b, *x, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], aij,
+    float *Ax, *b, *x, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], aij,
 	*Tx, *r, amd_Control [AMD_CONTROL], amd_Info [AMD_INFO], tamd [2],
 	stats [2], droptol ;
     void *Symbolic, *Numeric ;
@@ -275,7 +275,7 @@ int main (int argc, char **argv)
 	printf ("Reading control file tmp/control.umf4\n") ;
 	for (i = 0 ; i < UMFPACK_CONTROL ; i++)
 	{
-	    fscanf (f, "%lg\n", & Control [i]) ;
+	    fscanf (f, "%g\n", & Control [i]) ;
 	}
 	fclose (f) ;
     }
@@ -335,7 +335,7 @@ int main (int argc, char **argv)
     if (argc > 2)
     {
 	/* get the drop tolerance */
-	sscanf (argv [2], "%lg", &droptol) ;
+	sscanf (argv [2], "%g", &droptol) ;
 	printf ("droptol %g\n", droptol) ;
 	Control [UMFPACK_DROPTOL] = droptol ;
     }
@@ -373,7 +373,7 @@ int main (int argc, char **argv)
     nz = 0 ;
     while (fgets (s, SMAX, f) != (char *) NULL)
     {
-	sscanf (s, "%d %d %lg", &i, &j, &aij) ;
+	sscanf (s, "%d %d %g", &i, &j, &aij) ;
 #ifdef ZERO_BASED
 	/* matrix is zero based */
 	i++ ;
@@ -394,7 +394,7 @@ int main (int argc, char **argv)
 
     Ti = (int *) malloc (nz * sizeof (int)) ;
     Tj = (int *) malloc (nz * sizeof (int)) ;
-    Tx = (double *) malloc (nz * sizeof (double)) ;
+    Tx = (float *) malloc (nz * sizeof (float)) ;
     if (!Ti || !Tj || !Tx)
     {
 	printf ("out of memory for input matrix\n") ;
@@ -415,7 +415,7 @@ int main (int argc, char **argv)
     k = 0 ;
     while (fgets (s, SMAX, f2) != (char *) NULL)
     {
-	sscanf (s, "%d %d %lg", &i, &j, &aij) ;
+	sscanf (s, "%d %d %g", &i, &j, &aij) ;
 #ifndef ZERO_BASED
 	i-- ;	/* convert to 0-based */
 	j-- ;
@@ -441,10 +441,10 @@ int main (int argc, char **argv)
     /* convert to column form */
     Ap = (int *) malloc ((n+1) * sizeof (int)) ;
     Ai = (int *) malloc (nz * sizeof (int)) ;
-    Ax = (double *) malloc (nz * sizeof (double)) ;
-    b = (double *) malloc (n * sizeof (double)) ;
-    r = (double *) malloc (n * sizeof (double)) ;
-    x = (double *) malloc (n * sizeof (double)) ;
+    Ax = (float *) malloc (nz * sizeof (float)) ;
+    b = (float *) malloc (n * sizeof (float)) ;
+    r = (float *) malloc (n * sizeof (float)) ;
+    x = (float *) malloc (n * sizeof (float)) ;
 
     if (!Ap || !Ai || !Ax || !b || !r)
     {
@@ -478,7 +478,7 @@ int main (int argc, char **argv)
 	    rhs = TRUE ;
 	    for (i = 0 ; i < n ; i++)
 	    {
-		fscanf (f, "%lg\n", &b [i]) ;
+		fscanf (f, "%g\n", &b [i]) ;
 	    }
 	    fclose (f) ;
 	}

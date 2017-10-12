@@ -102,7 +102,7 @@ For more information, see:
 	C syntax:
 
 	    #include "colamd.h"
-	    colamd_set_defaults (double knobs [COLAMD_KNOBS]) ;
+	    colamd_set_defaults (float knobs [COLAMD_KNOBS]) ;
 
 	Purpose:
 
@@ -110,7 +110,7 @@ For more information, see:
 
 	Arguments:
 
-	    double knobs [COLAMD_KNOBS] ;	Output only.
+	    float knobs [COLAMD_KNOBS] ;	Output only.
 
 		Let c = knobs [COLAMD_DENSE_COL], r = knobs [COLAMD_DENSE_ROW].
 		Colamd: rows with more than max (16, r*16*sqrt(n_col))
@@ -127,7 +127,7 @@ For more information, see:
 		be properly set to their defaults by the future version of
 		colamd_set_defaults, so that the code that calls colamd will
 		not need to change, assuming that you either use
-		colamd_set_defaults, or pass a (double *) NULL pointer as the
+		colamd_set_defaults, or pass a (float *) NULL pointer as the
 		knobs array to colamd or symamd.
 
 		knobs [COLAMD_AGGRESSIVE]: if nonzero, then perform aggressive
@@ -144,7 +144,7 @@ For more information, see:
 
 	    #include "colamd.h"
 	    Int UMF_colamd (Int n_row, Int n_col, Int Alen, Int *A, Int *p,
-		double knobs [COLAMD_KNOBS], Int stats [COLAMD_STATS]) ;
+		float knobs [COLAMD_KNOBS], Int stats [COLAMD_STATS]) ;
 
 	Purpose:
 
@@ -228,7 +228,7 @@ For more information, see:
 		If colamd returns FALSE, then no permutation is returned, and
 		p is undefined on output.
 
-	    double knobs [COLAMD_KNOBS] ;	Input argument.
+	    float knobs [COLAMD_KNOBS] ;	Input argument.
 
 		See colamd_set_defaults for a description.
 		The behavior is undefined if knobs contains NaN's.
@@ -329,7 +329,7 @@ For more information, see:
 		Int A [ALEN] = {1, 2, 5, 3, 5, 1, 2, 3, 4, 2, 4} ;
 		Int p [ ] = {0, 3, 5, 9, 11} ;
 		Int stats [COLAMD_STATS] ;
-		UMF_colamd (5, 4, ALEN, A, p, (double *) NULL, stats) ;
+		UMF_colamd (5, 4, ALEN, A, p, (float *) NULL, stats) ;
 
 	    The permutation is returned in the array p, and A is destroyed.
 
@@ -451,7 +451,7 @@ PRIVATE void init_scoring
     Colamd_Col Col [],
     Int A [],
     Int head [],
-    double knobs [COLAMD_KNOBS],
+    float knobs [COLAMD_KNOBS],
     Int *p_n_row2,
     Int *p_n_col2,
     Int *p_max_deg
@@ -626,7 +626,7 @@ GLOBAL void UMF_colamd_set_defaults
 (
     /* === Parameters ======================================================= */
 
-    double knobs [COLAMD_KNOBS]		/* knob array */
+    float knobs [COLAMD_KNOBS]		/* knob array */
 )
 {
     /* === Local variables ================================================== */
@@ -679,7 +679,7 @@ GLOBAL Int UMF_colamd		/* returns TRUE if successful, FALSE otherwise*/
     Int Alen,			/* length of A */
     Int A [],			/* row indices of A */
     Int p [],			/* pointers to columns in A */
-    double knobs [COLAMD_KNOBS],/* parameters (uses defaults if NULL) */
+    float knobs [COLAMD_KNOBS],/* parameters (uses defaults if NULL) */
     Int stats [COLAMD_STATS]	/* output statistics and error codes */
 
     /* ------------------ */
@@ -715,7 +715,7 @@ GLOBAL Int UMF_colamd		/* returns TRUE if successful, FALSE otherwise*/
     Int max_deg ;		/* maximum row degree */
     Int aggressive ;		/* TRUE if doing aggressive absorption */
 #if 0
-    double default_knobs [COLAMD_KNOBS] ;	/* default knobs array */
+    float default_knobs [COLAMD_KNOBS] ;	/* default knobs array */
 #endif
 
     /* ------------------ */
@@ -826,7 +826,7 @@ GLOBAL Int UMF_colamd		/* returns TRUE if successful, FALSE otherwise*/
     }
 #endif
 
-    ASSERT (knobs != (double *) NULL) ;
+    ASSERT (knobs != (float *) NULL) ;
 
     /* --------------------- */
     /* added for UMFPACK v4.1: */
@@ -1270,7 +1270,7 @@ PRIVATE void init_scoring
     Colamd_Col Col [],		/* of size n_col+1 */
     Int A [],			/* column form and row form of A */
     Int head [],		/* of size n_col+1 */
-    double knobs [COLAMD_KNOBS],/* parameters */
+    float knobs [COLAMD_KNOBS],/* parameters */
     Int *p_n_row2,		/* number of non-dense, non-empty rows */
     Int *p_n_col2,		/* number of non-dense, non-empty columns */
     Int *p_max_deg		/* maximum row degree */

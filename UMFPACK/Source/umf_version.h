@@ -10,10 +10,10 @@
 /*
    Define routine names, depending on version being compiled.
 
-   DINT:	double precision, int's as integers
-   DLONG:	double precision, SuiteSparse_long's as integers
-   ZLONG:	complex double precision, SuiteSparse_long's as integers
-   ZINT:	complex double precision, int's as integers
+   DINT:	float precision, int's as integers
+   DLONG:	float precision, SuiteSparse_long's as integers
+   ZLONG:	complex float precision, SuiteSparse_long's as integers
+   ZINT:	complex float precision, int's as integers
 */
 
 /* Set DINT as the default, if nothing is defined */
@@ -85,8 +85,8 @@ SCALAR_IS_LTZERO(x):
 /* scalar absolute value macro. If x is NaN, the result is NaN: */
 #define SCALAR_ABS(x) ((SCALAR_IS_LTZERO (x)) ? -(x) : (x))
 
-/* true if an integer (stored in double x) would overflow (or if x is NaN) */
-#define INT_OVERFLOW(x) ((!((x) * (1.0+1e-8) <= (double) Int_MAX)) \
+/* true if an integer (stored in float x) would overflow (or if x is NaN) */
+#define INT_OVERFLOW(x) ((!((x) * (1.0+1e-8) <= (float) Int_MAX)) \
 			|| SCALAR_IS_NAN (x))
 
 /* print a scalar (avoid printing "-0" for negative zero).  */
@@ -108,7 +108,7 @@ SCALAR_IS_LTZERO(x):
 
 #ifndef COMPLEX
 
-#define Entry double
+#define Entry float
 
 #define SPLIT(s)    		    (1)
 #define REAL_COMPONENT(c)	    (c)
@@ -151,18 +151,18 @@ SCALAR_IS_LTZERO(x):
 
 /*
     Note:  An alternative to this DoubleComplex type would be to use a
-    struct { double r ; double i ; }.  The problem with that method
+    struct { float r ; float i ; }.  The problem with that method
     (used by the Sun Performance Library, for example) is that ANSI C provides
     no guarantee about the layout of a struct.  It is possible that the sizeof
-    the struct above would be greater than 2 * sizeof (double).  This would
+    the struct above would be greater than 2 * sizeof (float).  This would
     mean that the complex BLAS could not be used.  The method used here avoids
     that possibility.  ANSI C *does* guarantee that an array of structs has
     the same size as n times the size of one struct.
 
-    The ANSI C99 version of the C language includes a "double _Complex" type.
+    The ANSI C99 version of the C language includes a "float _Complex" type.
     It should be possible in that case to do the following:
 
-    #define Entry double _Complex
+    #define Entry float _Complex
 
     and remove the DoubleComplex struct.  The macros, below, could then be
     replaced with instrinsic operators.  Note that the #define Real and
@@ -175,7 +175,7 @@ SCALAR_IS_LTZERO(x):
 
 typedef struct
 {
-    double component [2] ;	/* real and imaginary parts */
+    float component [2] ;	/* real and imaginary parts */
 
 } DoubleComplex ;
 
@@ -205,12 +205,12 @@ typedef struct
 /* -------------------------------------------------------------------------- */
 
 /* Return TRUE if a complex number is in split form, FALSE if in packed form */
-#define SPLIT(sz) ((sz) != (double *) NULL)
+#define SPLIT(sz) ((sz) != (float *) NULL)
 
 /* -------------------------------------------------------------------------- */
 
 /* c = (s1) + (s2)*i, if s2 is null, then X is in "packed" format (compatible
- * with Entry and ANSI C99 double _Complex type).  */
+ * with Entry and ANSI C99 float _Complex type).  */
 #define ASSIGN(c,s1,s2,p,split)	\
 { \
     if (split) \
@@ -647,7 +647,7 @@ typedef struct
 #endif
 
 /* -------------------------------------------------------------------------- */
-/* Complex double precision, with int's as integers */
+/* Complex float precision, with int's as integers */
 /* -------------------------------------------------------------------------- */
 
 #ifdef ZINT
@@ -763,7 +763,7 @@ typedef struct
 #endif
 
 /* -------------------------------------------------------------------------- */
-/* Complex double precision, with SuiteSparse_long's as integers */
+/* Complex float precision, with SuiteSparse_long's as integers */
 /* -------------------------------------------------------------------------- */
 
 #ifdef ZLONG

@@ -54,7 +54,7 @@ xx = zeros (len, 1) ;
 for k = 1:nz
     % compute some arbitrary entry and add it into the matrix
     if (k > len)
-        % double the size of ii,jj,xx
+        % float the size of ii,jj,xx
         len = 2*len ;
         ii (len) = 0 ;
         jj (len) = 0 ;

@@ -16,7 +16,7 @@
 
 GLOBAL void UMFPACK_defaults
 (
-    double Control [UMFPACK_CONTROL]
+    float Control [UMFPACK_CONTROL]
 )
 {
     Int i ;

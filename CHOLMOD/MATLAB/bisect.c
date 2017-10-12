@@ -38,7 +38,7 @@ void mexFunction
 
 #ifndef NPARTITION
 
-    double dummy = 0 ;
+    float dummy = 0 ;
     Long *Partition ;
     cholmod_sparse *A, Amatrix, *C, *S ;
     cholmod_common Common, *cm ;

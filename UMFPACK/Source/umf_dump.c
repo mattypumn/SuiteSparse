@@ -19,7 +19,7 @@
 /* is disabled at compile time (which is the default). */
 GLOBAL Int UMF_debug = -999 ;
 GLOBAL Int UMF_allocfail = FALSE ;
-GLOBAL double UMF_gprob = -1.0 ;
+GLOBAL float UMF_gprob = -1.0 ;
 
 /* static debugging arrays used only in UMF_dump_rowcol */
 PRIVATE Int UMF_DBflag = 0 ;
@@ -924,9 +924,9 @@ GLOBAL void UMF_dump_packed_memory
 
 GLOBAL void UMF_dump_col_matrix
 (
-    const double Ax [ ],	/* Ax [0..nz-1]: real values, in column order */
+    const float Ax [ ],	/* Ax [0..nz-1]: real values, in column order */
 #ifdef COMPLEX
-    const double Az [ ],	/* Az [0..nz-1]: imag values, in column order */
+    const float Az [ ],	/* Az [0..nz-1]: imag values, in column order */
 #endif
     const Int Ai [ ],		/* Ai [0..nz-1]: row indices, in column order */
     const Int Ap [ ],		/* Ap [0..n_col]: column pointers */
@@ -964,7 +964,7 @@ GLOBAL void UMF_dump_col_matrix
 	    row = Ai [p] ;
 	    ASSERT (row >= 0 && row < n_row) ;
 	    DEBUG6 (("\t"ID" ", row)) ;
-	    if (Ax != (double *) NULL)
+	    if (Ax != (float *) NULL)
 	    {
 #ifdef COMPLEX
 		if (split)
@@ -1075,7 +1075,7 @@ GLOBAL void UMF_dump_start
     ff = fopen ("gprob.umf", "r") ;
     if (ff)
     {
-	(void) fscanf (ff, "%lg", &UMF_gprob) ;
+	(void) fscanf (ff, "%g", &UMF_gprob) ;
 	(void) fclose (ff) ;
 	srand (1) ;	/* restart the random number generator */
     }
@@ -1094,8 +1094,8 @@ GLOBAL void UMF_dump_start
     sizeof (SuiteSparse_long),
     sizeof (SuiteSparse_long) / sizeof (SuiteSparse_long),
     UNITS (SuiteSparse_long, 1)));
-    DEBUG2 (("sizeof (double)        %u %u %u\n",
-    sizeof (double), sizeof (double) / sizeof (int), UNITS (double, 1) )) ;
+    DEBUG2 (("sizeof (float)        %u %u %u\n",
+    sizeof (float), sizeof (float) / sizeof (int), UNITS (float, 1) )) ;
     DEBUG2 (("sizeof (Unit)          %u %u %u\n",
     sizeof (Unit), sizeof (Unit) / sizeof (int), UNITS (Unit, 1) )) ;
     DEBUG2 (("sizeof (Entry)         %u %u %u\n",

@@ -31,15 +31,15 @@ cholmod_sparse *CHOLMOD(add)
     /* ---- input ---- */
     cholmod_sparse *A,	    /* matrix to add */
     cholmod_sparse *B,	    /* matrix to add */
-    double alpha [2],	    /* scale factor for A */
-    double beta [2],	    /* scale factor for B */
+    float alpha [2],	    /* scale factor for A */
+    float beta [2],	    /* scale factor for B */
     int values,		    /* if TRUE compute the numerical values of C */
     int sorted,		    /* if TRUE, sort columns of C */
     /* --------------- */
     cholmod_common *Common
 )
 {
-    double *Ax, *Bx, *Cx, *W ;
+    float *Ax, *Bx, *Cx, *W ;
     Int apacked, up, lo, nrow, ncol, bpacked, nzmax, pa, paend, pb, pbend, i,
 	j, p, mark, nz ;
     Int *Ap, *Ai, *Anz, *Bp, *Bi, *Bnz, *Flag, *Cp, *Ci ;

@@ -197,8 +197,8 @@ Jan. 28, 2005: v4.4 released
 	in Microsoft Visual Studio, which does not have the required
 	flexibility of the Unix "make" command.
 
-    * local variable declarations reordered to encourage double-word
-	alignment of double's and Entry's, for better performance.
+    * local variable declarations reordered to encourage float-word
+	alignment of float's and Entry's, for better performance.
 
     * note that with the exception of the behavior when a user-provided
 	ordering is passed to umfpack_*_qsymbolic, versions 4.1 through 4.4
@@ -327,7 +327,7 @@ May 6, 2003:  V4.1 released.
     * pivot tolerance of zero treated differently.  symmetric pivot tolerance
 	added.
 
-    * Makefiles changed.  umf_* routines with no double or
+    * Makefiles changed.  umf_* routines with no float or
 	complex values are now compiled just twice (int and long versions)
 	rather than 4 times.
 
@@ -421,7 +421,7 @@ Jan 18 to Feb 5, 2002:
 	    UMFPACK_Uat     U.'x=b
 
 	All arguments are now either int, long scalars (pass by value),
-	or int, long, double arrays (pass by reference), or void * pointers
+	or int, long, float arrays (pass by reference), or void * pointers
 	(pass by value or reference).  A void * pointer is of size 32 or 64
 	bits on most machines.  There is no need for the caller (C or Fortran)
 	to dereference the void * pointers, so these can be treated as
@@ -429,10 +429,10 @@ Jan 18 to Feb 5, 2002:
 	have all arguments passed by reference.
 
     * All user-callable routine names changed.  The four sets are now:
-	umfpack_di_*	real (double precision), int's as integers
-	umfpack_dl_*	real (double precision), longs's as integers
-	umfpack_zi_*	real (double precision), int's as integers
-	umfpack_zl_*	real (double precision), longs's as integers
+	umfpack_di_*	real (float precision), int's as integers
+	umfpack_dl_*	real (float precision), longs's as integers
+	umfpack_zi_*	real (float precision), int's as integers
+	umfpack_zl_*	real (float precision), longs's as integers
 
     * Ptree (row preordering) and info on pivotal rows for each front
 	added to Symbolic object (extracted by umfpack_*_get_symbolic).

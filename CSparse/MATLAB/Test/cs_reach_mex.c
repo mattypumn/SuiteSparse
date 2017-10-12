@@ -11,7 +11,7 @@ void mexFunction
 )
 {
     cs Lmatrix, Bmatrix, *L, *B ;
-    double *x ;
+    float *x ;
     csi k, i, j, top, *xi, *perm ;
 
     if (nargout > 1 || nargin != 2)

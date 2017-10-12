@@ -48,7 +48,7 @@ int CHOLMOD(rowadd)
     cholmod_common *Common
 )
 {
-    double bk [2] ;
+    float bk [2] ;
     bk [0] = 0. ;
     bk [1] = 0. ;
     return (CHOLMOD(rowadd_mark) (k, R, bk, NULL, L, NULL, NULL, Common)) ;
@@ -69,7 +69,7 @@ int CHOLMOD(rowadd_solve)
     /* ---- input ---- */
     size_t k,		/* row/column index to add */
     cholmod_sparse *R,	/* row/column of matrix to factorize (n-by-1) */
-    double bk [2],	/* kth entry of the right-hand-side b */
+    float bk [2],	/* kth entry of the right-hand-side b */
     /* ---- in/out --- */
     cholmod_factor *L,	/* factor to modify */
     cholmod_dense *X,	/* solution to Lx=b (size n-by-1) */
@@ -113,7 +113,7 @@ int CHOLMOD(rowadd_mark)
     /* ---- input ---- */
     size_t kadd,	/* row/column index to add */
     cholmod_sparse *R,	/* row/column of matrix to factorize (n-by-1) */
-    double bk [2],	/* kth entry of the right hand side, b */
+    float bk [2],	/* kth entry of the right hand side, b */
     Int *colmark,	/* Int array of size 1.  See cholmod_updown.c */
     /* ---- in/out --- */
     cholmod_factor *L,	/* factor to modify */
@@ -123,8 +123,8 @@ int CHOLMOD(rowadd_mark)
     cholmod_common *Common
 )
 {
-    double dk, yj, l_kj, lx, l_ij, sqrt_dk, dj, xk, rnz, fl ;
-    double *Lx, *W, *Cx, *Rx, *Xx, *Nx ;
+    float dk, yj, l_kj, lx, l_ij, sqrt_dk, dj, xk, rnz, fl ;
+    float *Lx, *W, *Cx, *Rx, *Xx, *Nx ;
     Int *Li, *Lp, *Lnz, *Flag, *Stack, *Ci, *Rj, *Rp, *Lnext, *Iwork, *Rnz ;
     cholmod_sparse *C, Cmatrix ;
     Int i, j, p, pend, top, len, kk, li, lnz, mark, k, n, parent, Cp [2],

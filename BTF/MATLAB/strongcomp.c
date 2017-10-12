@@ -68,7 +68,7 @@ void mexFunction
 )
 {
     Long b, n, i, k, j, *Ap, *Ai, *P, *R, nblocks, *Work, *Q, jj ;
-    double *Px, *Rx, *Qx ;
+    float *Px, *Rx, *Qx ;
 
     /* ---------------------------------------------------------------------- */
     /* get inputs and allocate workspace */

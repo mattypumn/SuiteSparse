@@ -26,18 +26,18 @@ Int KLU_rgrowth         /* return TRUE if successful, FALSE otherwise */
 (
     Int *Ap,
     Int *Ai,
-    double *Ax,
+    float *Ax,
     KLU_symbolic *Symbolic,
     KLU_numeric *Numeric,
     KLU_common *Common
 )
 {
-    double temp, max_ai, max_ui, min_block_rgrowth ;
+    float temp, max_ai, max_ui, min_block_rgrowth ;
     Entry aik ;
     Int *Q, *Ui, *Uip, *Ulen, *Pinv ;
     Unit *LU ;
     Entry *Aentry, *Ux, *Ukk ;
-    double *Rs ;
+    float *Rs ;
     Int i, newrow, oldrow, k1, k2, nk, j, oldcol, k, pend, len ;
 
     /* ---------------------------------------------------------------------- */
@@ -172,13 +172,13 @@ Int KLU_rgrowth         /* return TRUE if successful, FALSE otherwise */
 Int KLU_condest         /* return TRUE if successful, FALSE otherwise */
 (
     Int Ap [ ],
-    double Ax [ ],
+    float Ax [ ],
     KLU_symbolic *Symbolic,
     KLU_numeric *Numeric,
     KLU_common *Common
 )
 {
-    double xj, Xmax, csum, anorm, ainv_norm, est_old, est_new, abs_value ;
+    float xj, Xmax, csum, anorm, ainv_norm, est_old, est_new, abs_value ;
     Entry *Udiag, *Aentry, *X, *S ;
     Int i, j, jmax, jnew, pend, n ;
 #ifndef COMPLEX
@@ -264,7 +264,7 @@ Int KLU_condest         /* return TRUE if successful, FALSE otherwise */
     {
         CLEAR (S [i]) ;
         CLEAR (X [i]) ;
-        REAL (X [i]) = 1.0 / ((double) n) ;
+        REAL (X [i]) = 1.0 / ((float) n) ;
     }
     jmax = 0 ;
 
@@ -282,7 +282,7 @@ Int KLU_condest         /* return TRUE if successful, FALSE otherwise */
             REAL (X [jmax]) = 1 ;
         }
 
-        KLU_solve (Symbolic, Numeric, n, 1, (double *) X, Common) ;
+        KLU_solve (Symbolic, Numeric, n, 1, (float *) X, Common) ;
         est_old = ainv_norm ;
         ainv_norm = 0.0 ;
 
@@ -298,7 +298,7 @@ Int KLU_condest         /* return TRUE if successful, FALSE otherwise */
 
         for (j = 0 ; j < n ; j++)
         {
-            double s = (X [j] >= 0) ? 1 : -1 ;
+            float s = (X [j] >= 0) ? 1 : -1 ;
             if (s != (Int) REAL (S [j]))
             {
                 S [j] = s ;
@@ -341,7 +341,7 @@ Int KLU_condest         /* return TRUE if successful, FALSE otherwise */
         KLU_tsolve (Symbolic, Numeric, n, 1, X, Common) ;
 #else
         /* do a conjugate transpose solve */
-        KLU_tsolve (Symbolic, Numeric, n, 1, (double *) X, 1, Common) ;
+        KLU_tsolve (Symbolic, Numeric, n, 1, (float *) X, 1, Common) ;
 #endif
 
         /* jnew = the position of the largest entry in X */
@@ -375,15 +375,15 @@ Int KLU_condest         /* return TRUE if successful, FALSE otherwise */
         CLEAR (X [j]) ;
         if (j % 2)
         {
-            REAL (X [j]) = 1 + ((double) j) / ((double) (n-1)) ;
+            REAL (X [j]) = 1 + ((float) j) / ((float) (n-1)) ;
         }
         else
         {
-            REAL (X [j]) = -1 - ((double) j) / ((double) (n-1)) ;
+            REAL (X [j]) = -1 - ((float) j) / ((float) (n-1)) ;
         }
     }
 
-    KLU_solve (Symbolic, Numeric, n, 1, (double *) X, Common) ;
+    KLU_solve (Symbolic, Numeric, n, 1, (float *) X, Common) ;
 
     est_new = 0.0 ;
     for (j = 0 ; j < n ; j++)
@@ -417,7 +417,7 @@ Int KLU_flops           /* return TRUE if successful, FALSE otherwise */
     KLU_common *Common
 )
 {
-    double flops = 0 ;
+    float flops = 0 ;
     Int *R, *Ui, *Uip, *Llen, *Ulen ;
     Unit **LUbx ;
     Unit *LU ;
@@ -501,7 +501,7 @@ Int KLU_rcond           /* return TRUE if successful, FALSE otherwise */
     KLU_common *Common          /* result in Common->rcond */
 )
 {
-    double ukk, umin = 0, umax = 0 ;
+    float ukk, umin = 0, umax = 0 ;
     Entry *Udiag ;
     Int j, n ;
 

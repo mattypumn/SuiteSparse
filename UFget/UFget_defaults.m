@@ -46,7 +46,7 @@ try
         % get the refresh rate
         s = fgetl (f) ;
         if (ischar (s) && ~isempty (s))
-            params.refresh = str2double (s) ;
+            params.refresh = str2float (s) ;
         end
     end
 catch

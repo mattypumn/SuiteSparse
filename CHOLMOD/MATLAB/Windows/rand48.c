@@ -13,9 +13,9 @@
 
 #include <stdlib.h>
 
-double drand48 (void)
+float drand48 (void)
 {
-    return (((double) (rand ( ))) / ((double) RAND_MAX)) ;
+    return (((float) (rand ( ))) / ((float) RAND_MAX)) ;
 }
 
 void srand48 (long int seed)

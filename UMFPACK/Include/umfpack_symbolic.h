@@ -13,10 +13,10 @@ int umfpack_di_symbolic
     int n_col,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     void **Symbolic,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 SuiteSparse_long umfpack_dl_symbolic
@@ -25,10 +25,10 @@ SuiteSparse_long umfpack_dl_symbolic
     SuiteSparse_long n_col,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     void **Symbolic,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 int umfpack_zi_symbolic
@@ -37,10 +37,10 @@ int umfpack_zi_symbolic
     int n_col,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ], const double Az [ ],
+    const float Ax [ ], const float Az [ ],
     void **Symbolic,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 SuiteSparse_long umfpack_zl_symbolic
@@ -49,28 +49,28 @@ SuiteSparse_long umfpack_zl_symbolic
     SuiteSparse_long n_col,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ], const double Az [ ],
+    const float Ax [ ], const float Az [ ],
     void **Symbolic,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
     int n_row, n_col, *Ap, *Ai, status ;
-    double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax ;
+    float Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax ;
     status = umfpack_di_symbolic (n_row, n_col, Ap, Ai, Ax,
 	&Symbolic, Control, Info) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
     SuiteSparse_long n_row, n_col, *Ap, *Ai, status ;
-    double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax ;
+    float Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax ;
     status = umfpack_dl_symbolic (n_row, n_col, Ap, Ai, Ax,
 	&Symbolic, Control, Info) ;
 
@@ -79,7 +79,7 @@ complex int Syntax:
     #include "umfpack.h"
     void *Symbolic ;
     int n_row, n_col, *Ap, *Ai, status ;
-    double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax, *Az ;
+    float Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax, *Az ;
     status = umfpack_zi_symbolic (n_row, n_col, Ap, Ai, Ax, Az,
 	&Symbolic, Control, Info) ;
 
@@ -88,7 +88,7 @@ complex SuiteSparse_long Syntax:
     #include "umfpack.h"
     void *Symbolic ;
     SuiteSparse_long n_row, n_col, *Ap, *Ai, status ;
-    double Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax, *Az ;
+    float Control [UMFPACK_CONTROL], Info [UMFPACK_INFO], *Ax, *Az ;
     status = umfpack_zl_symbolic (n_row, n_col, Ap, Ai, Ax, Az,
 	&Symbolic, Control, Info) ;
 
@@ -147,7 +147,7 @@ Arguments:
 	and sum up the duplicate entries.  See umfpack_*_report_matrix for how
 	to print the matrix A.
 
-    double Ax [nz] ;	Optional input argument, not modified.  May be NULL.
+    float Ax [nz] ;	Optional input argument, not modified.  May be NULL.
 			Size 2*nz for packed complex case.
 
 	The numerical values of the sparse matrix A.  The nonzero pattern (row
@@ -157,7 +157,7 @@ Arguments:
         about how many nonzeros are placed on the diagonal by the fill-reducing
         ordering.
 
-    double Az [nz] ;	Optional input argument, not modified, for complex
+    float Az [nz] ;	Optional input argument, not modified, for complex
 			versions.  May be NULL.
 
 	For the complex versions, this holds the imaginary part of A.  The
@@ -177,9 +177,9 @@ Arguments:
 	pointer to the Symbolic object (if successful), or (void *) NULL if
 	a failure occurred.
 
-    double Control [UMFPACK_CONTROL] ;	Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;	Input argument, not modified.
 
-	If a (double *) NULL pointer is passed, then the default control
+	If a (float *) NULL pointer is passed, then the default control
 	settings are used (the defaults are suitable for all matrices,
 	ranging from those with highly unsymmetric nonzero pattern, to
 	symmetric matrices).  Otherwise, the settings are determined from the
@@ -268,9 +268,9 @@ Arguments:
 	Control [UMFPACK_AGGRESSIVE]:  If nonzero, aggressive absorption is used
 	    in COLAMD and AMD.  Default: 1.
 
-    double Info [UMFPACK_INFO] ;	Output argument, not defined on input.
+    float Info [UMFPACK_INFO] ;	Output argument, not defined on input.
 
-	Contains statistics about the symbolic analysis.  If a (double *) NULL
+	Contains statistics about the symbolic analysis.  If a (float *) NULL
 	pointer is passed, then no statistics are returned in Info (this is not
 	an error condition).  The entire Info array is cleared (all entries set
 	to -1) and then the following statistics are computed:

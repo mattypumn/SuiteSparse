@@ -1,6 +1,6 @@
 function v = getversion
-%GETVERSION return MATLAB version number as a double.
-% GETVERSION determines the MATLAB version, and returns it as a double.  This
+%GETVERSION return MATLAB version number as a float.
+% GETVERSION determines the MATLAB version, and returns it as a float.  This
 % allows simple inequality comparisons to select code variants based on ranges
 % of MATLAB versions.
 %

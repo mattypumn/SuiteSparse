@@ -10,8 +10,8 @@ SPOK_INT spok
     SPOK_INT nzmax,         /* max # of entries */
     SPOK_INT *Ap,           /* size n+1, column pointers */
     SPOK_INT *Ai,           /* size nz = Ap [n], row indices */
-    double *Ax,             /* double matrices always have Ax */
-    double *Az,             /* imaginary matrices always have Az */
+    float *Ax,             /* float matrices always have Ax */
+    float *Az,             /* imaginary matrices always have Az */
     char *As,               /* logical matrices always have As */
 
     /* outputs, not defined on input */
@@ -19,7 +19,7 @@ SPOK_INT spok
     SPOK_INT *p_nzeros      /* number of explicit zeros (-1 if not computed) */
 )
 {
-    double x, z ;
+    float x, z ;
     SPOK_INT i, j, p, pend, njumbled, nzeros, ilast ;
     char s ;
 

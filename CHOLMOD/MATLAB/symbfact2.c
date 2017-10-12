@@ -46,8 +46,8 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double dummy = 0 ;
-    double *Lx, *px ;
+    float dummy = 0 ;
+    float *Lx, *px ;
     Long *Parent, *Post, *ColCount, *First, *Level, *Rp, *Ri, *Lp, *Li, *W ;
     cholmod_sparse *A, Amatrix, *F, *Aup, *Alo, *R, *A1, *A2, *L, *S ;
     cholmod_common Common, *cm ;
@@ -302,7 +302,7 @@ void mexFunction
 	}
 
 	/* fill numerical values of L with one's (only MATLAB needs this...) */
-	L->x = cholmod_l_malloc (lnz, sizeof (double), cm) ;
+	L->x = cholmod_l_malloc (lnz, sizeof (float), cm) ;
 	Lx = L->x ;
 	for (p = 0 ; p < lnz ; p++)
 	{

@@ -12,7 +12,7 @@ void mexFunction
     csn *N ;
     cs Amatrix, *A, *D ;
     csi n, order, *p ;
-    double tol ;
+    float tol ;
     if (nargout > 4 || nargin > 3 || nargin < 1)
     {
         mexErrMsgTxt ("Usage: [L,U,p,q] = cs_lu (A,tol)") ;

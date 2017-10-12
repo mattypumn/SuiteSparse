@@ -33,10 +33,10 @@ c       umf4zhb < HB/arc130.cua
 
         character title*72, key*30, type*3, ptrfmt*16,
      $          indfmt*16, valfmt*20, rhsfmt*20
-        double precision Ax (nzmax), x (nmax), b (nmax),
+        float precision Ax (nzmax), x (nmax), b (nmax),
      $          control (20), info (90)
 	complex*16 AA (nzmax), XX (nmax), BB (nmax), r (nmax), aij, xj
-	double precision Az (nmax), xz (nmax), bz (nmax), xi, xr
+	float precision Az (nmax), xz (nmax), bz (nmax), xi, xr
         character rhstyp*3
 
 c       ----------------------------------------------------------------
@@ -255,7 +255,7 @@ C Note that A is zero-based.
         integer
      $      n, nz, Ap (n+1), Ai (n), j, i, p
         complex*16 A (nz), x (n), b (n), r (n), aij
-	double precision rmax
+	float precision rmax
 
         do 10 i = 1, n
             r (i) = -b (i)

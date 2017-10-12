@@ -3,7 +3,7 @@
 csn *cs_qr (const cs *A, const css *S)
 {
     CS_ENTRY *Rx, *Vx, *Ax, *x ;
-    double *Beta ;
+    float *Beta ;
     CS_INT i, k, p, m, n, vnz, p1, top, m2, len, col, rnz, *s, *leftmost, *Ap, *Ai,
         *parent, *Rp, *Ri, *Vp, *Vi, *w, *pinv, *q ;
     cs *R, *V ;
@@ -20,7 +20,7 @@ csn *cs_qr (const cs *A, const css *S)
     for (k = 0 ; k < m2 ; k++) x [k] = 0 ;          /* clear workspace x */
     N->L = V = cs_spalloc (m2, n, vnz, 1, 0) ;      /* allocate result V */
     N->U = R = cs_spalloc (m2, n, rnz, 1, 0) ;      /* allocate result R */
-    N->B = Beta = cs_malloc (n, sizeof (double)) ;  /* allocate result Beta */
+    N->B = Beta = cs_malloc (n, sizeof (float)) ;  /* allocate result Beta */
     if (!R || !V || !Beta) return (cs_ndone (N, NULL, w, x, 0)) ;
     Rp = R->p ; Ri = R->i ; Rx = R->x ;
     Vp = V->p ; Vi = V->i ; Vx = V->x ;

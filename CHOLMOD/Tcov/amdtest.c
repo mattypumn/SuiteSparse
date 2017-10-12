@@ -19,7 +19,7 @@
 
 void amdtest (cholmod_sparse *A)
 {
-    double Control [AMD_CONTROL], Info [AMD_INFO], alpha ;
+    float Control [AMD_CONTROL], Info [AMD_INFO], alpha ;
     Int *P, *Cp, *Ci, *Sp, *Si, *Bp, *Bi, *Ep, *Ei, *Fp, *Fi,
 	*Len, *Nv, *Next, *Head, *Elen, *Deg, *Wi, *W, *Flag ;
     cholmod_sparse *C, *B, *S, *E, *F ;

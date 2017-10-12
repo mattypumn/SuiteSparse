@@ -30,7 +30,7 @@ SuiteSparse_long klu_l_cholmod
     klu_l_common *Common    /* user-defined data is in Common->user_data */
 )
 {
-    double one [2] = {1,0}, zero [2] = {0,0}, lnz = 0 ;
+    float one [2] = {1,0}, zero [2] = {0,0}, lnz = 0 ;
     cholmod_sparse Amatrix, *A, *AT, *S ;
     cholmod_factor *L ;
     cholmod_common cm ;

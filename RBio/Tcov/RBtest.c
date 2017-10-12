@@ -13,8 +13,8 @@
 
 int main (int argc, char **argv)
 {
-    double xr, xz, xmin, xmax ;
-    double *Ax, *Az ;
+    float xr, xz, xmin, xmax ;
+    float *Ax, *Az ;
     Long nrow, ncol, mkind, skind, *Ap, *Ai, i, *Zp, *Zi, asize, mkind2, skind2,
         znz, j, p, status, njumbled, nzeros, build_upper, zero_handling, fem,
         xsize, nelnz, nnz, kk, anz ;

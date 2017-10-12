@@ -58,10 +58,10 @@
 static void LSOLVE (PREFIX,1)
 (
     cholmod_factor *L,
-    double X [ ]                        /* n-by-1 in row form */
+    float X [ ]                        /* n-by-1 in row form */
 )
 {
-    double *Lx = L->x ;
+    float *Lx = L->x ;
     Int *Li = L->i ;
     Int *Lp = L->p ;
     Int *Lnz = L->nz ;
@@ -82,7 +82,7 @@ static void LSOLVE (PREFIX,1)
 	    /* solve with a single column of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y = X [j] ;
+	    float y = X [j] ;
 #ifdef LL
 	    y /= Lx [p] ;
 	    X [j] = y ;
@@ -103,7 +103,7 @@ static void LSOLVE (PREFIX,1)
 	    /* solve with a supernode of two columns of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [2] ;
+	    float y [2] ;
 	    Int q = Lp [j+1] ;
 #ifdef LL
 	    y [0] = X [j] / Lx [p] ;
@@ -134,7 +134,7 @@ static void LSOLVE (PREFIX,1)
 	    /* solve with a supernode of three columns of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [3] ;
+	    float y [3] ;
 	    Int q = Lp [j+1] ;
 	    Int r = Lp [j+2] ;
 #ifdef LL
@@ -177,10 +177,10 @@ static void LSOLVE (PREFIX,1)
 static void LSOLVE (PREFIX,2)
 (
     cholmod_factor *L,
-    double X [ ][2]		/* n-by-2 in row form */
+    float X [ ][2]		/* n-by-2 in row form */
 )
 {
-    double *Lx = L->x ;
+    float *Lx = L->x ;
     Int *Li = L->i ;
     Int *Lp = L->p ;
     Int *Lnz = L->nz ;
@@ -201,7 +201,7 @@ static void LSOLVE (PREFIX,2)
 	    /* solve with a single column of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [2] ;
+	    float y [2] ;
 	    y [0] = X [j][0] ;
 	    y [1] = X [j][1] ;
 #ifdef LL
@@ -229,7 +229,7 @@ static void LSOLVE (PREFIX,2)
 	    /* solve with a supernode of two columns of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [2][2] ;
+	    float y [2][2] ;
 	    Int q = Lp [j+1] ;
 	    y [0][0] = X [j][0] ;
 	    y [0][1] = X [j][1] ;
@@ -271,7 +271,7 @@ static void LSOLVE (PREFIX,2)
 	    /* solve with a supernode of three columns of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [3][2] ;
+	    float y [3][2] ;
 	    Int q = Lp [j+1] ;
 	    Int r = Lp [j+2] ;
 	    y [0][0] = X [j][0] ;
@@ -331,10 +331,10 @@ static void LSOLVE (PREFIX,2)
 static void LSOLVE (PREFIX,3)
 (
     cholmod_factor *L,
-    double X [ ][3]			/* n-by-3 in row form */
+    float X [ ][3]			/* n-by-3 in row form */
 )
 {
-    double *Lx = L->x ;
+    float *Lx = L->x ;
     Int *Li = L->i ;
     Int *Lp = L->p ;
     Int *Lnz = L->nz ;
@@ -355,7 +355,7 @@ static void LSOLVE (PREFIX,3)
 	    /* solve with a single column of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [3] ;
+	    float y [3] ;
 	    y [0] = X [j][0] ;
 	    y [1] = X [j][1] ;
 	    y [2] = X [j][2] ;
@@ -374,7 +374,7 @@ static void LSOLVE (PREFIX,3)
 	    for (p++ ; p < pend ; p++)
 	    {
 		Int i = Li [p] ;
-		double lx = Lx [p] ;
+		float lx = Lx [p] ;
 		X [i][0] -= lx * y [0] ;
 		X [i][1] -= lx * y [1] ;
 		X [i][2] -= lx * y [2] ;
@@ -389,7 +389,7 @@ static void LSOLVE (PREFIX,3)
 	    /* solve with a supernode of two columns of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [2][3] ;
+	    float y [2][3] ;
 	    Int q = Lp [j+1] ;
 	    y [0][0] = X [j][0] ;
 	    y [0][1] = X [j][1] ;
@@ -428,7 +428,7 @@ static void LSOLVE (PREFIX,3)
 	    for (p += 2, q++ ; p < pend ; p++, q++)
 	    {
 		Int i = Li [p] ;
-		double lx [2] ;
+		float lx [2] ;
 		lx [0] = Lx [p] ;
 		lx [1] = Lx [q] ;
 		X [i][0] -= lx [0] * y [0][0] + lx [1] * y [1][0] ;
@@ -445,7 +445,7 @@ static void LSOLVE (PREFIX,3)
 	    /* solve with a supernode of three columns of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [3][3] ;
+	    float y [3][3] ;
 	    Int q = Lp [j+1] ;
 	    Int r = Lp [j+2] ;
 	    y [0][0] = X [j][0] ;
@@ -503,7 +503,7 @@ static void LSOLVE (PREFIX,3)
 	    for (p += 3, q += 2, r++ ; p < pend ; p++, q++, r++)
 	    {
 		Int i = Li [p] ;
-		double lx [3] ;
+		float lx [3] ;
 		lx [0] = Lx [p] ;
 		lx [1] = Lx [q] ;
 		lx [2] = Lx [r] ;
@@ -526,10 +526,10 @@ static void LSOLVE (PREFIX,3)
 static void LSOLVE (PREFIX,4)
 (
     cholmod_factor *L,
-    double X [ ][4]			    /* n-by-4 in row form */
+    float X [ ][4]			    /* n-by-4 in row form */
 )
 {
-    double *Lx = L->x ;
+    float *Lx = L->x ;
     Int *Li = L->i ;
     Int *Lp = L->p ;
     Int *Lnz = L->nz ;
@@ -550,7 +550,7 @@ static void LSOLVE (PREFIX,4)
 	    /* solve with a single column of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [4] ;
+	    float y [4] ;
 	    y [0] = X [j][0] ;
 	    y [1] = X [j][1] ;
 	    y [2] = X [j][2] ;
@@ -573,7 +573,7 @@ static void LSOLVE (PREFIX,4)
 	    for (p++ ; p < pend ; p++)
 	    {
 		Int i = Li [p] ;
-		double lx = Lx [p] ;
+		float lx = Lx [p] ;
 		X [i][0] -= lx * y [0] ;
 		X [i][1] -= lx * y [1] ;
 		X [i][2] -= lx * y [2] ;
@@ -589,7 +589,7 @@ static void LSOLVE (PREFIX,4)
 	    /* solve with a supernode of two columns of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [2][4] ;
+	    float y [2][4] ;
 	    Int q = Lp [j+1] ;
 	    y [0][0] = X [j][0] ;
 	    y [0][1] = X [j][1] ;
@@ -638,7 +638,7 @@ static void LSOLVE (PREFIX,4)
 	    for (p += 2, q++ ; p < pend ; p++, q++)
 	    {
 		Int i = Li [p] ;
-		double lx [2] ;
+		float lx [2] ;
 		lx [0] = Lx [p] ;
 		lx [1] = Lx [q] ;
 		X [i][0] -= lx [0] * y [0][0] + lx [1] * y [1][0] ;
@@ -656,7 +656,7 @@ static void LSOLVE (PREFIX,4)
 	    /* solve with a supernode of three columns of L */
 	    /* -------------------------------------------------------------- */
 
-	    double y [3][4] ;
+	    float y [3][4] ;
 	    Int q = Lp [j+1] ;
 	    Int r = Lp [j+2] ;
 	    y [0][0] = X [j][0] ;
@@ -730,7 +730,7 @@ static void LSOLVE (PREFIX,4)
 	    for (p += 3, q += 2, r++ ; p < pend ; p++, q++, r++)
 	    {
 		Int i = Li [p] ;
-		double lx [3] ;
+		float lx [3] ;
 		lx [0] = Lx [p] ;
 		lx [1] = Lx [q] ;
 		lx [2] = Lx [r] ;
@@ -759,14 +759,14 @@ static void LSOLVE (PREFIX,k)
 )
 {
 
-    double yx [2] ;
+    float yx [2] ;
 #ifdef ZOMPLEX
-    double yz [1] ;
-    double *Lz = L->z ;
-    double *Xz = Y->z ;
+    float yz [1] ;
+    float *Lz = L->z ;
+    float *Xz = Y->z ;
 #endif
-    double *Lx = L->x ;
-    double *Xx = Y->x ;
+    float *Lx = L->x ;
+    float *Xx = Y->x ;
     Int *Li = L->i ;
     Int *Lp = L->p ;
     Int *Lnz = L->nz ;

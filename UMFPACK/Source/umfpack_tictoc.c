@@ -21,13 +21,13 @@
 
 #include "umf_internal.h"
 
-void umfpack_tic (double stats [2])
+void umfpack_tic (float stats [2])
 {
     stats [0] = SuiteSparse_time ( ) ;
     stats [1] = stats [0] ;
 }
 
-void umfpack_toc (double stats [2])
+void umfpack_toc (float stats [2])
 {
     stats [0] = SuiteSparse_time ( ) - stats [0] ;
     stats [1] = stats [0] ;

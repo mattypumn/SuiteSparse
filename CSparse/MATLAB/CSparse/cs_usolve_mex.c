@@ -23,7 +23,7 @@ void mexFunction
 )
 {
     cs Umatrix, Bmatrix, *U, *B, *X ;
-    double *x, *b ;
+    float *x, *b ;
     csi top, nz, p, *xi ;
     if (nargout > 1 || nargin != 2)
     {
@@ -35,7 +35,7 @@ void mexFunction
         B = cs_mex_get_sparse (&Bmatrix, 0, 1, pargin [1]) ;/* get sparse b */
         cs_mex_check (0, U->n, 1, 0, 1, 1, pargin [1]) ;
         xi = cs_malloc (2*U->n, sizeof (csi)) ;             /* get workspace */
-        x  = cs_malloc (U->n, sizeof (double)) ;
+        x  = cs_malloc (U->n, sizeof (float)) ;
         top = cs_spsolve (U, B, 0, xi, x, NULL, 0) ;        /* x = U\b */
         X = cs_spalloc (U->n, 1, U->n-top, 1, 0) ;          /* create sparse x*/
         X->p [0] = 0 ;
@@ -52,8 +52,8 @@ void mexFunction
     }
     else
     {
-        b = cs_mex_get_double (U->n, pargin [1]) ;          /* get full b */
-        x = cs_mex_put_double (U->n, b, &(pargout [0])) ;   /* x = b */
+        b = cs_mex_get_float (U->n, pargin [1]) ;          /* get full b */
+        x = cs_mex_put_float (U->n, b, &(pargout [0])) ;   /* x = b */
         cs_usolve (U, x) ;                                  /* x = U\x */
     }
 }

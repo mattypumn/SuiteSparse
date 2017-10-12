@@ -6,7 +6,7 @@
 === UMFPACK v5.6.0 ========================================
 ===========================================================
 UMFPACK V5.6.0 (Jun 1, 2012), Control:
-    Matrix entry defined as: double
+    Matrix entry defined as: float
     Int (generic integer) defined as: int
 
     0: print level: 3
@@ -37,7 +37,7 @@ UMFPACK V5.6.0 (Jun 1, 2012), Control:
     compiled for ANSI C
     POSIX C clock_getttime.
     computer/operating system: Linux
-    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 double: 8 Entry: 8 (in bytes)
+    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 float: 8 Entry: 8 (in bytes)
 
 File: tmp/A
 File: tmp/Asize
@@ -48,7 +48,7 @@ triplet-to-col time: wall 1.447e-05 cpu 1.447e-05
 column-form matrix, n_row 24 n_col 24, nz = 160. OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -114,7 +114,7 @@ Symbolic object: OK
 Numeric object:  OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -274,7 +274,7 @@ AMD test done
 === UMFPACK v5.6.0 ========================================
 ===========================================================
 UMFPACK V5.6.0 (Jun 1, 2012), Control:
-    Matrix entry defined as: double
+    Matrix entry defined as: float
     Int (generic integer) defined as: int
 
     0: print level: 3
@@ -305,7 +305,7 @@ UMFPACK V5.6.0 (Jun 1, 2012), Control:
     compiled for ANSI C
     POSIX C clock_getttime.
     computer/operating system: Linux
-    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 double: 8 Entry: 8 (in bytes)
+    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 float: 8 Entry: 8 (in bytes)
 
 File: tmp/A
 File: tmp/Asize
@@ -316,7 +316,7 @@ triplet-to-col time: wall 1.8673e-05 cpu 1.8673e-05
 column-form matrix, n_row 67 n_col 67, nz = 294. OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -370,7 +370,7 @@ Symbolic object: OK
 Numeric object:  OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -517,7 +517,7 @@ AMD test done
 === UMFPACK v5.6.0 ========================================
 ===========================================================
 UMFPACK V5.6.0 (Jun 1, 2012), Control:
-    Matrix entry defined as: double
+    Matrix entry defined as: float
     Int (generic integer) defined as: int
 
     0: print level: 3
@@ -548,7 +548,7 @@ UMFPACK V5.6.0 (Jun 1, 2012), Control:
     compiled for ANSI C
     POSIX C clock_getttime.
     computer/operating system: Linux
-    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 double: 8 Entry: 8 (in bytes)
+    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 float: 8 Entry: 8 (in bytes)
 
 File: tmp/A
 File: tmp/Asize
@@ -559,7 +559,7 @@ triplet-to-col time: wall 0.000115879 cpu 0.000115879
 column-form matrix, n_row 183 n_col 183, nz = 1000. OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -619,7 +619,7 @@ Symbolic object: OK
 Numeric object:  OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -773,7 +773,7 @@ AMD test done
 === UMFPACK v5.6.0 ========================================
 ===========================================================
 UMFPACK V5.6.0 (Jun 1, 2012), Control:
-    Matrix entry defined as: double
+    Matrix entry defined as: float
     Int (generic integer) defined as: int
 
     0: print level: 3
@@ -804,7 +804,7 @@ UMFPACK V5.6.0 (Jun 1, 2012), Control:
     compiled for ANSI C
     POSIX C clock_getttime.
     computer/operating system: Linux
-    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 double: 8 Entry: 8 (in bytes)
+    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 float: 8 Entry: 8 (in bytes)
 
 File: tmp/A
 File: tmp/Asize
@@ -815,7 +815,7 @@ triplet-to-col time: wall 0.000117101 cpu 0.000117101
 column-form matrix, n_row 183 n_col 183, nz = 1069. OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -875,7 +875,7 @@ Symbolic object: OK
 Numeric object:  OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -1029,7 +1029,7 @@ AMD test done
 === UMFPACK v5.6.0 ========================================
 ===========================================================
 UMFPACK V5.6.0 (Jun 1, 2012), Control:
-    Matrix entry defined as: double
+    Matrix entry defined as: float
     Int (generic integer) defined as: int
 
     0: print level: 3
@@ -1060,7 +1060,7 @@ UMFPACK V5.6.0 (Jun 1, 2012), Control:
     compiled for ANSI C
     POSIX C clock_getttime.
     computer/operating system: Linux
-    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 double: 8 Entry: 8 (in bytes)
+    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 float: 8 Entry: 8 (in bytes)
 
 File: tmp/A
 File: tmp/Asize
@@ -1071,7 +1071,7 @@ triplet-to-col time: wall 0.00012349 cpu 0.00012349
 column-form matrix, n_row 130 n_col 130, nz = 1282. OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -1137,7 +1137,7 @@ Symbolic object: OK
 Numeric object:  OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -1298,7 +1298,7 @@ AMD test done
 === UMFPACK v5.6.0 ========================================
 ===========================================================
 UMFPACK V5.6.0 (Jun 1, 2012), Control:
-    Matrix entry defined as: double
+    Matrix entry defined as: float
     Int (generic integer) defined as: int
 
     0: print level: 3
@@ -1329,7 +1329,7 @@ UMFPACK V5.6.0 (Jun 1, 2012), Control:
     compiled for ANSI C
     POSIX C clock_getttime.
     computer/operating system: Linux
-    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 double: 8 Entry: 8 (in bytes)
+    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 float: 8 Entry: 8 (in bytes)
 
 File: tmp/A
 File: tmp/Asize
@@ -1340,7 +1340,7 @@ triplet-to-col time: wall 0.00010607 cpu 0.00010607
 column-form matrix, n_row 130 n_col 130, nz = 1037. OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -1406,7 +1406,7 @@ Symbolic object: OK
 Numeric object:  OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -1567,7 +1567,7 @@ AMD test done
 ===========================================================
 droptol 1e-06
 UMFPACK V5.6.0 (Jun 1, 2012), Control:
-    Matrix entry defined as: double
+    Matrix entry defined as: float
     Int (generic integer) defined as: int
 
     0: print level: 3
@@ -1598,7 +1598,7 @@ UMFPACK V5.6.0 (Jun 1, 2012), Control:
     compiled for ANSI C
     POSIX C clock_getttime.
     computer/operating system: Linux
-    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 double: 8 Entry: 8 (in bytes)
+    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 float: 8 Entry: 8 (in bytes)
 
 File: tmp/A
 File: tmp/Asize
@@ -1609,7 +1609,7 @@ triplet-to-col time: wall 0.000105891 cpu 0.000105891
 column-form matrix, n_row 130 n_col 130, nz = 1037. OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -1675,7 +1675,7 @@ Symbolic object: OK
 Numeric object:  OK
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double
+    matrix entry defined as:          float
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.

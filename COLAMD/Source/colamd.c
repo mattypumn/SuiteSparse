@@ -120,8 +120,8 @@
 	C syntax:
 
 	    #include "colamd.h"
-	    colamd_set_defaults (double knobs [COLAMD_KNOBS]) ;
-	    colamd_l_set_defaults (double knobs [COLAMD_KNOBS]) ;
+	    colamd_set_defaults (float knobs [COLAMD_KNOBS]) ;
+	    colamd_l_set_defaults (float knobs [COLAMD_KNOBS]) ;
 
 	Purpose:
 
@@ -129,7 +129,7 @@
 
 	Arguments:
 
-	    double knobs [COLAMD_KNOBS] ;	Output only.
+	    float knobs [COLAMD_KNOBS] ;	Output only.
 
 		NOTE: the meaning of the dense row/col knobs has changed in v2.4
 
@@ -155,7 +155,7 @@
 		be properly set to their defaults by the future version of
 		colamd_set_defaults, so that the code that calls colamd will
 		not need to change, assuming that you either use
-		colamd_set_defaults, or pass a (double *) NULL pointer as the
+		colamd_set_defaults, or pass a (float *) NULL pointer as the
 		knobs array to colamd or symamd.
 
 	    knobs [2]: aggressive absorption
@@ -172,10 +172,10 @@
 
 	    #include "colamd.h"
 	    int colamd (int n_row, int n_col, int Alen, int *A, int *p,
-	    	double knobs [COLAMD_KNOBS], int stats [COLAMD_STATS]) ;
+	    	float knobs [COLAMD_KNOBS], int stats [COLAMD_STATS]) ;
 	    SuiteSparse_long colamd_l (SuiteSparse_long n_row,
                 SuiteSparse_long n_col, SuiteSparse_long Alen,
-                SuiteSparse_long *A, SuiteSparse_long *p, double knobs
+                SuiteSparse_long *A, SuiteSparse_long *p, float knobs
                 [COLAMD_KNOBS], SuiteSparse_long stats [COLAMD_STATS]) ;
 
 	Purpose:
@@ -263,7 +263,7 @@
 		If colamd returns FALSE, then no permutation is returned, and
 		p is undefined on output.
 
-	    double knobs [COLAMD_KNOBS] ;	Input argument.
+	    float knobs [COLAMD_KNOBS] ;	Input argument.
 
 		See colamd_set_defaults for a description.
 
@@ -370,7 +370,7 @@
 		int A [ALEN] = {0, 1, 4, 2, 4, 0, 1, 2, 3, 1, 3} ;
 		int p [ ] = {0, 3, 5, 9, 11} ;
 		int stats [COLAMD_STATS] ;
-		colamd (5, 4, ALEN, A, p, (double *) NULL, stats) ;
+		colamd (5, 4, ALEN, A, p, (float *) NULL, stats) ;
 
 	    The permutation is returned in the array p, and A is destroyed.
 
@@ -382,10 +382,10 @@
 
 	    #include "colamd.h"
 	    int symamd (int n, int *A, int *p, int *perm,
-	    	double knobs [COLAMD_KNOBS], int stats [COLAMD_STATS],
+	    	float knobs [COLAMD_KNOBS], int stats [COLAMD_STATS],
 		void (*allocate) (size_t, size_t), void (*release) (void *)) ;
 	    SuiteSparse_long symamd_l (SuiteSparse_long n, SuiteSparse_long *A,
-                SuiteSparse_long *p, SuiteSparse_long *perm, double knobs
+                SuiteSparse_long *p, SuiteSparse_long *perm, float knobs
                 [COLAMD_KNOBS], SuiteSparse_long stats [COLAMD_STATS], void
                 (*allocate) (size_t, size_t), void (*release) (void *)) ;
 
@@ -451,7 +451,7 @@
 		PAP').  The array is used as a workspace during the ordering,
 		which is why it must be of length n+1, not just n.
 
-	    double knobs [COLAMD_KNOBS] ;	Input argument.
+	    float knobs [COLAMD_KNOBS] ;	Input argument.
 
 		See colamd_set_defaults for a description.
 
@@ -751,7 +751,7 @@ typedef struct Colamd_Row_struct
 #define PRIVATE static
 
 #define DENSE_DEGREE(alpha,n) \
-    ((Int) MAX (16.0, (alpha) * sqrt ((double) (n))))
+    ((Int) MAX (16.0, (alpha) * sqrt ((float) (n))))
 
 #define MAX(a,b) (((a) > (b)) ? (a) : (b))
 #define MIN(a,b) (((a) < (b)) ? (a) : (b))
@@ -828,7 +828,7 @@ PRIVATE void init_scoring
     Colamd_Col Col [],
     Int A [],
     Int head [],
-    double knobs [COLAMD_KNOBS],
+    float knobs [COLAMD_KNOBS],
     Int *p_n_row2,
     Int *p_n_col2,
     Int *p_max_deg
@@ -1087,7 +1087,7 @@ PUBLIC void COLAMD_set_defaults
 (
     /* === Parameters ======================================================= */
 
-    double knobs [COLAMD_KNOBS]		/* knob array */
+    float knobs [COLAMD_KNOBS]		/* knob array */
 )
 {
     /* === Local variables ================================================== */
@@ -1120,7 +1120,7 @@ PUBLIC Int SYMAMD_MAIN			/* return TRUE if OK, FALSE otherwise */
     Int A [],				/* row indices of A */
     Int p [],				/* column pointers of A */
     Int perm [],			/* output permutation, size n+1 */
-    double knobs [COLAMD_KNOBS],	/* parameters (uses defaults if NULL) */
+    float knobs [COLAMD_KNOBS],	/* parameters (uses defaults if NULL) */
     Int stats [COLAMD_STATS],		/* output statistics and error codes */
     void * (*allocate) (size_t, size_t),
     					/* pointer to calloc (ANSI C) or */
@@ -1146,8 +1146,8 @@ PUBLIC Int SYMAMD_MAIN			/* return TRUE if OK, FALSE otherwise */
     Int last_row ;		/* last row seen in the current column */
     Int length ;		/* number of nonzeros in a column */
 
-    double cknobs [COLAMD_KNOBS] ;		/* knobs for colamd */
-    double default_knobs [COLAMD_KNOBS] ;	/* default knobs for colamd */
+    float cknobs [COLAMD_KNOBS] ;		/* knobs for colamd */
+    float default_knobs [COLAMD_KNOBS] ;	/* default knobs for colamd */
 
 #ifndef NDEBUG
     colamd_get_debug ("symamd") ;
@@ -1323,14 +1323,14 @@ PUBLIC Int SYMAMD_MAIN			/* return TRUE if OK, FALSE otherwise */
     Mlen = COLAMD_recommended (mnz, n_row, n) ;
     M = (Int *) ((*allocate) (Mlen, sizeof (Int))) ;
     DEBUG0 (("symamd: M is %d-by-%d with %d entries, Mlen = %g\n",
-    	n_row, n, mnz, (double) Mlen)) ;
+    	n_row, n, mnz, (float) Mlen)) ;
 
     if (!M)
     {
 	stats [COLAMD_STATUS] = COLAMD_ERROR_out_of_memory ;
 	(*release) ((void *) count) ;
 	(*release) ((void *) mark) ;
-	DEBUG0 (("symamd: allocate M (size %g) failed\n", (double) Mlen)) ;
+	DEBUG0 (("symamd: allocate M (size %g) failed\n", (float) Mlen)) ;
 	return (FALSE) ;
     }
 
@@ -1441,7 +1441,7 @@ PUBLIC Int COLAMD_MAIN		/* returns TRUE if successful, FALSE otherwise*/
     Int Alen,			/* length of A */
     Int A [],			/* row indices of A */
     Int p [],			/* pointers to columns in A */
-    double knobs [COLAMD_KNOBS],/* parameters (uses defaults if NULL) */
+    float knobs [COLAMD_KNOBS],/* parameters (uses defaults if NULL) */
     Int stats [COLAMD_STATS]	/* output statistics and error codes */
 )
 {
@@ -1458,7 +1458,7 @@ PUBLIC Int COLAMD_MAIN		/* returns TRUE if successful, FALSE otherwise*/
     Int n_row2 ;		/* number of non-dense, non-empty rows */
     Int ngarbage ;		/* number of garbage collections performed */
     Int max_deg ;		/* maximum row degree */
-    double default_knobs [COLAMD_KNOBS] ;	/* default knobs array */
+    float default_knobs [COLAMD_KNOBS] ;	/* default knobs array */
     Int aggressive ;		/* do aggressive absorption */
     int ok ;
 
@@ -1891,7 +1891,7 @@ PRIVATE void init_scoring
     Colamd_Col Col [],		/* of size n_col+1 */
     Int A [],			/* column form and row form of A */
     Int head [],		/* of size n_col+1 */
-    double knobs [COLAMD_KNOBS],/* parameters */
+    float knobs [COLAMD_KNOBS],/* parameters */
     Int *p_n_row2,		/* number of non-dense, non-empty rows */
     Int *p_n_col2,		/* number of non-dense, non-empty columns */
     Int *p_max_deg		/* maximum row degree */

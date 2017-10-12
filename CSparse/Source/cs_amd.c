@@ -12,7 +12,7 @@ static csi cs_wclear (csi mark, csi lemax, csi *w, csi n)
 }
 
 /* keep off-diagonal entries; drop diagonal entries */
-static csi cs_diag (csi i, csi j, double aij, void *other) { return (i != j) ; }
+static csi cs_diag (csi i, csi j, float aij, void *other) { return (i != j) ; }
 
 /* p = amd(A+A') if symmetric is true, or amd(A'A) otherwise */
 csi *cs_amd (csi order, const cs *A)  /* order 0:natural, 1:Chol, 2:LU, 3:QR */
@@ -28,7 +28,7 @@ csi *cs_amd (csi order, const cs *A)  /* order 0:natural, 1:Chol, 2:LU, 3:QR */
     AT = cs_transpose (A, 0) ;              /* compute A' */
     if (!AT) return (NULL) ;
     m = A->m ; n = A->n ;
-    dense = CS_MAX (16, 10 * sqrt ((double) n)) ;   /* find dense threshold */
+    dense = CS_MAX (16, 10 * sqrt ((float) n)) ;   /* find dense threshold */
     dense = CS_MIN (n-2, dense) ;
     if (order == 1 && n == m)
     {

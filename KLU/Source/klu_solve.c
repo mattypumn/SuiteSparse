@@ -20,14 +20,14 @@ Int KLU_solve
     Int nrhs,               /* number of right-hand-sides */
 
     /* right-hand-side on input, overwritten with solution to Ax=b on output */
-    double B [ ],           /* size n*nrhs, in column-oriented form, with
+    float B [ ],           /* size n*nrhs, in column-oriented form, with
                              * leading dimension d. */
     /* --------------- */
     KLU_common *Common
 )
 {
     Entry x [4], offik, s ;
-    double rs, *Rs ;
+    float rs, *Rs ;
     Entry *Offx, *X, *Bz, *Udiag ;
     Int *Q, *R, *Pnum, *Offp, *Offi, *Lip, *Uip, *Llen, *Ulen ;
     Unit **LUbx ;

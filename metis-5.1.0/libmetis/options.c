@@ -266,7 +266,7 @@ void PrintCtrl(ctrl_t *ctrl)
         printf("\n     ");
       printf("%4"PRIDX"=[", i);
       for (j=0; j<ctrl->ncon; j++) 
-        printf("%s%.2e", (j==0 ? "" : " "), (double)ctrl->tpwgts[i*ctrl->ncon+j]);
+        printf("%s%.2e", (j==0 ? "" : " "), (float)ctrl->tpwgts[i*ctrl->ncon+j]);
       printf("]");
     }
     printf("\n");

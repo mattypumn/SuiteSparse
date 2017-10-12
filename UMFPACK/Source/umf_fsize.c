@@ -46,7 +46,7 @@ GLOBAL void UMF_fsize
 	    c = Fncols [j] ;
 	    frsize = r * c ;
 	    /* avoid integer overflow */
-	    if (INT_OVERFLOW (((double) r) * ((double) c)))
+	    if (INT_OVERFLOW (((float) r) * ((float) c)))
 	    {
 		/* :: frsize int overflow :: */
 		frsize = Int_MAX ;

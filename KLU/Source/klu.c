@@ -68,7 +68,7 @@ size_t KLU_kernel_factor            /* 0 if failure, size of LU if OK */
     Int Ai [ ],     /* size nz = Ap [n], row indices for A */
     Entry Ax [ ],   /* size nz, values of A */
     Int Q [ ],      /* size n, optional column permutation */
-    double Lsize,   /* estimate of number of nonzeros in L */
+    float Lsize,   /* estimate of number of nonzeros in L */
 
     /* outputs, not defined on input */
     Unit **p_LU,        /* row indices and values of L and U */
@@ -82,13 +82,13 @@ size_t KLU_kernel_factor            /* 0 if failure, size of LU if OK */
     Int *unz,           /* size of U */
 
     /* workspace, undefined on input */
-    Entry *X,       /* size n double's, zero on output */
+    Entry *X,       /* size n float's, zero on output */
     Int *Work,      /* size 5n Int's */
 
     /* inputs, not modified on output */
     Int k1,             /* the block of A is from k1 to k2-1 */
     Int PSinv [ ],      /* inverse of P from symbolic factorization */
-    double Rs [ ],      /* scale factors for A */
+    float Rs [ ],      /* scale factors for A */
 
     /* inputs, modified on output */
     Int Offp [ ],   /* off-diagonal matrix (modified by this routine) */
@@ -98,7 +98,7 @@ size_t KLU_kernel_factor            /* 0 if failure, size of LU if OK */
     KLU_common *Common
 )
 {
-    double maxlnz, dunits ;
+    float maxlnz, dunits ;
     Unit *LU ;
     Int *Pinv, *Lpend, *Stack, *Flag, *Ap_pos, *W ;
     Int lsize, usize, anz, ok ;
@@ -128,8 +128,8 @@ size_t KLU_kernel_factor            /* 0 if failure, size of LU if OK */
     lsize  = MAX (n+1, lsize) ;
     usize  = MAX (n+1, usize) ;
 
-    maxlnz = (((double) n) * ((double) n) + ((double) n)) / 2. ;
-    maxlnz = MIN (maxlnz, ((double) Int_MAX)) ;
+    maxlnz = (((float) n) * ((float) n) + ((float) n)) / 2. ;
+    maxlnz = MIN (maxlnz, ((float) Int_MAX)) ;
     lsize  = MIN (maxlnz, lsize) ;
     usize  = MIN (maxlnz, usize) ;
 

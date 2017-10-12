@@ -20,7 +20,7 @@
 #include <cstring>
 
 #include <complex>
-typedef std::complex<double> Complex ;
+typedef std::complex<float> Complex ;
 
 // -----------------------------------------------------------------------------
 // debugging and printing control
@@ -223,8 +223,8 @@ template <typename Entry> struct spqr_work
     Long maxfrank ;         // largest rank of fronts in this stack
 
     // for computing the 2-norm of w, the vector of the dead column norms
-    double wscale ;         // scale factor for norm (w (of this stack))
-    double wssq ;           // sum-of-squares for norm (w (of this stack))
+    float wscale ;         // scale factor for norm (w (of this stack))
+    float wssq ;           // sum-of-squares for norm (w (of this stack))
 } ;
 
 
@@ -236,7 +236,7 @@ template <typename Entry> struct spqr_work
 
 template <typename Entry> struct spqr_blob
 {
-    double tol ;
+    float tol ;
     spqr_symbolic *QRsym ;
     spqr_numeric <Entry> *QRnum ;
     spqr_work <Entry> *Work ;
@@ -279,7 +279,7 @@ template <typename Entry> spqr_numeric <Entry> *spqr_factorize
 
     // inputs, not modified
     Long freeA,                     // if TRUE, free A on output
-    double tol,                     // for rank detection
+    float tol,                     // for rank detection
     Long ntol,                      // apply tol only to first ntol columns
     spqr_symbolic *QRsym,
 
@@ -288,7 +288,7 @@ template <typename Entry> spqr_numeric <Entry> *spqr_factorize
 ) ;
 
 // returns tol (-1 if error)
-template <typename Entry> double spqr_tol
+template <typename Entry> float spqr_tol
 (
     // inputs, not modified
     cholmod_sparse *A,
@@ -297,7 +297,7 @@ template <typename Entry> double spqr_tol
     cholmod_common *cc
 ) ;
 
-template <typename Entry> double spqr_maxcolnorm
+template <typename Entry> float spqr_maxcolnorm
 (
     // inputs, not modified
     cholmod_sparse *A,
@@ -411,7 +411,7 @@ template <typename Entry> void spqrDebug_dumpsparse
     cholmod_common *cc
 ) ;
 
-void spqrDebug_print (double x) ;
+void spqrDebug_print (float x) ;
 void spqrDebug_print (Complex x) ;
 
 void spqrDebug_dump_Parent (Long n, Long *Parent, const char *filename) ;
@@ -627,7 +627,7 @@ template <typename Entry> int spqr_1colamd
     // inputs, not modified
     int ordering,           // all available, except 0:fixed and 3:given
                             // treated as 1:natural
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     cholmod_sparse *A,      // m-by-n sparse matrix
 
@@ -657,7 +657,7 @@ template <typename Entry> int spqr_1colamd
 template <typename Entry> int spqr_1fixed
 (
     // inputs, not modified
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     cholmod_sparse *A,      // m-by-n sparse matrix
 
@@ -685,7 +685,7 @@ template <typename Entry> SuiteSparseQR_factorization <Entry> *spqr_1factor
 (
     // inputs, not modified
     int ordering,           // all ordering options available
-    double tol,             // only accept singletons above tol
+    float tol,             // only accept singletons above tol
     Long bncols,            // number of columns of B
     int keepH,              // if TRUE, keep the Householder vectors
     cholmod_sparse *A,      // m-by-n sparse matrix
@@ -886,7 +886,7 @@ template <typename Entry> Long spqr_front
     Long m,             // F is m-by-n with leading dimension m
     Long n,
     Long npiv,          // number of pivot columns
-    double tol,         // a column is flagged as dead if its norm is <= tol
+    float tol,         // a column is flagged as dead if its norm is <= tol
     Long ntol,          // apply tol only to first ntol pivot columns
     Long fchunk,        // block size for compact WY Householder reflections,
                         // treated as 1 if fchunk <= 1
@@ -905,8 +905,8 @@ template <typename Entry> Long spqr_front
     Entry *W,           // size b*(n+b), where b = min (fchunk,n,m)
 
     // input/output
-    double *wscale,
-    double *wssq,
+    float *wscale,
+    float *wssq,
 
     cholmod_common *cc
 ) ;
@@ -929,7 +929,7 @@ template <typename Entry> int spqr_rmap
 // === spqr_conj ===============================================================
 // =============================================================================
 
-inline double spqr_conj (double x)
+inline float spqr_conj (float x)
 {
     return (x) ;
 }
@@ -944,12 +944,12 @@ inline Complex spqr_conj (Complex x)
 // === spqr_abs ================================================================
 // =============================================================================
 
-inline double spqr_abs (double x, cholmod_common *cc)       // cc is unused
+inline float spqr_abs (float x, cholmod_common *cc)       // cc is unused
 {
     return (fabs (x)) ;
 }
 
-inline double spqr_abs (Complex x, cholmod_common *cc)
+inline float spqr_abs (Complex x, cholmod_common *cc)
 {
     return (SuiteSparse_config.hypot_func (x.real ( ), x.imag ( ))) ;
 }
@@ -959,14 +959,14 @@ inline double spqr_abs (Complex x, cholmod_common *cc)
 // === spqr_divide =============================================================
 // =============================================================================
 
-inline double spqr_divide (double a, double b, cholmod_common *cc)  // cc unused
+inline float spqr_divide (float a, float b, cholmod_common *cc)  // cc unused
 {
     return (a/b) ;
 }
 
 inline Complex spqr_divide (Complex a, Complex b, cholmod_common *cc)
 {
-    double creal, cimag ;
+    float creal, cimag ;
     SuiteSparse_config.divcomplex_func
         (a.real(), a.imag(), b.real(), b.imag(), &creal, &cimag) ;
     return (Complex (creal, cimag)) ;
@@ -1002,14 +1002,13 @@ inline Long spqr_add (Long a, Long b, int *ok)
 inline Long spqr_mult (Long a, Long b, int *ok)
 {
     Long c = a * b ;
-    if (((double) c) != ((double) a) * ((double) b))
+    if (((float) c) != ((float) a) * ((float) b))
     {
         (*ok) = FALSE ;
         return (EMPTY) ;
     }
     return (c) ;
 }
-
 
 // =============================================================================
 // === BLAS interface ==========================================================
@@ -1041,6 +1040,12 @@ extern "C" {
 #define LAPACK_ZLARFT zlarft_64_
 #define LAPACK_ZLARFB zlarfb_64_
 
+#define BLAS_SNRM2    snrm2_
+#define LAPACK_SLARF  slarf_
+#define LAPACK_SLARFG slarfg_
+#define LAPACK_SLARFT slarft_
+#define LAPACK_SLARFB slarfb_
+
 #elif defined (BLAS_NO_UNDERSCORE)
 
 #define BLAS_DNRM2    dnrm2
@@ -1054,6 +1059,12 @@ extern "C" {
 #define LAPACK_ZLARFG zlarfg
 #define LAPACK_ZLARFT zlarft
 #define LAPACK_ZLARFB zlarfb
+
+#define BLAS_SNRM2    snrm2_
+#define LAPACK_SLARF  slarf_
+#define LAPACK_SLARFG slarfg_
+#define LAPACK_SLARFT slarft_
+#define LAPACK_SLARFB slarfb_
 
 #else
 
@@ -1069,6 +1080,12 @@ extern "C" {
 #define LAPACK_ZLARFT zlarft_
 #define LAPACK_ZLARFB zlarfb_
 
+#define BLAS_SNRM2    snrm2_
+#define LAPACK_SLARF  slarf_
+#define LAPACK_SLARFG slarfg_
+#define LAPACK_SLARFT slarft_
+#define LAPACK_SLARFB slarfb_
+
 #endif
 
 // =============================================================================
@@ -1078,11 +1095,19 @@ extern "C" {
 extern "C"
 {
 
+void LAPACK_SLARFT (char *direct, char *storev, BLAS_INT *n, BLAS_INT *k,
+    float *V, BLAS_INT *ldv, float *Tau, float *T, BLAS_INT *ldt) ;
+
 void LAPACK_DLARFT (char *direct, char *storev, BLAS_INT *n, BLAS_INT *k,
     double *V, BLAS_INT *ldv, double *Tau, double *T, BLAS_INT *ldt) ;
 
 void LAPACK_ZLARFT (char *direct, char *storev, BLAS_INT *n, BLAS_INT *k,
     Complex *V, BLAS_INT *ldv, Complex *Tau, Complex *T, BLAS_INT *ldt) ;
+
+void LAPACK_SLARFB (char *side, char *trans, char *direct, char *storev,
+    BLAS_INT *m, BLAS_INT *n, BLAS_INT *k, float *V, BLAS_INT *ldv,
+    float *T, BLAS_INT *ldt, float *C, BLAS_INT *ldc, float *Work,
+    BLAS_INT *ldwork) ;
 
 void LAPACK_DLARFB (char *side, char *trans, char *direct, char *storev,
     BLAS_INT *m, BLAS_INT *n, BLAS_INT *k, double *V, BLAS_INT *ldv,
@@ -1094,15 +1119,23 @@ void LAPACK_ZLARFB (char *side, char *trans, char *direct, char *storev,
     Complex *T, BLAS_INT *ldt, Complex *C, BLAS_INT *ldc, Complex *Work,
     BLAS_INT *ldwork) ;
 
+double BLAS_SNRM2 (BLAS_INT *n, float *X, BLAS_INT *incx) ;
+
 double BLAS_DNRM2 (BLAS_INT *n, double *X, BLAS_INT *incx) ;
 
 double BLAS_DZNRM2 (BLAS_INT *n, Complex *X, BLAS_INT *incx) ;
+
+void LAPACK_SLARFG (BLAS_INT *n, float *alpha, float *X, BLAS_INT *incx,
+    float *tau) ;
 
 void LAPACK_DLARFG (BLAS_INT *n, double *alpha, double *X, BLAS_INT *incx,
     double *tau) ;
 
 void LAPACK_ZLARFG (BLAS_INT *n, Complex *alpha, Complex *X, BLAS_INT *incx,
     Complex *tau) ;
+
+void LAPACK_SLARF (char *side, BLAS_INT *m, BLAS_INT *n, float *V,
+    BLAS_INT *incv, float *tau, float *C, BLAS_INT *ldc, float *Work) ;
 
 void LAPACK_DLARF (char *side, BLAS_INT *m, BLAS_INT *n, double *V,
     BLAS_INT *incv, double *tau, double *C, BLAS_INT *ldc, double *Work) ;

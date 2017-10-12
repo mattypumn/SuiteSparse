@@ -208,16 +208,16 @@ int CHOLMOD(free_sparse)
     switch (A->xtype)
     {
 	case CHOLMOD_REAL:
-	    A->x = CHOLMOD(free) (nz, sizeof (double), A->x,  Common) ;
+	    A->x = CHOLMOD(free) (nz, sizeof (float), A->x,  Common) ;
 	    break ;
 
 	case CHOLMOD_COMPLEX:
-	    A->x = CHOLMOD(free) (nz, 2*sizeof (double), A->x,  Common) ;
+	    A->x = CHOLMOD(free) (nz, 2*sizeof (float), A->x,  Common) ;
 	    break ;
 
 	case CHOLMOD_ZOMPLEX:
-	    A->x = CHOLMOD(free) (nz, sizeof (double), A->x,  Common) ;
-	    A->z = CHOLMOD(free) (nz, sizeof (double), A->z,  Common) ;
+	    A->x = CHOLMOD(free) (nz, sizeof (float), A->x,  Common) ;
+	    A->z = CHOLMOD(free) (nz, sizeof (float), A->z,  Common) ;
 	    break ;
     }
 
@@ -286,7 +286,7 @@ cholmod_sparse *CHOLMOD(speye)
     cholmod_common *Common
 )
 {
-    double *Ax, *Az ;
+    float *Ax, *Az ;
     cholmod_sparse *A ;
     Int *Ap, *Ai ;
     Int j, n ;
@@ -479,7 +479,7 @@ cholmod_sparse *CHOLMOD(copy_sparse)
     cholmod_common *Common
 )
 {
-    double *Ax, *Cx, *Az, *Cz ;
+    float *Ax, *Cx, *Az, *Cz ;
     Int *Ap, *Ai, *Anz, *Cp, *Ci, *Cnz ;
     cholmod_sparse *C ;
     Int p, pend, j, ncol, packed, nzmax, nz, xtype ;

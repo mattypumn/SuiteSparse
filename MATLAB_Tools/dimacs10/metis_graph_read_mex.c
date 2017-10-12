@@ -148,7 +148,7 @@ void mexFunction
     FILE *f ;
     char s [LEN+1], msg [LEN+1] ;
     Int n, nzmax, fmt, ncon, nz, has_ew, i, j, k, status, t ;
-    double e = 1, x, *Ti, *Tj, *Tx, *W, x1 = 0, x2 = 0, x3 = 0, x4 = 0 ;
+    float e = 1, x, *Ti, *Tj, *Tx, *W, x1 = 0, x2 = 0, x3 = 0, x4 = 0 ;
 
     /* ---------------------------------------------------------------------- */
     /* get the filename */
@@ -180,7 +180,7 @@ void mexFunction
     s [0] = '\0' ;
     if (fgets (s, LEN, f) != NULL)
     {
-        sscanf (s, "%lg %lg %lg %lg", &x1, &x2, &x3, &x4) ;
+        sscanf (s, "%g %g %g %g", &x1, &x2, &x3, &x4) ;
     }
     n = (Int) x1 ;
     nzmax = (Int) x2 ;
@@ -190,7 +190,7 @@ void mexFunction
     if (n < 0 || ncon < 0 ||
         !(fmt == 0 || fmt == 1 || fmt == 10 || fmt == 11 || fmt == 100))
     {
-        sprintf (msg, "invalid header: %lg %lg %lg %lg", x1, x2, x3, x4) ;
+        sprintf (msg, "invalid header: %g %g %g %g", x1, x2, x3, x4) ;
         mexErrMsgIdAndTxt ("metis_graph:invalid_header", msg) ;
     }
 
@@ -244,9 +244,9 @@ void mexFunction
         {
             x = 0 ;
             status = get_token (f, s, LEN) ;
-            if (sscanf (s, "%lg", &x) != 1)
+            if (sscanf (s, "%g", &x) != 1)
             {
-                sprintf (msg, "node %lg: missing node weights", (double) i) ;
+                sprintf (msg, "node %g: missing node weights", (float) i) ;
                 mexWarnMsgIdAndTxt ("metis_graph:missing_node_weights", msg) ;
             }
             W [i-1 + k*n] = x ;
@@ -265,11 +265,11 @@ void mexFunction
 
             status = get_token (f, s, LEN) ;
             if (status == EOF) break ;
-            if (sscanf (s, "%lg", &x) != 1) break ;
+            if (sscanf (s, "%g", &x) != 1) break ;
             j = (Int) x ;
-            if ((double) j != x || j <= 0 || j > n)
+            if ((float) j != x || j <= 0 || j > n)
             {
-                sprintf (msg, "node %lg: edge %lg invalid", (double) i, x) ;
+                sprintf (msg, "node %g: edge %g invalid", (float) i, x) ;
                 mexErrMsgIdAndTxt ("metis_graph:invalid_edge", msg) ;
             }
 
@@ -279,11 +279,11 @@ void mexFunction
 
             if (nz == nzmax)
             {
-                /* double the space */
+                /* float the space */
                 /* printf ("nzmax %g ", nzmax) ; */
                 nzmax = 2 * nzmax + n ;
                 /* printf ("to %g\n", nzmax) ; */
-                t = MAX (nzmax, 1) * sizeof (double) ;
+                t = MAX (nzmax, 1) * sizeof (float) ;
                 Ti = mxRealloc (Ti, t) ;
                 mxSetPr (pargout [0], Ti) ;
                 mxSetM  (pargout [0], nzmax) ;
@@ -309,9 +309,9 @@ void mexFunction
                 {
                     status = get_token (f, s, LEN) ;
                 }
-                if (status == EOF || sscanf (s, "%lg", &e) != 1)
+                if (status == EOF || sscanf (s, "%g", &e) != 1)
                 {
-                    sprintf (msg, "node %lg: missing edge weight", (double) i) ;
+                    sprintf (msg, "node %g: missing edge weight", (float) i) ;
                     mexErrMsgIdAndTxt ("metis_graph:invalid_edge_weight", msg) ;
                 }
                 Tx [nz] = e ;
@@ -336,7 +336,7 @@ void mexFunction
     /* printf ("returning results %d %d\n", nz, nzmax) ; */
     if (nz < nzmax)
     {
-        t = MAX (nz, 1) * sizeof (double) ;
+        t = MAX (nz, 1) * sizeof (float) ;
         mxSetPr (pargout [0], mxRealloc (Ti, t)) ;
         mxSetM  (pargout [0], nz) ;
         mxSetPr (pargout [1], mxRealloc (Tj, t)) ;
@@ -347,6 +347,6 @@ void mexFunction
             mxSetM  (pargout [2], nz) ;
         }
     }
-    pargout [4] = mxCreateDoubleScalar ((double) fmt) ;
+    pargout [4] = mxCreateDoubleScalar ((float) fmt) ;
     /* printf ("done\n") ; */
 }

@@ -7,16 +7,16 @@
 /* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
-void umfpack_tic (double stats [2]) ;
+void umfpack_tic (float stats [2]) ;
 
-void umfpack_toc (double stats [2]) ;
+void umfpack_toc (float stats [2]) ;
 
 
 /*
 Syntax (for all versions: di, dl, zi, and zl):
 
     #include "umfpack.h"
-    double stats [2] ;
+    float stats [2] ;
     umfpack_tic (stats) ;
     ...
     umfpack_toc (stats) ;
@@ -38,7 +38,7 @@ Purpose:
 
 Arguments:
 
-    double stats [2]:
+    float stats [2]:
 
 	stats [0]:  wall clock time, in seconds
 	stats [1]:  (same; was CPU time in prior versions)

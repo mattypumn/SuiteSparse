@@ -9,7 +9,7 @@ void mexFunction
 )
 {
     CS_INT n, k, *p ;
-    double *xx ;
+    float *xx ;
     if (nargout > 1 || nargin != 2)
     {
         mexErrMsgTxt ("Usage: x = cs_pvec(b,p)") ;
@@ -30,17 +30,17 @@ void mexFunction
         mexErrMsgTxt ("complex case not supported") ;
 #else
         cs_complex_t *x, *b ;
-        b = cs_cl_mex_get_double (n, pargin [0]) ;
+        b = cs_cl_mex_get_float (n, pargin [0]) ;
         x = cs_dl_malloc (n, sizeof (cs_complex_t)) ;
         cs_cl_pvec (p, b, x, n) ;
-        pargout [0] = cs_cl_mex_put_double (n, x) ;
+        pargout [0] = cs_cl_mex_put_float (n, x) ;
         cs_free (b) ;       /* free copy of complex values */
 #endif
     }
     else
     {
-        double *x, *b ;
-        b = cs_dl_mex_get_double (n, pargin [0]) ;
+        float *x, *b ;
+        b = cs_dl_mex_get_float (n, pargin [0]) ;
         pargout [0] = mxCreateDoubleMatrix (n, 1, mxREAL) ;
         x = mxGetPr (pargout [0]) ;
         cs_dl_pvec (p, b, x, n) ;

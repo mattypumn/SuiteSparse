@@ -1658,13 +1658,13 @@ public class UFgui extends JFrame
     }
 
     //-------------------------------------------------------------------------
-    // get double from JTextField
+    // get float from JTextField
     //-------------------------------------------------------------------------
 
-    private double getDouble (JTextField tfield, double Default)
+    private float getDouble (JTextField tfield, float Default)
     {
         String s = tfield.getText ( ) ;
-        double result = Default ;
+        float result = Default ;
         if (s.length ( ) > 0)
         {
             try
@@ -1715,11 +1715,11 @@ public class UFgui extends JFrame
         long minnz = getLong (minnz_Field, 0) ;
         long maxnz = getLong (maxnz_Field, INF) ;
 
-        double minpsym = getDouble (minpsym_Field, 0) ;
-        double maxpsym = getDouble (maxpsym_Field, 1.0) ;
+        float minpsym = getDouble (minpsym_Field, 0) ;
+        float maxpsym = getDouble (maxpsym_Field, 1.0) ;
 
-        double minnsym = getDouble (minnsym_Field, 0) ;
-        double maxnsym = getDouble (maxnsym_Field, 1.0) ;
+        float minnsym = getDouble (minnsym_Field, 0) ;
+        float maxnsym = getDouble (maxnsym_Field, 1.0) ;
 
         boolean shape_square = shape_square_Button.isSelected ( ) ;
         boolean shape_rect   = shape_rect_Button.isSelected ( ) ;
@@ -1784,8 +1784,8 @@ public class UFgui extends JFrame
             int isND     = (Integer) Stats [id-1][8] ;
             int posdef   = (Integer) Stats [id-1][9] ;
 
-            double psym = (Double) Stats [id-1][10] ;
-            double nsym = (Double) Stats [id-1][11] ;
+            float psym = (Double) Stats [id-1][10] ;
+            float nsym = (Double) Stats [id-1][11] ;
 
             boolean choose_group = true ;
             if (ngroups > 0)
@@ -1950,8 +1950,8 @@ public class UFgui extends JFrame
                     int isBinary       = (Integer) Stats [id-1][7] ;
                     int isND           = (Integer) Stats [id-1][8] ;
                     int posdef         = (Integer) Stats [id-1][9] ;
-                    double psym        = (Double)  Stats [id-1][10] ;
-                    double nsym        = (Double)  Stats [id-1][11] ;
+                    float psym        = (Double)  Stats [id-1][10] ;
+                    float nsym        = (Double)  Stats [id-1][11] ;
                     String kind        = (String)  Stats [id-1][12] ;
 
                     if (csv)

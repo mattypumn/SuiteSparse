@@ -45,7 +45,7 @@ PRIVATE Int numeric_alloc
 (
     NumericType **NumericHandle,
     SymbolicType *Symbolic,
-    double alloc_init,
+    float alloc_init,
     Int scale
 ) ;
 
@@ -64,14 +64,14 @@ GLOBAL Int UMFPACK_numeric
 (
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
     void *SymbolicHandle,
     void **NumericHandle,
-    const double Control [UMFPACK_CONTROL],
-    double User_Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float User_Info [UMFPACK_INFO]
 )
 {
 
@@ -79,9 +79,9 @@ GLOBAL Int UMFPACK_numeric
     /* local variables */
     /* ---------------------------------------------------------------------- */
 
-    double Info2 [UMFPACK_INFO], alloc_init, relpt, relpt2, droptol,
+    float Info2 [UMFPACK_INFO], alloc_init, relpt, relpt2, droptol,
 	front_alloc_init, stats [2] ;
-    double *Info ;
+    float *Info ;
     WorkType WorkSpace, *Work ;
     NumericType *Numeric ;
     SymbolicType *Symbolic ;
@@ -128,7 +128,7 @@ GLOBAL Int UMFPACK_numeric
 	scale = UMFPACK_DEFAULT_SCALE ;
     }
 
-    if (User_Info != (double *) NULL)
+    if (User_Info != (float *) NULL)
     {
 	/* return Info in user's array */
 	Info = User_Info ;
@@ -187,7 +187,7 @@ GLOBAL Int UMFPACK_numeric
     Info [UMFPACK_STATUS] = UMFPACK_OK ;
     Info [UMFPACK_NROW] = n_row ;
     Info [UMFPACK_NCOL] = n_col ;
-    Info [UMFPACK_SIZE_OF_UNIT] = (double) (sizeof (Unit)) ;
+    Info [UMFPACK_SIZE_OF_UNIT] = (float) (sizeof (Unit)) ;
 
     if (!Ap || !Ai || !Ax || !NumericHandle)
     {
@@ -437,16 +437,16 @@ GLOBAL Int UMFPACK_numeric
     UMF_set_stats (
 	Info,
 	Symbolic,
-	(double) Numeric->max_usage,	/* actual peak Numeric->Memory */
-	(double) Numeric->size,		/* actual final Numeric->Memory */
+	(float) Numeric->max_usage,	/* actual peak Numeric->Memory */
+	(float) Numeric->size,		/* actual final Numeric->Memory */
 	Numeric->flops,			/* actual "true flops" */
-	(double) Numeric->lnz + n_inner,		/* actual nz in L */
-	(double) Numeric->unz + Numeric->nnzpiv,	/* actual nz in U */
-	(double) Numeric->maxfrsize,	/* actual largest front size */
-	(double) ulen,			/* actual Numeric->Upattern size */
-	(double) npiv,			/* actual # pivots found */
-	(double) Numeric->maxnrows,	/* actual largest #rows in front */
-	(double) Numeric->maxncols,	/* actual largest #cols in front */
+	(float) Numeric->lnz + n_inner,		/* actual nz in L */
+	(float) Numeric->unz + Numeric->nnzpiv,	/* actual nz in U */
+	(float) Numeric->maxfrsize,	/* actual largest front size */
+	(float) ulen,			/* actual Numeric->Upattern size */
+	(float) npiv,			/* actual # pivots found */
+	(float) Numeric->maxnrows,	/* actual largest #rows in front */
+	(float) Numeric->maxncols,	/* actual largest #cols in front */
 	scale != UMFPACK_SCALE_NONE,
 	Symbolic->prefer_diagonal,
 	ACTUAL) ;
@@ -532,11 +532,11 @@ PRIVATE Int numeric_alloc
 (
     NumericType **NumericHandle,
     SymbolicType *Symbolic,
-    double alloc_init,
+    float alloc_init,
     Int scale
 )
 {
-    double nsize, bsize ;
+    float nsize, bsize ;
     Int n_row, n_col, n_inner, min_usage, trying ;
     NumericType *Numeric ;
 
@@ -575,12 +575,12 @@ PRIVATE Int numeric_alloc
     if (scale != UMFPACK_SCALE_NONE)
     {
 	DEBUG0 (("Allocating scale factors\n")) ;
-	Numeric->Rs = (double *) UMF_malloc (n_row, sizeof (double)) ;
+	Numeric->Rs = (float *) UMF_malloc (n_row, sizeof (float)) ;
     }
     else
     {
 	DEBUG0 (("No scale factors allocated (R = I)\n")) ;
-	Numeric->Rs = (double *) NULL ;
+	Numeric->Rs = (float *) NULL ;
     }
 
     Numeric->Memory = (Unit *) NULL ;
@@ -620,7 +620,7 @@ PRIVATE Int numeric_alloc
 
     /* Numeric->Memory cannot be larger in size than Int_MAX / sizeof(Unit) */
     /* For ILP32 mode:  2GB (nsize cannot be bigger than 256 Mwords) */
-    bsize = ((double) Int_MAX) / sizeof (Unit) - 1 ;
+    bsize = ((float) Int_MAX) / sizeof (Unit) - 1 ;
     DEBUG0 (("bsize %g\n", bsize)) ;
     nsize = MIN (nsize, bsize) ;
 
@@ -644,7 +644,7 @@ PRIVATE Int numeric_alloc
 	/* and try again */
 	trying = Numeric->size > min_usage ;
 	Numeric->size = (Int)
-	    (UMF_REALLOC_REDUCTION * ((double) Numeric->size)) ;
+	    (UMF_REALLOC_REDUCTION * ((float) Numeric->size)) ;
 	Numeric->size = MAX (min_usage, Numeric->size) ;
     }
 

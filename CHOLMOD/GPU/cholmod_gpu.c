@@ -46,7 +46,7 @@ static int poll_gpu (size_t s)          /* TRUE if OK, FALSE otherwise */
     /* Returns TRUE if the GPU has a block of memory of size s,
        FALSE otherwise.  The block of memory is immediately freed. */
     void *p = NULL ;
-    /* double t = SuiteSparse_time ( ) ; */
+    /* float t = SuiteSparse_time ( ) ; */
     if (s == 0)
     {
         return (FALSE) ;
@@ -74,7 +74,7 @@ int CHOLMOD(gpu_memorysize)      /* returns 1 on error, 0 otherwise */
 {
     size_t good, bad, s, total_free, total_memory ;
     int k ;
-    double t ;
+    float t ;
 
     *total_mem = 0;
     *available_mem = 0;
@@ -161,7 +161,7 @@ int CHOLMOD(gpu_probe) ( cholmod_common *Common )
 
 #ifdef GPU_BLAS
     int ngpus, idevice;
-    double tstart, tend;
+    float tstart, tend;
     struct cudaDeviceProp gpuProp;
 
     if (Common->useGPU != 1)
@@ -358,11 +358,11 @@ int CHOLMOD(gpu_allocate) ( cholmod_common *Common )
     int k;
     size_t fdm, tdm;
     size_t requestedDeviceMemory, requestedHostMemory;
-    double tstart, tend;
+    float tstart, tend;
     cudaError_t cudaErr;
     cublasStatus_t cublasErr;
     size_t maxGpuMemBytes;
-    double maxGpuMemFraction;
+    float maxGpuMemFraction;
 
     /* fprintf (stderr, "gpu_allocate useGPU %d\n", Common->useGPU) ; */
     if (Common->useGPU != 1) return (0) ;
@@ -379,8 +379,8 @@ int CHOLMOD(gpu_allocate) ( cholmod_common *Common )
     if (err)
     {
         printf ("GPU failure in cholmod_gpu: gpu_memorysize %g %g MB\n",
-            ((double) tdm) / (1024*1024),
-            ((double) fdm) / (1024*1024)) ;
+            ((float) tdm) / (1024*1024),
+            ((float) fdm) / (1024*1024)) ;
         ERROR (CHOLMOD_GPU_PROBLEM, "gpu memorysize failure\n") ;
     }
 
@@ -464,7 +464,7 @@ int CHOLMOD(gpu_allocate) ( cholmod_common *Common )
     if (cudaErr)
     {
         printf ("GPU failure in cholmod_gpu: requested %g MB\n",
-            ((double) requestedDeviceMemory) / (1024*1024)) ;
+            ((float) requestedDeviceMemory) / (1024*1024)) ;
         ERROR (CHOLMOD_GPU_PROBLEM, "device memory allocation failure\n") ;
     }
 

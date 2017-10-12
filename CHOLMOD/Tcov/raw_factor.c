@@ -39,7 +39,7 @@ static int icomp (Int *i, Int *j)
 static cholmod_sparse *add_gunk (cholmod_sparse *A)
 {
     cholmod_sparse *S ;
-    double *Sx, *Sz ;
+    float *Sx, *Sz ;
     Int *Sp, *Si, nz, p, save3, j, n ;
 
     if (A == NULL) return (NULL) ;
@@ -117,9 +117,9 @@ static cholmod_sparse *add_gunk (cholmod_sparse *A)
  * arrowhead matrix).
  */
 
-double raw_factor (cholmod_sparse *A, Int check_errors)
+float raw_factor (cholmod_sparse *A, Int check_errors)
 {
-    double maxerr = 0, r, anorm ;
+    float maxerr = 0, r, anorm ;
     cholmod_sparse *AT, *C, *LT, *Lsparse, *S, *ST, *R, *A1 ;
     cholmod_factor *L, *Lcopy ;
     cholmod_dense *X, *W, *B, *X2 ;
@@ -128,7 +128,7 @@ double raw_factor (cholmod_sparse *A, Int check_errors)
     Int *Parent, *Post, *First, *Level, *Ri, *Rp, *LTp = NULL, *LTi = NULL, *P,
 	*mask, *RLinkUp ;
     SuiteSparse_long lr ;
-    double beta [2] ;
+    float beta [2] ;
     unsigned SuiteSparse_long save ;
 
     /* ---------------------------------------------------------------------- */
@@ -677,16 +677,16 @@ fprintf (stderr, "solve %8.2e\n", r) ;
  * fill-reducing ordering is used.  Both simplicial LL' and LDL' factorizations
  * are used (testing rowfac_mask, for LPDASA only). */
 
-double raw_factor2 (cholmod_sparse *A, double alpha, int domask)
+float raw_factor2 (cholmod_sparse *A, float alpha, int domask)
 {
     Int n, i, prefer_zomplex, is_ll, xtype, sorted, axtype, stype ;
     Int *mask = NULL, *RLinkUp = NULL, nz = 0 ;
     Int *Cp = NULL, added_gunk ;
-    double maxerr = 0, r = 0 ;
+    float maxerr = 0, r = 0 ;
     cholmod_sparse *AT = NULL, *C = NULL, *CT = NULL, *CC = NULL, *C2 = NULL ;
     cholmod_factor *L = NULL ;
     cholmod_dense *B = NULL, *X = NULL ;
-    double beta [2] ;
+    float beta [2] ;
 
 /*
 int saveit = cm->print ;
@@ -785,7 +785,7 @@ cm->precise = TRUE ;
     if (CC && domask)
     {
 	Int *Cp, *Ci, p ;
-	double *Cx, *Cz ;
+	float *Cx, *Cz ;
 
 	/* this implicitly sets the first row/col of C to zero, except diag. */
 	mask [0] = 1 ;

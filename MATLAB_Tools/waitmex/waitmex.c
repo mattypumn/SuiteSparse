@@ -34,7 +34,7 @@
 
 waitbar *waitbar_create         /* return a pointer to the new waitbar */
 (
-    double fraction,            /* fraction from 0 to 1 */
+    float fraction,            /* fraction from 0 to 1 */
     char *message               /* message to display */
 )
 {
@@ -73,7 +73,7 @@ waitbar *waitbar_create         /* return a pointer to the new waitbar */
 
 void waitbar_update
 (
-    double fraction,
+    float fraction,
     waitbar *h,
     char *message
 )

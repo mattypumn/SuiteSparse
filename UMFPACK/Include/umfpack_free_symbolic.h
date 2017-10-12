@@ -28,13 +28,13 @@ void umfpack_zl_free_symbolic
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;
     umfpack_di_free_symbolic (&Symbolic) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Symbolic ;

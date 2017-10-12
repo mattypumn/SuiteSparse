@@ -99,12 +99,12 @@
 
 static void get_value
 (
-    double *Ax,	    /* real values, or real/imag. for CHOLMOD_COMPLEX type */
-    double *Az,	    /* imaginary values for CHOLMOD_ZOMPLEX type */
+    float *Ax,	    /* real values, or real/imag. for CHOLMOD_COMPLEX type */
+    float *Az,	    /* imaginary values for CHOLMOD_ZOMPLEX type */
     Int p,	    /* get the pth entry */
     Int xtype,	    /* A->xtype: pattern, real, complex, or zomplex */
-    double *x,	    /* the real part */
-    double *z	    /* the imaginary part */
+    float *x,	    /* the real part */
+    float *z	    /* the imaginary part */
 )
 {
     switch (xtype)
@@ -186,8 +186,8 @@ int CHOLMOD(symmetry)
     cholmod_common *Common
 )
 {
-    double aij_real = 0, aij_imag = 0, aji_real = 0, aji_imag = 0 ;
-    double *Ax, *Az ;
+    float aij_real = 0, aij_imag = 0, aji_real = 0, aji_imag = 0 ;
+    float *Ax, *Az ;
     Int *Ap, *Ai, *Anz, *munch ;
     Int packed, nrow, ncol, xtype, is_symmetric, is_skew, is_hermitian, posdiag,
 	j, p, pend, i, piend, result, xmatched, pmatched, nzdiag, i2, found ;

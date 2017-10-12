@@ -95,7 +95,7 @@ static int TEMPLATE (cholmod_super_numeric)
     /* ---- input ---- */
     cholmod_sparse *A,  /* matrix to factorize */
     cholmod_sparse *F,  /* F = A' or A(:,f)' */
-    double beta [2],    /* beta*I is added to diagonal of matrix to factorize */
+    float beta [2],    /* beta*I is added to diagonal of matrix to factorize */
     /* ---- in/out --- */
     cholmod_factor *L,  /* factorization */
     /* -- workspace -- */
@@ -104,8 +104,8 @@ static int TEMPLATE (cholmod_super_numeric)
     cholmod_common *Common
     )
 {
-    double one [2], zero [2], tstart ;
-    double *Lx, *Ax, *Fx, *Az, *Fz, *C ;
+    float one [2], zero [2], tstart ;
+    float *Lx, *Ax, *Fx, *Az, *Fz, *C ;
     Int *Super, *Head, *Ls, *Lpi, *Lpx, *Map, *SuperMap, *RelativeMap, *Next,
         *Lpos, *Fp, *Fi, *Fnz, *Ap, *Ai, *Anz, *Iwork, *Next_save, *Lpos_save,
         *Previous;
@@ -385,7 +385,7 @@ static int TEMPLATE (cholmod_super_numeric)
             }
             else
             {
-                double fjk[2];
+                float fjk[2];
                 /* copy the kth column of A*F into the supernode */
                 pf = Fp [k] ;
                 pfend = (Fpacked) ? (Fp [k+1]) : (p + Fnz [k]) ;

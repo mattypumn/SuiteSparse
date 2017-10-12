@@ -574,7 +574,7 @@ int CHOLMOD(rowfac)
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
     cholmod_sparse *F,	/* used for A*A' case only. F=A' or A(:,f)' */
-    double beta [2],	/* factorize beta*I+A or beta*I+AA' */
+    float beta [2],	/* factorize beta*I+A or beta*I+AA' */
     size_t kstart,	/* first row to factorize */
     size_t kend,	/* last row to factorize is kend-1 */
     /* ---- in/out --- */
@@ -599,7 +599,7 @@ int CHOLMOD(rowfac_mask)
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
     cholmod_sparse *F,	/* used for A*A' case only. F=A' or A(:,f)' */
-    double beta [2],	/* factorize beta*I+A or beta*I+AA' */
+    float beta [2],	/* factorize beta*I+A or beta*I+AA' */
     size_t kstart,	/* first row to factorize */
     size_t kend,	/* last row to factorize is kend-1 */
     Int *mask,		/* size A->nrow. if mask[i] >= 0 row i is set to zero */
@@ -626,7 +626,7 @@ int CHOLMOD(rowfac_mask2)
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
     cholmod_sparse *F,	/* used for A*A' case only. F=A' or A(:,f)' */
-    double beta [2],	/* factorize beta*I+A or beta*I+AA' */
+    float beta [2],	/* factorize beta*I+A or beta*I+AA' */
     size_t kstart,	/* first row to factorize */
     size_t kend,	/* last row to factorize is kend-1 */
     Int *mask,		/* size A->nrow. if mask[i] >= maskmark row i is set

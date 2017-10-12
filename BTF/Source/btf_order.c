@@ -38,11 +38,11 @@ Int BTF(order)      /* returns number of blocks found */
     Int n,          /* A is n-by-n in compressed column form */
     Int Ap [ ],     /* size n+1 */
     Int Ai [ ],     /* size nz = Ap [n] */
-    double maxwork, /* do at most maxwork*nnz(A) work in the maximum
+    float maxwork, /* do at most maxwork*nnz(A) work in the maximum
                      * transversal; no limit if <= 0 */
 
     /* output, not defined on input */
-    double *work,   /* work performed in maxtrans, or -1 if limit reached */
+    float *work,   /* work performed in maxtrans, or -1 if limit reached */
     Int P [ ],      /* size n, row permutation */
     Int Q [ ],      /* size n, column permutation */
     Int R [ ],      /* size n+1.  block b is in rows/cols R[b] ... R[b+1]-1 */

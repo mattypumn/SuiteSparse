@@ -174,7 +174,7 @@ static int get_line (FILE *f, char *buf)
  * with Inf's properly.
  */
 
-static double fix_inf (double x)
+static float fix_inf (float x)
 {
     if ((x >= HUGE_DOUBLE) || (x <= -HUGE_DOUBLE))
     {
@@ -286,7 +286,7 @@ static int read_header	/* returns TRUE if successful, FALSE on error */
 {
     char *p ;
     int first = TRUE, got_mm_header = FALSE, c, c2, is_complex, nitems ;
-    double l1, l2, l3, l4 ;
+    float l1, l2, l3, l4 ;
 
     *mtype = CHOLMOD_TRIPLET ;
     *nrow = 0 ;
@@ -431,7 +431,7 @@ static int read_header	/* returns TRUE if successful, FALSE on error */
 	    l2 = EMPTY ;
 	    l3 = 0 ;
 	    l4 = 0 ;
-	    nitems = sscanf (buf, "%lg %lg %lg %lg\n", &l1, &l2, &l3, &l4) ;
+	    nitems = sscanf (buf, "%g %g %g %g\n", &l1, &l2, &l3, &l4) ;
 	    if (nitems < 2 || nitems > 4 || l1 > Int_max || l2 > Int_max)
 	    {
 		/* invalid matrix */
@@ -508,11 +508,11 @@ static cholmod_triplet *read_triplet
     cholmod_common *Common
 )
 {
-    double x, z ;
-    double *Tx ;
+    float x, z ;
+    float *Tx ;
     Int *Ti, *Tj, *Rdeg, *Cdeg ;
     cholmod_triplet *T ;
-    double l1, l2 ;
+    float l1, l2 ;
     Int nitems, xtype, unknown, k, nshould, is_lower, is_upper, one_based, i, j,
 	imax, jmax, skew_symmetric, p, complex_symmetric ;
     size_t s, nnz2, extra ;
@@ -608,7 +608,7 @@ static cholmod_triplet *read_triplet
 		/* blank line or comment */
 		continue ;
 	    }
-	    nitems = sscanf (buf, "%lg %lg %lg %lg\n", &l1, &l2, &x, &z) ;
+	    nitems = sscanf (buf, "%g %g %g %g\n", &l1, &l2, &x, &z) ;
 	    x = fix_inf (x) ;
 	    z = fix_inf (z) ;
 	    break ;
@@ -890,8 +890,8 @@ static cholmod_dense *read_dense
     cholmod_common *Common
 )
 {
-    double x, z ;
-    double *Xx = NULL ;
+    float x, z ;
+    float *Xx = NULL ;
     cholmod_dense *X ;
     Int nitems, xtype = -1, nshould = 0, i, j, k, kup, first ;
 
@@ -959,7 +959,7 @@ static cholmod_dense *read_dense
 		    /* blank line or comment */
 		    continue ;
 		}
-		nitems = sscanf (buf, "%lg %lg\n", &x, &z) ;
+		nitems = sscanf (buf, "%g %g\n", &x, &z) ;
 		x = fix_inf (x) ;
 		z = fix_inf (z) ;
 		break ;

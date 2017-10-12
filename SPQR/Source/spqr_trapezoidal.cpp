@@ -212,14 +212,14 @@ template <typename Entry> Long spqr_trapezoidal // rank of R; EMPTY on failure
 
 // =============================================================================
 
-template Long spqr_trapezoidal <double>      // rank of R, or EMPTY on failure
+template Long spqr_trapezoidal <float>      // rank of R, or EMPTY on failure
 (
     // inputs, not modified
 
     Long n,         // R is m-by-n (m is not needed here; can be economy R)
     Long *Rp,       // size n+1, column pointers of R
     Long *Ri,       // size rnz = Rp [n], row indices of R
-    double *Rx,     // size rnz, numerical values of R
+    float *Rx,     // size rnz, numerical values of R
 
     Long bncols,    // number of columns of B
 
@@ -235,7 +235,7 @@ template Long spqr_trapezoidal <double>      // rank of R, or EMPTY on failure
     // outputs, not allocated on input
     Long **p_Tp,    // size n+1, column pointers of T
     Long **p_Ti,    // size rnz, row indices of T
-    double **p_Tx,  // size rnz, numerical values of T
+    float **p_Tx,  // size rnz, numerical values of T
 
     Long **p_Qtrap,  // size n+bncols, modified Qfill
 

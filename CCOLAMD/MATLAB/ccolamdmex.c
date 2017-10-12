@@ -44,7 +44,7 @@ void mexFunction
 
     Long *A ;                   /* ccolamd's copy of the matrix and workspace */
     Long *cmember ;             /* ccolamd's copy of the constraint set */
-    double *in_cmember ;        /* input constraint set */
+    float *in_cmember ;        /* input constraint set */
     Long *p ;                   /* ccolamd's copy of the column pointers */
     Long Alen ;                 /* size of A */
     Long cslen ;                /* size of CS  */
@@ -52,10 +52,10 @@ void mexFunction
     Long n_row ;                /* number of rows of A */
     Long nnz ;                  /* number of entries in A */
     Long full ;                 /* TRUE if input matrix full, FALSE if sparse */
-    double knobs [CCOLAMD_KNOBS] ; /* ccolamd user-controllable parameters */
-    double *out_perm ;          /* output permutation vector */
-    double *out_stats ;         /* output stats vector */
-    double *in_knobs ;          /* input knobs vector */
+    float knobs [CCOLAMD_KNOBS] ; /* ccolamd user-controllable parameters */
+    float *out_perm ;          /* output permutation vector */
+    float *out_stats ;         /* output stats vector */
+    float *in_knobs ;          /* input knobs vector */
     Long i ;                    /* loop counter */
     mxArray *Ainput ;           /* input matrix handle */
     Long spumoni ;              /* verbosity variable */

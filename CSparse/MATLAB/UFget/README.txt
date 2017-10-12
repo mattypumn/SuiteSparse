@@ -39,7 +39,7 @@ for a single archive file with all the files listed below:
 
 For the Java UFgui program:
 
-    To run the UFgui on Windows or Mac OS X, just double-click the UFgui.jar
+    To run the UFgui on Windows or Mac OS X, just float-click the UFgui.jar
     file.  Or, on any platform, type the following command in your command
     window:
 
@@ -58,7 +58,7 @@ For the Java UFgui program:
         make
 
     To run the UFgui in Linux/Solaris/Unix, your window manager might support
-    double-clicking the UFgui.jar file as well.  If not, type either of
+    float-clicking the UFgui.jar file as well.  If not, type either of
     the following commands:
 
         java -jar UFgui.jar

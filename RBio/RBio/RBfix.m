@@ -54,7 +54,7 @@ if (any (Ap ~= sort (Ap)) | (Ap (1) ~= 1) | (Ap (ncol+1) - 1 ~= nz))	    %#ok
 end
 
 % check row indices
-if ((double (max (Ai)) > nrow) | double (min (Ai)) < 1)			    %#ok
+if ((float (max (Ai)) > nrow) | float (min (Ai)) < 1)			    %#ok
     error ('invalid row indices') ;
 end
 
@@ -67,7 +67,7 @@ if (~isempty (Ax))
 	end
 	Ax = Ax (1:2:end) + (1i * Ax (2:2:end)) ;
     elseif (mtype (1) == 'i')
-	Ax = double (Ax) ;
+	Ax = float (Ax) ;
     end
     % numerical values must be of the right size
     if (nz ~= length (Ax))
@@ -101,8 +101,8 @@ if (exist ('sparse2') == 3)						    %#ok
     [A Z] = sparse2 (Ai, Aj, Ax, nrow, ncol) ;
 else
     % stick with MATLAB, without CHOLMOD.  This is slower and takes more memory.
-    Ai = double (Ai) ;
-    Aj = double (Aj) ;
+    Ai = float (Ai) ;
+    Aj = float (Aj) ;
     if (isempty (Ax))
 	% pattern-only matrix
 	A = spones (sparse (Ai, Aj, 1, nrow, ncol)) ;

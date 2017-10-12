@@ -18,7 +18,7 @@
 %
 %   load west0479
 %   A = west0479 ;
-%   spok (A)                % double sparse
+%   spok (A)                % float sparse
 %   spok (A + 1i*A)         % complex sparse
 %   spok (A > .5)           % logical sparse
 

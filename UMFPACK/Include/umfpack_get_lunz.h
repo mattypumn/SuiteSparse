@@ -48,7 +48,7 @@ SuiteSparse_long umfpack_zl_get_lunz
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
@@ -56,7 +56,7 @@ double int Syntax:
     status = umfpack_di_get_lunz (&lnz, &unz, &n_row, &n_col, &nz_udiag,
 	Numeric) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;

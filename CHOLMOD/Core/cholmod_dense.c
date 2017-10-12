@@ -161,7 +161,7 @@ cholmod_dense *CHOLMOD(zeros)
 )
 {
     cholmod_dense *X ;
-    double *Xx, *Xz ;
+    float *Xx, *Xz ;
     Int i, nz ;
 
     /* ---------------------------------------------------------------------- */
@@ -228,7 +228,7 @@ cholmod_dense *CHOLMOD(ones)
 )
 {
     cholmod_dense *X ;
-    double *Xx, *Xz ;
+    float *Xx, *Xz ;
     Int i, nz ;
 
     /* ---------------------------------------------------------------------- */
@@ -296,7 +296,7 @@ cholmod_dense *CHOLMOD(eye)
 )
 {
     cholmod_dense *X ;
-    double *Xx, *Xz ;
+    float *Xx, *Xz ;
     Int i, n, nz ;
 
     /* ---------------------------------------------------------------------- */
@@ -373,16 +373,16 @@ int CHOLMOD(free_dense)
     switch (X->xtype)
     {
 	case CHOLMOD_REAL:
-	    X->x = CHOLMOD(free) (X->nzmax, sizeof (double), X->x, Common) ;
+	    X->x = CHOLMOD(free) (X->nzmax, sizeof (float), X->x, Common) ;
 	    break ;
 
 	case CHOLMOD_COMPLEX:
-	    X->x = CHOLMOD(free) (X->nzmax, 2*sizeof (double), X->x, Common) ;
+	    X->x = CHOLMOD(free) (X->nzmax, 2*sizeof (float), X->x, Common) ;
 	    break ;
 
 	case CHOLMOD_ZOMPLEX:
-	    X->x = CHOLMOD(free) (X->nzmax, sizeof (double), X->x, Common) ;
-	    X->z = CHOLMOD(free) (X->nzmax, sizeof (double), X->z, Common) ;
+	    X->x = CHOLMOD(free) (X->nzmax, sizeof (float), X->x, Common) ;
+	    X->z = CHOLMOD(free) (X->nzmax, sizeof (float), X->z, Common) ;
 	    break ;
     }
 
@@ -508,7 +508,7 @@ cholmod_dense *CHOLMOD(sparse_to_dense)
  * C = sparse (X)			values = TRUE
  * C = spones (sparse (X))		values = FALSE
  *
- * except that X must be double (it can be of many different types in MATLAB)
+ * except that X must be float (it can be of many different types in MATLAB)
  *
  * The resulting sparse matrix C has the same numeric xtype as the input dense
  * matrix X, unless "values" is FALSE (in which case C is real, where C(i,j)=1

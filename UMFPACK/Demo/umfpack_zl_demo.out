@@ -13,7 +13,7 @@ Availability: http://www.suitesparse.com
 UMFPACK V5.7.6 (May 4, 2016): OK
 
 UMFPACK V5.7.6 (May 4, 2016), Control:
-    Matrix entry defined as: double complex
+    Matrix entry defined as: float complex
     Int (generic integer) defined as: SuiteSparse_long
 
     0: print level: 5
@@ -44,7 +44,7 @@ UMFPACK V5.7.6 (May 4, 2016), Control:
     compiled for ANSI C
     POSIX C clock_getttime.
     computer/operating system: Linux
-    size of int: 4 SuiteSparse_long: 8 Int: 8 pointer: 8 double: 8 Entry: 16 (in bytes)
+    size of int: 4 SuiteSparse_long: 8 Int: 8 pointer: 8 float: 8 Entry: 16 (in bytes)
 
 
 b: dense vector, n = 5. 
@@ -252,7 +252,7 @@ diagonal of U: dense vector, n = 5.
     Numeric object:  OK
 
 UMFPACK V5.7.6 (May 4, 2016), Info:
-    matrix entry defined as:          double complex
+    matrix entry defined as:          float complex
     Int (generic integer) defined as: SuiteSparse_long
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -371,7 +371,7 @@ x (solution of Ax=b, solve is split into 3 steps): dense vector, n = 5.
 maxnorm of residual: 1.77636e-14
 
 UMFPACK V5.7.6 (May 4, 2016), Info:
-    matrix entry defined as:          double complex
+    matrix entry defined as:          float complex
     Int (generic integer) defined as: SuiteSparse_long
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -600,7 +600,7 @@ diagonal of U: dense vector, n = 5.
     Numeric object:  OK
 
 UMFPACK V5.7.6 (May 4, 2016), Info:
-    matrix entry defined as:          double complex
+    matrix entry defined as:          float complex
     Int (generic integer) defined as: SuiteSparse_long
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -847,7 +847,7 @@ diagonal of U: dense vector, n = 5.
     Numeric object:  OK
 
 UMFPACK V5.7.6 (May 4, 2016), Info:
-    matrix entry defined as:          double complex
+    matrix entry defined as:          float complex
     Int (generic integer) defined as: SuiteSparse_long
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -1238,7 +1238,7 @@ Loading numeric object:
 
 Done loading numeric object
 UMFPACK V5.7.6 (May 4, 2016), Info:
-    matrix entry defined as:          double complex
+    matrix entry defined as:          float complex
     Int (generic integer) defined as: SuiteSparse_long
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.
@@ -1336,7 +1336,7 @@ maxnorm of residual: 4.88498e-15
 
 Solving C'x=b again, using umfpack_zl_wsolve instead:
 UMFPACK V5.7.6 (May 4, 2016), Info:
-    matrix entry defined as:          double complex
+    matrix entry defined as:          float complex
     Int (generic integer) defined as: SuiteSparse_long
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.

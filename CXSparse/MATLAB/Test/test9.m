@@ -33,7 +33,7 @@ for i = f
 %    end
 
 
-    for cmplex = 0:double(~ispc)
+    for cmplex = 0:float(~ispc)
 
         if (cmplex)
             A = A + 1i * sprand (A) ;

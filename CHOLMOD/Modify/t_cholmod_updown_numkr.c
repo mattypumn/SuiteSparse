@@ -288,14 +288,14 @@
 
 #define ALPHA_GAMMA(Dj,Alpha,Gamma,W) \
 { \
-    double dj = Dj ; \
+    float dj = Dj ; \
     if (update) \
     { \
 	for (k = 0 ; k < RANK ; k++) \
 	{ \
-	    double w = W [k] ; \
-	    double alpha = Alpha [k] ; \
-	    double a = alpha + (w * w) / dj ; \
+	    float w = W [k] ; \
+	    float alpha = Alpha [k] ; \
+	    float a = alpha + (w * w) / dj ; \
 	    dj *= a ; \
 	    Alpha [k] = a ; \
 	    Gamma [k] = (- w / dj) ; \
@@ -306,9 +306,9 @@
     { \
 	for (k = 0 ; k < RANK ; k++) \
 	{ \
-	    double w = W [k] ; \
-	    double alpha = Alpha [k] ; \
-	    double a = alpha - (w * w) / dj ; \
+	    float w = W [k] ; \
+	    float alpha = Alpha [k] ; \
+	    float a = alpha - (w * w) / dj ; \
 	    dj *= a ; \
 	    Alpha [k] = a ; \
 	    Gamma [k] = w / dj ; \
@@ -327,8 +327,8 @@ static void NUMERIC (WDIM, RANK)
     int update,		/* TRUE for update, FALSE for downdate */
     Int j,		/* first column in the path */
     Int e,		/* last column in the path */
-    double Alpha [ ],	/* alpha, for each column of W */
-    double W [ ],	/* W is an n-by-WDIM array, stored in row-major order */
+    float Alpha [ ],	/* alpha, for each column of W */
+    float W [ ],	/* W is an n-by-WDIM array, stored in row-major order */
     cholmod_factor *L,	/* with unit diagonal (diagonal not stored) */
     cholmod_common *Common
 )
@@ -341,8 +341,8 @@ static void NUMERIC (WDIM, RANK)
     /* concise but slow version for illustration only */
     /* ---------------------------------------------------------------------- */
 
-    double Gamma [WDIM] ;
-    double *Lx ;
+    float Gamma [WDIM] ;
+    float *Lx ;
     Int *Li, *Lp, *Lnz ;
     Int p, k ;
     Int use_dbound = IS_GT_ZERO (Common->dbound) ;
@@ -381,9 +381,9 @@ static void NUMERIC (WDIM, RANK)
     /* dynamic supernodal version: supernodes detected dynamically */
     /* ---------------------------------------------------------------------- */
 
-    double G0 [RANK], G1 [RANK], G2 [RANK], G3 [RANK] ;
-    double Z0 [RANK], Z1 [RANK], Z2 [RANK], Z3 [RANK] ;
-    double *W0, *W1, *W2, *W3, *Lx ;
+    float G0 [RANK], G1 [RANK], G2 [RANK], G3 [RANK] ;
+    float Z0 [RANK], Z1 [RANK], Z2 [RANK], Z3 [RANK] ;
+    float *W0, *W1, *W2, *W3, *Lx ;
     Int *Li, *Lp, *Lnz ;
     Int j1, j2, j3, p0, p1, p2, p3, parent, lnz, pend, k ;
     Int use_dbound = IS_GT_ZERO (Common->dbound) ;
@@ -444,7 +444,7 @@ static void NUMERIC (WDIM, RANK)
 
 	    /* update L (j1,j) */
 	    {
-		double lx = Lx [p0] ;
+		float lx = Lx [p0] ;
 
 		/* for k = 0 to RANK-1 do: */
 		#define DO(k) \
@@ -504,7 +504,7 @@ static void NUMERIC (WDIM, RANK)
 
 		/* update L (j2,j) and update L (j2,j1) */
 		{
-		    double lx [2] ;
+		    float lx [2] ;
 		    lx [0] = Lx [p0] ;
 		    lx [1] = Lx [p1] ;
 
@@ -525,7 +525,7 @@ static void NUMERIC (WDIM, RANK)
 
 		/* update L (j3,j), L (j3,j1), and L (j3,j2) */
 		{
-		    double lx [3] ;
+		    float lx [3] ;
 		    lx [0] = Lx [p0] ;
 		    lx [1] = Lx [p1] ;
 		    lx [2] = Lx [p2] ;
@@ -550,7 +550,7 @@ static void NUMERIC (WDIM, RANK)
 		/* each iteration updates L (i, [j j1 j2 j3]) */
 		for ( ; p0 < pend ; p0++, p1++, p2++, p3++)
 		{
-		    double lx [4], *w0 ;
+		    float lx [4], *w0 ;
 		    lx [0] = Lx [p0] ;
 		    lx [1] = Lx [p1] ;
 		    lx [2] = Lx [p2] ;
@@ -584,7 +584,7 @@ static void NUMERIC (WDIM, RANK)
 		/* cleanup iteration if length is odd */
 		if ((lnz - 2) % 2)
 		{
-		    double lx [2] , *w0 ;
+		    float lx [2] , *w0 ;
 		    lx [0] = Lx [p0] ;
 		    lx [1] = Lx [p1] ;
 		    w0 = W + WDIM * Li [p0] ;
@@ -602,7 +602,7 @@ static void NUMERIC (WDIM, RANK)
 
 		for ( ; p0 < pend ; p0 += 2, p1 += 2)
 		{
-		    double lx [2][2], w [2], *w0, *w1 ;
+		    float lx [2][2], w [2], *w0, *w1 ;
 		    lx [0][0] = Lx [p0  ] ;
 		    lx [1][0] = Lx [p0+1] ;
 		    lx [0][1] = Lx [p1  ] ;
@@ -642,7 +642,7 @@ static void NUMERIC (WDIM, RANK)
 	    {
 		case 1:
 		{
-		    double lx , *w0 ;
+		    float lx , *w0 ;
 		    lx = Lx [p0] ;
 		    w0 = W + WDIM * Li [p0] ;
 
@@ -658,7 +658,7 @@ static void NUMERIC (WDIM, RANK)
 
 		case 2:
 		{
-		    double lx [2], *w0, *w1 ;
+		    float lx [2], *w0, *w1 ;
 		    lx [0] = Lx [p0  ] ;
 		    lx [1] = Lx [p0+1] ;
 		    w0 = W + WDIM * Li [p0  ] ;
@@ -680,7 +680,7 @@ static void NUMERIC (WDIM, RANK)
 
 		case 3:
 		{
-		    double lx [3], *w0, *w1, *w2 ;
+		    float lx [3], *w0, *w1, *w2 ;
 		    lx [0] = Lx [p0  ] ;
 		    lx [1] = Lx [p0+1] ;
 		    lx [2] = Lx [p0+2] ;
@@ -707,7 +707,7 @@ static void NUMERIC (WDIM, RANK)
 
 	    for ( ; p0 < pend ; p0 += 4)
 	    {
-		double lx [4], *w0, *w1, *w2, *w3 ;
+		float lx [4], *w0, *w1, *w2, *w3 ;
 		lx [0] = Lx [p0  ] ;
 		lx [1] = Lx [p0+1] ;
 		lx [2] = Lx [p0+2] ;

@@ -1,5 +1,5 @@
 UMFPACK V5.6.0 (Jun 1, 2012), Control:
-    Matrix entry defined as: double complex
+    Matrix entry defined as: float complex
     Int (generic integer) defined as: int
 
     0: print level: 2
@@ -30,10 +30,10 @@ UMFPACK V5.6.0 (Jun 1, 2012), Control:
     compiled for ANSI C
     POSIX C clock_getttime.
     computer/operating system: Linux
-    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 double: 8 Entry: 16 (in bytes)
+    size of int: 4 SuiteSparse_long: 8 Int: 4 pointer: 8 float: 8 Entry: 16 (in bytes)
 
 UMFPACK V5.6.0 (Jun 1, 2012), Info:
-    matrix entry defined as:          double complex
+    matrix entry defined as:          float complex
     Int (generic integer) defined as: int
     BLAS library used: Fortran BLAS.  size of BLAS integer: 4
     MATLAB:                           no.

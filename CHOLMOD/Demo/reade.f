@@ -14,8 +14,8 @@ c-----------------------------------------------------------------------
         character title*72, key*30, type*3, ptrfmt*16,
      $          indfmt*16, valfmt*20, rhsfmt*20
         logical sym, unsorted
-        double precision Value (nzmax)
-	double precision skew
+        float precision Value (nzmax)
+	float precision skew
         character rhstyp*3
         integer nel
 	integer lastrow

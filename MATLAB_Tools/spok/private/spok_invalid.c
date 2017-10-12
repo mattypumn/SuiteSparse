@@ -11,7 +11,7 @@ void mexFunction
 )
 {
     SPOK_INT *Ap, *Ai ;
-    double *Ax ;
+    float *Ax ;
     int kind ;
 
     if (nargin == 0)

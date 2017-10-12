@@ -15,7 +15,7 @@ for ii = f
 
     Prob = UFget (ii) ;
     disp (Prob) ;
-    for cmplex = 0:double(~ispc)
+    for cmplex = 0:float(~ispc)
 
         A = Prob.A ;
         if (cmplex)

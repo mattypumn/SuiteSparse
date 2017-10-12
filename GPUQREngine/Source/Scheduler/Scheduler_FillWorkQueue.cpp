@@ -370,7 +370,7 @@ void Scheduler::fillTasks
 #if 0
     if (f == 40) // (front->printMe)
     {
-        printf("[FillWorkQueue] %g : %d -> %d\n", (double) f,
+        printf("[FillWorkQueue] %g : %d -> %d\n", (float) f,
             state, nextState) ;
             // StateNames[state], StateNames[nextState]);
         debugDumpFront(front);
@@ -400,7 +400,7 @@ TaskDescriptor buildSAssemblyTask
     TaskDescriptor returner;
     returner.Type = TASKTYPE_SAssembly;
     returner.F = front->gpuF;
-    returner.AuxAddress[0] = (double*) meta->gpuS;
+    returner.AuxAddress[0] = (float*) meta->gpuS;
     returner.fm = front->fm;
     returner.fn = front->fn;
     returner.extra[0] = meta->Scount;
@@ -431,8 +431,8 @@ TaskDescriptor buildPackAssemblyTask
     returner.F = front->gpuF;
     returner.AuxAddress[0] = meta->gpuC;
     returner.AuxAddress[1] = meta->gpuP;
-    returner.AuxAddress[2] = (double*) meta->gpuRjmap;
-    returner.AuxAddress[3] = (double*) meta->gpuRimap;
+    returner.AuxAddress[2] = (float*) meta->gpuRjmap;
+    returner.AuxAddress[3] = (float*) meta->gpuRimap;
     returner.extra[0] = meta->pn;
     returner.extra[1] = meta->cm;
     returner.extra[2] = meta->cn;

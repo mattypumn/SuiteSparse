@@ -25,8 +25,8 @@ static void factor2
     KLU_common *Common
 )
 {
-    double lsize ;
-    double *Lnz, *Rs ;
+    float lsize ;
+    float *Lnz, *Rs ;
     Int *P, *Q, *R, *Pnum, *Offp, *Offi, *Pblock, *Pinv, *Iwork,
         *Lip, *Uip, *Llen, *Ulen ;
     Entry *Offx, *X, s, *Udiag ;
@@ -107,7 +107,7 @@ static void factor2
          * the scale factors are permuted according to the final pivot row
          * permutation, so that Rs [k] is the scale factor for the kth row of
          * A(p,q) where p and q are the final row and column permutations. */
-        KLU_scale (scale, n, Ap, Ai, (double *) Ax, Rs, Pnum, Common) ;
+        KLU_scale (scale, n, Ap, Ai, (float *) Ax, Rs, Pnum, Common) ;
         if (Common->status < KLU_OK)
         {
             /* matrix is invalid */
@@ -387,7 +387,7 @@ KLU_numeric *KLU_factor         /* returns NULL if error, or a valid
     /* --- inputs --- */
     Int Ap [ ],         /* size n+1, column pointers */
     Int Ai [ ],         /* size nz, row indices */
-    double Ax [ ],
+    float Ax [ ],
     KLU_symbolic *Symbolic,
     /* -------------- */
     KLU_common *Common
@@ -476,7 +476,7 @@ KLU_numeric *KLU_factor         /* returns NULL if error, or a valid
 
     if (Common->scale > 0)
     {
-        Numeric->Rs = KLU_malloc (n, sizeof (double), Common) ;
+        Numeric->Rs = KLU_malloc (n, sizeof (float), Common) ;
     }
     else
     {

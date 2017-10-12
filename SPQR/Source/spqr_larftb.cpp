@@ -35,7 +35,7 @@
 #include "spqr.hpp"
 
 inline void spqr_private_larft (char direct, char storev, Long n, Long k,
-    double *V, Long ldv, double *Tau, double *T, Long ldt, cholmod_common *cc)
+    float *V, Long ldv, float *Tau, float *T, Long ldt, cholmod_common *cc)
 {
     BLAS_INT N = n, K = k, LDV = ldv, LDT = ldt ;
     if (CHECK_BLAS_INT &&
@@ -45,7 +45,7 @@ inline void spqr_private_larft (char direct, char storev, Long n, Long k,
     }
     if (!CHECK_BLAS_INT || cc->blas_ok)
     {
-        LAPACK_DLARFT (&direct, &storev, &N, &K, V, &LDV, Tau, T, &LDT) ;
+        LAPACK_SLARFT (&direct, &storev, &N, &K, V, &LDV, Tau, T, &LDT) ;
     }
 }
 
@@ -67,8 +67,8 @@ inline void spqr_private_larft (char direct, char storev, Long n, Long k,
 
 
 inline void spqr_private_larfb (char side, char trans, char direct, char storev,
-    Long m, Long n, Long k, double *V, Long ldv, double *T, Long ldt, double *C,
-    Long ldc, double *Work, Long ldwork, cholmod_common *cc)
+    Long m, Long n, Long k, float *V, Long ldv, float *T, Long ldt, float *C,
+    Long ldc, float *Work, Long ldwork, cholmod_common *cc)
 {
     BLAS_INT M = m, N = n, K = k, LDV = ldv, LDT = ldt, LDC = ldc,
         LDWORK = ldwork ;
@@ -80,7 +80,7 @@ inline void spqr_private_larfb (char side, char trans, char direct, char storev,
     }
     if (!CHECK_BLAS_INT || cc->blas_ok)
     {
-        LAPACK_DLARFB (&side, &trans, &direct, &storev, &M, &N, &K, V, &LDV,
+        LAPACK_SLARFB (&side, &trans, &direct, &storev, &M, &N, &K, V, &LDV,
             T, &LDT, C, &LDC, Work, &LDWORK) ;
     }
 }
@@ -188,7 +188,7 @@ template <typename Entry> void spqr_larftb
 
 // =============================================================================
 
-template void spqr_larftb <double>
+template void spqr_larftb <float>
 (
     // inputs, not modified (V is modified and then restored on output)
     int method,     // 0,1,2,3
@@ -199,14 +199,14 @@ template void spqr_larftb <double>
                     // for methods 2 and 3, v = n
     Long ldc,       // leading dimension of C
     Long ldv,       // leading dimension of V
-    double *V,      // V is v-by-k, unit lower triangular (diag not stored)
-    double *Tau,    // size k, the k Householder coefficients
+    float *V,      // V is v-by-k, unit lower triangular (diag not stored)
+    float *Tau,    // size k, the k Householder coefficients
 
     // input/output
-    double *C,      // C is m-by-n, with leading dimension ldc
+    float *C,      // C is m-by-n, with leading dimension ldc
 
     // workspace, not defined on input or output
-    double *W,      // for methods 0,1: size k*k + n*k
+    float *W,      // for methods 0,1: size k*k + n*k
                     // for methods 2,3: size k*k + m*k
     cholmod_common *cc
 ) ;

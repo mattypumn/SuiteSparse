@@ -8,11 +8,11 @@
 /* -------------------------------------------------------------------------- */
 
 /*
-    Sets statistics in Info array.  Calculates everything in double precision,
+    Sets statistics in Info array.  Calculates everything in float precision,
     rather than Int or size_t, so that usage estimates can be computed even if
     the problem is so large that it would cause integer overflow.
 
-    This routine has many double relop's, but the NaN case is ignored.
+    This routine has many float relop's, but the NaN case is ignored.
 */
 
 #include "umf_internal.h"
@@ -21,25 +21,25 @@
 
 GLOBAL void UMF_set_stats
 (
-    double Info [ ],
+    float Info [ ],
     SymbolicType *Symbolic,
-    double max_usage,		/* peak size of Numeric->Memory, in Units */
-    double num_mem_size,	/* final size of Numeric->Memory, in Units */
-    double flops,		/* "true flops" */
-    double lnz,			/* nz in L */
-    double unz,			/* nz in U */
-    double maxfrsize,		/* largest front size */
-    double ulen,		/* size of Numeric->Upattern */
-    double npiv,		/* number of pivots found */
-    double maxnrows,		/* largest #rows in front */
-    double maxncols,		/* largest #cols in front */
+    float max_usage,		/* peak size of Numeric->Memory, in Units */
+    float num_mem_size,	/* final size of Numeric->Memory, in Units */
+    float flops,		/* "true flops" */
+    float lnz,			/* nz in L */
+    float unz,			/* nz in U */
+    float maxfrsize,		/* largest front size */
+    float ulen,		/* size of Numeric->Upattern */
+    float npiv,		/* number of pivots found */
+    float maxnrows,		/* largest #rows in front */
+    float maxncols,		/* largest #cols in front */
     Int scale,			/* true if scaling the rows of A */
     Int prefer_diagonal,	/* true if diagonal pivoting (only square A) */
     Int what			/* ESTIMATE or ACTUAL */
 )
 {
 
-    double sym_size, work_usage, nn, n_row, n_col, n_inner, num_On_size1,
+    float sym_size, work_usage, nn, n_row, n_col, n_inner, num_On_size1,
 	num_On_size2, num_usage, sym_maxncols, sym_maxnrows, elen, n1 ;
 
     n_col = Symbolic->n_col ;

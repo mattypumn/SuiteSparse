@@ -66,10 +66,10 @@ cholmod_sparse *CHOLMOD(spsolve)	    /* returns the sparse solution X */
     cholmod_common *Common
 )
 {
-    double x, z ;
+    float x, z ;
     cholmod_dense *X4, *B4 ;
     cholmod_sparse *X ;
-    double *Bx, *Bz, *Xx, *Xz, *B4x, *B4z, *X4x, *X4z ;
+    float *Bx, *Bz, *Xx, *Xz, *B4x, *B4z, *X4x, *X4z ;
     Int *Bi, *Bp, *Xp, *Xi, *Bnz ;
     Int n, nrhs, q, p, i, j, jfirst, jlast, packed, block, pend, j_n, xtype ;
     size_t xnz, nzmax ;

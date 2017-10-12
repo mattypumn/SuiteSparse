@@ -81,7 +81,7 @@ int CHOLMOD(factorize)
     cholmod_common *Common
 )
 {
-    double zero [2] ;
+    float zero [2] ;
     zero [0] = 0 ;
     zero [1] = 0 ;
     return (CHOLMOD(factorize_p) (A, zero, NULL, 0, L, Common)) ;
@@ -98,7 +98,7 @@ int CHOLMOD(factorize_p)
 (
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
-    double beta [2],	/* factorize beta*I+A or beta*I+A'*A */
+    float beta [2],	/* factorize beta*I+A or beta*I+A'*A */
     Int *fset,		/* subset of 0:(A->ncol)-1 */
     size_t fsize,	/* size of fset */
     /* ---- in/out --- */

@@ -64,7 +64,7 @@ template <typename Entry> void spqr_stranspose2
 
 // =============================================================================
 
-template void spqr_stranspose2 <double>
+template void spqr_stranspose2 <float>
 (
     // input, not modified
     cholmod_sparse *A,  // m-by-n
@@ -77,7 +77,7 @@ template void spqr_stranspose2 <double>
     Long *PLinv,        // size m, inverse row permutation, PLinv [i] = k
 
     // output, contents not defined on input
-    double *Sx,         // size nz, numerical values of S
+    float *Sx,         // size nz, numerical values of S
 
     // workspace, not defined on input or output
     Long *W             // size m

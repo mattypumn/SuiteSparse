@@ -49,7 +49,7 @@ int CHOLMOD(colamd)
     cholmod_common *Common
 )
 {
-    double knobs [COLAMD_KNOBS] ;
+    float knobs [COLAMD_KNOBS] ;
     cholmod_sparse *C ;
     Int *NewPerm, *Parent, *Post, *Work2n ;
     Int k, nrow, ncol ;

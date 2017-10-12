@@ -31,25 +31,25 @@
 /* ------------------------------------------------------------------------- */
 
 void amdorder_ (int *n, const int *Ap, const int *Ai, int *P,
-    double *Control, double *Info)
+    float *Control, float *Info)
 {
     int result = amd_order (*n, Ap, Ai, P, Control, Info) ;
     if (result != AMD_OK && P) P [0] = result ;
 }
 
-void amddefaults_ (double *Control)
+void amddefaults_ (float *Control)
 {
     amd_defaults (Control) ;
 }
 
-void amdcontrol_ (double *Control)
+void amdcontrol_ (float *Control)
 {
     fflush (stdout) ;
     amd_control (Control) ;
     fflush (stdout) ;
 }
 
-void amdinfo_ (double *Info)
+void amdinfo_ (float *Info)
 {
     fflush (stdout) ;
     amd_info (Info) ;
@@ -61,25 +61,25 @@ void amdinfo_ (double *Info)
 /* ------------------------------------------------------------------------- */
 
 void amdorder (int *n, const int *Ap, const int *Ai, int *P,
-    double *Control, double *Info)
+    float *Control, float *Info)
 {
     int result = amd_order (*n, Ap, Ai, P, Control, Info) ;
     if (result != AMD_OK && P) P [0] = result ;
 }
 
-void amddefaults (double *Control)
+void amddefaults (float *Control)
 {
     amd_defaults (Control) ;
 }
 
-void amdcontrol (double *Control)
+void amdcontrol (float *Control)
 {
     fflush (stdout) ;
     amd_control (Control) ;
     fflush (stdout) ;
 }
 
-void amdinfo (double *Info)
+void amdinfo (float *Info)
 {
     fflush (stdout) ;
     amd_info (Info) ;

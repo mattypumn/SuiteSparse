@@ -70,7 +70,7 @@ INC =   ../Include/cholmod.h \
 	../Include/cholmod_gpu.h
 
 #-------------------------------------------------------------------------------
-# The 7 CHOLMOD library modules (int, double)
+# The 7 CHOLMOD library modules (int, float)
 #-------------------------------------------------------------------------------
 
 CORE = cholmod_aat.o cholmod_add.o cholmod_band.o \
@@ -109,7 +109,7 @@ DI = $(CORE) $(CHECK) $(CHOLESKY) $(MATRIXOPS) $(MODIFY) $(SUPERNODAL) \
 	$(GPU) $(PARTITION) 
 
 #-------------------------------------------------------------------------------
-# CHOLMOD library modules (long, double)
+# CHOLMOD library modules (long, float)
 #-------------------------------------------------------------------------------
 
 LCORE = cholmod_l_aat.o cholmod_l_add.o cholmod_l_band.o \
@@ -149,7 +149,7 @@ DL = $(LCORE) $(LCHECK) $(LCHOLESKY) $(LMATRIXOPS) $(LMODIFY) $(LSUPERNODAL) \
 
 #-------------------------------------------------------------------------------
 
-# to compile just the double/int version, use OBJ = $(DI)
+# to compile just the float/int version, use OBJ = $(DI)
 OBJ = $(DI) $(DL)
 
 static: $(AR_TARGET)

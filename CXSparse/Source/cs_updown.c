@@ -4,7 +4,7 @@ CS_INT cs_updown (cs *L, CS_INT sigma, const cs *C, const CS_INT *parent)
 {
     CS_INT n, p, f, j, *Lp, *Li, *Cp, *Ci ;
     CS_ENTRY *Lx, *Cx, alpha, gamma, w1, w2, *w ;
-    double beta = 1, beta2 = 1, delta ;
+    float beta = 1, beta2 = 1, delta ;
 #ifdef CS_COMPLEX
     cs_complex_t phase ;
 #endif

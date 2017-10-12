@@ -222,7 +222,7 @@ static void construct_column
     /* inputs, not modified on output */
     Int k1,         /* the block of A is from k1 to k2-1 */
     Int PSinv [ ],  /* inverse of P from symbolic factorization */
-    double Rs [ ],  /* scale factors for A */
+    float Rs [ ],  /* scale factors for A */
     Int scale,      /* 0: no scaling, nonzero: scale the rows with Rs */
 
     /* inputs, modified on output */
@@ -356,8 +356,8 @@ static Int lpivot
     Int diagrow,
     Int *p_pivrow,
     Entry *p_pivot,
-    double *p_abs_pivot,
-    double tol,
+    float *p_abs_pivot,
+    float tol,
     Entry X [ ],
     Unit *LU,           /* LU factors (pattern and values) */
     Int Lip [ ],
@@ -373,7 +373,7 @@ static Int lpivot
 )
 {
     Entry x, pivot, *Lx ;
-    double abs_pivot, xabs ;
+    float abs_pivot, xabs ;
     Int p, i, ppivrow, pdiag, pivrow, *Li, last_row_index, firstrow, len ;
 
     pivrow = EMPTY ;
@@ -661,7 +661,7 @@ size_t KLU_kernel   /* final size of LU on output */
     /* inputs, not modified on output */
     Int k1,             /* the block of A is from k1 to k2-1 */
     Int PSinv [ ],      /* inverse of P from symbolic factorization */
-    double Rs [ ],      /* scale factors for A */
+    float Rs [ ],      /* scale factors for A */
 
     /* inputs, modified on output */
     Int Offp [ ],   /* off-diagonal matrix (modified by this routine) */
@@ -672,7 +672,7 @@ size_t KLU_kernel   /* final size of LU on output */
 )
 {
     Entry pivot ;
-    double abs_pivot, xsize, nunits, tol, memgrow ;
+    float abs_pivot, xsize, nunits, tol, memgrow ;
     Entry *Ux ;
     Int *Li, *Ui ;
     Unit *LU ;          /* LU factors (pattern and values) */
@@ -757,13 +757,13 @@ size_t KLU_kernel   /* final size of LU on output */
                  DUNITS (Entry, n - k) + DUNITS (Entry, k) ;
 
         /* LU can grow by at most 'nunits' entries if the column is dense */
-        PRINTF (("lup %d lusize %g lup+nunits: %g\n", lup, (double) lusize,
+        PRINTF (("lup %d lusize %g lup+nunits: %g\n", lup, (float) lusize,
             lup+nunits));
-        xsize = ((double) lup) + nunits ;
-        if (xsize > (double) lusize)
+        xsize = ((float) lup) + nunits ;
+        if (xsize > (float) lusize)
         {
             /* check here how much to grow */
-            xsize = (memgrow * ((double) lusize) + 4*n + 1) ;
+            xsize = (memgrow * ((float) lusize) + 4*n + 1) ;
             if (INT_OVERFLOW (xsize))
             {
                 PRINTF (("Matrix is too large (Int overflow)\n")) ;

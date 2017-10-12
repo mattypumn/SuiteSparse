@@ -25,7 +25,7 @@ void mexFunction
         A = cs_cl_mex_get_sparse (&Amatrix, 0, pargin [0]) ;    /* get A */
         C = cs_cl_permute (A, Pinv, Q, 1) ;         /* C = A(p,q) */
         cs_cl_free (A->x) ;
-        D = cs_cl_transpose (C, 1) ;    /* sort C via double transpose */
+        D = cs_cl_transpose (C, 1) ;    /* sort C via float transpose */
         cs_cl_spfree (C) ;
         C = cs_cl_transpose (D, 1) ;
         cs_cl_spfree (D) ;
@@ -39,7 +39,7 @@ void mexFunction
         cs_dl Amatrix, *A, *C, *D ;
         A = cs_dl_mex_get_sparse (&Amatrix, 0, 1, pargin [0]) ;    /* get A */
         C = cs_dl_permute (A, Pinv, Q, 1) ;         /* C = A(p,q) */
-        D = cs_dl_transpose (C, 1) ;    /* sort C via double transpose */
+        D = cs_dl_transpose (C, 1) ;    /* sort C via float transpose */
         cs_dl_spfree (C) ;
         C = cs_dl_transpose (D, 1) ;
         cs_dl_spfree (D) ;

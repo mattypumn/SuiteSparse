@@ -24,21 +24,21 @@ GLOBAL Int CAMD_order
     const Int Ap [ ],
     const Int Ai [ ],
     Int P [ ],
-    double Control [ ],
-    double Info [ ],
+    float Control [ ],
+    float Info [ ],
     const Int C [ ]
 )
 {
     Int *Len, *S, nz, i, *Pinv, info, status, *Rp, *Ri, *Cp, *Ci, ok ;
     size_t nzaat, slen ;
-    double mem = 0 ;
+    float mem = 0 ;
 
 #ifndef NDEBUG
     CAMD_debug_init ("camd") ;
 #endif
 
     /* clear the Info array, if it exists */
-    info = Info != (double *) NULL ;
+    info = Info != (float *) NULL ;
     if (info)
     {
 	for (i = 0 ; i < CAMD_INFO ; i++)
@@ -140,7 +140,7 @@ GLOBAL Int CAMD_order
     /* --------------------------------------------------------------------- */
 
     nzaat = CAMD_aat (n, Cp, Ci, Len, P, Info) ;
-    CAMD_DEBUG1 (("nzaat: %g\n", (double) nzaat)) ;
+    CAMD_DEBUG1 (("nzaat: %g\n", (float) nzaat)) ;
     ASSERT ((MAX (nz-n, 0) <= nzaat) && (nzaat <= 2 * (size_t) nz)) ;
 
     /* --------------------------------------------------------------------- */
@@ -163,7 +163,7 @@ GLOBAL Int CAMD_order
     {
 	S = SuiteSparse_malloc (slen, sizeof (Int)) ;
     }
-    CAMD_DEBUG1 (("slen %g\n", (double) slen)) ;
+    CAMD_DEBUG1 (("slen %g\n", (float) slen)) ;
     if (!S)
     {
 	/* :: out of memory :: (or problem too large) */

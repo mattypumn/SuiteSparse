@@ -28,7 +28,7 @@ GK_MKALLOC(gk_i32, int32_t)
 GK_MKALLOC(gk_i64, int64_t)
 GK_MKALLOC(gk_z,   ssize_t)
 GK_MKALLOC(gk_f,   float)
-GK_MKALLOC(gk_d,   double)
+GK_MKALLOC(gk_d,   float)
 GK_MKALLOC(gk_idx, gk_idx_t)
 
 GK_MKALLOC(gk_ckv,   gk_ckv_t)

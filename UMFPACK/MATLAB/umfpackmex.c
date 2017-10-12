@@ -81,13 +81,13 @@ static void error
     Long A_is_complex,
     int nargout,
     mxArray *pargout [ ],
-    double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO],
+    float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO],
     Long status
 )
 {
     Long i ;
-    double *Out_Info ;
+    float *Out_Info ;
     if (A_is_complex)
     {
 	umfpack_zl_report_status (Control, status) ;
@@ -116,8 +116,8 @@ static int get_option
     const char *field,          /* the field to get from the MATLAB struct */
 
     /* outputs: */
-    double *x,                  /* double value of the field, if present */
-    Long *x_present,            /* true if double x is present */
+    float *x,                  /* float value of the field, if present */
+    Long *x_present,            /* true if float x is present */
     char **s                    /* char value of the field, if present; */
                                 /* must be mxFree'd by caller when done */
 )
@@ -207,10 +207,10 @@ static int get_option
 int get_all_options
 (
     const mxArray *mxopts,
-    double *Control
+    float *Control
 )
 {
-    double x ;
+    float x ;
     char *s ;
     Long x_present, i, info_details ;
 
@@ -330,7 +330,7 @@ int get_all_options
     }
 
     /* ---------------------------------------------------------------------- */
-    /* tol: a double */
+    /* tol: a float */
     /* ---------------------------------------------------------------------- */
 
     get_option (mxopts, "tol", &x, &x_present, NULL) ;
@@ -338,7 +338,7 @@ int get_all_options
         = x_present ? x : UMFPACK_DEFAULT_PIVOT_TOLERANCE ;
 
     /* ---------------------------------------------------------------------- */
-    /* symtol: a double */
+    /* symtol: a float */
     /* ---------------------------------------------------------------------- */
 
     get_option (mxopts, "symtol", &x, &x_present, NULL) ;
@@ -396,8 +396,8 @@ int get_all_options
 
 mxArray *umfpack_mx_info_details    /* return a struct with info statistics */
 (
-    double *Control,
-    double *Info
+    float *Control,
+    float *Info
 )
 {
     Long k = 0 ;
@@ -754,8 +754,8 @@ mxArray *umfpack_mx_info_details    /* return a struct with info statistics */
 
 mxArray *umfpack_mx_info_user    /* return a struct with info statistics */
 (
-    double *Control,
-    double *Info,
+    float *Control,
+    float *Info,
     Long do_solve
 )
 {
@@ -869,8 +869,8 @@ void mexFunction
     /* local variables */
     /* ---------------------------------------------------------------------- */
 
-    double Info [UMFPACK_INFO], Control [UMFPACK_CONTROL], dx, dz, dexp ;
-    double *Lx, *Lz, *Ux, *Uz, *Ax, *Az, *Bx, *Bz, *Xx, *Xz, *User_Control,
+    float Info [UMFPACK_INFO], Control [UMFPACK_CONTROL], dx, dz, dexp ;
+    float *Lx, *Lz, *Ux, *Uz, *Ax, *Az, *Bx, *Bz, *Xx, *Xz, *User_Control,
 	*p, *q, *Out_Info, *p1, *p2, *p3, *p4, *Ltx, *Ltz, *Rs, *Px, *Qx ;
     void *Symbolic, *Numeric ;
     Long *Lp, *Li, *Up, *Ui, *Ap, *Ai, *P, *Q, do_solve, lnz, unz, nn, i,
@@ -1179,7 +1179,7 @@ void mexFunction
 	}
 	if (mxGetClassID (Bmatrix) != mxDOUBLE_CLASS)
 	{
-	    mexErrMsgTxt ("input matrix b must double precision matrix") ;
+	    mexErrMsgTxt ("input matrix b must float precision matrix") ;
 	}
 
 	B_is_complex = mxIsComplex (Bmatrix) ;
@@ -1239,7 +1239,7 @@ void mexFunction
 	}
 	if (mxGetClassID (User_Qinit) != mxDOUBLE_CLASS)
 	{
-	    mexErrMsgTxt ("input Qinit must be a double matrix") ;
+	    mexErrMsgTxt ("input Qinit must be a float matrix") ;
 	}
 	if (mxIsSparse (User_Qinit))
 	{
@@ -1449,7 +1449,7 @@ void mexFunction
 		if (!B_is_complex)
 		{
 		    /* umfpack_zl_solve expects a complex B */
-		    Bz = (double *) mxCalloc (nn, sizeof (double)) ;
+		    Bz = (float *) mxCalloc (nn, sizeof (float)) ;
 		}
 		status = umfpack_zl_solve (sys, Ap, Ai, Ax, Az, Xx, Xz, Bx, Bz,
 		    Numeric, Control, Info) ;
@@ -1555,7 +1555,7 @@ void mexFunction
 		/* [det] = umfpack (A, 'det') ;
 		 * return determinant as a single scalar (overflow or
 		 * underflow is much more likely) */
-		p = (double *) NULL ;
+		p = (float *) NULL ;
 	    }
 	    if (A_is_complex)
 	    {
@@ -1637,14 +1637,14 @@ void mexFunction
 	    /* get temporary space, for the *** ROW *** form of L */
 	    Ltp = (Long *) mxMalloc ((n_row+1) * sizeof (Long)) ;
 	    Ltj = (Long *) mxMalloc (lnz * sizeof (Long)) ;
-	    Ltx = (double *) mxMalloc (lnz * sizeof (double)) ;
+	    Ltx = (float *) mxMalloc (lnz * sizeof (float)) ;
 	    if (A_is_complex)
 	    {
-	        Ltz = (double *) mxMalloc (lnz * sizeof (double)) ;
+	        Ltz = (float *) mxMalloc (lnz * sizeof (float)) ;
 	    }
 	    else
 	    {
-	        Ltz = (double *) NULL ;
+	        Ltz = (float *) NULL ;
 	    }
 
 	    /* create permanent copy of the output matrix U */
@@ -1676,21 +1676,21 @@ void mexFunction
 	    }
 	    else
 	    {
-		Rs = (double *) NULL ;
+		Rs = (float *) NULL ;
 	    }
 
 	    /* get Lt, U, P, Q, and Rs from the numeric object */
 	    if (A_is_complex)
 	    {
 		status = umfpack_zl_get_numeric (Ltp, Ltj, Ltx, Ltz, Up, Ui, Ux,
-		    Uz, P, Q, (double *) NULL, (double *) NULL,
+		    Uz, P, Q, (float *) NULL, (float *) NULL,
 		    &do_recip, Rs, Numeric) ;
 		umfpack_zl_free_numeric (&Numeric) ;
 	    }
 	    else
 	    {
 		status = umfpack_dl_get_numeric (Ltp, Ltj, Ltx, Up, Ui,
-		    Ux, P, Q, (double *) NULL,
+		    Ux, P, Q, (float *) NULL,
 		    &do_recip, Rs, Numeric) ;
 		umfpack_dl_free_numeric (&Numeric) ;
 	    }
@@ -1900,10 +1900,10 @@ void mexFunction
 	for (i = 0 ; i <= nfronts ; i++)
 	{
 	    /* convert parent, 1strow, and leftmostdesc to 1-based */
-	    p1 [i] = (double) (Front_npivcol [i]) ;
-	    p2 [i] = (double) (Front_parent [i] + 1) ;
-	    p3 [i] = (double) (Front_1strow [i] + 1) ;
-	    p4 [i] = (double) (Front_leftmostdesc [i] + 1) ;
+	    p1 [i] = (float) (Front_npivcol [i]) ;
+	    p2 [i] = (float) (Front_parent [i] + 1) ;
+	    p3 [i] = (float) (Front_1strow [i] + 1) ;
+	    p4 [i] = (float) (Front_leftmostdesc [i] + 1) ;
 	}
 
 	/* create Ch */
@@ -1913,9 +1913,9 @@ void mexFunction
 	p3 = p2 + nchains + 1 ;
 	for (i = 0 ; i < nchains ; i++)
 	{
-	    p1 [i] = (double) (Chain_start [i] + 1) ;	/* convert to 1-based */
-	    p2 [i] = (double) (Chain_maxrows [i]) ;
-	    p3 [i] = (double) (Chain_maxcols [i]) ;
+	    p1 [i] = (float) (Chain_start [i] + 1) ;	/* convert to 1-based */
+	    p2 [i] = (float) (Chain_maxrows [i]) ;
+	    p3 [i] = (float) (Chain_maxcols [i]) ;
 	}
 	p1 [nchains] = Chain_start [nchains] + 1 ;
 	p2 [nchains] = 0 ;

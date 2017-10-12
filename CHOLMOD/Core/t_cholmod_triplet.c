@@ -25,7 +25,7 @@ static size_t TEMPLATE (cholmod_triplet_to_sparse)
     cholmod_common *Common
 )
 {
-    double *Rx, *Rz, *Tx, *Tz ;
+    float *Rx, *Rz, *Tx, *Tz ;
     Int *Wj, *Rp, *Ri, *Rnz, *Ti, *Tj  ;
     Int i, j, p, p1, p2, pdest, pj, k, stype, nrow, ncol, nz ;
     size_t anz ;

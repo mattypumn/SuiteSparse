@@ -11,61 +11,61 @@ int umfpack_di_numeric
 (
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     void *Symbolic,
     void **Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 SuiteSparse_long umfpack_dl_numeric
 (
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
     void *Symbolic,
     void **Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 int umfpack_zi_numeric
 (
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ], const double Az [ ],
+    const float Ax [ ], const float Az [ ],
     void *Symbolic,
     void **Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 SuiteSparse_long umfpack_zl_numeric
 (
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ], const double Az [ ],
+    const float Ax [ ], const float Az [ ],
     void *Symbolic,
     void **Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Symbolic, *Numeric ;
     int *Ap, *Ai, status ;
-    double *Ax, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO] ;
+    float *Ax, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO] ;
     status = umfpack_di_numeric (Ap, Ai, Ax, Symbolic, &Numeric, Control, Info);
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Symbolic, *Numeric ;
     SuiteSparse_long *Ap, *Ai, status ;
-    double *Ax, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO] ;
+    float *Ax, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO] ;
     status = umfpack_dl_numeric (Ap, Ai, Ax, Symbolic, &Numeric, Control, Info);
 
 complex int Syntax:
@@ -73,7 +73,7 @@ complex int Syntax:
     #include "umfpack.h"
     void *Symbolic, *Numeric ;
     int *Ap, *Ai, status ;
-    double *Ax, *Az, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO] ;
+    float *Ax, *Az, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO] ;
     status = umfpack_zi_numeric (Ap, Ai, Ax, Az, Symbolic, &Numeric,
 	Control, Info) ;
 
@@ -82,7 +82,7 @@ complex SuiteSparse_long Syntax:
     #include "umfpack.h"
     void *Symbolic, *Numeric ;
     SuiteSparse_long *Ap, *Ai, status ;
-    double *Ax, *Az, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO] ;
+    float *Ax, *Az, Control [UMFPACK_CONTROL], Info [UMFPACK_INFO] ;
     status = umfpack_zl_numeric (Ap, Ai, Ax, Az, Symbolic, &Numeric,
 	Control, Info) ;
 
@@ -120,7 +120,7 @@ Arguments:
 
 	This must be identical to the Ai array passed to umfpack_*_*symbolic.
 
-    double Ax [nz] ;	Input argument, not modified, of size nz = Ap [n_col].
+    float Ax [nz] ;	Input argument, not modified, of size nz = Ap [n_col].
 			Size 2*nz for packed complex case.
 
 	The numerical values of the sparse matrix A.  The nonzero pattern (row
@@ -128,7 +128,7 @@ Arguments:
 	the corresponding numerical values are stored in
 	Ax [(Ap [j]) ... (Ap [j+1]-1)].
 
-    double Az [nz] ;	Input argument, not modified, for complex versions.
+    float Az [nz] ;	Input argument, not modified, for complex versions.
 
 	For the complex versions, this holds the imaginary part of A.  The
 	imaginary part of column j is held in Az [(Ap [j]) ... (Ap [j+1]-1)].
@@ -151,9 +151,9 @@ Arguments:
 	pointer to the Numeric object (if successful), or (void *) NULL if
 	a failure occurred.
 
-    double Control [UMFPACK_CONTROL] ;   Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;   Input argument, not modified.
 
-	If a (double *) NULL pointer is passed, then the default control
+	If a (float *) NULL pointer is passed, then the default control
 	settings are used.  Otherwise, the settings are determined from the
 	Control array.  See umfpack_*_defaults on how to fill the Control
 	array with the default settings.  If Control contains NaN's, the
@@ -240,7 +240,7 @@ Arguments:
 	Control [UMFPACK_ALLOC_INIT]:
 
 	    When umfpack_*_numeric starts, it allocates memory for the Numeric
-	    object.  Part of this is of fixed size (approximately n double's +
+	    object.  Part of this is of fixed size (approximately n float's +
 	    12*n integers).  The remainder is of variable size, which grows to
 	    hold the LU factors and the frontal matrices created during
 	    factorization.  A estimate of the upper bound is computed by
@@ -327,10 +327,10 @@ Arguments:
 
 	    Default: 0.0.
 
-    double Info [UMFPACK_INFO] ;	Output argument.
+    float Info [UMFPACK_INFO] ;	Output argument.
 
 	Contains statistics about the numeric factorization.  If a
-	(double *) NULL pointer is passed, then no statistics are returned in
+	(float *) NULL pointer is passed, then no statistics are returned in
 	Info (this is not an error condition).  The following statistics are
 	computed in umfpack_*_numeric:
 

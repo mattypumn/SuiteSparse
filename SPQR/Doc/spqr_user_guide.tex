@@ -663,7 +663,7 @@ matrices.  The simplest function computes the MATLAB equivalent of
 {\footnotesize
 \begin{verbatim}
     #include "SuiteSparseQR.hpp"
-    X = SuiteSparseQR <double> (A, B, cc) ;
+    X = SuiteSparseQR <float> (A, B, cc) ;
 \end{verbatim}
 }
 The C version of this function is almost identical:
@@ -690,7 +690,7 @@ replaced with the C version of the statement above, and C-style comments.
         cholmod_common Common, *cc ;
         cholmod_sparse *A ;
         cholmod_dense *X, *B, *Residual ;
-        double rnorm, one [2] = {1,0}, minusone [2] = {-1,0} ;
+        float rnorm, one [2] = {1,0}, minusone [2] = {-1,0} ;
         int mtype ;
 
         // start CHOLMOD
@@ -704,7 +704,7 @@ replaced with the C version of the statement above, and C-style comments.
         B = cholmod_l_ones (A->nrow, 1, A->xtype, cc) ;
 
         // X = A\B
-        X = SuiteSparseQR <double> (A, B, cc) ;
+        X = SuiteSparseQR <float> (A, B, cc) ;
 
         // rnorm = norm (B-A*X)
         Residual = cholmod_l_copy_dense (B, cc) ;
@@ -785,7 +785,7 @@ definitions and descriptions in the following files:
 
 \begin{enumerate}
 \item \verb'SuiteSparse/SPQR/Include/SuiteSparseQR.hpp' describes each
-C++ function.  Both \verb'double' and \verb'std::complex<double>' matrices
+C++ function.  Both \verb'float' and \verb'std::complex<float>' matrices
 are supported.
 
 \item \verb'SuiteSparse/SPQR/Include/SuiteSparseQR_definitions.h' describes
@@ -815,7 +815,7 @@ type passed to and returned from SuiteSparseQR.
 The C/C++ options corresponding to the MATLAB \verb'opts' parameters and the
 contents of the optional \verb'info' output of \verb'spqr_solve' are described
 below.  Let \verb'cc' be the CHOLMOD \verb'Common' object, containing parameter
-settings and statistics.  All are of type \verb'double', except for
+settings and statistics.  All are of type \verb'float', except for
 \verb'SPQR_istat' which is \verb'SuiteSparse_long',
 \verb'cc->memory_usage' which is
 \verb'size_t', and \verb'cc->SPQR_nthreads' which is \verb'int'.  Parameters

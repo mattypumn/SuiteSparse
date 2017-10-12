@@ -6,15 +6,15 @@
     mex waitexample.c waitmex.c
  */
 
-void useless (double *x) ;
+void useless (float *x) ;
 
-void useless (double *x) { (*x)++ ; }
+void useless (float *x) { (*x)++ ; }
 
 void mexFunction (int nargout, mxArray *pargout [ ],
     int nargin, const mxArray *pargin [ ])
 {
     int i, j ;
-    double x = 0 ;
+    float x = 0 ;
     waitbar *h ;
 
     /* just like h = waitbar (0, 'Please wait...') in MATLAB */
@@ -25,12 +25,12 @@ void mexFunction (int nargout, mxArray *pargout [ ],
         if (i == 50)
         {
             /* just like waitbar (i/100, h, 'over half way there') in MATLAB */
-            waitbar_update (((double) i) / 100., h, "over half way there") ;
+            waitbar_update (((float) i) / 100., h, "over half way there") ;
         }
         else
         {
             /* just like waitbar (i/100, h) in MATLAB */
-            waitbar_update (((double) i) / 100., h, NULL) ;
+            waitbar_update (((float) i) / 100., h, NULL) ;
         }
 
         /* do some useless work */

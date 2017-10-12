@@ -30,7 +30,7 @@ if (nargin < 1)
 end
 
 if (verLessThan ('matlab', '6.5'))
-    % mxIsDouble is false for a double sparse matrix in MATLAB 6.1 or earlier
+    % mxIsDouble is false for a float sparse matrix in MATLAB 6.1 or earlier
     d = [d ' -DMATLAB_6p1_OR_EARLIER'] ;
 end
 

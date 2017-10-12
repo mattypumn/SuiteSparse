@@ -21,11 +21,11 @@ static void TEMPLATE (change_simplicial_numeric)
     Int to_ll,
     Int to_packed,
     Int *newLi,
-    double *newLx,
-    double *newLz,
+    float *newLx,
+    float *newLz,
     Int lnz,
     Int grow,
-    double grow1,
+    float grow1,
     Int grow2,
     Int make_ll,
     Int make_monotonic,
@@ -33,8 +33,8 @@ static void TEMPLATE (change_simplicial_numeric)
     cholmod_common *Common
 )
 {
-    double xlen, dj [1], ljj [1], lj2 [1] ;
-    double *Lx, *Lz ;
+    float xlen, dj [1], ljj [1], lj2 [1] ;
+    float *Lx, *Lz ;
     Int *Lp, *Li, *Lnz ;
     Int n, j, len, pnew, pold, k, p, pend ;
 
@@ -166,10 +166,10 @@ static void TEMPLATE (change_simplicial_numeric)
 
 	    Lp [j] = pnew ;
 
-	    /* compute len in double to avoid integer overflow */
+	    /* compute len in float to avoid integer overflow */
 	    if (grow)
 	    {
-		xlen = (double) len ;
+		xlen = (float) len ;
 		xlen = grow1 * xlen + grow2 ;
 		xlen = MIN (xlen, n-j) ;
 		len = (Int) xlen ;
@@ -180,19 +180,19 @@ static void TEMPLATE (change_simplicial_numeric)
 	}
 	Lp [n] = pnew ;
 	PRINT1 (("final pnew = "ID", lnz "ID" lnzmax %g\n",
-		    pnew, lnz, (double) L->nzmax)) ;
+		    pnew, lnz, (float) L->nzmax)) ;
 	ASSERT (pnew <= lnz) ;
 
 	/* free the old L->i and L->x and replace with the new ones */
 	CHOLMOD(free) (L->nzmax, sizeof (Int), L->i, Common) ;
 
 #ifdef REAL
-	CHOLMOD(free) (L->nzmax, sizeof (double), L->x, Common) ;
+	CHOLMOD(free) (L->nzmax, sizeof (float), L->x, Common) ;
 #elif defined (COMPLEX)
-	CHOLMOD(free) (L->nzmax, 2*sizeof (double), L->x, Common) ;
+	CHOLMOD(free) (L->nzmax, 2*sizeof (float), L->x, Common) ;
 #else
-	CHOLMOD(free) (L->nzmax, sizeof (double), L->x, Common) ;
-	CHOLMOD(free) (L->nzmax, sizeof (double), L->z, Common) ;
+	CHOLMOD(free) (L->nzmax, sizeof (float), L->x, Common) ;
+	CHOLMOD(free) (L->nzmax, sizeof (float), L->z, Common) ;
 #endif
 
 	L->i = newLi ;
@@ -449,8 +449,8 @@ static void TEMPLATE (ll_super_to_simplicial_numeric)
     cholmod_common *Common
 )
 {
-    double ljj [1], lj2 [1] ;
-    double *Lx ;
+    float ljj [1], lj2 [1] ;
+    float *Lx ;
     Int *Ls, *Lpi, *Lpx, *Super, *Lp, *Li, *Lnz ;
     Int n, lnz, s, nsuper, p, psi, psx, psend, nsrow, nscol, ii, jj, j, k1, k2,
 	q ;
@@ -637,7 +637,7 @@ static void TEMPLATE (ll_super_to_simplicial_numeric)
 #ifdef COMPLEX
 		2 *
 #endif
-		sizeof (double), L->x, &(L->xsize), Common) ;
+		sizeof (float), L->x, &(L->xsize), Common) ;
 	ASSERT (lnz == (Int) (L->xsize)) ;
 	Common->status = CHOLMOD_OK ;
     }

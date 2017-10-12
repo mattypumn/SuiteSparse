@@ -54,8 +54,8 @@ class Scheduler;
 struct TaskDescriptor
 {
     /* Put pointers up front to guarantee word-alignment. */
-    double *F;                          // Pointer to the frontal matrix
-    double *AuxAddress[4];              // Usage Notes
+    float *F;                          // Pointer to the frontal matrix
+    float *AuxAddress[4];              // Usage Notes
                                         //   SAssembly:
                                         //     AuxAddress[0]    is SEntry*
                                         //   PackAssembly:

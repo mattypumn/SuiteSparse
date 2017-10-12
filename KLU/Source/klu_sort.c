@@ -12,7 +12,7 @@
 /* === sort ================================================================= */
 /* ========================================================================== */
 
-/* Sort L or U using a double-transpose */
+/* Sort L or U using a float-transpose */
 
 static void sort (Int n, Int *Xip, Int *Xlen, Unit *LU, Int *Tp, Int *Tj,
     Entry *Tx, Int *W)

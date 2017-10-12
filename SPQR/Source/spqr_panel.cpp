@@ -145,7 +145,7 @@ template <typename Entry> void spqr_panel
 
 // =============================================================================
 
-template void spqr_panel <double>
+template void spqr_panel <float>
 (
     // input
     int method,
@@ -154,16 +154,16 @@ template void spqr_panel <double>
     Long v,
     Long h,             // number of Householder vectors in the panel
     Long *Vi,           // Vi [0:v-1] defines the pattern of the panel
-    double *V,          // v-by-h, panel of Householder vectors
-    double *Tau,        // size h, Householder coefficients for the panel
+    float *V,          // v-by-h, panel of Householder vectors
+    float *Tau,        // size h, Householder coefficients for the panel
     Long ldx,
 
     // input/output
-    double *X,          // m-by-n with leading dimension m 
+    float *X,          // m-by-n with leading dimension m 
 
     // workspace
-    double *C,          // method 0,1: v-by-n;  method 2,3: m-by-v
-    double *W,          // method 0,1: k*k+n*k; method 2,3: k*k+m*k
+    float *C,          // method 0,1: v-by-n;  method 2,3: m-by-v
+    float *W,          // method 0,1: k*k+n*k; method 2,3: k*k+m*k
 
     cholmod_common *cc
 ) ;

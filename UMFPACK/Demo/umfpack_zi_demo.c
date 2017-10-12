@@ -60,10 +60,10 @@
 static int n = 5, nz = 12 ;
 static int Arow [ ] = { 0,  4,  1,  1,   2,   2,  0,  1,  2,  3,  4,  4} ;
 static int Acol [ ] = { 0,  4,  0,  2,   1,   2,  1,  4,  3,  2,  1,  2} ;
-static double Aval [ ] = {2., 1., 3., 4., -1., -3., 3., 6., 2., 1., 4., 2.} ;
-static double Avalz[ ] = {1., .4, .1, .2, -1., -.2, 0., 6., 3., 0., .3, .3} ;
-static double b [ ] = {8., 45., -3., 3., 19.}, x [5], r [5] ;
-static double bz[ ] = {1., -5., -2., 0., 2.2}, xz[5], rz[5] ;
+static float Aval [ ] = {2., 1., 3., 4., -1., -3., 3., 6., 2., 1., 4., 2.} ;
+static float Avalz[ ] = {1., .4, .1, .2, -1., -.2, 0., 6., 3., 0., .3, .3} ;
+static float b [ ] = {8., 45., -3., 3., 19.}, x [5], r [5] ;
+static float bz[ ] = {1., -5., -2., 0., 2.2}, xz[5], rz[5] ;
 
 /* Avalz, bz:  imaginary part of A and b */
 
@@ -86,17 +86,17 @@ static void error
 /* A' is the complex conjugate transpose, not the array transpose */
 /* -------------------------------------------------------------------------- */
 
-static double resid
+static float resid
 (
     int transpose,
     int Ap [ ],
     int Ai [ ],
-    double Ax [ ]
-    , double Az [ ]
+    float Ax [ ]
+    , float Az [ ]
 )
 {
     int i, j, p ;
-    double norm ;
+    float norm ;
 
     for (i = 0 ; i < n ; i++)
     {
@@ -147,9 +147,9 @@ static double resid
 
 int main (int argc, char **argv)
 {
-    double Info [UMFPACK_INFO], Control [UMFPACK_CONTROL], *Ax, *Cx, *Lx, *Ux,
+    float Info [UMFPACK_INFO], Control [UMFPACK_CONTROL], *Ax, *Cx, *Lx, *Ux,
 	*W, t [2], *Dx, rnorm, *Rb, *y, *Rs ;
-    double *Az, *Lz, *Uz, *Dz, *Cz, *Rbz, *yz ;
+    float *Az, *Lz, *Uz, *Dz, *Cz, *Rbz, *yz ;
     int *Ap, *Ai, *Cp, *Ci, row, col, p, lnz, unz, nr, nc, *Lp, *Li, *Ui, *Up,
 	*P, *Q, *Lj, i, j, k, anz, nfr, nchains, *Qinit, fnpiv, lnz1, unz1, nz1,
 	status, *Front_npivcol, *Front_parent, *Chain_start, *Wi, *Pinit, n1,
@@ -197,8 +197,8 @@ int main (int argc, char **argv)
     nz1 = MAX (nz,1) ;	/* ensure arrays are not of size zero. */
     Ap = (int *) malloc ((n+1) * sizeof (int)) ;
     Ai = (int *) malloc (nz1 * sizeof (int)) ;
-    Ax = (double *) malloc (nz1 * sizeof (double)) ;
-    Az = (double *) malloc (nz1 * sizeof (double)) ;
+    Ax = (float *) malloc (nz1 * sizeof (float)) ;
+    Az = (float *) malloc (nz1 * sizeof (float)) ;
     if (!Ap || !Ai || !Ax || !Az)
     {
 	error ("out of memory") ;
@@ -288,10 +288,10 @@ int main (int argc, char **argv)
     /* ---------------------------------------------------------------------- */
 
     /* Rb = R*b */
-    Rb  = (double *) malloc (n * sizeof (double)) ;
-    Rbz = (double *) malloc (n * sizeof (double)) ;
-    y   = (double *) malloc (n * sizeof (double)) ;
-    yz  = (double *) malloc (n * sizeof (double)) ;
+    Rb  = (float *) malloc (n * sizeof (float)) ;
+    Rbz = (float *) malloc (n * sizeof (float)) ;
+    y   = (float *) malloc (n * sizeof (float)) ;
+    yz  = (float *) malloc (n * sizeof (float)) ;
     if (!Rb || !y) error ("out of memory") ;
     if (!Rbz || !yz) error ("out of memory") ;
 
@@ -480,8 +480,8 @@ int main (int argc, char **argv)
 
     Cp = (int *) malloc ((n+1) * sizeof (int)) ;
     Ci = (int *) malloc (nz1 * sizeof (int)) ;
-    Cx = (double *) malloc (nz1 * sizeof (double)) ;
-    Cz = (double *) malloc (nz1 * sizeof (double)) ;
+    Cx = (float *) malloc (nz1 * sizeof (float)) ;
+    Cz = (float *) malloc (nz1 * sizeof (float)) ;
     if (!Cp || !Ci || !Cx || !Cz)
     {
 	error ("out of memory") ;
@@ -605,17 +605,17 @@ int main (int argc, char **argv)
     unz1 = MAX (unz,1) ;
     Lp = (int *) malloc ((n+1) * sizeof (int)) ;
     Lj = (int *) malloc (lnz1 * sizeof (int)) ;
-    Lx = (double *) malloc (lnz1 * sizeof (double)) ;
-    Lz = (double *) malloc (lnz1 * sizeof (double)) ;
+    Lx = (float *) malloc (lnz1 * sizeof (float)) ;
+    Lz = (float *) malloc (lnz1 * sizeof (float)) ;
     Up = (int *) malloc ((n+1) * sizeof (int)) ;
     Ui = (int *) malloc (unz1 * sizeof (int)) ;
-    Ux = (double *) malloc (unz1 * sizeof (double)) ;
-    Uz = (double *) malloc (unz1 * sizeof (double)) ;
+    Ux = (float *) malloc (unz1 * sizeof (float)) ;
+    Uz = (float *) malloc (unz1 * sizeof (float)) ;
     P = (int *) malloc (n * sizeof (int)) ;
     Q = (int *) malloc (n * sizeof (int)) ;
-    Dx = (double *) NULL ;	/* D vector not requested */
-    Dz = (double *) NULL ;
-    Rs  = (double *) malloc (n * sizeof (double)) ;
+    Dx = (float *) NULL ;	/* D vector not requested */
+    Dz = (float *) NULL ;
+    Rs  = (float *) malloc (n * sizeof (float)) ;
     if (!Lp || !Lj || !Lx || !Lz || !Up || !Ui || !Ux || !Uz || !P || !Q || !Rs)
     {
 	error ("out of memory") ;
@@ -712,7 +712,7 @@ int main (int argc, char **argv)
 
     printf ("\nSolving C'x=b again, using umfpack_zi_wsolve instead:\n") ;
     Wi = (int *) malloc (n * sizeof (int)) ;
-    W = (double *) malloc (10*n * sizeof (double)) ;
+    W = (float *) malloc (10*n * sizeof (float)) ;
     if (!Wi || !W)
     {
 	error ("out of memory") ;

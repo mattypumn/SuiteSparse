@@ -10,7 +10,7 @@
 #include "spqr.hpp"
 
 #ifdef SUITESPARSE_TIMER_ENABLED
-#define INIT_TIME(x)    double x = 0.0; double time_ ## x;
+#define INIT_TIME(x)    float x = 0.0; float time_ ## x;
 #define TIC(x)          time_ ## x = SuiteSparse_time();
 #define TOC(x)          x += SuiteSparse_time() - time_ ## x;
 #else
@@ -66,7 +66,7 @@ void numfronts_in_stage
 
 void spqrgpu_kernel
 (
-    spqr_blob <double> *Blob
+    spqr_blob <float> *Blob
 )
 {
 
@@ -78,9 +78,9 @@ void spqrgpu_kernel
     // -------------------------------------------------------------------------
 
     spqr_symbolic *QRsym = Blob->QRsym ;
-    spqr_numeric <double> *QRnum = Blob->QRnum ;
-    spqr_work <double> *Work = Blob->Work ;
-    double *Sx = Blob->Sx ;
+    spqr_numeric <float> *QRnum = Blob->QRnum ;
+    spqr_work <float> *Work = Blob->Work ;
+    float *Sx = Blob->Sx ;
 //  Long ntol = Blob->ntol ;        // no rank detection on the GPU
     cholmod_common *cc = Blob->cc ;
 
@@ -108,7 +108,7 @@ void spqrgpu_kernel
     // get the contents of the QR numeric object
     // -------------------------------------------------------------------------
 
-    double ** Rblock = QRnum->Rblock ;
+    float ** Rblock = QRnum->Rblock ;
     char *    Rdead = QRnum->Rdead ;
 
     // -------------------------------------------------------------------------
@@ -118,8 +118,8 @@ void spqrgpu_kernel
     Long stack = 0 ;                    // no mixing of GPU and TBB parallelism
     ASSERT (QRnum->ntasks == 1) ;
 
-    double * Stack_top = Work [stack].Stack_top ;
-    double * Stack_head = Work [stack].Stack_head ;
+    float * Stack_top = Work [stack].Stack_top ;
+    float * Stack_head = Work [stack].Stack_head ;
 
     Long sumfrank = Work [stack].sumfrank ;
     Long maxfrank = Work [stack].maxfrank ;
@@ -312,11 +312,11 @@ void spqrgpu_kernel
     // stage.  So malloc the space on the GPU once, but see cudaMemset below.
     // This workspace is not on the CPU.
     wsMondoF = Workspace::allocate (wsMondoF_size,      // GPU only
-        sizeof(double), false, false, true, false) ;
+        sizeof(float), false, false, true, false) ;
 
     // malloc R for each front on the CPU (not on the GPU)
     wsMondoR = Workspace::allocate (wsMondoR_size,      // CPU only
-        sizeof(double), false, true, false, false) ;
+        sizeof(float), false, true, false, false) ;
 
     // malloc S on the GPU (not on the CPU)
     wsS = Workspace::allocate (wsS_size,                // GPU only
@@ -363,7 +363,7 @@ void spqrgpu_kernel
 
         // set fronts on the GPU to all zero
         cudaMemset (wsMondoF->gpu(), (size_t) 0,
-            FSize [stage] * sizeof (double)) ;
+            FSize [stage] * sizeof (float)) ;
 
         // surgically transfer S input values to the GPU
         Workspace surgical_S (SSize [stage], sizeof (SEntry)) ;
@@ -414,8 +414,8 @@ void spqrgpu_kernel
             front->Stair = Stair + Rp[f];
 
             // set pointer offsets into mondo workspaces
-            front->gpuF = GPU_REFERENCE(wsMondoF, double*) + FOffsets[f];
-            front->cpuR = CPU_REFERENCE(wsMondoR, double*) + ROffsets[f];
+            front->gpuF = GPU_REFERENCE(wsMondoF, float*) + FOffsets[f];
+            front->cpuR = CPU_REFERENCE(wsMondoR, float*) + ROffsets[f];
 
             front->sparseMeta = SparseMeta();
             SparseMeta *meta = &(front->sparseMeta);
@@ -488,7 +488,7 @@ void spqrgpu_kernel
                 // its parent in memory since we're already charging our
                 // staging algorithm for the space of a front and its children
                 child->gpuF = cmeta->gpuC =
-                    GPU_REFERENCE(wsMondoF, double*) + ChildOffset;
+                    GPU_REFERENCE(wsMondoF, float*) + ChildOffset;
 
                 // surgically copy the data to the GPU asynchronously
                 Workspace *wsLimbo = LimboDirectory[c];
@@ -547,7 +547,7 @@ void spqrgpu_kernel
             Long fn = Rp [f+1] - Rp [f] ;        // F has fn cols
             Long fp = Super [f+1] - Super [f] ;  // F has fp pivot columns
             Long frank = MIN(fm, fp);
-            double *cpuF = (&fronts[relp])->cpuR;
+            float *cpuF = (&fronts[relp])->cpuR;
 
             PR (("\n --- Front factorized, front %ld fm %ld fn %ld fp %ld frank %ld",
                 f, fm, fn, fp, frank)) ;
@@ -583,7 +583,7 @@ void spqrgpu_kernel
             Long fn = Rp [f+1] - Rp [f] ;        // F has fn cols
             Long fp = Super [f+1] - Super [f] ;  // F has fp pivot columns
             Long frank = MIN(fm, fp);
-            double *cpuF = (&fronts[relp])->cpuR;
+            float *cpuF = (&fronts[relp])->cpuR;
 
             // cpuF for frontal matrix f has been factorized on the GPU and
             // copied to the CPU.  It is (frank+cm)-by-fn, stored by row.  The
@@ -622,7 +622,7 @@ void spqrgpu_kernel
             if(meta->isStaged)
             {
                 // offset into R to get the start of C
-                double *C = cpuF + frank * fn + fp;
+                float *C = cpuF + frank * fn + fp;
 
                 PR (("   ===> move to Limbo\n")) ;
 
@@ -636,7 +636,7 @@ void spqrgpu_kernel
                 // calloc pagelocked memory on the CPU
                 Workspace *wsLimbo =
                     LimboDirectory[f] = Workspace::allocate (cm * cn,   // CPU
-                    sizeof(double), true, true, false, true);
+                    sizeof(float), true, true, false, true);
 
                 if (wsLimbo == NULL)
                 {
@@ -645,14 +645,14 @@ void spqrgpu_kernel
                     return ;
                 }
 
-                double *L = CPU_REFERENCE(wsLimbo, double*);
+                float *L = CPU_REFERENCE(wsLimbo, float*);
 
                 // copy from C into Limbo
                 for(Long i=0; i<cm; i++)
                 {
                     for(Long j=i; j<cn; j++)
                     {
-                        double value = C[i*fn+j];
+                        float value = C[i*fn+j];
                         L[i*cn+j] = value;
                         PR (("%f\n", value));
                     }

@@ -10,41 +10,41 @@
 int umfpack_di_report_numeric
 (
     void *Numeric,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_dl_report_numeric
 (
     void *Numeric,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 int umfpack_zi_report_numeric
 (
     void *Numeric,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 SuiteSparse_long umfpack_zl_report_numeric
 (
     void *Numeric,
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     int status ;
     status = umfpack_di_report_numeric (Numeric, Control) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     SuiteSparse_long status ;
     status = umfpack_dl_report_numeric (Numeric, Control) ;
 
@@ -52,7 +52,7 @@ complex int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     int status ;
     status = umfpack_zi_report_numeric (Numeric, Control) ;
 
@@ -60,7 +60,7 @@ complex SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
-    double Control [UMFPACK_CONTROL] ;
+    float Control [UMFPACK_CONTROL] ;
     SuiteSparse_long status ;
     status = umfpack_zl_report_numeric (Numeric, Control) ;
 
@@ -93,9 +93,9 @@ Arguments:
 	The Numeric object, which holds the numeric factorization computed by
 	umfpack_*_numeric.
 
-    double Control [UMFPACK_CONTROL] ;	Input argument, not modified.
+    float Control [UMFPACK_CONTROL] ;	Input argument, not modified.
 
-	If a (double *) NULL pointer is passed, then the default control
+	If a (float *) NULL pointer is passed, then the default control
 	settings are used.  Otherwise, the settings are determined from the
 	Control array.  See umfpack_*_defaults on how to fill the Control
 	array with the default settings.  If Control contains NaN's, the

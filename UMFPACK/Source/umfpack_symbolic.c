@@ -20,13 +20,13 @@ GLOBAL Int UMFPACK_symbolic
     Int n_col,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
+    const float Ax [ ],
 #ifdef COMPLEX
-    const double Az [ ],
+    const float Az [ ],
 #endif
     void **SymbolicHandle,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO]
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO]
 )
 {
     return (UMFPACK_qsymbolic (n_row, n_col, Ap, Ai, Ax,

@@ -77,7 +77,7 @@ GLOBAL Int UMFPACK_save_numeric
     WRITE (Numeric->Uip,   Int,   Numeric->npiv+1) ;
     if (Numeric->scale != UMFPACK_SCALE_NONE)
     {
-	WRITE (Numeric->Rs, double, Numeric->n_row) ;
+	WRITE (Numeric->Rs, float, Numeric->n_row) ;
     }
     if (Numeric->ulen > 0)
     {

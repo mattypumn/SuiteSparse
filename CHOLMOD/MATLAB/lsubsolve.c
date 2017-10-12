@@ -53,7 +53,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double dummy = 0, *Px, *Xsetx ;
+    float dummy = 0, *Px, *Xsetx ;
     Long *Lp, *Lnz, *Xp, *Xi, xnz, *Perm, *Lprev, *Lnext, *Xsetp ;
     cholmod_sparse *Bset, Bmatrix, *Xset ;
     cholmod_dense *Bdense, *X, *Y, *E ;
@@ -220,7 +220,7 @@ void mexFunction
     /* fill numerical values of Xset with one's */
     Xsetp = Xset->p ;
     xsetlen = Xsetp [1] ;
-    Xset->x = cholmod_l_malloc (xsetlen, sizeof (double), cm) ;
+    Xset->x = cholmod_l_malloc (xsetlen, sizeof (float), cm) ;
     Xsetx = Xset->x ;
     for (k = 0 ; k < xsetlen ; k++)
     {

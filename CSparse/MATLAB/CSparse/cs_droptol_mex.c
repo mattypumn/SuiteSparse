@@ -10,7 +10,7 @@ void mexFunction
 {
     cs Amatrix, *C, *A ;
     csi j, k ;
-    double tol ;
+    float tol ;
     if (nargout > 1 || nargin != 2)
     {
         mexErrMsgTxt ("Usage: C = cs_droptol(A,tol)") ;

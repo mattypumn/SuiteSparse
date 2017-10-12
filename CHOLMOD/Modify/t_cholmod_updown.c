@@ -86,7 +86,7 @@ static void NUMERIC (WDIM, r)
     Int rank,		/* rank of the update/downdate */
     cholmod_factor *L,	/* with unit diagonal (diagonal not stored) */
 			/* temporary workspaces: */
-    double W [ ],	/* n-by-WDIM dense matrix, initially zero */
+    float W [ ],	/* n-by-WDIM dense matrix, initially zero */
     Path_type Path [ ],
     Int npaths,
     Int mask [ ],	/* size n */
@@ -94,8 +94,8 @@ static void NUMERIC (WDIM, r)
     cholmod_common *Common
 )
 {
-    double Alpha [8] ;
-    double *Cx, *Wpath, *W1, *a ;
+    float Alpha [8] ;
+    float *Cx, *Wpath, *W1, *a ;
     Int i, j, p, ccol, pend, wfirst, e, path, packed ;
     Int *Ci, *Cp, *Cnz ;
 

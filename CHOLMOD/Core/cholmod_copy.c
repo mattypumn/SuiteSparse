@@ -69,8 +69,8 @@ static cholmod_sparse *copy_sym_to_unsym
     cholmod_common *Common
 )
 {
-    double aij ;
-    double *Ax, *Cx ;
+    float aij ;
+    float *Ax, *Cx ;
     Int *Ap, *Ai, *Anz, *Cp, *Ci, *Wj, *Iwork ;
     cholmod_sparse *C ;
     Int nrow, ncol, nz, packed, j, p, pend, i, pc, up, lo, values, diag,

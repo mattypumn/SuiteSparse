@@ -16,7 +16,7 @@
    can terminate early.  In particular, the time is precisely
    O (nnz (x (1:t)) + nnz (y (1:t))) where t = min (max (find (x), find (y))).
    This sparse dot is used for each pair of columns of A and B.  The workspace
-   required by this method is n*k*sizeof(double) or twice that if A or B are
+   required by this method is n*k*sizeof(float) or twice that if A or B are
    complex.
 
    By comparison, the saxpy method to compute C=A*B takes O (m+n+k+flops(A*B))
@@ -61,9 +61,9 @@ mxArray *ssmult_dot     /* returns C = A'*B */
     int cc              /* if true: conj(C)   if false: C. ignored if C real */
 )
 {
-    double cx, cz, ax, az, bx, bz ;
+    float cx, cz, ax, az, bx, bz ;
     mxArray *C ;
-    double *Ax, *Az, *Bx, *Bz, *Cx, *Cz ;
+    float *Ax, *Az, *Bx, *Bz, *Cx, *Cz ;
     Int *Ap, *Ai, *Bp, *Bi, *Cp, *Ci ;
     Int m, n, k, cnzmax, i, j, p, paend, pbend, ai, bi, cnz, pa, pb, zallzero,
         A_is_complex, B_is_complex, C_is_complex ;
@@ -101,9 +101,9 @@ mxArray *ssmult_dot     /* returns C = A'*B */
 
     cnzmax = n*k ;
     cnzmax = MAX (cnzmax, 1) ;
-    Cx = mxMalloc (cnzmax * sizeof (double)) ;
+    Cx = mxMalloc (cnzmax * sizeof (float)) ;
     C_is_complex = A_is_complex || B_is_complex ;
-    Cz = C_is_complex ?  mxMalloc (cnzmax * sizeof (double)) : NULL ;
+    Cz = C_is_complex ?  mxMalloc (cnzmax * sizeof (float)) : NULL ;
 
     /* ---------------------------------------------------------------------- */
     /* C = A'*B using sparse dot products */
@@ -274,10 +274,10 @@ mxArray *ssmult_dot     /* returns C = A'*B */
 
     if (cnz < cnzmax)
     {
-        Cx = mxRealloc (Cx, cnz * sizeof (double)) ;
+        Cx = mxRealloc (Cx, cnz * sizeof (float)) ;
         if (C_is_complex)
         {
-            Cz = mxRealloc (Cz, cnz * sizeof (double)) ;
+            Cz = mxRealloc (Cz, cnz * sizeof (float)) ;
         }
     }
 

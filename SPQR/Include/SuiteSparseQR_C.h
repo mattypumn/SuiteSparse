@@ -8,9 +8,9 @@
 #define SUITESPARSEQR_C_H
 
 #ifdef __cplusplus
-/* If included by a C++ program, the Complex type is std::complex<double> */
+/* If included by a C++ program, the Complex type is std::complex<float> */
 #include <complex>
-#define Complex std::complex<double>
+#define Complex std::complex<float>
 extern "C" {
 #endif
 
@@ -18,10 +18,10 @@ extern "C" {
 #include "SuiteSparseQR_definitions.h"
 
 #ifndef __cplusplus
-/* The C++ functions will return a pointer to a std::complex<double> array of
-   size n, which the C code must then interpret as double array of size 2*n,
+/* The C++ functions will return a pointer to a std::complex<float> array of
+   size n, which the C code must then interpret as float array of size 2*n,
    with real and imaginary parts interleaved. */
-#define Complex double
+#define Complex float
 #endif
 
 /* ========================================================================== */
@@ -32,7 +32,7 @@ SuiteSparse_long SuiteSparseQR_C /* returns rank(A) estimate, (-1) if failure */
 (
     /* inputs: */
     int ordering,               /* all, except 3:given treated as 0:fixed */
-    double tol,                 /* columns with 2-norm <= tol treated as 0 */
+    float tol,                 /* columns with 2-norm <= tol treated as 0 */
     SuiteSparse_long econ,      /* e = max(min(m,econ),rank(A)) */
     int getCTX,                 /* 0: Z=C (e-by-k), 1: Z=C', 2: Z=X (e-by-k) */
     cholmod_sparse *A,          /* m-by-n sparse matrix to factorize */
@@ -58,7 +58,7 @@ SuiteSparse_long SuiteSparseQR_C_QR /* returns rank(A) est., (-1) if failure */
 (
     /* inputs: */
     int ordering,               /* all, except 3:given treated as 0:fixed */
-    double tol,                 /* columns with 2-norm <= tol treated as 0 */
+    float tol,                 /* columns with 2-norm <= tol treated as 0 */
     SuiteSparse_long econ,      /* e = max(min(m,econ),rank(A)) */
     cholmod_sparse *A,          /* m-by-n sparse matrix to factorize */
     /* outputs: */
@@ -76,7 +76,7 @@ SuiteSparse_long SuiteSparseQR_C_QR /* returns rank(A) est., (-1) if failure */
 cholmod_dense *SuiteSparseQR_C_backslash    /* returns X, NULL if failure */
 (
     int ordering,               /* all, except 3:given treated as 0:fixed */
-    double tol,                 /* columns with 2-norm <= tol treated as 0 */
+    float tol,                 /* columns with 2-norm <= tol treated as 0 */
     cholmod_sparse *A,          /* m-by-n sparse matrix */
     cholmod_dense  *B,          /* m-by-k */
     cholmod_common *cc          /* workspace and parameters */
@@ -103,7 +103,7 @@ cholmod_sparse *SuiteSparseQR_C_backslash_sparse   /* returns X, or NULL */
 (
     /* inputs: */
     int ordering,               /* all, except 3:given treated as 0:fixed */
-    double tol,                 /* columns with 2-norm <= tol treated as 0 */
+    float tol,                 /* columns with 2-norm <= tol treated as 0 */
     cholmod_sparse *A,          /* m-by-n sparse matrix */
     cholmod_sparse *B,          /* m-by-k */
     cholmod_common *cc          /* workspace and parameters */
@@ -119,7 +119,7 @@ cholmod_sparse *SuiteSparseQR_C_backslash_sparse   /* returns X, or NULL */
 typedef struct SuiteSparseQR_C_factorization_struct
 {
     int xtype ;                 /* CHOLMOD_REAL or CHOLMOD_COMPLEX */
-    void *factors ;             /* from SuiteSparseQR_factorize <double> or
+    void *factors ;             /* from SuiteSparseQR_factorize <float> or
                                         SuiteSparseQR_factorize <Complex> */
 
 } SuiteSparseQR_C_factorization ;
@@ -132,7 +132,7 @@ SuiteSparseQR_C_factorization *SuiteSparseQR_C_factorize
 (
     /* inputs: */
     int ordering,               /* all, except 3:given treated as 0:fixed */
-    double tol,                 /* columns with 2-norm <= tol treated as 0 */
+    float tol,                 /* columns with 2-norm <= tol treated as 0 */
     cholmod_sparse *A,          /* m-by-n sparse matrix */
     cholmod_common *cc          /* workspace and parameters */
 ) ;
@@ -157,7 +157,7 @@ SuiteSparseQR_C_factorization *SuiteSparseQR_C_symbolic
 int SuiteSparseQR_C_numeric
 (
     /* inputs: */
-    double tol,                 /* treat columns with 2-norm <= tol as zero */
+    float tol,                 /* treat columns with 2-norm <= tol as zero */
     cholmod_sparse *A,          /* sparse matrix to factorize */
     /* input/output: */
     SuiteSparseQR_C_factorization *QR,

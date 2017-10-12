@@ -18,7 +18,7 @@ cs_dl *cs_dl_frand (CS_INT n, CS_INT nel, CS_INT s)
         {
             for (i = 0 ; i < s ; i++)
             {
-                cs_dl_entry (T, P [i], P [j], rand () / (double) RAND_MAX) ;
+                cs_dl_entry (T, P [i], P [j], rand () / (float) RAND_MAX) ;
             }
         }
     }

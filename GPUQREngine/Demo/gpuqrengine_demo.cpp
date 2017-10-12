@@ -18,7 +18,7 @@
 
 //------------------------------------------------------------------------------
 
-void randfill(double *x, Int m, Int n)
+void randfill(float *x, Int m, Int n)
 {
     for(int i=0; i<m; i++) {
         for(int j=0; j<n; j++) {
@@ -29,7 +29,7 @@ void randfill(double *x, Int m, Int n)
 
 //------------------------------------------------------------------------------
 
-void randfill_stair(double *x, Int m, Int n, Int aggression)
+void randfill_stair(float *x, Int m, Int n, Int aggression)
 {
     int i = 0;
     for(int j=0; j<n; j++)
@@ -45,7 +45,7 @@ void randfill_stair(double *x, Int m, Int n, Int aggression)
 
 //------------------------------------------------------------------------------
 
-void randfill_blocktriu(double *x, Int m, Int n)
+void randfill_blocktriu(float *x, Int m, Int n)
 {
     int ybmax = CEIL(m, TILESIZE);
     int xbmax = CEIL(n, TILESIZE);
@@ -72,10 +72,10 @@ void randfill_blocktriu(double *x, Int m, Int n)
 //------------------------------------------------------------------------------
 
 void printMatrix(FILE *troll, const char *name,
-    int which, int f, double *inM, int m, int n)
+    int which, int f, float *inM, int m, int n)
 {
 
-    double (*M)[n] = (double (*)[n]) inM;
+    float (*M)[n] = (float (*)[n]) inM;
 
     fprintf(troll, "%s%d {%d} = [\n", name, which, 1+f);
     for(int i=0; i<m; i++)
@@ -143,8 +143,8 @@ void driver
         int n = front->fn;
 
         /* Attach the front data. */
-        double *F = front->cpuR = front->F = (double*)
-            SuiteSparse_calloc(m*n, sizeof(double));
+        float *F = front->cpuR = front->F = (float*)
+            SuiteSparse_calloc(m*n, sizeof(float));
         randfill(F, m, n);
 
         /* Print the A matrix. */
@@ -169,7 +169,7 @@ void driver
         Front *front = (&fronts[f]);
         int m = front->fm;
         int n = front->fn;
-        double *R = front->cpuR;
+        float *R = front->cpuR;
 
         /* Print the R matrix. */
         if (troll != NULL)
@@ -194,15 +194,15 @@ void driver
 
 //------------------------------------------------------------------------------
 
-void printStats(QREngineStats stats, int numFronts, double m, double n)
+void printStats(QREngineStats stats, int numFronts, float m, float n)
 {
     float kernelTime = stats.kernelTime;
     Int numLaunches = stats.numLaunches;
     Int gpuFlops = stats.flopsActual;
 
     /* Compute & Print FLOPS */
-    double time = (double) kernelTime;
-    double flops;
+    float time = (float) kernelTime;
+    float flops;
     if(m >= n)
     {
         flops = 2.0 * n*n * (m - (n/3));
@@ -212,10 +212,10 @@ void printStats(QREngineStats stats, int numFronts, double m, double n)
         flops = 2.0 * m*m * (n - (m/3));
     }
 
-    flops *= (double) numFronts;
+    flops *= (float) numFronts;
     flops /= (time / 1e3);
-    double gflops = flops / 1e9;
-    double gpugflops = (gpuFlops / (time / 1e3)) / 1e9;
+    float gflops = flops / 1e9;
+    float gpugflops = (gpuFlops / (time / 1e3)) / 1e9;
     printf("m: %.0f, n: %.0f, nf: %d, nl: %ld, gpuFlops: %ld, t: %fms, gflops: %f, gpugflops: %f\n", m, n, numFronts, numLaunches, gpuFlops, time, gflops, gpugflops);
 }
 
@@ -248,7 +248,7 @@ void experiment2(cholmod_common *cc, int m, int n, int numFronts)
     /* See if this experiment would blow out the memory. */
     size_t threshold = 3.50 * 1024 * 1024 * 1024;
     size_t memoryReq = (size_t) (numFronts * (CEIL(m, 32) * 32 * 33 + m * n)) ;
-    if(memoryReq * sizeof(double) > threshold) return;
+    if(memoryReq * sizeof(float) > threshold) return;
 
     /* Configure problem set. */
     Front *fronts = (Front*) SuiteSparse_calloc(numFronts, sizeof(Front));
@@ -272,7 +272,7 @@ void experiment2(cholmod_common *cc, int m, int n, int numFronts)
 
 int main(int argn, char **argv)
 {
-    double t ;
+    float t ;
     size_t total_mem, available_mem ;
 
     /* Clear the troll file. */
@@ -300,7 +300,7 @@ int main(int argn, char **argv)
         return (0) ;
     }
     printf ("available GPU memory: %g MB, warmup time: %g\n",
-        (double) (cc->gpuMemorySize) / (1024 * 1024), t) ;
+        (float) (cc->gpuMemorySize) / (1024 * 1024), t) ;
 
     experiment1(cc, 1, 2, 8, 8);
     experiment1(cc, 2, 2, 12, 8);

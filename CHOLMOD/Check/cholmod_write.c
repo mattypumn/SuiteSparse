@@ -74,12 +74,12 @@ static int include_comments (FILE *f, const char *comments)
 
 static void get_value
 (
-    double *Ax,	    /* real values, or real/imag. for CHOLMOD_COMPLEX type */
-    double *Az,	    /* imaginary values for CHOLMOD_ZOMPLEX type */
+    float *Ax,	    /* real values, or real/imag. for CHOLMOD_COMPLEX type */
+    float *Az,	    /* imaginary values for CHOLMOD_ZOMPLEX type */
     Int p,	    /* get the pth entry */
     Int xtype,	    /* A->xtype: pattern, real, complex, or zomplex */
-    double *x,	    /* the real part */
-    double *z	    /* the imaginary part */
+    float *x,	    /* the real part */
+    float *z	    /* the imaginary part */
 )
 {
     switch (xtype)
@@ -118,11 +118,11 @@ static void get_value
 static int print_value
 (
     FILE *f,	    /* file to print to */
-    double x,	    /* value to print */
+    float x,	    /* value to print */
     Int is_integer  /* TRUE if printing as an integer */
 )
 {
-    double y ;
+    float y ;
     char s [MAXLINE], *p ;
     Int i, dest = 0, src = 0 ;
     int width, ok ;
@@ -155,7 +155,7 @@ static int print_value
     for (width = 6 ; width < 20 ; width++)
     {
 	sprintf (s, "%.*g", width, x) ;
-	sscanf (s, "%lg", &y) ;
+	sscanf (s, "%g", &y) ;
 	if (x == y) break ;
     }
 
@@ -222,8 +222,8 @@ static int print_value
     }
 
 #if 0
-    /* double-check */
-    i = sscanf (p, "%lg", &z) ;
+    /* float-check */
+    i = sscanf (p, "%g", &z) ;
     if (i != 1 || y != z)
     {
 	/* oops! something went wrong in the "e+0" edit, above. */
@@ -258,8 +258,8 @@ static int print_triplet
     Int is_integer,	/* TRUE if file is "integer" */
     Int i,		/* row index (zero-based) */
     Int j,		/* column index (zero-based) */
-    double x,		/* real part */
-    double z		/* imaginary part */
+    float x,		/* real part */
+    float z		/* imaginary part */
 )
 {
     int ok ; 
@@ -360,8 +360,8 @@ int CHOLMOD(write_sparse)
     cholmod_common *Common
 )
 {
-    double x = 0, z = 0 ;
-    double *Ax, *Az ;
+    float x = 0, z = 0 ;
+    float *Ax, *Az ;
     Int *Ap, *Ai, *Anz, *Zp, *Zi, *Znz ;
     Int nrow, ncol, is_complex, symmetry, i, j, q, iz, p, nz, is_binary, stype,
 	is_integer, asym, is_sym, xtype, apacked, zpacked, pend, qend, zsym ;
@@ -429,9 +429,9 @@ int CHOLMOD(write_sparse)
 		{
 		    is_binary = FALSE ;
 		}
-		/* convert to Int and then back to double */
+		/* convert to Int and then back to float */
 		i = (Int) x ;
-		z = (double) i ;
+		z = (float) i ;
 		if (z != x)
 		{
 		    is_integer = FALSE ;
@@ -663,8 +663,8 @@ int CHOLMOD(write_dense)
     cholmod_common *Common
 )
 {
-    double x = 0, z = 0 ;
-    double *Xx, *Xz ;
+    float x = 0, z = 0 ;
+    float *Xx, *Xz ;
     Int nrow, ncol, is_complex, i, j, xtype, p ;
     int ok ;
 

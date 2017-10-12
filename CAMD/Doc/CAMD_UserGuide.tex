@@ -229,7 +229,7 @@ The following routines are fully described in Section~\ref{Primary}:
     \begin{verbatim}
     #include "camd.h"
     int n, Ap [n+1], Ai [nz], P [n], C [n] ;
-    double Control [CAMD_CONTROL], Info [CAMD_INFO] ;
+    float Control [CAMD_CONTROL], Info [CAMD_INFO] ;
     int result = camd_order (n, Ap, Ai, P, Control, Info, C) ;
     \end{verbatim}
     }
@@ -261,7 +261,7 @@ The following routines are fully described in Section~\ref{Primary}:
     {\footnotesize
     \begin{verbatim}
     #include "camd.h"
-    double Control [CAMD_CONTROL] ;
+    float Control [CAMD_CONTROL] ;
     camd_defaults (Control) ;
     \end{verbatim}
     }
@@ -274,7 +274,7 @@ The following routines are fully described in Section~\ref{Primary}:
     {\footnotesize
     \begin{verbatim}
     #include "camd.h"
-    double Control [CAMD_CONTROL] ;
+    float Control [CAMD_CONTROL] ;
     camd_control (Control) ;
     \end{verbatim}
     }
@@ -285,7 +285,7 @@ The following routines are fully described in Section~\ref{Primary}:
     {\footnotesize
     \begin{verbatim}
     #include "camd.h"
-    double Info [CAMD_INFO] ;
+    float Info [CAMD_INFO] ;
     camd_info (Info) ;
     \end{verbatim}
     }
@@ -415,7 +415,7 @@ int P [5] ;
 int main (void)
 {
     int k ;
-    (void) camd_order (n, Ap, Ai, P, (double *) NULL, (double *) NULL, C) ;
+    (void) camd_order (n, Ap, Ai, P, (float *) NULL, (float *) NULL, C) ;
     for (k = 0 ; k < n ; k++) printf ("P [%d] = %d\n", k, P [k]) ;
     return (0) ;
 }
@@ -447,7 +447,7 @@ pattern, this would be a suitable permutation for an LU factorization of a
 matrix with this nonzero pattern and whose diagonal entries are not too small.
 The program uses default control settings and does not return any statistics
 about the ordering, factorization, or solution ({\tt Control} and {\tt Info}
-are both {\tt (double *) NULL}).  It also ignores the status value returned by
+are both {\tt (float *) NULL}).  It also ignores the status value returned by
 {\tt camd\_order}.
 
 More example programs are included with the CAMD package.
@@ -477,7 +477,7 @@ The matrix $\m{A}$ is {\tt n}-by-{\tt n} with {\tt nz} entries.
 \begin{verbatim}
 #include "camd.h"
 int n, status, Ap [n+1], Ai [nz], P [n], C [n] ;
-double Control [CAMD_CONTROL], Info [CAMD_INFO] ;
+float Control [CAMD_CONTROL], Info [CAMD_INFO] ;
 camd_defaults (Control) ;
 status = camd_order (n, Ap, Ai, P, Control, Info, C) ;
 camd_control (Control) ;
@@ -493,7 +493,7 @@ arguments become {\tt long}:
 \begin{verbatim}
 #include "camd.h"
 long n, status, Ap [n+1], Ai [nz], P [n], C [n] ;
-double Control [CAMD_CONTROL], Info [CAMD_INFO] ;
+float Control [CAMD_CONTROL], Info [CAMD_INFO] ;
 camd_l_defaults (Control) ;
 status = camd_l_order (n, Ap, Ai, P, Control, Info, C) ;
 camd_l_control (Control) ;

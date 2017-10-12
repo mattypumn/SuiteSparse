@@ -33,7 +33,7 @@ c       umf4hb64 < HB/arc130.rua
 
         character title*72, key*30, type*3, ptrfmt*16,
      $          indfmt*16, valfmt*20, rhsfmt*20
-        double precision Ax (nzmax), x (nmax), b (nmax), aij, xj,
+        float precision Ax (nzmax), x (nmax), b (nmax), aij, xj,
      $          r (nmax), control (20), info (90)
         character rhstyp*3
 
@@ -329,7 +329,7 @@ C Note that A is zero-based.
         subroutine resid (n, nz, Ap, Ai, Ax, x, b, r)
         integer*8
      $      n, nz, Ap (n+1), Ai (n), j, i, p
-        double precision Ax (nz), x (n), b (n), r (n), rmax, aij
+        float precision Ax (nz), x (n), b (n), r (n), rmax, aij
 
         do 10 i = 1, n
             r (i) = -b (i)

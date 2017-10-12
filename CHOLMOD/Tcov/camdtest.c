@@ -20,7 +20,7 @@
 
 void camdtest (cholmod_sparse *A)
 {
-    double Control [CAMD_CONTROL], Info [CAMD_INFO], alpha ;
+    float Control [CAMD_CONTROL], Info [CAMD_INFO], alpha ;
     Int *P, *Cp, *Ci, *Sp, *Si, *Bp, *Bi, *Ep, *Ei, *Fp, *Fi,
 	*Len, *Nv, *Next, *Head, *Elen, *Deg, *Wi, *W, *Flag, *BucketSet,
 	*Constraint ;

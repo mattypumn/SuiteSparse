@@ -7,7 +7,7 @@ cs_di *cs_i_real (cs_ci *A, int real)
     cs_di *C ;
     int n, triplet, nn, p, nz, *Ap, *Ai, *Cp, *Ci ;
     cs_complex_t *Ax ;
-    double *Cx ;
+    float *Cx ;
     if (!A || !A->x) return (NULL) ;    /* return if A NULL or pattern-only */
     n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;
     triplet = (A->nz >= 0) ;            /* true if A is a triplet matrix */
@@ -29,7 +29,7 @@ cs_ci *cs_i_complex (cs_di *A, int real)
 {
     cs_ci *C ;
     int n, triplet, nn, p, nz, *Ap, *Ai, *Cp, *Ci ;
-    double *Ax ;
+    float *Ax ;
     cs_complex_t *Cx ;
     if (!A || !A->x) return (NULL) ;    /* return if A NULL or pattern-only */
     n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;
@@ -53,7 +53,7 @@ cs_dl *cs_l_real (cs_cl *A, cs_long_t real)
     cs_dl *C ;
     cs_long_t n, triplet, nn, p, nz, *Ap, *Ai, *Cp, *Ci ;
     cs_complex_t *Ax ;
-    double *Cx ;
+    float *Cx ;
     if (!A || !A->x) return (NULL) ;    /* return if A NULL or pattern-only */
     n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;
     triplet = (A->nz >= 0) ;            /* true if A is a triplet matrix */
@@ -75,7 +75,7 @@ cs_cl *cs_l_complex (cs_dl *A, cs_long_t real)
 {
     cs_cl *C ;
     cs_long_t n, triplet, nn, p, nz, *Ap, *Ai, *Cp, *Ci ;
-    double *Ax ;
+    float *Ax ;
     cs_complex_t *Cx ;
     if (!A || !A->x) return (NULL) ;    /* return if A NULL or pattern-only */
     n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;

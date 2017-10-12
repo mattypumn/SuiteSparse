@@ -23,8 +23,8 @@ static void TEMPLATE (cholmod_super_lsolve)
     cholmod_common *Common
 )
 {
-    double *Lx, *Xx, *Ex ;
-    double minus_one [2], one [2] ;
+    float *Lx, *Xx, *Ex ;
+    float minus_one [2], one [2] ;
     Int *Lpi, *Lpx, *Ls, *Super ;
     Int nsuper, k1, k2, psi, psend, psx, nsrow, nscol, ii, s,
 	nsrow2, n, ps2, j, i, d, nrhs ;
@@ -231,8 +231,8 @@ static void TEMPLATE (cholmod_super_ltsolve)
     cholmod_common *Common
 )
 {
-    double *Lx, *Xx, *Ex ;
-    double minus_one [2], one [2] ;
+    float *Lx, *Xx, *Ex ;
+    float minus_one [2], one [2] ;
     Int *Lpi, *Lpx, *Ls, *Super ;
     Int nsuper, k1, k2, psi, psend, psx, nsrow, nscol, ii, s,
 	nsrow2, n, ps2, j, i, d, nrhs ;

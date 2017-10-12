@@ -23,16 +23,16 @@ Int KLU_scale           /* return TRUE if successful, FALSE otherwise */
     Int n,
     Int Ap [ ],         /* size n+1, column pointers */
     Int Ai [ ],         /* size nz, row indices */
-    double Ax [ ],
+    float Ax [ ],
     /* outputs, not defined on input */
-    double Rs [ ],      /* size n, can be NULL if scale <= 0 */
+    float Rs [ ],      /* size n, can be NULL if scale <= 0 */
     /* workspace, not defined on input or output */
     Int W [ ],          /* size n, can be NULL */
     /* --------------- */
     KLU_common *Common
 )
 {
-    double a ;
+    float a ;
     Entry *Az ;
     Int row, col, p, pend, check_duplicates ;
 

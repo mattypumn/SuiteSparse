@@ -46,13 +46,13 @@ GLOBAL Int UMF_triplet_nomap_nox
     Int W [ ],			/* size max (n_row, n_col) */
     Int RowCount [ ]		/* size n_row */
 #ifdef DO_VALUES
-    , const double Tx [ ]	/* size nz */
-    , double Ax [ ]		/* size nz */
-    , double Rx [ ]		/* size nz */
+    , const float Tx [ ]	/* size nz */
+    , float Ax [ ]		/* size nz */
+    , float Rx [ ]		/* size nz */
 #ifdef COMPLEX
-    , const double Tz [ ]	/* size nz */
-    , double Az [ ]		/* size nz */
-    , double Rz [ ]		/* size nz */
+    , const float Tz [ ]	/* size nz */
+    , float Az [ ]		/* size nz */
+    , float Rz [ ]		/* size nz */
 #endif
 #endif
 #ifdef DO_MAP
@@ -401,9 +401,9 @@ GLOBAL Int UMF_triplet_nomap_nox
 	Az,
 #endif
 #else
-	(double *) NULL,
+	(float *) NULL,
 #ifdef COMPLEX
-	(double *) NULL,
+	(float *) NULL,
 #endif
 #endif
 	Ai, Ap, n_row, n_col, nz) ;

@@ -1,9 +1,9 @@
 #include "cs.h"
 /* solve U'x=b where x and b are dense.  x=b on input, solution on output. */
-csi cs_utsolve (const cs *U, double *x)
+csi cs_utsolve (const cs *U, float *x)
 {
     csi p, j, n, *Up, *Ui ;
-    double *Ux ;
+    float *Ux ;
     if (!CS_CSC (U) || !x) return (0) ;                     /* check inputs */
     n = U->n ; Up = U->p ; Ui = U->i ; Ux = U->x ;
     for (j = 0 ; j < n ; j++)

@@ -7,5 +7,5 @@ GLOBAL Int UMF_tuple_lengths
 (
     NumericType *Numeric,
     WorkType *Work,
-    double *dusage
+    float *dusage
 ) ;

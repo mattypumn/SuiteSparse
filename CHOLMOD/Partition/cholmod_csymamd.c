@@ -43,7 +43,7 @@ int CHOLMOD(csymamd)
     cholmod_common *Common
 )
 {
-    double knobs [CCOLAMD_KNOBS] ;
+    float knobs [CCOLAMD_KNOBS] ;
     Int *perm, *Head ;
     Int ok, i, nrow, stats [CCOLAMD_STATS] ;
 

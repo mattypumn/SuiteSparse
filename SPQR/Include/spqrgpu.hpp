@@ -5,7 +5,7 @@
 
 void spqrgpu_kernel
 (
-    spqr_blob <double> *Blob    // contains the entire problem input/output
+    spqr_blob <float> *Blob    // contains the entire problem input/output
 ) ;
 
 void spqrgpu_kernel             // placeholder, since complex case not supported
@@ -65,7 +65,7 @@ void spqrgpu_buildAssemblyMaps
     Long *Sleft,
     Long *Sp,
     Long *Sj,
-    double *Sx,
+    float *Sx,
     Long *Fm,
     Long *Cm,
     Long *Childp,

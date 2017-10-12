@@ -59,7 +59,7 @@ Int KLU_free_numeric
 
     KLU_free (Numeric->Udiag, n, sizeof (Entry), Common) ;
 
-    KLU_free (Numeric->Rs,   n, sizeof (double), Common) ;
+    KLU_free (Numeric->Rs,   n, sizeof (float), Common) ;
     KLU_free (Numeric->Pinv, n, sizeof (Int), Common) ;
 
     KLU_free (Numeric->Work, Numeric->worksize, 1, Common) ;

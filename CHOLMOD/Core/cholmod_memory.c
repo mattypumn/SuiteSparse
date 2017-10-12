@@ -153,8 +153,8 @@ void *CHOLMOD(malloc)	/* returns pointer to the newly malloc'd block */
 	    Common->memory_usage =
 		MAX (Common->memory_usage, Common->memory_inuse) ;
 	    PRINTM (("cholmod_malloc %p %g cnt: %g inuse %g\n",
-		    p, (double) n*size, (double) Common->malloc_count,
-                    (double) Common->memory_inuse)) ;
+		    p, (float) n*size, (float) Common->malloc_count,
+                    (float) Common->memory_inuse)) ;
 	}
     }
     return (p) ;
@@ -200,8 +200,8 @@ void *CHOLMOD(free)	/* always returns NULL */
 	Common->malloc_count-- ;
 	Common->memory_inuse -= (n * size) ;
 	PRINTM (("cholmod_free   %p %g cnt: %g inuse %g\n",
-		p, (double) n*size, (double) Common->malloc_count,
-                (double) Common->memory_inuse)) ;
+		p, (float) n*size, (float) Common->malloc_count,
+                (float) Common->memory_inuse)) ;
 	/* This assertion will fail if the user calls cholmod_malloc and
 	 * cholmod_free with mismatched memory sizes.  It shouldn't fail
 	 * otherwise. */
@@ -265,8 +265,8 @@ void *CHOLMOD(calloc)	/* returns pointer to the newly calloc'd block */
 	    Common->memory_usage =
 		MAX (Common->memory_usage, Common->memory_inuse) ;
 	    PRINTM (("cholmod_malloc %p %g cnt: %g inuse %g\n",
-		    p, (double) n*size, (double) Common->malloc_count,
-                    (double) Common->memory_inuse)) ;
+		    p, (float) n*size, (float) Common->malloc_count,
+                    (float) Common->memory_inuse)) ;
 	}
     }
     return (p) ;
@@ -345,10 +345,10 @@ void *CHOLMOD(realloc)	/* returns pointer to reallocated block */
 	    /* success: return revised p and change the size of the block */
 	    PRINTM (("cholmod_free %p %g cnt: %g inuse %g\n"
 		     "cholmod_malloc %p %g cnt: %g inuse %g\n",
-		p, (double) nold*size, (double) Common->malloc_count-1,
-                   (double) (Common->memory_inuse - nold*size),
-		pnew, (double) nnew*size, (double) Common->malloc_count,
-                   (double) (Common->memory_inuse + (nnew-nold)*size))) ;
+		p, (float) nold*size, (float) Common->malloc_count-1,
+                   (float) (Common->memory_inuse - nold*size),
+		pnew, (float) nnew*size, (float) Common->malloc_count,
+                   (float) (Common->memory_inuse + (nnew-nold)*size))) ;
 	    p = pnew ;
 	    *n = nnew ;
 	    Common->memory_inuse += ((nnew-nold) * size) ;
@@ -386,15 +386,15 @@ int CHOLMOD(realloc_multiple)
     /* ---- in/out --- */
     void **Iblock,	/* int or SuiteSparse_long block */
     void **Jblock,	/* int or SuiteSparse_long block */
-    void **Xblock,	/* complex or double block */
-    void **Zblock,	/* zomplex case only: double block */
+    void **Xblock,	/* complex or float block */
+    void **Zblock,	/* zomplex case only: float block */
     size_t *nold_p,	/* current size of the I,J,X,Z blocks on input,
 			 * nnew on output if successful */
     /* --------------- */
     cholmod_common *Common
 )
 {
-    double *xx, *zz ;
+    float *xx, *zz ;
     size_t i, j, x, z, nold ;
 
     RETURN_IF_NULL_COMMON (FALSE) ;
@@ -430,19 +430,19 @@ int CHOLMOD(realloc_multiple)
     switch (xtype)
     {
 	case CHOLMOD_REAL:
-	    *Xblock = CHOLMOD(realloc) (nnew, sizeof (double), *Xblock, &x,
+	    *Xblock = CHOLMOD(realloc) (nnew, sizeof (float), *Xblock, &x,
                     Common) ;
 	    break ;
 
 	case CHOLMOD_COMPLEX:
-	    *Xblock = CHOLMOD(realloc) (nnew, 2*sizeof (double), *Xblock, &x,
+	    *Xblock = CHOLMOD(realloc) (nnew, 2*sizeof (float), *Xblock, &x,
                     Common) ;
 	    break ;
 
 	case CHOLMOD_ZOMPLEX:
-	    *Xblock = CHOLMOD(realloc) (nnew, sizeof (double), *Xblock, &x,
+	    *Xblock = CHOLMOD(realloc) (nnew, sizeof (float), *Xblock, &x,
                     Common) ;
-	    *Zblock = CHOLMOD(realloc) (nnew, sizeof (double), *Zblock, &z,
+	    *Zblock = CHOLMOD(realloc) (nnew, sizeof (float), *Zblock, &z,
                     Common) ;
 	    break ;
     }
@@ -466,19 +466,19 @@ int CHOLMOD(realloc_multiple)
 	    switch (xtype)
 	    {
 		case CHOLMOD_REAL:
-		    *Xblock = CHOLMOD(free) (x, sizeof (double), *Xblock,
+		    *Xblock = CHOLMOD(free) (x, sizeof (float), *Xblock,
                             Common) ;
 		    break ;
 
 		case CHOLMOD_COMPLEX:
-		    *Xblock = CHOLMOD(free) (x, 2*sizeof (double), *Xblock,
+		    *Xblock = CHOLMOD(free) (x, 2*sizeof (float), *Xblock,
                             Common) ;
 		    break ;
 
 		case CHOLMOD_ZOMPLEX:
-		    *Xblock = CHOLMOD(free) (x, sizeof (double), *Xblock,
+		    *Xblock = CHOLMOD(free) (x, sizeof (float), *Xblock,
                             Common) ;
-		    *Zblock = CHOLMOD(free) (x, sizeof (double), *Zblock,
+		    *Zblock = CHOLMOD(free) (x, sizeof (float), *Zblock,
                             Common) ;
 		    break ;
 	    }
@@ -500,19 +500,19 @@ int CHOLMOD(realloc_multiple)
 	    switch (xtype)
 	    {
 		case CHOLMOD_REAL:
-		    *Xblock = CHOLMOD(realloc) (nold, sizeof (double),
+		    *Xblock = CHOLMOD(realloc) (nold, sizeof (float),
                             *Xblock, &x, Common) ;
 		    break ;
 
 		case CHOLMOD_COMPLEX:
-		    *Xblock = CHOLMOD(realloc) (nold, 2*sizeof (double),
+		    *Xblock = CHOLMOD(realloc) (nold, 2*sizeof (float),
                             *Xblock, &x, Common) ;
 		    break ;
 
 		case CHOLMOD_ZOMPLEX:
-		    *Xblock = CHOLMOD(realloc) (nold, sizeof (double),
+		    *Xblock = CHOLMOD(realloc) (nold, sizeof (float),
                             *Xblock, &x, Common) ;
-		    *Zblock = CHOLMOD(realloc) (nold, sizeof (double),
+		    *Zblock = CHOLMOD(realloc) (nold, sizeof (float),
                             *Zblock, &z, Common) ;
 		    break ;
 	    }

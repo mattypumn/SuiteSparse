@@ -89,7 +89,7 @@ SuiteSparse_long umfpack_zl_get_symbolic
 
 /*
 
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     int status, n_row, n_col, nz, nfr, nchains, *P, *Q,
@@ -101,7 +101,7 @@ double int Syntax:
 	Front_leftmostdesc, Chain_start, Chain_maxrows, Chain_maxcols,
 	Symbolic) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     SuiteSparse_long status, n_row, n_col, nz, nfr, nchains, *P, *Q,

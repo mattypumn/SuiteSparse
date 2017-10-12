@@ -156,7 +156,7 @@ int cholmod_factorize_p
 (
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
-    double beta [2],	/* factorize beta*I+A or beta*I+A'*A */
+    float beta [2],	/* factorize beta*I+A or beta*I+A'*A */
     int *fset,		/* subset of 0:(A->ncol)-1 */
     size_t fsize,	/* size of fset */
     /* ---- in/out --- */
@@ -165,7 +165,7 @@ int cholmod_factorize_p
     cholmod_common *Common
 ) ;
 
-int cholmod_l_factorize_p (cholmod_sparse *, double *, SuiteSparse_long *,
+int cholmod_l_factorize_p (cholmod_sparse *, float *, SuiteSparse_long *,
     size_t, cholmod_factor *, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
@@ -375,7 +375,7 @@ int cholmod_rowfac
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
     cholmod_sparse *F,	/* used for A*A' case only. F=A' or A(:,fset)' */
-    double beta [2],	/* factorize beta*I+A or beta*I+A'*A */
+    float beta [2],	/* factorize beta*I+A or beta*I+A'*A */
     size_t kstart,	/* first row to factorize */
     size_t kend,	/* last row to factorize is kend-1 */
     /* ---- in/out --- */
@@ -384,7 +384,7 @@ int cholmod_rowfac
     cholmod_common *Common
 ) ;
 
-int cholmod_l_rowfac (cholmod_sparse *, cholmod_sparse *, double *, size_t,
+int cholmod_l_rowfac (cholmod_sparse *, cholmod_sparse *, float *, size_t,
     size_t, cholmod_factor *, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
@@ -399,7 +399,7 @@ int cholmod_rowfac_mask
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
     cholmod_sparse *F,	/* used for A*A' case only. F=A' or A(:,fset)' */
-    double beta [2],	/* factorize beta*I+A or beta*I+A'*A */
+    float beta [2],	/* factorize beta*I+A or beta*I+A'*A */
     size_t kstart,	/* first row to factorize */
     size_t kend,	/* last row to factorize is kend-1 */
     int *mask,		/* if mask[i] >= 0, then set row i to zero */
@@ -410,7 +410,7 @@ int cholmod_rowfac_mask
     cholmod_common *Common
 ) ;
 
-int cholmod_l_rowfac_mask (cholmod_sparse *, cholmod_sparse *, double *, size_t,
+int cholmod_l_rowfac_mask (cholmod_sparse *, cholmod_sparse *, float *, size_t,
     size_t, SuiteSparse_long *, SuiteSparse_long *, cholmod_factor *,
     cholmod_common *) ;
 
@@ -419,7 +419,7 @@ int cholmod_rowfac_mask2
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to factorize */
     cholmod_sparse *F,	/* used for A*A' case only. F=A' or A(:,fset)' */
-    double beta [2],	/* factorize beta*I+A or beta*I+A'*A */
+    float beta [2],	/* factorize beta*I+A or beta*I+A'*A */
     size_t kstart,	/* first row to factorize */
     size_t kend,	/* last row to factorize is kend-1 */
     int *mask,		/* if mask[i] >= maskmark, then set row i to zero */
@@ -431,7 +431,7 @@ int cholmod_rowfac_mask2
     cholmod_common *Common
 ) ;
 
-int cholmod_l_rowfac_mask2 (cholmod_sparse *, cholmod_sparse *, double *,
+int cholmod_l_rowfac_mask2 (cholmod_sparse *, cholmod_sparse *, float *,
     size_t, size_t, SuiteSparse_long *, SuiteSparse_long, SuiteSparse_long *,
     cholmod_factor *, cholmod_common *) ;
 
@@ -554,7 +554,7 @@ int cholmod_l_resymbol_noperm (cholmod_sparse *, SuiteSparse_long *, size_t, int
 /* cholmod_rcond:  compute rough estimate of reciprocal of condition number */
 /* -------------------------------------------------------------------------- */
 
-double cholmod_rcond	    /* return min(diag(L)) / max(diag(L)) */
+float cholmod_rcond	    /* return min(diag(L)) / max(diag(L)) */
 (
     /* ---- input ---- */
     cholmod_factor *L,
@@ -562,7 +562,7 @@ double cholmod_rcond	    /* return min(diag(L)) / max(diag(L)) */
     cholmod_common *Common
 ) ;
 
-double cholmod_l_rcond (cholmod_factor *, cholmod_common *) ;
+float cholmod_l_rcond (cholmod_factor *, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_postorder: Compute the postorder of a tree */

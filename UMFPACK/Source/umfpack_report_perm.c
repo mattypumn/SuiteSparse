@@ -24,7 +24,7 @@ GLOBAL Int UMFPACK_report_perm
 (
     Int np,
     const Int Perm [ ],
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 )
 {
     Int prl, *W, status ;

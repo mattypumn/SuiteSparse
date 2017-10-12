@@ -8,8 +8,8 @@ __device__ void packassemble ( )
     int *shRimap = shMemory.packassemble.Rimap;
     int *shRjmap = shMemory.packassemble.Rjmap;
 
-    double *C     = myTask.AuxAddress[0];
-    double *P     = myTask.AuxAddress[1];
+    float *C     = myTask.AuxAddress[0];
+    float *P     = myTask.AuxAddress[1];
     int *Rjmap    = (int*) myTask.AuxAddress[2];
     int *Rimap    = (int*) myTask.AuxAddress[3];
 //  int fm        = myTask.fm;

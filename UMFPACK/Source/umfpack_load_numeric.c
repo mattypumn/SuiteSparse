@@ -116,7 +116,7 @@ GLOBAL Int UMFPACK_load_numeric
     Numeric->Upos     = (Int *) NULL ;
     Numeric->Uilen    = (Int *) NULL ;
     Numeric->Uip      = (Int *) NULL ;
-    Numeric->Rs       = (double *) NULL ;
+    Numeric->Rs       = (float *) NULL ;
     Numeric->Memory   = (Unit *) NULL ;
     Numeric->Upattern = (Int *) NULL ;
 
@@ -137,7 +137,7 @@ GLOBAL Int UMFPACK_load_numeric
     READ (Numeric->Uip,   Int,   Numeric->npiv+1) ;
     if (Numeric->scale != UMFPACK_SCALE_NONE)
     {
-	READ (Numeric->Rs, double, Numeric->n_row) ;
+	READ (Numeric->Rs, float, Numeric->n_row) ;
     }
     if (Numeric->ulen > 0)
     {

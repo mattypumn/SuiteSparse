@@ -41,20 +41,20 @@
 int cholmod_drop
 (
     /* ---- input ---- */
-    double tol,		/* keep entries with absolute value > tol */
+    float tol,		/* keep entries with absolute value > tol */
     /* ---- in/out --- */
     cholmod_sparse *A,	/* matrix to drop entries from */
     /* --------------- */
     cholmod_common *Common
 ) ;
 
-int cholmod_l_drop (double, cholmod_sparse *, cholmod_common *) ;
+int cholmod_l_drop (float, cholmod_sparse *, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_norm_dense:  s = norm (X), 1-norm, inf-norm, or 2-norm */
 /* -------------------------------------------------------------------------- */
 
-double cholmod_norm_dense
+float cholmod_norm_dense
 (
     /* ---- input ---- */
     cholmod_dense *X,	/* matrix to compute the norm of */
@@ -63,13 +63,13 @@ double cholmod_norm_dense
     cholmod_common *Common
 ) ;
 
-double cholmod_l_norm_dense (cholmod_dense *, int, cholmod_common *) ;
+float cholmod_l_norm_dense (cholmod_dense *, int, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_norm_sparse:  s = norm (A), 1-norm or inf-norm */
 /* -------------------------------------------------------------------------- */
 
-double cholmod_norm_sparse
+float cholmod_norm_sparse
 (
     /* ---- input ---- */
     cholmod_sparse *A,	/* matrix to compute the norm of */
@@ -78,7 +78,7 @@ double cholmod_norm_sparse
     cholmod_common *Common
 ) ;
 
-double cholmod_l_norm_sparse (cholmod_sparse *, int, cholmod_common *) ;
+float cholmod_l_norm_sparse (cholmod_sparse *, int, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */
 /* cholmod_horzcat:  C = [A,B] */
@@ -131,8 +131,8 @@ int cholmod_sdmult
     /* ---- input ---- */
     cholmod_sparse *A,	/* sparse matrix to multiply */
     int transpose,	/* use A if 0, or A' otherwise */
-    double alpha [2],   /* scale factor for A */
-    double beta [2],    /* scale factor for Y */
+    float alpha [2],   /* scale factor for A */
+    float beta [2],    /* scale factor for Y */
     cholmod_dense *X,	/* dense matrix to multiply */
     /* ---- in/out --- */
     cholmod_dense *Y,	/* resulting dense matrix */
@@ -140,7 +140,7 @@ int cholmod_sdmult
     cholmod_common *Common
 ) ;
 
-int cholmod_l_sdmult (cholmod_sparse *, int, double *, double *,
+int cholmod_l_sdmult (cholmod_sparse *, int, float *, float *,
     cholmod_dense *, cholmod_dense *Y, cholmod_common *) ;
 
 /* -------------------------------------------------------------------------- */

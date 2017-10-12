@@ -9,7 +9,7 @@ void mexFunction
 )
 {
     CS_INT j, k ;
-    double tol ;
+    float tol ;
     if (nargout > 1 || nargin != 2)
     {
         mexErrMsgTxt ("Usage: C = cs_droptol(A,tol)") ;

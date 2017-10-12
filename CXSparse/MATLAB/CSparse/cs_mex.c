@@ -14,7 +14,7 @@ void cs_mex_check (CS_INT nel, CS_INT m, CS_INT n, int square, int sparse,
     if (!sparse)
     {
         if (mxIsSparse (A)) mexErrMsgTxt ("matrix must be full") ;
-        if (values && !mxIsDouble (A)) mexErrMsgTxt ("matrix must be double") ;
+        if (values && !mxIsDouble (A)) mexErrMsgTxt ("matrix must be float") ;
     }
     if (nel)
     {
@@ -68,7 +68,7 @@ mxArray *cs_dl_mex_put_sparse (cs_dl **Ahandle)
         /* A is a pattern only matrix; return all 1's to MATLAB */
         CS_INT i, nz ;
         nz = A->p [A->n] ;
-        A->x = cs_dl_malloc (CS_MAX (nz,1), sizeof (double)) ;
+        A->x = cs_dl_malloc (CS_MAX (nz,1), sizeof (float)) ;
         for (i = 0 ; i < nz ; i++)
         {
             A->x [i] = 1 ;
@@ -81,16 +81,16 @@ mxArray *cs_dl_mex_put_sparse (cs_dl **Ahandle)
 }
 
 /* get a real MATLAB dense column vector */
-double *cs_dl_mex_get_double (CS_INT n, const mxArray *X)
+float *cs_dl_mex_get_float (CS_INT n, const mxArray *X)
 {
     cs_mex_check (0, n, 1, 0, 0, 1, X) ;
     return (mxGetPr (X)) ;
 }
 
-/* return a double vector to MATLAB */
-double *cs_dl_mex_put_double (CS_INT n, const double *b, mxArray **X)
+/* return a float vector to MATLAB */
+float *cs_dl_mex_put_float (CS_INT n, const float *b, mxArray **X)
 {
-    double *x ;
+    float *x ;
     CS_INT k ;
     *X = mxCreateDoubleMatrix (n, 1, mxREAL) ;      /* create x */
     x = mxGetPr (*X) ;
@@ -102,7 +102,7 @@ double *cs_dl_mex_put_double (CS_INT n, const double *b, mxArray **X)
 CS_INT *cs_dl_mex_get_int (CS_INT n, const mxArray *Imatlab, CS_INT *imax,
     int lo)
 {
-    double *p ;
+    float *p ;
     CS_INT i, k, *C = cs_dl_malloc (n, sizeof (CS_INT)) ;
     cs_mex_check (1, n, 1, 0, 0, 1, Imatlab) ;
     if (mxIsComplex (Imatlab))
@@ -125,7 +125,7 @@ CS_INT *cs_dl_mex_get_int (CS_INT n, const mxArray *Imatlab, CS_INT *imax,
 mxArray *cs_dl_mex_put_int (CS_INT *p, CS_INT n, CS_INT offset, int do_free)
 {
     mxArray *X = mxCreateDoubleMatrix (1, n, mxREAL) ;
-    double *x = mxGetPr (X) ;
+    float *x = mxGetPr (X) ;
     CS_INT k ;
     for (k = 0 ; k < n ; k++) x [k] = (p ? p [k] : k) + offset ;
     if (do_free) cs_free (p) ;
@@ -139,7 +139,7 @@ static cs_complex_t *cs_cl_get_vector (CS_INT n, CS_INT size,
     const mxArray *Xmatlab)
 {
     CS_INT p ;
-    double *X, *Z ;
+    float *X, *Z ;
     cs_complex_t *Y ;
     X = mxGetPr (Xmatlab) ;
     Z = (mxIsComplex (Xmatlab)) ? mxGetPi (Xmatlab) : NULL ;
@@ -169,7 +169,7 @@ cs_cl *cs_cl_mex_get_sparse (cs_cl *A, int square, const mxArray *Amatlab)
 mxArray *cs_cl_mex_put_sparse (cs_cl **Ahandle)
 {
     cs_cl *A ;
-    double *x, *z ;
+    float *x, *z ;
     mxArray *Amatlab ;
     CS_INT k ;
     if (!Ahandle || !CS_CSC ((*Ahandle))) mexErrMsgTxt ("invalid sparse matrix") ;
@@ -185,8 +185,8 @@ mxArray *cs_cl_mex_put_sparse (cs_cl **Ahandle)
     cs_cl_free (mxGetPi (Amatlab)) ;
     mxSetJc (Amatlab, (void *) (A->p)) ; /* assign A->p pointer to MATLAB A */
     mxSetIr (Amatlab, (void *) (A->i)) ;
-    x = cs_dl_malloc (A->nzmax, sizeof (double)) ;
-    z = cs_dl_malloc (A->nzmax, sizeof (double)) ;
+    x = cs_dl_malloc (A->nzmax, sizeof (float)) ;
+    z = cs_dl_malloc (A->nzmax, sizeof (float)) ;
     for (k = 0 ; k < A->nzmax ; k++)
     {
         x [k] = creal (A->x [k]) ;      /* copy and split numerical values */
@@ -201,16 +201,16 @@ mxArray *cs_cl_mex_put_sparse (cs_cl **Ahandle)
 }
 
 /* get a real or complex MATLAB dense column vector, and copy to cs_complex_t */
-cs_complex_t *cs_cl_mex_get_double (CS_INT n, const mxArray *X)
+cs_complex_t *cs_cl_mex_get_float (CS_INT n, const mxArray *X)
 {
     cs_mex_check (0, n, 1, 0, 0, 1, X) ;
     return (cs_cl_get_vector (n, n, X)) ;
 }
 
 /* copy a complex vector back to MATLAB and free it */
-mxArray *cs_cl_mex_put_double (CS_INT n, cs_complex_t *b)
+mxArray *cs_cl_mex_put_float (CS_INT n, cs_complex_t *b)
 {
-    double *x, *z ;
+    float *x, *z ;
     mxArray *X ;
     CS_INT k ;
     X = mxCreateDoubleMatrix (n, 1, mxCOMPLEX) ;    /* create x */

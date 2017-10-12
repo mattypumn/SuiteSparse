@@ -51,15 +51,15 @@ static void my_handler (int status, const char *file, int line,
 
 int main (int argc, char **argv)
 {
-    double resid [4], t, ta, tf, ts [3], tot, bnorm, xnorm, anorm, rnorm, fl,
+    float resid [4], t, ta, tf, ts [3], tot, bnorm, xnorm, anorm, rnorm, fl,
         anz, axbnorm, rnorm2, resid2, rcond ;
     FILE *f ;
     cholmod_sparse *A ;
     cholmod_dense *X = NULL, *B, *W, *R = NULL ;
-    double one [2], zero [2], minusone [2], beta [2], xlnz ;
+    float one [2], zero [2], minusone [2], beta [2], xlnz ;
     cholmod_common Common, *cm ;
     cholmod_factor *L ;
-    double *Bx, *Rx, *Xx, *Bz, *Xz, *Rz ;
+    float *Bx, *Rx, *Xx, *Bz, *Xz, *Rz ;
     SuiteSparse_long i, n, isize, xsize, ordering, xtype, s, ss, lnz ;
     int trial, method, L_is_super ;
     int ver [3] ;
@@ -151,17 +151,17 @@ int main (int argc, char **argv)
         /* Convert to zomplex, just for testing.  In a zomplex matrix,
            the real and imaginary parts are in separate arrays.  MATLAB
            uses zomplex matrix exclusively. */
-        double *Ax = A->x ;
+        float *Ax = A->x ;
         SuiteSparse_long nz = cholmod_l_nnz (A, cm) ;
         printf ("nz: %ld\n", nz) ;
-        double *Ax2 = cholmod_l_malloc (nz, sizeof (double), cm) ;
-        double *Az2 = cholmod_l_malloc (nz, sizeof (double), cm) ;
+        float *Ax2 = cholmod_l_malloc (nz, sizeof (float), cm) ;
+        float *Az2 = cholmod_l_malloc (nz, sizeof (float), cm) ;
         for (i = 0 ; i < nz ; i++)
         {
             Ax2 [i] = Ax [2*i  ] ;
             Az2 [i] = Ax [2*i+1] ;
         }
-        cholmod_l_free (A->nzmax, 2*sizeof(double), Ax, cm) ;
+        cholmod_l_free (A->nzmax, 2*sizeof(float), Ax, cm) ;
         A->x = Ax2 ;
         A->z = Az2 ;
         A->xtype = CHOLMOD_ZOMPLEX ;
@@ -186,8 +186,8 @@ int main (int argc, char **argv)
       D->stype = 1;
       cholmod_l_print_sparse (D, "D", cm);
 
-      double alpha[2];
-      double beta[2];
+      float alpha[2];
+      float beta[2];
       alpha[0] = 1.0;
       alpha[1] = 1.0;
       beta[0] = 1.0e9; // 9 works, 467doesn't
@@ -233,7 +233,7 @@ int main (int argc, char **argv)
 	/* real case */
 	for (i = 0 ; i < n ; i++)
 	{
-	    double x = n ;
+	    float x = n ;
 	    Bx [i] = 1 + i / x ;
 	}
     }
@@ -242,7 +242,7 @@ int main (int argc, char **argv)
 	/* complex case */
 	for (i = 0 ; i < n ; i++)
 	{
-	    double x = n ;
+	    float x = n ;
 	    Bx [2*i  ] = 1 + i / x ;		/* real part of B(i) */
 	    Bx [2*i+1] = (x/2 - i) / (3*x) ;	/* imag part of B(i) */
 	}
@@ -252,7 +252,7 @@ int main (int argc, char **argv)
 	/* zomplex case */
 	for (i = 0 ; i < n ; i++)
 	{
-	    double x = n ;
+	    float x = n ;
 	    Bx [i] = 1 + i / x ;		/* real part of B(i) */
 	    Bz [i] = (x/2 - i) / (3*x) ;	/* imag part of B(i) */
 	}
@@ -351,7 +351,7 @@ int main (int argc, char **argv)
 
     for (method = 0 ; method <= nmethods ; method++)
     {
-        double x = n ;
+        float x = n ;
         resid [method] = -1 ;       /* not yet computed */
 
         if (method == 0)
@@ -401,7 +401,7 @@ int main (int argc, char **argv)
             cholmod_dense *X2 = NULL, *B2 = NULL ;
             cholmod_sparse *Bset, *Xset = NULL ;
             SuiteSparse_long *Bsetp, *Bseti, *Xsetp, *Xseti, xlen, j, k, *Lnz ;
-            double *X1x, *X2x, *B2x, err ;
+            float *X1x, *X2x, *B2x, err ;
             FILE *timelog = fopen ("timelog.m", "w") ;
             if (timelog) fprintf (timelog, "results = [\n") ;
 
@@ -496,7 +496,7 @@ int main (int argc, char **argv)
                 }
 
                 if (timelog) fprintf (timelog, "%g %g %g %g\n",
-                    (double) i, (double) xlen, fl, t);
+                    (float) i, (float) xlen, fl, t);
 
                 /* clear B for the next test */
                 if (xtype == CHOLMOD_REAL)
@@ -667,8 +667,8 @@ int main (int argc, char **argv)
 	}
     }
 
-    printf ("ints in L: %15.0f, doubles in L: %15.0f\n",
-        (double) isize, (double) xsize) ;
+    printf ("ints in L: %15.0f, floats in L: %15.0f\n",
+        (float) isize, (float) xsize) ;
     printf ("factor flops %g nnz(L) %15.0f (w/no amalgamation)\n",
 	    cm->fl, cm->lnz) ;
     if (A->stype == 0)
@@ -699,7 +699,7 @@ int main (int argc, char **argv)
     printf ("solve2  cputime:   %12.4f mflop: %8.1f (%d trials)\n", ts [2],
 	(ts [2] == 0) ? 0 : (1e-6*4*cm->lnz / ts [2]), NTRIALS) ;
     printf ("peak memory usage: %12.0f (MB)\n",
-	    (double) (cm->memory_usage) / 1048576.) ;
+	    (float) (cm->memory_usage) / 1048576.) ;
     printf ("residual (|Ax-b|/(|A||x|+|b|)): ") ;
     for (method = 0 ; method <= nmethods ; method++)
     {

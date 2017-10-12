@@ -19,7 +19,7 @@ void mexFunction
 )
 {
     CS_INT m, n, mn, m2, n2, k, s, j, ij, sj, si, p, *Ap, *Ai ;
-    double aij, ax, az, *S, *Ax, *Az ;
+    float aij, ax, az, *S, *Ax, *Az ;
     if (nargout > 1 || nargin < 1 || nargin > 2)
     {
         mexErrMsgTxt ("Usage: S = cs_thumb(A,k)") ;
@@ -30,9 +30,9 @@ void mexFunction
     mn = CS_MAX (m,n) ;
     k = (nargin == 1) ? 256 : mxGetScalar (pargin [1]) ;    /* get k */
     /* s = size of each submatrix; A(1:s,1:s) maps to S(1,1) */
-    s = (mn < k) ? 1 : (CS_INT) ceil ((double) mn / (double) k) ;
-    m2 = (CS_INT) ceil ((double) m / (double) s) ;
-    n2 = (CS_INT) ceil ((double) n / (double) s) ;
+    s = (mn < k) ? 1 : (CS_INT) ceil ((float) mn / (float) k) ;
+    m2 = (CS_INT) ceil ((float) m / (float) s) ;
+    n2 = (CS_INT) ceil ((float) n / (float) s) ;
     /* create S */
     pargout [0] = mxCreateDoubleMatrix (m2, n2, mxREAL) ;
     S = mxGetPr (pargout [0]) ;

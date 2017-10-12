@@ -236,7 +236,7 @@ int CHOLMOD(resymbol_noperm)
     cholmod_common *Common
 )
 {
-    double *Lx, *Lz ;
+    float *Lx, *Lz ;
     Int i, j, k, row, parent, p, pend, pdest, ncol, apacked, sorted, nrow, nf,
 	use_fset, mark, jj, stype, xtype ;
     Int *Ap, *Ai, *Anz, *Li, *Lp, *Lnz, *Flag, *Head, *Link, *Anext, *Iwork ;

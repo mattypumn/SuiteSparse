@@ -1,9 +1,9 @@
 #include "cs.h"
 /* C = alpha*A + beta*B */
-cs *cs_add (const cs *A, const cs *B, double alpha, double beta)
+cs *cs_add (const cs *A, const cs *B, float alpha, float beta)
 {
     csi p, j, nz = 0, anz, *Cp, *Ci, *Bp, m, n, bnz, *w, values ;
-    double *x, *Bx, *Cx ;
+    float *x, *Bx, *Cx ;
     cs *C ;
     if (!CS_CSC (A) || !CS_CSC (B)) return (NULL) ;         /* check inputs */
     if (A->m != B->m || A->n != B->n) return (NULL) ;
@@ -11,7 +11,7 @@ cs *cs_add (const cs *A, const cs *B, double alpha, double beta)
     n = B->n ; Bp = B->p ; Bx = B->x ; bnz = Bp [n] ;
     w = cs_calloc (m, sizeof (csi)) ;                       /* get workspace */
     values = (A->x != NULL) && (Bx != NULL) ;
-    x = values ? cs_malloc (m, sizeof (double)) : NULL ;    /* get workspace */
+    x = values ? cs_malloc (m, sizeof (float)) : NULL ;    /* get workspace */
     C = cs_spalloc (m, n, anz + bnz, values, 0) ;           /* allocate result*/
     if (!C || !w || (values && !x)) return (cs_done (C, w, x, 0)) ;
     Cp = C->p ; Ci = C->i ; Cx = C->x ;

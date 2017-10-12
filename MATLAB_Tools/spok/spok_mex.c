@@ -26,7 +26,7 @@ void mexFunction
 )
 {
     SPOK_INT *Ap, *Ai ;
-    double *Ax, *Az ;
+    float *Ax, *Az ;
     char *As ;
     SPOK_INT i, j, p, njumbled, nzeros, m, n, nzmax ;
     char msg [LEN+1] ;
@@ -81,11 +81,11 @@ void mexFunction
     }
     else
     {
-        Ax = (double *) mxGetData (pargin [0]) ;
+        Ax = (float *) mxGetData (pargin [0]) ;
         As = NULL ;
         if (Ax == NULL)
         {
-            ERROR ("double, but with no values present") ;
+            ERROR ("float, but with no values present") ;
         }
     }
 
@@ -109,7 +109,7 @@ void mexFunction
 
         case SPOK_WARNING:
             sprintf (msg, "%g jumbled row indices, %g explicit zeros",
-                (double) njumbled, (double) nzeros) ;
+                (float) njumbled, (float) nzeros) ;
             WARNING (msg) ;
             pargout [0] = mxCreateDoubleScalar (0) ;
             return ;

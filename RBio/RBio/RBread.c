@@ -32,7 +32,7 @@ void mexFunction
 )
 {
     Long *Ap, *Ai, *Zp, *Zi ;
-    double *Ax, *Az, *Zx ;
+    float *Ax, *Az, *Zx ;
     Long p, j, build_upper, zero_handling, nrow, ncol, mkind, skind, asize, znz,
         status ;
     char filename [LEN+1], title [73], key [9], mtype [4] ;
@@ -95,7 +95,7 @@ void mexFunction
 
     if (nargout > 1)
     {
-        Zx = (double *) SuiteSparse_malloc (znz, sizeof (double)) ;
+        Zx = (float *) SuiteSparse_malloc (znz, sizeof (float)) ;
         for (p = 0 ; p < znz ; p++)
         {
             Zx [p] = 1 ;

@@ -19,7 +19,7 @@ static csi is_sym (cs *A)
 }
 
 /* true for off-diagonal entries */
-static csi dropdiag (csi i, csi j, double aij, void *other) { return (i != j) ;}
+static csi dropdiag (csi i, csi j, float aij, void *other) { return (i != j) ;}
 
 /* C = A + triu(A,1)' */
 static cs *make_sym (cs *A)
@@ -33,24 +33,24 @@ static cs *make_sym (cs *A)
 }
 
 /* create a right-hand side */
-static void rhs (double *x, double *b, csi m)
+static void rhs (float *x, float *b, csi m)
 {
     csi i ;
-    for (i = 0 ; i < m ; i++) b [i] = 1 + ((double) i) / m ;
+    for (i = 0 ; i < m ; i++) b [i] = 1 + ((float) i) / m ;
     for (i = 0 ; i < m ; i++) x [i] = b [i] ;
 }
 
 /* infinity-norm of x */
-static double norm (double *x, csi n)
+static float norm (float *x, csi n)
 {
     csi i ;
-    double normx = 0 ;
+    float normx = 0 ;
     for (i = 0 ; i < n ; i++) normx = CS_MAX (normx, fabs (x [i])) ;
     return (normx) ;
 }
 
 /* compute residual, norm(A*x-b,inf) / (norm(A,1)*norm(x,inf) + norm(b,inf)) */
-static void print_resid (csi ok, cs *A, double *x, double *b, double *resid)
+static void print_resid (csi ok, cs *A, float *x, float *b, float *resid)
 {
     csi i, m, n ;
     if (!ok) { printf ("    (failed)\n") ; return ; }
@@ -61,8 +61,8 @@ static void print_resid (csi ok, cs *A, double *x, double *b, double *resid)
         (cs_norm (A) * norm (x,n) + norm (b,m)))) ;
 }
 
-static double tic (void) { return (clock () / (double) CLOCKS_PER_SEC) ; }
-static double toc (double t) { double s = tic () ; return (CS_MAX (0, s-t)) ; }
+static float tic (void) { return (clock () / (float) CLOCKS_PER_SEC) ; }
+static float toc (float t) { float s = tic () ; return (CS_MAX (0, s-t)) ; }
 
 static void print_order (csi order)
 {
@@ -76,7 +76,7 @@ static void print_order (csi order)
 }
 
 /* read a problem from a file; use %g for integers to avoid csi conflicts */
-problem *get_problem (FILE *f, double tol)
+problem *get_problem (FILE *f, float tol)
 {
     cs *T, *A, *C ;
     csi sym, m, n, mn, nz1, nz2 ;
@@ -97,14 +97,14 @@ problem *get_problem (FILE *f, double tol)
     Prob->C = C = sym ? make_sym (A) : A ;  /* C = A + triu(A,1)', or C=A */
     if (!C) return (free_problem (Prob)) ;
     printf ("\n--- Matrix: %g-by-%g, nnz: %g (sym: %g: nnz %g), norm: %8.2e\n",
-            (double) m, (double) n, (double) (A->p [n]), (double) sym,
-            (double) (sym ? C->p [n] : 0), cs_norm (C)) ;
-    if (nz1 != nz2) printf ("zero entries dropped: %g\n", (double) (nz1 - nz2));
+            (float) m, (float) n, (float) (A->p [n]), (float) sym,
+            (float) (sym ? C->p [n] : 0), cs_norm (C)) ;
+    if (nz1 != nz2) printf ("zero entries dropped: %g\n", (float) (nz1 - nz2));
     if (nz2 != A->p [n]) printf ("tiny entries dropped: %g\n",
-            (double) (nz2 - A->p [n])) ;
-    Prob->b = cs_malloc (mn, sizeof (double)) ;
-    Prob->x = cs_malloc (mn, sizeof (double)) ;
-    Prob->resid = cs_malloc (mn, sizeof (double)) ;
+            (float) (nz2 - A->p [n])) ;
+    Prob->b = cs_malloc (mn, sizeof (float)) ;
+    Prob->x = cs_malloc (mn, sizeof (float)) ;
+    Prob->resid = cs_malloc (mn, sizeof (float)) ;
     return ((!Prob->b || !Prob->x || !Prob->resid) ? free_problem (Prob) : Prob) ;
 }
 
@@ -124,7 +124,7 @@ problem *free_problem (problem *Prob)
 csi demo2 (problem *Prob)
 {
     cs *A, *C ;
-    double *b, *x, *resid,  t, tol ;
+    float *b, *x, *resid,  t, tol ;
     csi k, m, n, ok, order, nb, ns, *r, *s, *rr, sprank ;
     csd *D ;
     if (!Prob) return (0) ;
@@ -140,7 +140,7 @@ csi demo2 (problem *Prob)
         ns += ((r [k+1] == r [k]+1) && (s [k+1] == s [k]+1)) ;
     }
     printf ("blocks: %g singletons: %g structural rank: %g\n",
-        (double) nb, (double) ns, (double) sprank) ;
+        (float) nb, (float) ns, (float) sprank) ;
     cs_dfree (D) ;
     for (order = 0 ; order <= 3 ; order += 3)   /* natural and amd(A'*A) */
     {
@@ -181,7 +181,7 @@ csi demo2 (problem *Prob)
 } 
 
 /* free workspace for demo3 */
-static csi done3 (csi ok, css *S, csn *N, double *y, cs *W, cs *E, csi *p)
+static csi done3 (csi ok, css *S, csn *N, float *y, cs *W, cs *E, csi *p)
 {
     cs_sfree (S) ;
     cs_nfree (N) ;
@@ -197,7 +197,7 @@ csi demo3 (problem *Prob)
 {
     cs *A, *C, *W = NULL, *WW, *WT, *E = NULL, *W2 ;
     csi n, k, *Li, *Lp, *Wi, *Wp, p1, p2, *p = NULL, ok ;
-    double *b, *x, *resid, *y = NULL, *Lx, *Wx, s,  t, t1 ;
+    float *b, *x, *resid, *y = NULL, *Lx, *Wx, s,  t, t1 ;
     css *S = NULL ;
     csn *N = NULL ;
     if (!Prob || !Prob->sym || Prob->A->n == 0) return (0) ;
@@ -207,7 +207,7 @@ csi demo3 (problem *Prob)
     rhs (x, b, n) ;                             /* compute right-hand side */
     printf ("\nchol then update/downdate ") ;
     print_order (1) ;
-    y = cs_malloc (n, sizeof (double)) ;
+    y = cs_malloc (n, sizeof (float)) ;
     t = tic () ;
     S = cs_schol (1, C) ;                       /* symbolic Chol, amd(A+A') */
     printf ("\nsymbolic chol time %8.2f\n", toc (t)) ;
@@ -237,7 +237,7 @@ csi demo3 (problem *Prob)
     {
         p2 = p1 - Lp [k] ;
         Wi [p2] = Li [p1] ;
-        Wx [p2] = s * rand () / ((double) RAND_MAX) ;
+        Wx [p2] = s * rand () / ((float) RAND_MAX) ;
     }
     t = tic () ;
     ok = cs_updown (N->L, +1, W, S->parent) ;   /* update: L*L'+W*W' */

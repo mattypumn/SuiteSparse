@@ -63,7 +63,7 @@ void spqrgpu_computeFrontStaging
 
     size_t gpuMemorySize = cc->gpuMemorySize;
 
-//  printf ("GPU mem starts %g MB\n", (double) gpuMemorySize / (1024*1024)) ;
+//  printf ("GPU mem starts %g MB\n", (float) gpuMemorySize / (1024*1024)) ;
 
     // account for two Scheduler work queues in the GPU memory
     if (gpuMemorySize > 1)
@@ -96,7 +96,7 @@ void spqrgpu_computeFrontStaging
         gpuMemorySize = (gpuMemorySize > s) ? (gpuMemorySize-s) : 0 ;
     }
 
-//  printf ("GPU mem now    %g MB\n", (double) gpuMemorySize / (1024*1024)) ;
+//  printf ("GPU mem now    %g MB\n", (float) gpuMemorySize / (1024*1024)) ;
 
     // -------------------------------------------------------------------------
     // assign fronts to stages based on remaining GPU memory availability
@@ -136,7 +136,7 @@ void spqrgpu_computeFrontStaging
         size_t frontMem = fm * fn;          // F
         size_t rMem = (frank + cm) * fn;    // R + C
 
-        // for sMem, "2 *" assumes sizeof (SEntry) is 2*sizeof(double)
+        // for sMem, "2 *" assumes sizeof (SEntry) is 2*sizeof(float)
         size_t sMem = 2 * (Sp[Sleft[Super[f+1]]] - Sp[Sleft[Super[f]]]);
 
         // CEIL is defined in GPUQREngine
@@ -168,7 +168,7 @@ void spqrgpu_computeFrontStaging
         }
 
         /* determine which stage will contain this front */
-        if((ReqMem + (frontMem + childMemOld + sMem + vtMem)) * sizeof(double)
+        if((ReqMem + (frontMem + childMemOld + sMem + vtMem)) * sizeof(float)
             < gpuMemorySize)
         {
             /* If we can add the front to the current stage, accum its mem. */
@@ -182,7 +182,7 @@ void spqrgpu_computeFrontStaging
         }
         else if (gpuMemorySize == 0 ||
             ((frontMem + childMemOld + childMemNew + sMem + vtMem)
-             * sizeof(double) < gpuMemorySize))
+             * sizeof(float) < gpuMemorySize))
         {
             /* Else if the front and its children fit on the GPU, add it
                to the next stage and reset the mem accumulator. */

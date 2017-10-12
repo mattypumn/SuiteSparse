@@ -163,7 +163,7 @@ static void dump_set (Int s, Int **Set_ps1, Int **Set_ps2, Int j, Int n,
 
 static void dump_col
 (
-    char *w, Int j, Int p1, Int p2, Int *Li, double *Lx, Int n,
+    char *w, Int j, Int p1, Int p2, Int *Li, float *Lx, Int n,
     cholmod_common *Common
 )
 {
@@ -427,8 +427,8 @@ int CHOLMOD(updown_mask2)
     cholmod_common *Common
 )
 {
-    double xj, fl ;
-    double *Lx, *W, *Xx, *Nx ;
+    float xj, fl ;
+    float *Lx, *W, *Xx, *Nx ;
     Int *Li, *Lp, *Lnz, *Cp, *Ci, *Cnz, *Head, *Flag, *Stack, *Lnext, *Iwork,
 	*Set_ps1 [32], *Set_ps2 [32], *ps1, *ps2 ;
     size_t maxrank ;
@@ -492,9 +492,9 @@ int CHOLMOD(updown_mask2)
     /* allocate workspace */
     /* ---------------------------------------------------------------------- */
 
-    /* Note: cholmod_rowadd and cholmod_rowdel use the second n doubles in
+    /* Note: cholmod_rowadd and cholmod_rowdel use the second n floats in
      * Common->Xwork for Cx, and then perform a rank-1 update here, which uses
-     * the first n doubles in Common->Xwork.   Both the rowadd and rowdel
+     * the first n floats in Common->Xwork.   Both the rowadd and rowdel
      * routines allocate enough workspace so that Common->Xwork isn't destroyed
      * below.  Also, both cholmod_rowadd and cholmod_rowdel use the second n
      * ints in Common->Iwork for Ci.
@@ -546,7 +546,7 @@ int CHOLMOD(updown_mask2)
     CHOLMOD_CLEAR_FLAG (Common) ;
     mark = Common->mark ;
 
-    PRINT1 (("updown, rank %g update %d\n", (double) C->ncol, update)) ;
+    PRINT1 (("updown, rank %g update %d\n", (float) C->ncol, update)) ;
     DEBUG (CHOLMOD(dump_factor) (L, "input L for updown", Common)) ;
     ASSERT (CHOLMOD(dump_sparse) (C, "input C for updown", Common) >= 0) ;
 
@@ -1208,7 +1208,7 @@ int CHOLMOD(updown_mask2)
 	    p2 = p1 + newlnz ;
 	    DEBUG (dump_col ("After merge: ", j, p1, p2, Li, Lx, n, Common)) ;
 
-	    fl += Path [path].rank * (6 + 4 * (double) newlnz) ;
+	    fl += Path [path].rank * (6 + 4 * (float) newlnz) ;
 
 	    /* -------------------------------------------------------------- */
 	    /* clear Flag; original pattern of column j L no longer marked */

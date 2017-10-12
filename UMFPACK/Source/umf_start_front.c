@@ -23,7 +23,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
     SymbolicType *Symbolic
 )
 {
-    double maxbytes ;
+    float maxbytes ;
     Int fnrows_max, fncols_max, fnr2, fnc2, fsize, fcurr_size, maxfrsize,
 	overflow, nb, f, cdeg ;
 
@@ -39,7 +39,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
     Work->any_skip = FALSE ;
 
     maxbytes = sizeof (Entry) *
-	(double) (fnrows_max + nb) * (double) (fncols_max + nb) ;
+	(float) (fnrows_max + nb) * (float) (fncols_max + nb) ;
     fcurr_size = Work->fcurr_size ;
 
     if (Symbolic->prefer_diagonal)
@@ -153,7 +153,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
     {
 	maxfrsize = (fnrows_max + nb) * (fncols_max + nb) ;
     }
-    ASSERT (!INT_OVERFLOW ((double) maxfrsize * sizeof (Entry))) ;
+    ASSERT (!INT_OVERFLOW ((float) maxfrsize * sizeof (Entry))) ;
 
     if (Numeric->front_alloc_init < 0)
     {
@@ -181,7 +181,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
 	    /* add the L and U blocks */
 	    cdeg += nb ;
 
-	    if (INT_OVERFLOW (((double) cdeg * (double) cdeg) * sizeof (Entry)))
+	    if (INT_OVERFLOW (((float) cdeg * (float) cdeg) * sizeof (Entry)))
 	    {
 		/* :: int overflow, symmetric front size :: */
 		fsize2 = Int_MAX / sizeof (Entry) ;
@@ -198,7 +198,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
 
     /* fsize and maxfrsize are now safe from integer overflow.  They both
      * include the size of the pivot blocks. */
-    ASSERT (!INT_OVERFLOW ((double) fsize * sizeof (Entry))) ;
+    ASSERT (!INT_OVERFLOW ((float) fsize * sizeof (Entry))) ;
 
     Work->fnrows_new = 0 ;
     Work->fncols_new = 0 ;
@@ -222,7 +222,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
 	/* allocate a smaller working array */
 	if (fnrows_max <= fncols_max)
 	{
-	    fnr2 = (Int) sqrt ((double) fsize) ;
+	    fnr2 = (Int) sqrt ((float) fsize) ;
 	    /* make sure fnr2 is odd */
 	    fnr2 = MAX (fnr2, 1) ;
 	    if (fnr2 % 2 == 0) fnr2++ ;
@@ -231,7 +231,7 @@ GLOBAL Int UMF_start_front    /* returns TRUE if successful, FALSE otherwise */
 	}
 	else
 	{
-	    fnc2 = (Int) sqrt ((double) fsize) ;
+	    fnc2 = (Int) sqrt ((float) fsize) ;
 	    fnc2 = MIN (fnc2, fncols_max + nb) ;
 	    fnr2 = fsize / fnc2 ;
 	    /* make sure fnr2 is odd */

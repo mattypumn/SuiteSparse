@@ -54,8 +54,8 @@ cholmod_sparse *CHOLMOD(ssmult)
     cholmod_common *Common
 )
 {
-    double bjt ;
-    double *Ax, *Bx, *Cx, *W ;
+    float bjt ;
+    float *Ax, *Bx, *Cx, *W ;
     Int *Ap, *Anz, *Ai, *Bp, *Bnz, *Bi, *Cp, *Ci, *Flag ;
     cholmod_sparse *C, *A2, *B2, *A3, *B3, *C2 ;
     Int apacked, bpacked, j, i, pa, paend, pb, pbend, ncol, mark, cnz, t, p,

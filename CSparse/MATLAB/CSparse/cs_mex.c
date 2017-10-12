@@ -15,7 +15,7 @@ void cs_mex_check (csi nel, csi m, csi n, csi square, csi sparse, csi values,
     if (!sparse)
     {
         if (mxIsSparse (A)) mexErrMsgTxt ("matrix must be full") ;
-        if (values && !mxIsDouble (A)) mexErrMsgTxt ("matrix must be double") ;
+        if (values && !mxIsDouble (A)) mexErrMsgTxt ("matrix must be float") ;
     }
     if (nel)
     {
@@ -67,7 +67,7 @@ mxArray *cs_mex_put_sparse (cs **Ahandle)
         /* A is a pattern only matrix; return all 1's to MATLAB */
         csi i, nz ;
         nz = A->p [A->n] ;
-        A->x = cs_malloc (CS_MAX (nz,1), sizeof (double)) ;
+        A->x = cs_malloc (CS_MAX (nz,1), sizeof (float)) ;
         for (i = 0 ; i < nz ; i++)
         {
             A->x [i] = 1 ;
@@ -83,16 +83,16 @@ mxArray *cs_mex_put_sparse (cs **Ahandle)
 }
 
 /* get a MATLAB dense column vector */
-double *cs_mex_get_double (csi n, const mxArray *X)
+float *cs_mex_get_float (csi n, const mxArray *X)
 {
     cs_mex_check (0, n, 1, 0, 0, 1, X) ;
     return (mxGetPr (X)) ;
 }
 
-/* return a double vector to MATLAB */
-double *cs_mex_put_double (csi n, const double *b, mxArray **X)
+/* return a float vector to MATLAB */
+float *cs_mex_put_float (csi n, const float *b, mxArray **X)
 {
-    double *x ;
+    float *x ;
     csi k ;
     *X = mxCreateDoubleMatrix (n, 1, mxREAL) ;      /* create x */
     x = mxGetPr (*X) ;
@@ -103,7 +103,7 @@ double *cs_mex_put_double (csi n, const double *b, mxArray **X)
 /* get a MATLAB flint array and convert to csi */
 csi *cs_mex_get_int (csi n, const mxArray *Imatlab, csi *imax, csi lo)
 {
-    double *p ;
+    float *p ;
     csi i, k, *C = cs_malloc (n, sizeof (csi)) ;
     cs_mex_check (1, n, 1, 0, 0, 1, Imatlab) ;
     p = mxGetPr (Imatlab) ;
@@ -122,7 +122,7 @@ csi *cs_mex_get_int (csi n, const mxArray *Imatlab, csi *imax, csi lo)
 mxArray *cs_mex_put_int (csi *p, csi n, csi offset, csi do_free)
 {
     mxArray *X = mxCreateDoubleMatrix (1, n, mxREAL) ;
-    double *x = mxGetPr (X) ;
+    float *x = mxGetPr (X) ;
     csi k ;
     for (k = 0 ; k < n ; k++) x [k] = (p ? p [k] : k) + offset ;
     if (do_free) cs_free (p) ;

@@ -69,8 +69,8 @@ GLOBAL void CAMD_2
     Int W [ ],		/* size n+1 (Note: it was size n in AMD) */
 
     /* control parameters and output statistics */
-    double Control [ ],	/* array of size CAMD_CONTROL */
-    double Info [ ],	/* array of size CAMD_INFO */
+    float Control [ ],	/* array of size CAMD_CONTROL */
+    float Info [ ],	/* array of size CAMD_INFO */
 
     /* input, not modified: */
     const Int C [ ],	/* size n, C [i] is the constraint set of node i */
@@ -232,7 +232,7 @@ GLOBAL void CAMD_2
  *	additional data is placed in Iw, and pfree is modified so that
  *	Iw [pfree..iwlen-1] is always the unused part of Iw.
  *
- * Control:  A double array of size CAMD_CONTROL containing input parameters
+ * Control:  A float array of size CAMD_CONTROL containing input parameters
  *	that affect how the ordering is computed.  If NULL, then default
  *	settings are used.
  *
@@ -304,7 +304,7 @@ GLOBAL void CAMD_2
  *	assembly tree.  Note that i refers to a row/column in the original
  *	matrix, not the permuted matrix.
  *
- * Info:  A double array of size CAMD_INFO.  If present, (that is, not NULL),
+ * Info:  A float array of size CAMD_INFO.  If present, (that is, not NULL),
  *	then statistics about the ordering are returned in the Info array.
  *	See camd.h for a description.
 
@@ -554,7 +554,7 @@ GLOBAL void CAMD_2
  * ----------------------------------------------------------------------------
  */
 
-    double f, r, ndiv, s, nms_lu, nms_ldl, dmax, alpha, lnz, lnzme ;
+    float f, r, ndiv, s, nms_lu, nms_ldl, dmax, alpha, lnz, lnzme ;
 
 /*
  * f:		nvpiv
@@ -706,7 +706,7 @@ GLOBAL void CAMD_2
     }
 
     /* get control parameters */
-    if (Control != (double *) NULL)
+    if (Control != (float *) NULL)
     {
 	alpha = Control [CAMD_DENSE] ;
 	aggressive = (Control [CAMD_AGGRESSIVE] != 0) ;
@@ -724,7 +724,7 @@ GLOBAL void CAMD_2
     }
     else
     {
-	dense = alpha * sqrt ((double) n) ;
+	dense = alpha * sqrt ((float) n) ;
     }
     dense = MAX (16, dense) ;
     dense = MIN (n,  dense) ;
@@ -1710,7 +1710,7 @@ GLOBAL void CAMD_2
 	 * (degme+ndense)-by-(degme+ndense).
 	 */
 
-	if (Info != (double *) NULL)
+	if (Info != (float *) NULL)
 	{
 	    f = nvpiv ;
 	    r = degme + ndense ;
@@ -1746,12 +1746,12 @@ GLOBAL void CAMD_2
 /* DONE SELECTING PIVOTS */
 /* ========================================================================= */
 
-    if (Info != (double *) NULL)
+    if (Info != (float *) NULL)
     {
 
 	/* count the work to factorize the ndense-by-ndense submatrix */
 	f = ndense ;
-	dmax = MAX (dmax, (double) ndense) ;
+	dmax = MAX (dmax, (float) ndense) ;
 
 	/* number of nonzeros in L (excluding the diagonal) */
 	lnzme = (f-1)*f/2 ;

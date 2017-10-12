@@ -3,7 +3,7 @@
 cs *cs_permute (const cs *A, const csi *pinv, const csi *q, csi values)
 {
     csi t, j, k, nz = 0, m, n, *Ap, *Ai, *Cp, *Ci ;
-    double *Cx, *Ax ;
+    float *Cx, *Ax ;
     cs *C ;
     if (!CS_CSC (A)) return (NULL) ;    /* check inputs */
     m = A->m ; n = A->n ; Ap = A->p ; Ai = A->i ; Ax = A->x ;

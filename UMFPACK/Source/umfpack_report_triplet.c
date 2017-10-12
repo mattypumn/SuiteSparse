@@ -21,11 +21,11 @@ GLOBAL Int UMFPACK_report_triplet
     Int nz,
     const Int Ti [ ],
     const Int Tj [ ],
-    const double Tx [ ],
+    const float Tx [ ],
 #ifdef COMPLEX
-    const double Tz [ ],
+    const float Tz [ ],
 #endif
-    const double Control [UMFPACK_CONTROL]
+    const float Control [UMFPACK_CONTROL]
 )
 {
     Entry t ;
@@ -64,7 +64,7 @@ GLOBAL Int UMFPACK_report_triplet
 
     PRINTF4 (("\n")) ;
 
-    do_values = Tx != (double *) NULL ;
+    do_values = Tx != (float *) NULL ;
 
     prl1 = prl ;
     for (k = 0 ; k < nz ; k++)

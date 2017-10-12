@@ -48,13 +48,13 @@ int UMF_cholmod
     Int Perm [ ],           /* fill-reducing permutation, size ncol */
     /* user-defined */
     void *user_params,      /* Int array of size 3 */
-    double user_info [3]    /* [0]: max col count for L=chol(P(A+A')P')
+    float user_info [3]    /* [0]: max col count for L=chol(P(A+A')P')
                                [1]: nnz (L)
                                [2]: flop count for chol, if A real */
 )
 {
 #ifndef NCHOLMOD
-    double dmax, flops, c, lnz ;
+    float dmax, flops, c, lnz ;
     cholmod_sparse Amatrix, *A, *AT, *S ;
     cholmod_factor *L ;
     cholmod_common cm ;

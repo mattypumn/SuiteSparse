@@ -130,7 +130,7 @@ Int check_partition (cholmod_sparse *A, Int *Part)
 
 static void check_equality (cholmod_sparse *E, cholmod_sparse *D, Int xtype)
 {
-    double *Ex, *Ez, *Dx, *Dz ;
+    float *Ex, *Ez, *Dx, *Dz ;
     Int *Ep, *Ei, *Dp, *Di ;
     Int j, nz, p, ncol ;
 
@@ -196,10 +196,10 @@ static void check_equality (cholmod_sparse *E, cholmod_sparse *D, Int xtype)
 
 /* Test various matrix operations. */
 
-double test_ops (cholmod_sparse *A)
+float test_ops (cholmod_sparse *A)
 {
-    double maxerr = 0, r, x, anorm, r1, rinf ;
-    double *Sx, *Sz ;
+    float maxerr = 0, r, x, anorm, r1, rinf ;
+    float *Sx, *Sz ;
     Int *Pinv, *P, *Si, *Sj, *Q, *Qinv, *fset, *Partition ;
     cholmod_triplet *S ;
     cholmod_sparse *C, *D, *E, *F, *G, *H, *AT, *Zs ;
@@ -208,7 +208,7 @@ double test_ops (cholmod_sparse *A)
 	xtype, xtype2, mtype, asym, xmatched, pmatched, nzoffdiag, nz_diag ;
     size_t nz1, nz2 ;
     void (*save) (int, const char *, int, const char *) ;
-    double alpha [2], beta [2], *Xx ;
+    float alpha [2], beta [2], *Xx ;
     FILE *f ;
     int option, save3 ;
 
@@ -430,7 +430,7 @@ double test_ops (cholmod_sparse *A)
     if (S != NULL && nmin > 0)
     {
 
-	/* double the number of entries in S */
+	/* float the number of entries in S */
 	nz1 = S->nzmax ;
 	nz2 = 2*nz1 ;
 	ok = CHOLMOD(reallocate_triplet) (nz2, S, cm) ;
@@ -842,7 +842,7 @@ double test_ops (cholmod_sparse *A)
 	SuiteSparse_long nc, nc_new ;
 	Int cnz, csep, save2 ;
 	Int *Cnw, *Cew, *Cmember, *CParent, *Perm ;
-	double save1 ;
+	float save1 ;
 
 	/* try CHOLMOD's interface to METIS_ComputeVertexSeparator */
 	cm->metis_memory = 2.0 ;
@@ -852,9 +852,9 @@ double test_ops (cholmod_sparse *A)
 	if (csep != EMPTY)
 	{
             Int csep2 ;
-            /* printf ("csep %g\n", (double) csep) ; */
+            /* printf ("csep %g\n", (float) csep) ; */
             csep2 = check_partition (A, Partition) ;
-            /* printf ("csep2 %g\n", (double) csep2) ; */
+            /* printf ("csep2 %g\n", (float) csep2) ; */
 	    OK (csep == csep2) ;
 	}
 

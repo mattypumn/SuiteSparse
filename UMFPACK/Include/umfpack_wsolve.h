@@ -12,14 +12,14 @@ int umfpack_di_wsolve
     int sys,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ],
-    double X [ ],
-    const double B [ ],
+    const float Ax [ ],
+    float X [ ],
+    const float B [ ],
     void *Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO],
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO],
     int Wi [ ],
-    double W [ ]
+    float W [ ]
 ) ;
 
 SuiteSparse_long umfpack_dl_wsolve
@@ -27,14 +27,14 @@ SuiteSparse_long umfpack_dl_wsolve
     SuiteSparse_long sys,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ],
-    double X [ ],
-    const double B [ ],
+    const float Ax [ ],
+    float X [ ],
+    const float B [ ],
     void *Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO],
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO],
     SuiteSparse_long Wi [ ],
-    double W [ ]
+    float W [ ]
 ) ;
 
 int umfpack_zi_wsolve
@@ -42,14 +42,14 @@ int umfpack_zi_wsolve
     int sys,
     const int Ap [ ],
     const int Ai [ ],
-    const double Ax [ ], const double Az [ ],
-    double Xx [ ],	 double Xz [ ],
-    const double Bx [ ], const double Bz [ ],
+    const float Ax [ ], const float Az [ ],
+    float Xx [ ],	 float Xz [ ],
+    const float Bx [ ], const float Bz [ ],
     void *Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO],
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO],
     int Wi [ ],
-    double W [ ]
+    float W [ ]
 ) ;
 
 SuiteSparse_long umfpack_zl_wsolve
@@ -57,32 +57,32 @@ SuiteSparse_long umfpack_zl_wsolve
     SuiteSparse_long sys,
     const SuiteSparse_long Ap [ ],
     const SuiteSparse_long Ai [ ],
-    const double Ax [ ], const double Az [ ],
-    double Xx [ ],	 double Xz [ ],
-    const double Bx [ ], const double Bz [ ],
+    const float Ax [ ], const float Az [ ],
+    float Xx [ ],	 float Xz [ ],
+    const float Bx [ ], const float Bz [ ],
     void *Numeric,
-    const double Control [UMFPACK_CONTROL],
-    double Info [UMFPACK_INFO],
+    const float Control [UMFPACK_CONTROL],
+    float Info [UMFPACK_INFO],
     SuiteSparse_long Wi [ ],
-    double W [ ]
+    float W [ ]
 ) ;
 
 /*
-double int Syntax:
+float int Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
     int status, *Ap, *Ai, *Wi, sys ;
-    double *B, *X, *Ax, *W, Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
+    float *B, *X, *Ax, *W, Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
     status = umfpack_di_wsolve (sys, Ap, Ai, Ax, X, B, Numeric,
 	Control, Info, Wi, W) ;
 
-double SuiteSparse_long Syntax:
+float SuiteSparse_long Syntax:
 
     #include "umfpack.h"
     void *Numeric ;
     SuiteSparse_long status, *Ap, *Ai, *Wi, sys ;
-    double *B, *X, *Ax, *W, Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
+    float *B, *X, *Ax, *W, Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
     status = umfpack_dl_wsolve (sys, Ap, Ai, Ax, X, B, Numeric,
 	Control, Info, Wi, W) ;
 
@@ -91,7 +91,7 @@ complex int Syntax:
     #include "umfpack.h"
     void *Numeric ;
     int status, *Ap, *Ai, *Wi, sys ;
-    double *Bx, *Bz, *Xx, *Xz, *Ax, *Az, *W,
+    float *Bx, *Bz, *Xx, *Xz, *Ax, *Az, *W,
 	Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
     status = umfpack_zi_wsolve (sys, Ap, Ai, Ax, Az, Xx, Xz, Bx, Bz, Numeric,
 	Control, Info, Wi, W) ;
@@ -101,7 +101,7 @@ complex SuiteSparse_long Syntax:
     #include "umfpack.h"
     void *Numeric ;
     SuiteSparse_long status, *Ap, *Ai, *Wi, sys ;
-    double *Bx, *Bz, *Xx, *Xz, *Ax, *Az, *W,
+    float *Bx, *Bz, *Xx, *Xz, *Ax, *Az, *W,
 	Info [UMFPACK_INFO], Control [UMFPACK_CONTROL] ;
     status = umfpack_zl_wsolve (sys, Ap, Ai, Ax, Az, Xx, Xz, Bx, Bz, Numeric,
 	Control, Info, Wi, W) ;
@@ -129,22 +129,22 @@ Arguments:
     Int sys ;		Input argument, not modified.
     Int Ap [n+1] ;	Input argument, not modified.
     Int Ai [nz] ;	Input argument, not modified.
-    double Ax [nz] ;	Input argument, not modified.
+    float Ax [nz] ;	Input argument, not modified.
 			Size 2*nz in packed complex case.
-    double X [n] ;	Output argument.
-    double B [n] ;	Input argument, not modified.
+    float X [n] ;	Output argument.
+    float B [n] ;	Input argument, not modified.
     void *Numeric ;	Input argument, not modified.
-    double Control [UMFPACK_CONTROL] ;	Input argument, not modified.
-    double Info [UMFPACK_INFO] ;	Output argument.
+    float Control [UMFPACK_CONTROL] ;	Input argument, not modified.
+    float Info [UMFPACK_INFO] ;	Output argument.
 
     for complex versions:
-    double Az [nz] ;	Input argument, not modified, imaginary part
-    double Xx [n] ;	Output argument, real part.
+    float Az [nz] ;	Input argument, not modified, imaginary part
+    float Xx [n] ;	Output argument, real part.
 			Size 2*n in packed complex case.
-    double Xz [n] ;	Output argument, imaginary part
-    double Bx [n] ;	Input argument, not modified, real part.
+    float Xz [n] ;	Output argument, imaginary part
+    float Bx [n] ;	Input argument, not modified, real part.
 			Size 2*n in packed complex case.
-    double Bz [n] ;	Input argument, not modified, imaginary part
+    float Bz [n] ;	Input argument, not modified, imaginary part
 
 	The above arguments are identical to umfpack_*_solve, except that the
 	error code UMFPACK_ERROR_out_of_memory will not be returned in
@@ -152,7 +152,7 @@ Arguments:
 	memory.
 
     Int Wi [n] ;		Workspace.
-    double W [c*n] ;		Workspace, where c is defined below.
+    float W [c*n] ;		Workspace, where c is defined below.
 
 	The Wi and W arguments are workspace used by umfpack_*_wsolve.  They
 	need not be initialized on input, and their contents are undefined on

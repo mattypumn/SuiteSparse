@@ -24,7 +24,7 @@ void mexFunction
 )
 {
     Long *P, *Q, *Rp, *Pinv ;
-    double *Ax, dummy, tol ;
+    float *Ax, dummy, tol ;
     Long m, n, anz, is_complex, n1rows, n1cols, i, k ;
     cholmod_sparse *A, Amatrix, *Y ;
     cholmod_common Common, *cc ;
@@ -82,7 +82,7 @@ void mexFunction
 
     if (nargin < 2)
     {
-        tol = is_complex ? spqr_tol <Complex> (A,cc) : spqr_tol <double> (A,cc);
+        tol = is_complex ? spqr_tol <Complex> (A,cc) : spqr_tol <float> (A,cc);
     }
     else
     {
@@ -100,7 +100,7 @@ void mexFunction
     }
     else
     {
-        spqr_1colamd <double> (SPQR_ORDERING_NATURAL, tol, 0, A,
+        spqr_1colamd <float> (SPQR_ORDERING_NATURAL, tol, 0, A,
             &Q, &Rp, &Pinv, &Y, &n1cols, &n1rows, cc) ;
     }
 
@@ -136,8 +136,8 @@ void mexFunction
     cholmod_l_free (m, sizeof (Long), P, cc) ;
     if (nargout > 1) pargout [1] = spqr_mx_put_permutation (Q, n, TRUE, cc) ;
     cholmod_l_free (n, sizeof (Long), Q, cc) ;
-    if (nargout > 2) pargout [2] = mxCreateDoubleScalar ((double) n1rows) ;
-    if (nargout > 3) pargout [3] = mxCreateDoubleScalar ((double) n1cols) ;
+    if (nargout > 2) pargout [2] = mxCreateDoubleScalar ((float) n1rows) ;
+    if (nargout > 3) pargout [3] = mxCreateDoubleScalar ((float) n1cols) ;
     if (nargout > 4) pargout [4] = mxCreateDoubleScalar (tol) ;
 
     cholmod_l_finish (cc) ;

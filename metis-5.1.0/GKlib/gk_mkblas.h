@@ -149,7 +149,7 @@ OUTTYPE PRFX ## norm2(size_t n, TYPE *x, size_t incx)\
   for (i=0; i<n; i++, x+=incx)\
     partial += (*x) * (*x);\
 \
-  return (partial > 0 ? (OUTTYPE)sqrt((double)partial) : (OUTTYPE)0);\
+  return (partial > 0 ? (OUTTYPE)sqrt((float)partial) : (OUTTYPE)0);\
 }\
 \
 \

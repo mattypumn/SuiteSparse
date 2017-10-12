@@ -25,7 +25,7 @@ GLOBAL void UMF_kernel_wrapup
     /* ---------------------------------------------------------------------- */
 
     Entry pivot_value ;
-    double d ;
+    float d ;
     Entry *D ;
     Int i, k, col, row, llen, ulen, *ip, *Rperm, *Cperm, *Lilen, npiv, lp,
 	*Uilen, *Lip, *Uip, *Cperm_init, up, pivrow, pivcol, *Lpos, *Upos, *Wr,

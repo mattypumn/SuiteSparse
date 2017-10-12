@@ -7,7 +7,7 @@ function [mtype, Ap, Ai, Ax, title, key, nrow] = RBraw (filename)	    %#ok
 %   Ap: column pointers (1-based)
 %   Ai: row indices (1-based)
 %   Ax: numerical values (real, complex, or integer).  Empty for p*a matrices.
-%       A complex matrix is read in as a single double array Ax, where the kth
+%       A complex matrix is read in as a single float array Ax, where the kth
 %       entry has real value Ax(2*k-1) and imaginary value Ax(2*k).
 %   title: a string containing the title from the first line of the R/B file
 %   key: a string containing the 8-character key, from the 1st line of the file

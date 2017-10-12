@@ -1,6 +1,6 @@
 #include "cs.h"
 /* x=A\b where A is unsymmetric; b overwritten with solution */
-CS_INT cs_lusol (CS_INT order, const cs *A, CS_ENTRY *b, double tol)
+CS_INT cs_lusol (CS_INT order, const cs *A, CS_ENTRY *b, float tol)
 {
     CS_ENTRY *x ;
     css *S ;

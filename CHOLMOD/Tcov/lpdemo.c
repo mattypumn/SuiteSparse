@@ -42,7 +42,7 @@ static void Lcheck (cholmod_factor *L, Int *rflag)
 {
     Int *Lp, *Li, *Lnz ;
     Int i, n, j, p, pend ;
-    double *Lx ;
+    float *Lx ;
 
     if (L == NULL)
     {
@@ -85,7 +85,7 @@ cholmod_sparse *lp_prune
 )
 {
     cholmod_sparse *C ;
-    double *Ax, *Cx ;
+    float *Ax, *Cx ;
     Int *Ai, *Ap, *Ci, *Cp ;
     Int i, kk, j, p, nz, nf, ncol ;
 
@@ -146,20 +146,20 @@ cholmod_sparse *lp_prune
  * norm ((beta*I + C*C')y(r) - b(r)), where C = A (r,f).
  */
 
-double lp_resid
+float lp_resid
 (
     cholmod_sparse *A, 
     Int *rflag,
     Int *fset,
     Int fsize,
-    double beta [2],
+    float beta [2],
     cholmod_dense *Y,
     cholmod_dense *B
 )
 {
     cholmod_dense *R ;
-    double *Rx, *Yx ;
-    double rnorm, bnorm, ynorm, norm ;
+    float *Rx, *Yx ;
+    float rnorm, bnorm, ynorm, norm ;
     cholmod_sparse *C ;
     cholmod_dense *W ;
     Int i, nrow ;
@@ -238,11 +238,11 @@ cholmod_sparse *get_row
     Int *rflag,
     Int *fset,
     Int fsize,
-    double beta [2]
+    float beta [2]
 )
 {
     cholmod_sparse *Ri, *R, *C, *S ;
-    double *Sx ;
+    float *Sx ;
     Int *Sp, *Si ;
     Int p, ii, found ;
 
@@ -315,10 +315,10 @@ cholmod_sparse *get_row
 /* === lpdemo =============================================================== */
 /* ========================================================================== */
 
-double lpdemo (cholmod_triplet *T)
+float lpdemo (cholmod_triplet *T)
 {
-    double r, maxerr = 0, anorm, bnorm, norm, xnorm, ynorm ;
-    double *b = NULL, *Yx = NULL, *Xx = NULL, *Sx ;
+    float r, maxerr = 0, anorm, bnorm, norm, xnorm, ynorm ;
+    float *b = NULL, *Yx = NULL, *Xx = NULL, *Sx ;
     cholmod_sparse *A, *AT, *Apermuted, *C, *S, *Row ;
     cholmod_dense *X, *B, *Y, *DeltaB, *R ;
     cholmod_factor *L ;
@@ -326,7 +326,7 @@ double lpdemo (cholmod_triplet *T)
 	*Sp, *Si, *StaticParent ;
     Int i, j, k, nrow, ncol, fsize, cols [MAXCOLS+1], trial, rank, kk, rsize,
 	p, op, ok ;
-    double beta [2], bk [2], yk [2] ;
+    float beta [2], bk [2], yk [2] ;
 
     /* ---------------------------------------------------------------------- */
     /* convert T into a sparse matrix A */
@@ -861,7 +861,7 @@ double lpdemo (cholmod_triplet *T)
 	{
 	    cholmod_factor *L2 ;
 	    cholmod_dense *X2 ;
-	    double *X2x ;
+	    float *X2x ;
 	    L2 = CHOLMOD(copy_factor) (L, cm) ;
 	    X2 = CHOLMOD(copy_dense) (X, cm) ;
 	    X2x = (X2 == NULL) ? NULL : X2->x ;
@@ -881,7 +881,7 @@ double lpdemo (cholmod_triplet *T)
 	    r = -1 ;
 	    if (ok && R != NULL)
 	    {
-		double *Rx ;
+		float *Rx ;
 		Rx = R->x ;
 		r = 0 ;
 		for (i = 0 ; i < colmark [0] ; i++)

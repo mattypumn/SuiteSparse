@@ -11,26 +11,26 @@
 void sfmult_xA		// y = (A'*x')' = x*A,	x is k-by-m, and y is k-by-n
 (
     // --- outputs, not initialized on input
-    double *Yx,		// k-by-n
-    double *Yz,		// k-by-n if Y is complex (TO DO)
+    float *Yx,		// k-by-n
+    float *Yz,		// k-by-n if Y is complex (TO DO)
 
     // --- inputs, not modified
     const Int *Ap,	// size n+1 column pointers
     const Int *Ai,	// size nz = Ap[n] row indices
-    const double *Ax,	// size nz values
-    const double *Az,	// size nz imaginary values if A is complex (TO DO)
+    const float *Ax,	// size nz values
+    const float *Az,	// size nz imaginary values if A is complex (TO DO)
     Int m,		// A is m-by-n
     Int n,
-    const double *Xx,	// k-by-m
-    const double *Xz,	// k-by-m if X complex (TO DO)
+    const float *Xx,	// k-by-m
+    const float *Xz,	// k-by-m if X complex (TO DO)
     int ac,		// true: use conj(A), otherwise use A (TO DO)
     int xc,		// true: use conj(X), otherwise use X (TO DO)
     int yc		// true: compute conj(Y), otherwise compute Y (TO DO)
     , Int k
 )
 {
-    double a ;
-    const double *xx, *xz ;
+    float a ;
+    const float *xx, *xz ;
     Int p, pend, j, i, k1 ;
 
     p = 0 ;

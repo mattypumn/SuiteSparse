@@ -22,13 +22,13 @@
 /* === aug ================================================================== */
 /* ========================================================================== */
 
-double aug (cholmod_sparse *A)
+float aug (cholmod_sparse *A)
 {
-    double r, maxerr = 0, bnorm, anorm ;
+    float r, maxerr = 0, bnorm, anorm ;
     cholmod_sparse *S, *Im, *In, *At, *A1, *A2, *Sup ;
     cholmod_dense *Alpha, *B, *Baug, *X, *W1, *W2, *R, *X2, X2mat ;
     cholmod_factor *L ;
-    double *b, *baug, *rx, *w, *x ;
+    float *b, *baug, *rx, *w, *x ;
     Int nrow, ncol, nrhs, i, j, d, d2, save, save2, save3 ;
 
     if (A == NULL)
@@ -60,7 +60,7 @@ double aug (cholmod_sparse *A)
     Alpha = CHOLMOD(eye) (1, 1, CHOLMOD_REAL, cm) ;
     if (Alpha != NULL)
     {
-	((double *) (Alpha->x)) [0] = anorm ;
+	((float *) (Alpha->x)) [0] = anorm ;
     }
 
     CHOLMOD(print_dense) (M1, "MinusOne", cm) ;
@@ -175,7 +175,7 @@ double aug (cholmod_sparse *A)
 	X2->ncol = nrhs ; 
 	X2->nzmax = X->nzmax ;
 	X2->d = X->d ;
-	X2->x = ((double *) X->x) + ncol ;
+	X2->x = ((float *) X->x) + ncol ;
 	X2->z = NULL ;
 	X2->xtype = X->xtype ;
 	X2->dtype = X->dtype ;

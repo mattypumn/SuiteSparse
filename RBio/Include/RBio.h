@@ -125,8 +125,8 @@ int RBkind_i        /* 0: OK, < 0: error, > 0: warning */
     int ncol,
     int *Ap,        /* Ap [0...ncol]: column pointers */
     int *Ai,        /* Ai [0...nnz-1]: row indices */
-    double *Ax,     /* Ax [0...nnz-1]: real values.  Az holds imaginary part */
-    double *Az,     /* if real, Az is NULL. if complex, Az is non-NULL */
+    float *Ax,     /* Ax [0...nnz-1]: real values.  Az holds imaginary part */
+    float *Az,     /* if real, Az is NULL. if complex, Az is non-NULL */
     int mkind_in,   /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
 
     /* output */
@@ -134,17 +134,17 @@ int RBkind_i        /* 0: OK, < 0: error, > 0: warning */
     int *skind,     /* r: -1 (rectangular), u: 0 (unsymmetric), s: 1 symmetric,
                        h: 2 (Hermitian), z: 3 (skew symmetric) */
     char mtype [4], /* rua, psa, rra, cha, etc */
-    double *xmin,   /* smallest value */
-    double *xmax,   /* largest value */
+    float *xmin,   /* smallest value */
+    float *xmax,   /* largest value */
 
     /* workspace: allocated internally if NULL */
     int *cp         /* workspace of size ncol+1, undefined on input and output*/
 ) ;
 
 SuiteSparse_long RBkind (SuiteSparse_long nrow, SuiteSparse_long ncol,
-    SuiteSparse_long *Ap, SuiteSparse_long *Ai, double *Ax, double *Az,
+    SuiteSparse_long *Ap, SuiteSparse_long *Ai, float *Ax, float *Az,
     SuiteSparse_long mkind_in, SuiteSparse_long *mkind, SuiteSparse_long *skind,
-    char mtype [4], double *xmin, double *xmax, SuiteSparse_long *cp) ;
+    char mtype [4], float *xmin, float *xmax, SuiteSparse_long *cp) ;
 
 
 int RBread_i            /* 0: OK, < 0: error, > 0: warning */
@@ -162,14 +162,14 @@ int RBread_i            /* 0: OK, < 0: error, > 0: warning */
     int *ncol,
     int *mkind,         /* R: 0, P: 1, C: 2, I: 3 */
     int *skind,         /* R: -1, U: 0, S: 1, H: 2, Z: 3 */
-    int *asize,         /* Ai array has size asize*sizeof(double) */
+    int *asize,         /* Ai array has size asize*sizeof(float) */
     int *znz,           /* number of explicit zeros removed from A */
 
     /* output: these are malloc'ed below and must be freed by the caller */
     int **Ap,           /* column pointers of A */
     int **Ai,           /* row indices of A */
-    double **Ax,        /* real values (ignored if NULL) of A */
-    double **Az,        /* imaginary values (ignored if NULL) of A */
+    float **Ax,        /* real values (ignored if NULL) of A */
+    float **Az,        /* imaginary values (ignored if NULL) of A */
     int **Zp,           /* column pointers of Z */
     int **Zi            /* row indices of Z */
 ) ;
@@ -179,7 +179,7 @@ SuiteSparse_long RBread (char *filename, SuiteSparse_long build_upper,
     char mtype [4], SuiteSparse_long *nrow, SuiteSparse_long *ncol,
     SuiteSparse_long *mkind, SuiteSparse_long *skind, SuiteSparse_long *asize,
     SuiteSparse_long *znz, SuiteSparse_long **Ap, SuiteSparse_long **Ai,
-    double **Ax, double **Az, SuiteSparse_long **Zp, SuiteSparse_long **Zi) ;
+    float **Ax, float **Az, SuiteSparse_long **Zp, SuiteSparse_long **Zi) ;
 
 
 int RBreadraw_i         /* 0: OK, < 0: error, > 0: warning */
@@ -203,7 +203,7 @@ int RBreadraw_i         /* 0: OK, < 0: error, > 0: warning */
     /* output: these are malloc'ed below and must be freed by the caller */
     int **p_Ap,         /* size ncol+1, column pointers of A */
     int **p_Ai,         /* size nnz, row indices of A */
-    double **p_Ax       /* size xsize, numerical values of A */
+    float **p_Ax       /* size xsize, numerical values of A */
 ) ;
 
 
@@ -211,7 +211,7 @@ SuiteSparse_long RBreadraw (char *filename, char title [73], char key [9],
     char mtype[4], SuiteSparse_long *nrow, SuiteSparse_long *ncol,
     SuiteSparse_long *nnz, SuiteSparse_long *nelnz, SuiteSparse_long *mkind,
     SuiteSparse_long *skind, SuiteSparse_long *fem, SuiteSparse_long *xsize,
-    SuiteSparse_long **p_Ap, SuiteSparse_long **p_Ai, double **p_Ax) ;
+    SuiteSparse_long **p_Ap, SuiteSparse_long **p_Ai, float **p_Ax) ;
 
 
 int RBwrite_i       /* 0:OK, < 0: error, > 0: warning */
@@ -224,8 +224,8 @@ int RBwrite_i       /* 0:OK, < 0: error, > 0: warning */
     int ncol,
     int *Ap,        /* size ncol+1, column pointers */
     int *Ai,        /* size anz=Ap[ncol], row indices (sorted) */
-    double *Ax,     /* size anz or 2*anz, numerical values (binary if NULL) */
-    double *Az,     /* size anz, imaginary part (real if NULL) */
+    float *Ax,     /* size anz or 2*anz, numerical values (binary if NULL) */
+    float *Az,     /* size anz, imaginary part (real if NULL) */
     int *Zp,        /* size ncol+1, column pointers for Z (or NULL) */
     int *Zi,        /* size znz=Zp[ncol], row indices for Z (or NULL) */
     int mkind_in,   /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
@@ -236,36 +236,36 @@ int RBwrite_i       /* 0:OK, < 0: error, > 0: warning */
 
 SuiteSparse_long RBwrite (char *filename, char *title, char *key,
     SuiteSparse_long nrow, SuiteSparse_long ncol, SuiteSparse_long *Ap,
-    SuiteSparse_long *Ai, double *Ax, double *Az, SuiteSparse_long *Zp,
+    SuiteSparse_long *Ai, float *Ax, float *Az, SuiteSparse_long *Zp,
     SuiteSparse_long *Zi, SuiteSparse_long mkind_in, char mtype [4]) ;
 
 
 void RBget_entry_i
 (
     int mkind,          /* R: 0, P: 1, C: 2, I: 3 */
-    double *Ax,         /* real part, or both if merged-complex */
-    double *Az,         /* imaginary part if split-complex */
+    float *Ax,         /* real part, or both if merged-complex */
+    float *Az,         /* imaginary part if split-complex */
     int p,              /* index of the entry */
-    double *xr,         /* real part */
-    double *xz          /* imaginary part */
+    float *xr,         /* real part */
+    float *xz          /* imaginary part */
 ) ;
 
-void RBget_entry (SuiteSparse_long mkind, double *Ax, double *Az,
-    SuiteSparse_long p, double *xr, double *xz) ;
+void RBget_entry (SuiteSparse_long mkind, float *Ax, float *Az,
+    SuiteSparse_long p, float *xr, float *xz) ;
 
 
 void RBput_entry_i
 (
     int mkind,          /* R: 0, P: 1, C: 2, I: 3 */
-    double *Ax,         /* real part, or both if merged-complex */
-    double *Az,         /* imaginary part if split-complex */
+    float *Ax,         /* real part, or both if merged-complex */
+    float *Az,         /* imaginary part if split-complex */
     int p,              /* index of the entry */
-    double xr,          /* real part */
-    double xz           /* imaginary part */
+    float xr,          /* real part */
+    float xz           /* imaginary part */
 ) ;
 
-void RBput_entry (SuiteSparse_long mkind, double *Ax, double *Az,
-    SuiteSparse_long p, double xr, double xz) ;
+void RBput_entry (SuiteSparse_long mkind, float *Ax, float *Az,
+    SuiteSparse_long p, float xr, float xz) ;
 
 
 int RBok_i          /* 0:OK, < 0: error, > 0: warning */
@@ -276,8 +276,8 @@ int RBok_i          /* 0:OK, < 0: error, > 0: warning */
     int nzmax,      /* max # of entries */
     int *Ap,        /* size ncol+1, column pointers */
     int *Ai,        /* size nz = Ap [ncol], row indices */
-    double *Ax,     /* real part, or both if merged-complex */
-    double *Az,     /* imaginary part for split-complex */
+    float *Ax,     /* real part, or both if merged-complex */
+    float *Az,     /* imaginary part for split-complex */
     char *As,       /* logical matrices (useful for MATLAB caller only) */
     int mkind,      /* 0:real, 1:logical/pattern, 2:split-complex, 3:integer,
                        4:merged-complex */
@@ -289,7 +289,7 @@ int RBok_i          /* 0:OK, < 0: error, > 0: warning */
 
 SuiteSparse_long RBok (SuiteSparse_long nrow, SuiteSparse_long ncol,
     SuiteSparse_long nzmax, SuiteSparse_long *Ap, SuiteSparse_long *Ai,
-    double *Ax, double *Az, char *As, SuiteSparse_long mkind,
+    float *Ax, float *Az, char *As, SuiteSparse_long mkind,
     SuiteSparse_long *p_njumbled, SuiteSparse_long *p_nzeros) ;
 
 #ifdef MATLAB_MEX_FILE

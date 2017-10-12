@@ -43,7 +43,7 @@ A = fscanf (f, '%g') ;
 % lo(i) = -Inf means that there is no lower bound on the ith variable.
 %
 % The identical workaround is used in UFfull_write, mread, mwrite, RBread, and
-% RBwrite.  1e308 was chosen because it's close to the largest IEEE double
+% RBwrite.  1e308 was chosen because it's close to the largest IEEE float
 % precision number of 1.7977e308, and because the string '1e308' is short,
 % leading to more compact files.  Note that NaN's are treated as +Inf.
 A (A ==  1e308) =  Inf ;

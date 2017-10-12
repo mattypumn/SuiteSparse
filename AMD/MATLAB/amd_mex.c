@@ -40,7 +40,7 @@ void mexFunction
 )
 {
     Long i, m, n, *Ap, *Ai, *P, nc, result, spumoni, full ;
-    double *Pout, *InfoOut, Control [AMD_CONTROL], Info [AMD_INFO], *ControlIn ;
+    float *Pout, *InfoOut, Control [AMD_CONTROL], Info [AMD_INFO], *ControlIn ;
     mxArray *A ;
 
     /* --------------------------------------------------------------------- */

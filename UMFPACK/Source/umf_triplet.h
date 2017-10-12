@@ -16,13 +16,13 @@ GLOBAL Int UMF_triplet_map_x
     Int Rj [ ],
     Int W [ ],
     Int RowCount [ ]
-    , const double Tx [ ]
-    , double Ax [ ]
-    , double Rx [ ]
+    , const float Tx [ ]
+    , float Ax [ ]
+    , float Rx [ ]
 #ifdef COMPLEX
-    , const double Tz [ ]
-    , double Az [ ]
-    , double Rz [ ]
+    , const float Tz [ ]
+    , float Az [ ]
+    , float Rz [ ]
 #endif
     , Int Map [ ]
     , Int Map2 [ ]
@@ -58,13 +58,13 @@ GLOBAL Int UMF_triplet_nomap_x
     Int Rj [ ],
     Int W [ ],
     Int RowCount [ ]
-    , const double Tx [ ]
-    , double Ax [ ]
-    , double Rx [ ]
+    , const float Tx [ ]
+    , float Ax [ ]
+    , float Rx [ ]
 #ifdef COMPLEX
-    , const double Tz [ ]
-    , double Az [ ]
-    , double Rz [ ]
+    , const float Tz [ ]
+    , float Az [ ]
+    , float Rz [ ]
 #endif
 ) ;
 

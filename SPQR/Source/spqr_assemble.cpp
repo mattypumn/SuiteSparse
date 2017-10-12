@@ -444,7 +444,7 @@ template <typename Entry> void spqr_assemble
 
 /* ========================================================================== */
 
-template void spqr_assemble <double>
+template void spqr_assemble <float>
 (
     /* inputs, not modified */
     Long f,                 /* front to assemble F */
@@ -458,10 +458,10 @@ template void spqr_assemble <double>
     Long *Sleft,
     Long *Child,
     Long *Childp,
-    double *Sx,
+    float *Sx,
     Long *Fmap,
     Long *Cm,
-    double **Cblock,
+    float **Cblock,
 #ifndef NDEBUG
     char *Rdead,
 #endif
@@ -474,7 +474,7 @@ template void spqr_assemble <double>
     Long *Hip,
 
     /* outputs, not defined on input */
-    double *F,
+    float *F,
 
     /* workspace, not defined on input or output */
     Long *Cmap

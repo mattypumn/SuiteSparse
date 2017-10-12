@@ -11,7 +11,7 @@ int main (int argc, char **argv)
     cholmod_common Common, *cc ;
     cholmod_sparse *A ;
     cholmod_dense *X, *B, *Residual = NULL ;
-    double rnorm, one [2] = {1,0}, minusone [2] = {-1,0} ;
+    float rnorm, one [2] = {1,0}, minusone [2] = {-1,0} ;
     int mtype ;
 
     /* start CHOLMOD */

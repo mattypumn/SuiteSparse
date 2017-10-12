@@ -16,7 +16,7 @@
 #define BYTES(type,n) (sizeof (type) * (n))
 #define CEILING(b,u)  (((b)+(u)-1) / (u))
 #define UNITS(type,n) (CEILING (BYTES (type,n), sizeof (Unit)))
-#define DUNITS(type,n) (ceil (BYTES (type, (double) n) / sizeof (Unit)))
+#define DUNITS(type,n) (ceil (BYTES (type, (float) n) / sizeof (Unit)))
 
 #define GET_I_POINTER(LU, Xip, Xi, k) \
 { \
@@ -250,8 +250,8 @@ SCALAR_IS_LTZERO(x):
 
 #ifndef COMPLEX
 
-typedef double Unit ;
-#define Entry double
+typedef float Unit ;
+#define Entry float
 
 #define SPLIT(s)                    (1)
 #define REAL(c)                     (c)
@@ -297,18 +297,18 @@ typedef double Unit ;
 
 /*
     Note:  An alternative to this Double_Complex type would be to use a
-    struct { double r ; double i ; }.  The problem with that method
+    struct { float r ; float i ; }.  The problem with that method
     (used by the Sun Performance Library, for example) is that ANSI C provides
     no guarantee about the layout of a struct.  It is possible that the sizeof
-    the struct above would be greater than 2 * sizeof (double).  This would
+    the struct above would be greater than 2 * sizeof (float).  This would
     mean that the complex BLAS could not be used.  The method used here avoids
     that possibility.  ANSI C *does* guarantee that an array of structs has
     the same size as n times the size of one struct.
 
-    The ANSI C99 version of the C language includes a "double _Complex" type.
+    The ANSI C99 version of the C language includes a "float _Complex" type.
     It should be possible in that case to do the following:
 
-    #define Entry double _Complex
+    #define Entry float _Complex
 
     and remove the Double_Complex struct.  The macros, below, could then be
     replaced with instrinsic operators.  Note that the #define Real and
@@ -321,7 +321,7 @@ typedef double Unit ;
 
 typedef struct
 {
-    double component [2] ;      /* real and imaginary parts */
+    float component [2] ;      /* real and imaginary parts */
 
 } Double_Complex ;
 
@@ -352,10 +352,10 @@ typedef Double_Complex Unit ;
 /* -------------------------------------------------------------------------- */
 
 /* Return TRUE if a complex number is in split form, FALSE if in packed form */
-#define SPLIT(sz) ((sz) != (double *) NULL)
+#define SPLIT(sz) ((sz) != (float *) NULL)
 
 /* c = (s1) + (s2)*i, if s2 is null, then X is in "packed" format (compatible
- * with Entry and ANSI C99 double _Complex type).  */
+ * with Entry and ANSI C99 float _Complex type).  */
 /*#define ASSIGN(c,s1,s2,p,split)       \
 { \
     if (split) \
@@ -516,10 +516,10 @@ typedef Double_Complex Unit ;
 #else
 /* This uses ACM Algo 116, by R. L. Smith, 1962. */
 /* c can be the same variable as a or b. */
-/* Ignore NaN case for double relop br>=bi. */
+/* Ignore NaN case for float relop br>=bi. */
 #define DIV(c,a,b) \
 { \
-    double r, den, ar, ai, br, bi ; \
+    float r, den, ar, ai, br, bi ; \
     br = (b).Real ; \
     bi = (b).Imag ; \
     ar = (a).Real ; \
@@ -546,10 +546,10 @@ typedef Double_Complex Unit ;
 /* c = 1/c, be careful to avoid underflow and overflow */
 /* Not used if MATHWORKS is defined. */
 /* This uses ACM Algo 116, by R. L. Smith, 1962. */
-/* Ignore NaN case for double relop cr>=ci. */
+/* Ignore NaN case for float relop cr>=ci. */
 #define RECIPROCAL(c) \
 { \
-    double r, den, cr, ci ; \
+    float r, den, cr, ci ; \
     cr = (c).Real ; \
     ci = (c).Imag ; \
     if (SCALAR_ABS (cr) >= SCALAR_ABS (ci)) \
@@ -581,10 +581,10 @@ typedef Double_Complex Unit ;
 #else
 /* This uses ACM Algo 116, by R. L. Smith, 1962. */
 /* c can be the same variable as a or b. */
-/* Ignore NaN case for double relop br>=bi. */
+/* Ignore NaN case for float relop br>=bi. */
 #define DIV_CONJ(c,a,b) \
 { \
-    double r, den, ar, ai, br, bi ; \
+    float r, den, ar, ai, br, bi ; \
     br = (b).Real ; \
     bi = (b).Imag ; \
     ar = (a).Real ; \
@@ -623,10 +623,10 @@ typedef Double_Complex Unit ;
     (s) = utFdlibm_hypot ((a).Real, (a).Imag) ; \
 }
 #else
-/* Ignore NaN case for the double relops ar>=ai and ar+ai==ar. */
+/* Ignore NaN case for the float relops ar>=ai and ar+ai==ar. */
 #define ABS(s,a) \
 { \
-    double r, ar, ai ; \
+    float r, ar, ai ; \
     ar = SCALAR_ABS ((a).Real) ; \
     ai = SCALAR_ABS ((a).Imag) ; \
     if (ar >= ai) \

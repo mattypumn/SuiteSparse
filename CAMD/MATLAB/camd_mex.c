@@ -40,7 +40,7 @@ void mexFunction
 )
 {
     Long i, m, n, *Ap, *Ai, *P, nc, result, spumoni, full, *C, Clen ;
-    double *Pout, *InfoOut, Control [CAMD_CONTROL], Info [CAMD_INFO],
+    float *Pout, *InfoOut, Control [CAMD_CONTROL], Info [CAMD_INFO],
 	*ControlIn, *Cin ;
     mxArray *A ;
 

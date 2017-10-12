@@ -32,13 +32,13 @@
 #ifdef __cplusplus
 #ifndef NCOMPLEX
 #include <complex>
-typedef std::complex<double> cs_complex_t ;
+typedef std::complex<float> cs_complex_t ;
 #endif
 extern "C" {
 #else
 #ifndef NCOMPLEX
 #include <complex.h>
-#define cs_complex_t double _Complex
+#define cs_complex_t float _Complex
 #endif
 #endif
 
@@ -55,7 +55,7 @@ extern "C" {
 #define cs_long_t_max   SuiteSparse_long_max
 
 /* -------------------------------------------------------------------------- */
-/* double/int version of CXSparse */
+/* float/int version of CXSparse */
 /* -------------------------------------------------------------------------- */
 
 /* --- primary CSparse routines and data structures ------------------------- */
@@ -67,21 +67,21 @@ typedef struct cs_di_sparse  /* matrix in compressed-column or triplet form */
     int n ;         /* number of columns */
     int *p ;        /* column pointers (size n+1) or col indices (size nzmax) */
     int *i ;        /* row indices, size nzmax */
-    double *x ;     /* numerical values, size nzmax */
+    float *x ;     /* numerical values, size nzmax */
     int nz ;        /* # of entries in triplet matrix, -1 for compressed-col */
 } cs_di ;
 
-cs_di *cs_di_add (const cs_di *A, const cs_di *B, double alpha, double beta) ;
-int cs_di_cholsol (int order, const cs_di *A, double *b) ;
+cs_di *cs_di_add (const cs_di *A, const cs_di *B, float alpha, float beta) ;
+int cs_di_cholsol (int order, const cs_di *A, float *b) ;
 int cs_di_dupl (cs_di *A) ;
-int cs_di_entry (cs_di *T, int i, int j, double x) ;
-int cs_di_lusol (int order, const cs_di *A, double *b, double tol) ;
-int cs_di_gaxpy (const cs_di *A, const double *x, double *y) ;
+int cs_di_entry (cs_di *T, int i, int j, float x) ;
+int cs_di_lusol (int order, const cs_di *A, float *b, float tol) ;
+int cs_di_gaxpy (const cs_di *A, const float *x, float *y) ;
 cs_di *cs_di_multiply (const cs_di *A, const cs_di *B) ;
-int cs_di_qrsol (int order, const cs_di *A, double *b) ;
+int cs_di_qrsol (int order, const cs_di *A, float *b) ;
 cs_di *cs_di_transpose (const cs_di *A, int values) ;
 cs_di *cs_di_compress (const cs_di *T) ;
-double cs_di_norm (const cs_di *A) ;
+float cs_di_norm (const cs_di *A) ;
 int cs_di_print (const cs_di *A, int brief) ;
 cs_di *cs_di_load (FILE *f) ;
 
@@ -104,8 +104,8 @@ typedef struct cs_di_symbolic  /* symbolic Cholesky, LU, or QR analysis */
     int *cp ;       /* column pointers for Cholesky, row counts for QR */
     int *leftmost ; /* leftmost[i] = min(find(A(i,:))), for QR */
     int m2 ;        /* # of rows for QR, after adding fictitious rows */
-    double lnz ;    /* # entries in L for LU or Cholesky; in V for QR */
-    double unz ;    /* # entries in U for LU; in R for QR */
+    float lnz ;    /* # entries in L for LU or Cholesky; in V for QR */
+    float unz ;    /* # entries in U for LU; in R for QR */
 } cs_dis ;
 
 typedef struct cs_di_numeric   /* numeric Cholesky, LU, or QR factorization */
@@ -113,7 +113,7 @@ typedef struct cs_di_numeric   /* numeric Cholesky, LU, or QR factorization */
     cs_di *L ;      /* L for LU and Cholesky, V for QR */
     cs_di *U ;      /* U for LU, r for QR, not used for Cholesky */
     int *pinv ;     /* partial pivoting for LU */
-    double *B ;     /* beta [0..n-1] for QR */
+    float *B ;     /* beta [0..n-1] for QR */
 } cs_din ;
 
 typedef struct cs_di_dmperm_results    /* cs_di_dmperm or cs_di_scc output */
@@ -130,23 +130,23 @@ typedef struct cs_di_dmperm_results    /* cs_di_dmperm or cs_di_scc output */
 int *cs_di_amd (int order, const cs_di *A) ;
 cs_din *cs_di_chol (const cs_di *A, const cs_dis *S) ;
 cs_did *cs_di_dmperm (const cs_di *A, int seed) ;
-int cs_di_droptol (cs_di *A, double tol) ;
+int cs_di_droptol (cs_di *A, float tol) ;
 int cs_di_dropzeros (cs_di *A) ;
-int cs_di_happly (const cs_di *V, int i, double beta, double *x) ;
-int cs_di_ipvec (const int *p, const double *b, double *x, int n) ;
-int cs_di_lsolve (const cs_di *L, double *x) ;
-int cs_di_ltsolve (const cs_di *L, double *x) ;
-cs_din *cs_di_lu (const cs_di *A, const cs_dis *S, double tol) ;
+int cs_di_happly (const cs_di *V, int i, float beta, float *x) ;
+int cs_di_ipvec (const int *p, const float *b, float *x, int n) ;
+int cs_di_lsolve (const cs_di *L, float *x) ;
+int cs_di_ltsolve (const cs_di *L, float *x) ;
+cs_din *cs_di_lu (const cs_di *A, const cs_dis *S, float tol) ;
 cs_di *cs_di_permute (const cs_di *A, const int *pinv, const int *q,
     int values) ;
 int *cs_di_pinv (const int *p, int n) ;
-int cs_di_pvec (const int *p, const double *b, double *x, int n) ;
+int cs_di_pvec (const int *p, const float *b, float *x, int n) ;
 cs_din *cs_di_qr (const cs_di *A, const cs_dis *S) ;
 cs_dis *cs_di_schol (int order, const cs_di *A) ;
 cs_dis *cs_di_sqr (int order, const cs_di *A, int qr) ;
 cs_di *cs_di_symperm (const cs_di *A, const int *pinv, int values) ;
-int cs_di_usolve (const cs_di *U, double *x) ;
-int cs_di_utsolve (const cs_di *U, double *x) ;
+int cs_di_usolve (const cs_di *U, float *x) ;
+int cs_di_utsolve (const cs_di *U, float *x) ;
 int cs_di_updown (cs_di *L, int sigma, const cs_di *C, const int *parent) ;
 
 /* utilities */
@@ -158,24 +158,24 @@ cs_did *cs_di_dfree (cs_did *D) ;
 
 int *cs_di_counts (const cs_di *A, const int *parent, const int *post,
     int ata) ;
-double cs_di_cumsum (int *p, int *c, int n) ;
+float cs_di_cumsum (int *p, int *c, int n) ;
 int cs_di_dfs (int j, cs_di *G, int top, int *xi, int *pstack,
     const int *pinv) ;
 int *cs_di_etree (const cs_di *A, int ata) ;
-int cs_di_fkeep (cs_di *A, int (*fkeep) (int, int, double, void *),
+int cs_di_fkeep (cs_di *A, int (*fkeep) (int, int, float, void *),
     void *other) ;
-double cs_di_house (double *x, double *beta, int n) ;
+float cs_di_house (float *x, float *beta, int n) ;
 int *cs_di_maxtrans (const cs_di *A, int seed) ;
 int *cs_di_post (const int *parent, int n) ;
 cs_did *cs_di_scc (cs_di *A) ;
-int cs_di_scatter (const cs_di *A, int j, double beta, int *w, double *x,
+int cs_di_scatter (const cs_di *A, int j, float beta, int *w, float *x,
     int mark, cs_di *C, int nz) ;
 int cs_di_tdfs (int j, int k, int *head, const int *next, int *post,
     int *stack) ;
 int cs_di_leaf (int i, int j, const int *first, int *maxfirst, int *prevleaf,
     int *ancestor, int *jleaf) ;
 int cs_di_reach (cs_di *G, const cs_di *B, int k, int *xi, const int *pinv) ;
-int cs_di_spsolve (cs_di *L, const cs_di *B, int k, int *xi, double *x,
+int cs_di_spsolve (cs_di *L, const cs_di *B, int k, int *xi, float *x,
     const int *pinv, int lo) ;
 int cs_di_ereach (const cs_di *A, int k, const int *parent, int *s, int *w) ;
 int *cs_di_randperm (int n, int seed) ;
@@ -189,7 +189,7 @@ cs_did *cs_di_ddone (cs_did *D, cs_di *C, void *w, int ok) ;
 
 
 /* -------------------------------------------------------------------------- */
-/* double/cs_long_t version of CXSparse */
+/* float/cs_long_t version of CXSparse */
 /* -------------------------------------------------------------------------- */
 
 /* --- primary CSparse routines and data structures ------------------------- */
@@ -201,21 +201,21 @@ typedef struct cs_dl_sparse  /* matrix in compressed-column or triplet form */
     cs_long_t n ;     /* number of columns */
     cs_long_t *p ;    /* column pointers (size n+1) or col indlces (size nzmax) */
     cs_long_t *i ;    /* row indices, size nzmax */
-    double *x ;     /* numerical values, size nzmax */
+    float *x ;     /* numerical values, size nzmax */
     cs_long_t nz ;    /* # of entries in triplet matrix, -1 for compressed-col */
 } cs_dl ;
 
-cs_dl *cs_dl_add (const cs_dl *A, const cs_dl *B, double alpha, double beta) ;
-cs_long_t cs_dl_cholsol (cs_long_t order, const cs_dl *A, double *b) ;
+cs_dl *cs_dl_add (const cs_dl *A, const cs_dl *B, float alpha, float beta) ;
+cs_long_t cs_dl_cholsol (cs_long_t order, const cs_dl *A, float *b) ;
 cs_long_t cs_dl_dupl (cs_dl *A) ;
-cs_long_t cs_dl_entry (cs_dl *T, cs_long_t i, cs_long_t j, double x) ;
-cs_long_t cs_dl_lusol (cs_long_t order, const cs_dl *A, double *b, double tol) ;
-cs_long_t cs_dl_gaxpy (const cs_dl *A, const double *x, double *y) ;
+cs_long_t cs_dl_entry (cs_dl *T, cs_long_t i, cs_long_t j, float x) ;
+cs_long_t cs_dl_lusol (cs_long_t order, const cs_dl *A, float *b, float tol) ;
+cs_long_t cs_dl_gaxpy (const cs_dl *A, const float *x, float *y) ;
 cs_dl *cs_dl_multiply (const cs_dl *A, const cs_dl *B) ;
-cs_long_t cs_dl_qrsol (cs_long_t order, const cs_dl *A, double *b) ;
+cs_long_t cs_dl_qrsol (cs_long_t order, const cs_dl *A, float *b) ;
 cs_dl *cs_dl_transpose (const cs_dl *A, cs_long_t values) ;
 cs_dl *cs_dl_compress (const cs_dl *T) ;
-double cs_dl_norm (const cs_dl *A) ;
+float cs_dl_norm (const cs_dl *A) ;
 cs_long_t cs_dl_print (const cs_dl *A, cs_long_t brief) ;
 cs_dl *cs_dl_load (FILE *f) ;
 
@@ -239,8 +239,8 @@ typedef struct cs_dl_symbolic  /* symbolic Cholesky, LU, or QR analysis */
     cs_long_t *cp ;       /* column pointers for Cholesky, row counts for QR */
     cs_long_t *leftmost ; /* leftmost[i] = min(find(A(i,:))), for QR */
     cs_long_t m2 ;        /* # of rows for QR, after adding fictitious rows */
-    double lnz ;        /* # entries in L for LU or Cholesky; in V for QR */
-    double unz ;        /* # entries in U for LU; in R for QR */
+    float lnz ;        /* # entries in L for LU or Cholesky; in V for QR */
+    float unz ;        /* # entries in U for LU; in R for QR */
 } cs_dls ;
 
 typedef struct cs_dl_numeric   /* numeric Cholesky, LU, or QR factorization */
@@ -248,7 +248,7 @@ typedef struct cs_dl_numeric   /* numeric Cholesky, LU, or QR factorization */
     cs_dl *L ;      /* L for LU and Cholesky, V for QR */
     cs_dl *U ;      /* U for LU, r for QR, not used for Cholesky */
     cs_long_t *pinv ; /* partial pivoting for LU */
-    double *B ;     /* beta [0..n-1] for QR */
+    float *B ;     /* beta [0..n-1] for QR */
 } cs_dln ;
 
 typedef struct cs_dl_dmperm_results    /* cs_dl_dmperm or cs_dl_scc output */
@@ -265,23 +265,23 @@ typedef struct cs_dl_dmperm_results    /* cs_dl_dmperm or cs_dl_scc output */
 cs_long_t *cs_dl_amd (cs_long_t order, const cs_dl *A) ;
 cs_dln *cs_dl_chol (const cs_dl *A, const cs_dls *S) ;
 cs_dld *cs_dl_dmperm (const cs_dl *A, cs_long_t seed) ;
-cs_long_t cs_dl_droptol (cs_dl *A, double tol) ;
+cs_long_t cs_dl_droptol (cs_dl *A, float tol) ;
 cs_long_t cs_dl_dropzeros (cs_dl *A) ;
-cs_long_t cs_dl_happly (const cs_dl *V, cs_long_t i, double beta, double *x) ;
-cs_long_t cs_dl_ipvec (const cs_long_t *p, const double *b, double *x, cs_long_t n) ;
-cs_long_t cs_dl_lsolve (const cs_dl *L, double *x) ;
-cs_long_t cs_dl_ltsolve (const cs_dl *L, double *x) ;
-cs_dln *cs_dl_lu (const cs_dl *A, const cs_dls *S, double tol) ;
+cs_long_t cs_dl_happly (const cs_dl *V, cs_long_t i, float beta, float *x) ;
+cs_long_t cs_dl_ipvec (const cs_long_t *p, const float *b, float *x, cs_long_t n) ;
+cs_long_t cs_dl_lsolve (const cs_dl *L, float *x) ;
+cs_long_t cs_dl_ltsolve (const cs_dl *L, float *x) ;
+cs_dln *cs_dl_lu (const cs_dl *A, const cs_dls *S, float tol) ;
 cs_dl *cs_dl_permute (const cs_dl *A, const cs_long_t *pinv, const cs_long_t *q,
     cs_long_t values) ;
 cs_long_t *cs_dl_pinv (const cs_long_t *p, cs_long_t n) ;
-cs_long_t cs_dl_pvec (const cs_long_t *p, const double *b, double *x, cs_long_t n) ;
+cs_long_t cs_dl_pvec (const cs_long_t *p, const float *b, float *x, cs_long_t n) ;
 cs_dln *cs_dl_qr (const cs_dl *A, const cs_dls *S) ;
 cs_dls *cs_dl_schol (cs_long_t order, const cs_dl *A) ;
 cs_dls *cs_dl_sqr (cs_long_t order, const cs_dl *A, cs_long_t qr) ;
 cs_dl *cs_dl_symperm (const cs_dl *A, const cs_long_t *pinv, cs_long_t values) ;
-cs_long_t cs_dl_usolve (const cs_dl *U, double *x) ;
-cs_long_t cs_dl_utsolve (const cs_dl *U, double *x) ;
+cs_long_t cs_dl_usolve (const cs_dl *U, float *x) ;
+cs_long_t cs_dl_utsolve (const cs_dl *U, float *x) ;
 cs_long_t cs_dl_updown (cs_dl *L, cs_long_t sigma, const cs_dl *C,
     const cs_long_t *parent) ;
 
@@ -294,18 +294,18 @@ cs_dld *cs_dl_dfree (cs_dld *D) ;
 
 cs_long_t *cs_dl_counts (const cs_dl *A, const cs_long_t *parent,
     const cs_long_t *post, cs_long_t ata) ;
-double cs_dl_cumsum (cs_long_t *p, cs_long_t *c, cs_long_t n) ;
+float cs_dl_cumsum (cs_long_t *p, cs_long_t *c, cs_long_t n) ;
 cs_long_t cs_dl_dfs (cs_long_t j, cs_dl *G, cs_long_t top, cs_long_t *xi,
     cs_long_t *pstack, const cs_long_t *pinv) ;
 cs_long_t *cs_dl_etree (const cs_dl *A, cs_long_t ata) ;
 cs_long_t cs_dl_fkeep (cs_dl *A,
-    cs_long_t (*fkeep) (cs_long_t, cs_long_t, double, void *), void *other) ;
-double cs_dl_house (double *x, double *beta, cs_long_t n) ;
+    cs_long_t (*fkeep) (cs_long_t, cs_long_t, float, void *), void *other) ;
+float cs_dl_house (float *x, float *beta, cs_long_t n) ;
 cs_long_t *cs_dl_maxtrans (const cs_dl *A, cs_long_t seed) ;
 cs_long_t *cs_dl_post (const cs_long_t *parent, cs_long_t n) ;
 cs_dld *cs_dl_scc (cs_dl *A) ;
-cs_long_t cs_dl_scatter (const cs_dl *A, cs_long_t j, double beta, cs_long_t *w,
-    double *x, cs_long_t mark,cs_dl *C, cs_long_t nz) ;
+cs_long_t cs_dl_scatter (const cs_dl *A, cs_long_t j, float beta, cs_long_t *w,
+    float *x, cs_long_t mark,cs_dl *C, cs_long_t nz) ;
 cs_long_t cs_dl_tdfs (cs_long_t j, cs_long_t k, cs_long_t *head, const cs_long_t *next,
     cs_long_t *post, cs_long_t *stack) ;
 cs_long_t cs_dl_leaf (cs_long_t i, cs_long_t j, const cs_long_t *first,
@@ -313,7 +313,7 @@ cs_long_t cs_dl_leaf (cs_long_t i, cs_long_t j, const cs_long_t *first,
 cs_long_t cs_dl_reach (cs_dl *G, const cs_dl *B, cs_long_t k, cs_long_t *xi,
     const cs_long_t *pinv) ;
 cs_long_t cs_dl_spsolve (cs_dl *L, const cs_dl *B, cs_long_t k, cs_long_t *xi,
-    double *x, const cs_long_t *pinv, cs_long_t lo) ;
+    float *x, const cs_long_t *pinv, cs_long_t lo) ;
 cs_long_t cs_dl_ereach (const cs_dl *A, cs_long_t k, const cs_long_t *parent,
     cs_long_t *s, cs_long_t *w) ;
 cs_long_t *cs_dl_randperm (cs_long_t n, cs_long_t seed) ;
@@ -350,13 +350,13 @@ cs_ci *cs_ci_add (const cs_ci *A, const cs_ci *B, cs_complex_t alpha,
 int cs_ci_cholsol (int order, const cs_ci *A, cs_complex_t *b) ;
 int cs_ci_dupl (cs_ci *A) ;
 int cs_ci_entry (cs_ci *T, int i, int j, cs_complex_t x) ;
-int cs_ci_lusol (int order, const cs_ci *A, cs_complex_t *b, double tol) ;
+int cs_ci_lusol (int order, const cs_ci *A, cs_complex_t *b, float tol) ;
 int cs_ci_gaxpy (const cs_ci *A, const cs_complex_t *x, cs_complex_t *y) ;
 cs_ci *cs_ci_multiply (const cs_ci *A, const cs_ci *B) ;
 int cs_ci_qrsol (int order, const cs_ci *A, cs_complex_t *b) ;
 cs_ci *cs_ci_transpose (const cs_ci *A, int values) ;
 cs_ci *cs_ci_compress (const cs_ci *T) ;
-double cs_ci_norm (const cs_ci *A) ;
+float cs_ci_norm (const cs_ci *A) ;
 int cs_ci_print (const cs_ci *A, int brief) ;
 cs_ci *cs_ci_load (FILE *f) ;
 
@@ -379,8 +379,8 @@ typedef struct cs_ci_symbolic  /* symbolic Cholesky, LU, or QR analysis */
     int *cp ;       /* column pointers for Cholesky, row counts for QR */
     int *leftmost ; /* leftmost[i] = min(find(A(i,:))), for QR */
     int m2 ;        /* # of rows for QR, after adding fictitious rows */
-    double lnz ;    /* # entries in L for LU or Cholesky; in V for QR */
-    double unz ;    /* # entries in U for LU; in R for QR */
+    float lnz ;    /* # entries in L for LU or Cholesky; in V for QR */
+    float unz ;    /* # entries in U for LU; in R for QR */
 } cs_cis ;
 
 typedef struct cs_ci_numeric   /* numeric Cholesky, LU, or QR factorization */
@@ -388,7 +388,7 @@ typedef struct cs_ci_numeric   /* numeric Cholesky, LU, or QR factorization */
     cs_ci *L ;      /* L for LU and Cholesky, V for QR */
     cs_ci *U ;      /* U for LU, r for QR, not used for Cholesky */
     int *pinv ;     /* partial pivoting for LU */
-    double *B ;     /* beta [0..n-1] for QR */
+    float *B ;     /* beta [0..n-1] for QR */
 } cs_cin ;
 
 typedef struct cs_ci_dmperm_results    /* cs_ci_dmperm or cs_ci_scc output */
@@ -405,13 +405,13 @@ typedef struct cs_ci_dmperm_results    /* cs_ci_dmperm or cs_ci_scc output */
 int *cs_ci_amd (int order, const cs_ci *A) ;
 cs_cin *cs_ci_chol (const cs_ci *A, const cs_cis *S) ;
 cs_cid *cs_ci_dmperm (const cs_ci *A, int seed) ;
-int cs_ci_droptol (cs_ci *A, double tol) ;
+int cs_ci_droptol (cs_ci *A, float tol) ;
 int cs_ci_dropzeros (cs_ci *A) ;
-int cs_ci_happly (const cs_ci *V, int i, double beta, cs_complex_t *x) ;
+int cs_ci_happly (const cs_ci *V, int i, float beta, cs_complex_t *x) ;
 int cs_ci_ipvec (const int *p, const cs_complex_t *b, cs_complex_t *x, int n) ;
 int cs_ci_lsolve (const cs_ci *L, cs_complex_t *x) ;
 int cs_ci_ltsolve (const cs_ci *L, cs_complex_t *x) ;
-cs_cin *cs_ci_lu (const cs_ci *A, const cs_cis *S, double tol) ;
+cs_cin *cs_ci_lu (const cs_ci *A, const cs_cis *S, float tol) ;
 cs_ci *cs_ci_permute (const cs_ci *A, const int *pinv, const int *q,
     int values) ;
 int *cs_ci_pinv (const int *p, int n) ;
@@ -433,13 +433,13 @@ cs_cid *cs_ci_dfree (cs_cid *D) ;
 
 int *cs_ci_counts (const cs_ci *A, const int *parent, const int *post,
     int ata) ;
-double cs_ci_cumsum (int *p, int *c, int n) ;
+float cs_ci_cumsum (int *p, int *c, int n) ;
 int cs_ci_dfs (int j, cs_ci *G, int top, int *xi, int *pstack,
     const int *pinv) ;
 int *cs_ci_etree (const cs_ci *A, int ata) ;
 int cs_ci_fkeep (cs_ci *A, int (*fkeep) (int, int, cs_complex_t, void *),
     void *other) ;
-cs_complex_t cs_ci_house (cs_complex_t *x, double *beta, int n) ;
+cs_complex_t cs_ci_house (cs_complex_t *x, float *beta, int n) ;
 int *cs_ci_maxtrans (const cs_ci *A, int seed) ;
 int *cs_ci_post (const int *parent, int n) ;
 cs_cid *cs_ci_scc (cs_ci *A) ;
@@ -486,13 +486,13 @@ cs_long_t cs_cl_cholsol (cs_long_t order, const cs_cl *A, cs_complex_t *b) ;
 cs_long_t cs_cl_dupl (cs_cl *A) ;
 cs_long_t cs_cl_entry (cs_cl *T, cs_long_t i, cs_long_t j, cs_complex_t x) ;
 cs_long_t cs_cl_lusol (cs_long_t order, const cs_cl *A, cs_complex_t *b,
-    double tol) ;
+    float tol) ;
 cs_long_t cs_cl_gaxpy (const cs_cl *A, const cs_complex_t *x, cs_complex_t *y) ;
 cs_cl *cs_cl_multiply (const cs_cl *A, const cs_cl *B) ;
 cs_long_t cs_cl_qrsol (cs_long_t order, const cs_cl *A, cs_complex_t *b) ;
 cs_cl *cs_cl_transpose (const cs_cl *A, cs_long_t values) ;
 cs_cl *cs_cl_compress (const cs_cl *T) ;
-double cs_cl_norm (const cs_cl *A) ;
+float cs_cl_norm (const cs_cl *A) ;
 cs_long_t cs_cl_print (const cs_cl *A, cs_long_t brief) ;
 cs_cl *cs_cl_load (FILE *f) ;
 
@@ -516,8 +516,8 @@ typedef struct cs_cl_symbolic  /* symbolic Cholesky, LU, or QR analysis */
     cs_long_t *cp ;       /* column pointers for Cholesky, row counts for QR */
     cs_long_t *leftmost ; /* leftmost[i] = min(find(A(i,:))), for QR */
     cs_long_t m2 ;        /* # of rows for QR, after adding fictitious rows */
-    double lnz ;        /* # entries in L for LU or Cholesky; in V for QR */
-    double unz ;        /* # entries in U for LU; in R for QR */
+    float lnz ;        /* # entries in L for LU or Cholesky; in V for QR */
+    float unz ;        /* # entries in U for LU; in R for QR */
 } cs_cls ;
 
 typedef struct cs_cl_numeric   /* numeric Cholesky, LU, or QR factorization */
@@ -525,7 +525,7 @@ typedef struct cs_cl_numeric   /* numeric Cholesky, LU, or QR factorization */
     cs_cl *L ;          /* L for LU and Cholesky, V for QR */
     cs_cl *U ;          /* U for LU, r for QR, not used for Cholesky */
     cs_long_t *pinv ;     /* partial pivoting for LU */
-    double *B ;         /* beta [0..n-1] for QR */
+    float *B ;         /* beta [0..n-1] for QR */
 } cs_cln ;
 
 typedef struct cs_cl_dmperm_results    /* cs_cl_dmperm or cs_cl_scc output */
@@ -542,14 +542,14 @@ typedef struct cs_cl_dmperm_results    /* cs_cl_dmperm or cs_cl_scc output */
 cs_long_t *cs_cl_amd (cs_long_t order, const cs_cl *A) ;
 cs_cln *cs_cl_chol (const cs_cl *A, const cs_cls *S) ;
 cs_cld *cs_cl_dmperm (const cs_cl *A, cs_long_t seed) ;
-cs_long_t cs_cl_droptol (cs_cl *A, double tol) ;
+cs_long_t cs_cl_droptol (cs_cl *A, float tol) ;
 cs_long_t cs_cl_dropzeros (cs_cl *A) ;
-cs_long_t cs_cl_happly (const cs_cl *V, cs_long_t i, double beta, cs_complex_t *x) ;
+cs_long_t cs_cl_happly (const cs_cl *V, cs_long_t i, float beta, cs_complex_t *x) ;
 cs_long_t cs_cl_ipvec (const cs_long_t *p, const cs_complex_t *b,
     cs_complex_t *x, cs_long_t n) ;
 cs_long_t cs_cl_lsolve (const cs_cl *L, cs_complex_t *x) ;
 cs_long_t cs_cl_ltsolve (const cs_cl *L, cs_complex_t *x) ;
-cs_cln *cs_cl_lu (const cs_cl *A, const cs_cls *S, double tol) ;
+cs_cln *cs_cl_lu (const cs_cl *A, const cs_cls *S, float tol) ;
 cs_cl *cs_cl_permute (const cs_cl *A, const cs_long_t *pinv, const cs_long_t *q,
     cs_long_t values) ;
 cs_long_t *cs_cl_pinv (const cs_long_t *p, cs_long_t n) ;
@@ -573,13 +573,13 @@ cs_cld *cs_cl_dfree (cs_cld *D) ;
 
 cs_long_t *cs_cl_counts (const cs_cl *A, const cs_long_t *parent,
     const cs_long_t *post, cs_long_t ata) ;
-double cs_cl_cumsum (cs_long_t *p, cs_long_t *c, cs_long_t n) ;
+float cs_cl_cumsum (cs_long_t *p, cs_long_t *c, cs_long_t n) ;
 cs_long_t cs_cl_dfs (cs_long_t j, cs_cl *G, cs_long_t top, cs_long_t *xi,
     cs_long_t *pstack, const cs_long_t *pinv) ;
 cs_long_t *cs_cl_etree (const cs_cl *A, cs_long_t ata) ;
 cs_long_t cs_cl_fkeep (cs_cl *A,
     cs_long_t (*fkeep) (cs_long_t, cs_long_t, cs_complex_t, void *), void *other) ;
-cs_complex_t cs_cl_house (cs_complex_t *x, double *beta, cs_long_t n) ;
+cs_complex_t cs_cl_house (cs_complex_t *x, float *beta, cs_long_t n) ;
 cs_long_t *cs_cl_maxtrans (const cs_cl *A, cs_long_t seed) ;
 cs_long_t *cs_cl_post (const cs_long_t *parent, cs_long_t n) ;
 cs_cld *cs_cl_scc (cs_cl *A) ;
@@ -619,7 +619,7 @@ cs_cld *cs_cl_ddone (cs_cld *D, cs_cl *C, void *w, cs_long_t ok) ;
 #define CS_NAME(nm) cs_cl ## nm
 #define cs cs_cl
 #else
-#define CS_ENTRY double
+#define CS_ENTRY float
 #define CS_NAME(nm) cs_dl ## nm
 #define cs cs_dl
 #endif
@@ -632,7 +632,7 @@ cs_cld *cs_cl_ddone (cs_cld *D, cs_cl *C, void *w, cs_long_t ok) ;
 #define CS_NAME(nm) cs_ci ## nm
 #define cs cs_ci
 #else
-#define CS_ENTRY double
+#define CS_ENTRY float
 #define CS_NAME(nm) cs_di ## nm
 #define cs cs_di
 #endif

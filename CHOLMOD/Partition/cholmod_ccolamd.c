@@ -47,7 +47,7 @@ static int ccolamd_interface
     cholmod_common *Common
 )
 {
-    double knobs [CCOLAMD_KNOBS] ;
+    float knobs [CCOLAMD_KNOBS] ;
     Int *Cp = NULL ;
     Int ok, k, nrow, ncol, stats [CCOLAMD_STATS] ;
 

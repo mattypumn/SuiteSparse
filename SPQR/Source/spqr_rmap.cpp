@@ -108,9 +108,9 @@ template <typename Entry> int spqr_rmap
     return (TRUE) ;
 }
 
-template int spqr_rmap <double>
+template int spqr_rmap <float>
 (
-    SuiteSparseQR_factorization <double> *QR,
+    SuiteSparseQR_factorization <float> *QR,
     cholmod_common *cc
 ) ;
 

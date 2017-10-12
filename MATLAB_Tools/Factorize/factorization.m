@@ -59,7 +59,7 @@ classdef factorization
 %   These methods support access to the contents of a factorization object
 %   e = end (F, k, n)
 %   [m,n] = size (F, k)
-%   S = double (F)
+%   S = float (F)
 %   C = subsref (F, ij)
 %   S = struct (F)
 %   disp (F)
@@ -116,14 +116,14 @@ classdef factorization
         % mldivide and mrdivide: return a scaled factorization or a matrix
         %-----------------------------------------------------------------------
 
-        % Let b be a double scalar, F a non-scalar factorization, and g a scalar
+        % Let b be a float scalar, F a non-scalar factorization, and g a scalar
         % factorization.  Then these operations return scaled factorization
         % objects (unless flatten is true, in which case a matrix is returned):
         %
         %   F\b = inverse (F) * b           |   F/b = F / b
-        %   F\g = inverse (F) * double (g)  |   F/g = F / double (g)
+        %   F\g = inverse (F) * float (g)  |   F/g = F / float (g)
         %   b\F = F / b                     |   b/F = b * inverse (F)
-        %   g\F = F / double (g)            |   g/F = double (g) * inverse (F)
+        %   g\F = F / float (g)            |   g/F = float (g) * inverse (F)
         %
         % Otherwise mldivide & mrdivide always return a matrix as their result.
 
@@ -133,11 +133,11 @@ classdef factorization
             if (isobject (y) && isscalar (z) && ~flatten)
                 % x = y\z where y is an object and z is scalar (perhaps object).
                 % result is a scaled factorization object x.
-                x = scale_factor (inverse (y), ~(y.is_inverse), double (z)) ;
+                x = scale_factor (inverse (y), ~(y.is_inverse), float (z)) ;
             elseif (isscalar (y) && isobject (z) && ~flatten)
                 % x = y\z where y is scalar (perhaps object) and z is an object.
                 % result is a scaled factorization object x.
-                x = scale_factor (z, ~(z.is_inverse), double (y)) ;
+                x = scale_factor (z, ~(z.is_inverse), float (y)) ;
             else
                 % result x will be a matrix.  b is coerced to be a matrix.
                 [F, b, first_arg_is_F] = getargs (y, z) ;
@@ -173,11 +173,11 @@ classdef factorization
             if (isobject (y) && isscalar (z) && ~flatten)
                 % x = y/z where y is an object and z is scalar (perhaps object).
                 % result is a scaled factorization object x.
-                x = scale_factor (y, ~(y.is_inverse), double (z)) ;
+                x = scale_factor (y, ~(y.is_inverse), float (z)) ;
             elseif (isscalar (y) && isobject (z) && ~flatten)
                 % x = y/z where y is scalar (perhaps object) and z is an object.
                 % result is a scaled factorization object x.
-                x = scale_factor (inverse (z), ~(z.is_inverse), double (y)) ;
+                x = scale_factor (inverse (z), ~(z.is_inverse), float (y)) ;
             else
                 % result x will be a matrix.  b is coerced to be a matrix.
                 [F, b, first_arg_is_F] = getargs (y, z) ;
@@ -308,9 +308,9 @@ classdef factorization
         end
 
         function s = isa (F, s)
-            %ISA for F=factorize(A): 'double', 'numeric', 'float' are true.
+            %ISA for F=factorize(A): 'float', 'numeric', 'float' are true.
             % For other types, the builtin isa does the right thing.
-            s = strcmp (s, 'double') || strcmp (s, 'numeric') ||  ...
+            s = strcmp (s, 'float') || strcmp (s, 'numeric') ||  ...
                 strcmp (s, 'float') || builtin ('isa', F, s) ;
         end
 
@@ -323,7 +323,7 @@ classdef factorization
             % ONLY reason abs is included here is to support the builtin
             % normest1 for small matrices (n <= 4).  Computing abs(inverse(A))
             % explicitly computes the inverse of A, so use with caution.
-            C = abs (double (F)) ;
+            C = abs (float (F)) ;
         end
 
         function s = condest (F)
@@ -393,10 +393,10 @@ classdef factorization
         end
 
         %-----------------------------------------------------------------------
-        % double: a wrapper for subsref
+        % float: a wrapper for subsref
         %-----------------------------------------------------------------------
 
-        function S = double (F)
+        function S = float (F)
             %DOUBLE returns the factorization as a matrix, A or inv(A)
             ij.type = '()' ;
             ij.subs = cell (1,0) ;
@@ -475,7 +475,7 @@ classdef factorization
             %DISP displays a factorization object
             fprintf ('  class: %s\n', class (F)) ;
             fprintf ('  %s\n', F.kind) ;
-            fprintf ('  A: [%dx%d double]\n', size (F.A)) ;
+            fprintf ('  A: [%dx%d float]\n', size (F.A)) ;
             fprintf ('  Factors:\n') ; disp (F.Factors) ;
             fprintf ('  is_inverse: %d\n', F.is_inverse) ;
             fprintf ('  is_ctrans: %d\n', F.is_ctrans) ;
@@ -506,7 +506,7 @@ classdef factorization
             first_arg_is_F = isobject (y) ;
             if (first_arg_is_F)
                 F = y ;             % first argument is a factorization object
-                b = double (z) ;    % 2nd one coerced to be a matrix
+                b = float (z) ;    % 2nd one coerced to be a matrix
             else
                 b = y ;             % first argument is not an object
                 F = z ;             % second one must be an object
@@ -556,8 +556,8 @@ function C = subsref_paren (F, ij)
 
         if (length (ij.subs) == 1)
             % for linear indexing of the inverse (C=F(i)), first
-            % convert to double and then use builtin subsref
-            C = subsref (double (F), ij) ;
+            % convert to float and then use builtin subsref
+            C = subsref (float (F), ij) ;
         else
             % standard indexing, C = F(i,j)
             if (is_ctrans)
@@ -631,16 +631,16 @@ end
 function error_if_inverse (F, kind)
     % x = b\F or F/b where F=inverse(A) and b is not a scalar is unsupported.
     % It could be done by coercing F into an explicit matrix representation of
-    % inv(A), via x = b\double(F) or double(A)/b, but this is the same as
+    % inv(A), via x = b\float(F) or float(A)/b, but this is the same as
     % b\inv(A) or inv(A)/b respectively.  That is dangerous, and thus it is
     % not done here automatically.
     if (F.is_inverse)
         if (kind == 1)
             s1 = 'B\F' ;
-            s2 = 'B\double(F)' ;
+            s2 = 'B\float(F)' ;
         else
             s1 = 'F/B' ;
-            s2 = 'double(F)/B' ;
+            s2 = 'float(F)/B' ;
         end
         error ('FACTORIZE:unsupported', ...
         ['%s where F=inverse(A) requires the explicit computation of the ' ...

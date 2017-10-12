@@ -30,15 +30,15 @@
 int CHOLMOD(drop)
 (
     /* ---- input ---- */
-    double tol,		/* keep entries with absolute value > tol */
+    float tol,		/* keep entries with absolute value > tol */
     /* ---- in/out --- */
     cholmod_sparse *A,	/* matrix to drop entries from */
     /* --------------- */
     cholmod_common *Common
 )
 {
-    double aij ;
-    double *Ax ;
+    float aij ;
+    float *Ax ;
     Int *Ap, *Ai, *Anz ;
     Int packed, i, j, nrow, ncol, p, pend, nz, values ;
 

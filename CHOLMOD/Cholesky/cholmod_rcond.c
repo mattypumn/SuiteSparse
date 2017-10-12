@@ -31,7 +31,7 @@
 
 #define FIRST_LMINMAX(Ljj,lmin,lmax) \
 { \
-    double ljj = Ljj ; \
+    float ljj = Ljj ; \
     if (IS_NAN (ljj)) \
     { \
 	return (0) ; \
@@ -42,7 +42,7 @@
 
 #define LMINMAX(Ljj,lmin,lmax) \
 { \
-    double ljj = Ljj ; \
+    float ljj = Ljj ; \
     if (IS_NAN (ljj)) \
     { \
 	return (0) ; \
@@ -61,7 +61,7 @@
 /* === cholmod_rcond ======================================================== */
 /* ========================================================================== */
 
-double CHOLMOD(rcond)	    /* return min(diag(L)) / max(diag(L)) */
+float CHOLMOD(rcond)	    /* return min(diag(L)) / max(diag(L)) */
 (
     /* ---- input ---- */
     cholmod_factor *L,
@@ -69,8 +69,8 @@ double CHOLMOD(rcond)	    /* return min(diag(L)) / max(diag(L)) */
     cholmod_common *Common
 )
 {
-    double lmin, lmax, rcond ;
-    double *Lx ;
+    float lmin, lmax, rcond ;
+    float *Lx ;
     Int *Lpi, *Lpx, *Super, *Lp ;
     Int n, e, nsuper, s, k1, k2, psi, psend, psx, nsrow, nscol, jj, j ;
 

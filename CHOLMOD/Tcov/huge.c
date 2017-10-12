@@ -30,7 +30,7 @@ void huge ( )
     int ok = TRUE, save ;
     Int junk ;
     FILE *f ;
-    double beta [2] ;
+    float beta [2] ;
 
     n = Size_max ;
     CHOLMOD (free_work) (cm) ;

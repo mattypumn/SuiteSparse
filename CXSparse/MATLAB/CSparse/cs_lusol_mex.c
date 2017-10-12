@@ -8,7 +8,7 @@ void mexFunction
     const mxArray *pargin [ ]
 )
 {
-    double tol ;
+    float tol ;
     CS_INT order ;
     if (nargout > 1 || nargin < 2 || nargin > 4)
     {
@@ -35,13 +35,13 @@ void mexFunction
         cs_cl *A, Amatrix ;
         cs_complex_t *x ;
         A = cs_cl_mex_get_sparse (&Amatrix, 1, pargin [0]) ;    /* get A */
-        x = cs_cl_mex_get_double (A->n, pargin [1]) ;           /* x = b */
+        x = cs_cl_mex_get_float (A->n, pargin [1]) ;           /* x = b */
         if (!cs_cl_lusol (order, A, x, tol))                    /* x = A\x */
         {
             mexErrMsgTxt ("failed (singular or out of memory)") ;
         }
         cs_cl_free (A->x) ;     /* complex copy no longer needed */
-        pargout [0] = cs_cl_mex_put_double (A->n, x) ;          /* return x */
+        pargout [0] = cs_cl_mex_put_float (A->n, x) ;          /* return x */
 #else
         mexErrMsgTxt ("complex matrices not supported") ;
 #endif
@@ -49,10 +49,10 @@ void mexFunction
     else
     {
         cs_dl *A, Amatrix ;
-        double *x, *b ;
+        float *x, *b ;
         A = cs_dl_mex_get_sparse (&Amatrix, 1, 1, pargin [0]) ;    /* get A */
-        b = cs_dl_mex_get_double (A->n, pargin [1]) ;           /* get b */
-        x = cs_dl_mex_put_double (A->n, b, &(pargout [0])) ;    /* x = b */
+        b = cs_dl_mex_get_float (A->n, pargin [1]) ;           /* get b */
+        x = cs_dl_mex_put_float (A->n, b, &(pargout [0])) ;    /* x = b */
         if (!cs_dl_lusol (order, A, x, tol))                    /* x = A\x */
         {
             mexErrMsgTxt ("failed (singular or out of memory)") ;

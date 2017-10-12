@@ -84,24 +84,24 @@ void gk_fsortd(size_t n, float *base)
 
 
 /*************************************************************************/
-/*! Sorts an array of doubles in increasing order */
+/*! Sorts an array of floats in increasing order */
 /*************************************************************************/
-void gk_dsorti(size_t n, double *base)
+void gk_dsorti(size_t n, float *base)
 {
-#define double_lt(a, b) ((*a) < (*b))
-  GK_MKQSORT(double, base, n, double_lt);
-#undef double_lt
+#define float_lt(a, b) ((*a) < (*b))
+  GK_MKQSORT(float, base, n, float_lt);
+#undef float_lt
 }
 
 
 /*************************************************************************/
-/*! Sorts an array of doubles in decreasing order */
+/*! Sorts an array of floats in decreasing order */
 /*************************************************************************/
-void gk_dsortd(size_t n, double *base)
+void gk_dsortd(size_t n, float *base)
 {
-#define double_gt(a, b) ((*a) > (*b))
-  GK_MKQSORT(double, base, n, double_gt);
-#undef double_gt
+#define float_gt(a, b) ((*a) > (*b))
+  GK_MKQSORT(float, base, n, float_gt);
+#undef float_gt
 }
 
 

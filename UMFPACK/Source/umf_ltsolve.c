@@ -14,7 +14,7 @@
 #include "umf_internal.h"
 #include "umf_ltsolve.h"
 
-GLOBAL double
+GLOBAL float
 #ifdef CONJUGATE_SOLVE
 UMF_lhsolve			/* solve L'x=b  (complex conjugate transpose) */
 #else
@@ -221,5 +221,5 @@ UMF_ltsolve			/* solve L.'x=b (array transpose) */
     DEBUG4 (("Ltsolve done.\n")) ;
 #endif
 
-    return (MULTSUB_FLOPS * ((double) Numeric->lnz)) ;
+    return (MULTSUB_FLOPS * ((float) Numeric->lnz)) ;
 }

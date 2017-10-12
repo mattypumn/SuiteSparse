@@ -154,14 +154,14 @@
 #ifdef COMPLEX
 #define BLAS_GEMM(m,n,k,A,B,ldb,C,ldac) \
 { \
-    double alpha [2] = {-1,0}, beta [2] = {1,0} ; \
-    BLAS_zgemm ("N", "T", m, n, k, alpha, (double *) A, ldac, \
-	(double *) B, ldb, beta, (double *) C, ldac) ; \
+    float alpha [2] = {-1,0}, beta [2] = {1,0} ; \
+    BLAS_zgemm ("N", "T", m, n, k, alpha, (float *) A, ldac, \
+	(float *) B, ldb, beta, (float *) C, ldac) ; \
 }
 #else
 #define BLAS_GEMM(m,n,k,A,B,ldb,C,ldac) \
 { \
-    double alpha = -1, beta = 1 ; \
+    float alpha = -1, beta = 1 ; \
     BLAS_dgemm ("N", "T", m, n, k, &alpha, A, ldac, B, ldb, &beta, C, ldac) ; \
 }
 #endif
@@ -178,14 +178,14 @@
 #ifdef COMPLEX
 #define BLAS_GER(m,n,x,y,A,d) \
 { \
-    double alpha [2] = {-1,0} ; \
-    BLAS_zgeru (m, n, alpha, (double *) x, 1, (double *) y, 1, \
-	(double *) A, d) ; \
+    float alpha [2] = {-1,0} ; \
+    BLAS_zgeru (m, n, alpha, (float *) x, 1, (float *) y, 1, \
+	(float *) A, d) ; \
 }
 #else
 #define BLAS_GER(m,n,x,y,A,d) \
 { \
-    double alpha = -1 ; \
+    float alpha = -1 ; \
     BLAS_dger (m, n, &alpha, x, 1, y, 1, A, d) ; \
 }
 #endif
@@ -201,14 +201,14 @@
 #ifdef COMPLEX
 #define BLAS_GEMV(m,n,A,x,y,d) \
 { \
-    double alpha [2] = {-1,0}, beta [2] = {1,0} ; \
-    BLAS_zgemv ("N", m, n, alpha, (double *) A, d, (double *) x, 1, beta, \
-	(double *) y, 1) ; \
+    float alpha [2] = {-1,0}, beta [2] = {1,0} ; \
+    BLAS_zgemv ("N", m, n, alpha, (float *) A, d, (float *) x, 1, beta, \
+	(float *) y, 1) ; \
 }
 #else
 #define BLAS_GEMV(m,n,A,x,y,d) \
 { \
-    double alpha = -1, beta = 1 ; \
+    float alpha = -1, beta = 1 ; \
     BLAS_dgemv ("N", m, n, &alpha, A, d, x, 1, &beta, y, 1) ; \
 }
 #endif
@@ -224,7 +224,7 @@
 #ifdef COMPLEX
 #define BLAS_TRSV(m,A,b,d) \
 { \
-    BLAS_ztrsv ("L", "N", "U", m, (double *) A, d, (double *) b, 1) ; \
+    BLAS_ztrsv ("L", "N", "U", m, (float *) A, d, (float *) b, 1) ; \
 }
 #else
 #define BLAS_TRSV(m,A,b,d) \
@@ -244,14 +244,14 @@
 #ifdef COMPLEX
 #define BLAS_TRSM_RIGHT(m,n,A,lda,B,ldb) \
 { \
-    double alpha [2] = {1,0} ; \
-    BLAS_ztrsm ("R", "L", "T", "U", m, n, alpha, (double *) A, lda, \
-	(double *) B, ldb) ; \
+    float alpha [2] = {1,0} ; \
+    BLAS_ztrsm ("R", "L", "T", "U", m, n, alpha, (float *) A, lda, \
+	(float *) B, ldb) ; \
 }
 #else
 #define BLAS_TRSM_RIGHT(m,n,A,lda,B,ldb) \
 { \
-    double alpha = 1 ; \
+    float alpha = 1 ; \
     BLAS_dtrsm ("R", "L", "T", "U", m, n, &alpha, A, lda, B, ldb) ; \
 }
 #endif
@@ -265,15 +265,15 @@
 #ifdef COMPLEX
 #define BLAS_SCAL(n,s,x) \
 { \
-    double alpha [2] ; \
+    float alpha [2] ; \
     alpha [0] = REAL_COMPONENT (s) ; \
     alpha [1] = IMAG_COMPONENT (s) ; \
-    BLAS_zscal (n, alpha, (double *) x, 1) ; \
+    BLAS_zscal (n, alpha, (float *) x, 1) ; \
 }
 #else
 #define BLAS_SCAL(n,s,x) \
 { \
-    double alpha = REAL_COMPONENT (s) ; \
-    BLAS_dscal (n, &alpha, (double *) x, 1) ; \
+    float alpha = REAL_COMPONENT (s) ; \
+    BLAS_dscal (n, &alpha, (float *) x, 1) ; \
 }
 #endif

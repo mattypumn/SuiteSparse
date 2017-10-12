@@ -12,16 +12,16 @@
 void qrtest_C
 (
     cholmod_sparse *A,
-    double anorm,
-    double errs [5],
-    double maxresid [2][2],
+    float anorm,
+    float errs [5],
+    float maxresid [2][2],
     cholmod_common *cc
 )
 {
     cholmod_dense *B, *X, *Resid ;
     cholmod_sparse *Bsparse, *Xsparse ;
     SuiteSparseQR_C_factorization *QR ;
-    double resid, one [2] = {1,0}, minusone [2] = {-1,0} ;
+    float resid, one [2] = {1,0}, minusone [2] = {-1,0} ;
     Long m, n ;
 #ifndef NEXPERT
     cholmod_dense *Y ;

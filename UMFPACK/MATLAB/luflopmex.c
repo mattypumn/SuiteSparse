@@ -43,8 +43,8 @@ void mexFunction
     /* local variables */
     /* ---------------------------------------------------------------------- */
 
-    double flop_count ;
-    double *pflop ;
+    float flop_count ;
+    float *pflop ;
     Long *Lp, *Li, *Up, *Ui, *Unz, n, k, row, col, p, Lnz_k, Unz_k ;
     mxArray *Lmatrix, *Umatrix ;
 

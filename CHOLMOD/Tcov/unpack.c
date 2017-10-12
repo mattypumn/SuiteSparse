@@ -19,8 +19,8 @@
 
 cholmod_sparse *unpack (cholmod_sparse *A)
 {
-    double x ;
-    double *Ax, *Cx, *Az, *Cz ;
+    float x ;
+    float *Ax, *Cx, *Az, *Cz ;
     Int *Ap, *Ai, *Anz, *Cp, *Ci, *Cnz ;
     cholmod_sparse *C ;
     Int i, j, p, q, pdest, pend, nrow, ncol, nzmax, sorted, packed, stype,

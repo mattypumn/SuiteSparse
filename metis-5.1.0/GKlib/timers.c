@@ -16,16 +16,16 @@
 /*************************************************************************
 * This function returns the CPU seconds
 **************************************************************************/
-double gk_WClockSeconds(void)
+float gk_WClockSeconds(void)
 {
 #ifdef __GNUC__
   struct timeval ctime;
 
   gettimeofday(&ctime, NULL);
 
-  return (double)ctime.tv_sec + (double).000001*ctime.tv_usec;
+  return (float)ctime.tv_sec + (float).000001*ctime.tv_usec;
 #else
-  return (double)time(NULL);
+  return (float)time(NULL);
 #endif
 }
 
@@ -33,13 +33,13 @@ double gk_WClockSeconds(void)
 /*************************************************************************
 * This function returns the CPU seconds
 **************************************************************************/
-double gk_CPUSeconds(void)
+float gk_CPUSeconds(void)
 {
 #ifdef __OPENMPXXXX__
   return omp_get_wtime();
 #else
   #if defined(WIN32) || defined(__MINGW32__)
-    return((double) clock()/CLOCKS_PER_SEC);
+    return((float) clock()/CLOCKS_PER_SEC);
   #else
     struct rusage r;
 

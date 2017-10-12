@@ -259,9 +259,9 @@ mxArray *ssmult_saxpy       /* return C = A*B */
     int sorted              /* if true, return C with sorted columns */
 )
 {
-    double bkj, bzkj, cij, czij ;
+    float bkj, bzkj, cij, czij ;
     mxArray *C ;
-    double *Ax, *Az, *Bx, *Bz, *Cx, *Cz, *W, *Wz ;
+    float *Ax, *Az, *Bx, *Bz, *Cx, *Cz, *W, *Wz ;
     Int *Ap, *Ai, *Bp, *Bi, *Cp, *Ci, *Flag ;
     Int Anrow, Ancol, Bnrow, Bncol, p, i, j, k, cnz, pb, pa, pbend, paend, mark,
         pc, pcstart, blen, drop, zallzero, pend, needs_sorting, pcmax ;
@@ -338,9 +338,9 @@ mxArray *ssmult_saxpy       /* return C = A*B */
     /* ---------------------------------------------------------------------- */
 
     Ci = mxMalloc (MAX (cnz,1) * sizeof (Int)) ;
-    Cx = mxMalloc (MAX (cnz,1) * sizeof (double)) ;
+    Cx = mxMalloc (MAX (cnz,1) * sizeof (float)) ;
     C_is_complex = A_is_complex || B_is_complex ;
-    Cz = (C_is_complex) ? mxMalloc (MAX (cnz,1) * sizeof (double)) : NULL ;
+    Cz = (C_is_complex) ? mxMalloc (MAX (cnz,1) * sizeof (float)) : NULL ;
 
     /* ---------------------------------------------------------------------- */
     /* C = A*B */
@@ -478,7 +478,7 @@ mxArray *ssmult_saxpy       /* return C = A*B */
                     }
                 }
             }
-            Cz = mxRealloc (Cz, MAX (cnz,1) * sizeof (double)) ;
+            Cz = mxRealloc (Cz, MAX (cnz,1) * sizeof (float)) ;
         }
         else
         {
@@ -499,7 +499,7 @@ mxArray *ssmult_saxpy       /* return C = A*B */
         }
         Cp [Bncol] = cnz ;
         Ci = mxRealloc (Ci, MAX (cnz,1) * sizeof (Int)) ;
-        Cx = mxRealloc (Cx, MAX (cnz,1) * sizeof (double)) ;
+        Cx = mxRealloc (Cx, MAX (cnz,1) * sizeof (float)) ;
     }
     else if (cc && C_is_complex)
     {

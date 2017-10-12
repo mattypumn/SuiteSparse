@@ -14,7 +14,7 @@
 #include "umf_internal.h"
 #include "umf_lsolve.h"
 
-GLOBAL double UMF_lsolve
+GLOBAL float UMF_lsolve
 (
     NumericType *Numeric,
     Entry X [ ],		/* b on input, solution x on output */
@@ -147,5 +147,5 @@ GLOBAL double UMF_lsolve
     DEBUG4 (("Lsolve done.\n")) ;
 #endif
 
-    return (MULTSUB_FLOPS * ((double) Numeric->lnz)) ;
+    return (MULTSUB_FLOPS * ((float) Numeric->lnz)) ;
 }

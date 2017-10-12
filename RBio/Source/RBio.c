@@ -63,10 +63,10 @@ PRIVATE Int RB(format)  /* return format to use (index in F_, C_format) */
 (
     /* input */
     Int nnz,            /* number of nonzeros */
-    double *x,          /* of size nnz */
+    float *x,          /* of size nnz */
     Int is_int,         /* true if integer format is to be used */
-    double xmin,        /* minimum value of x */
-    double xmax,        /* maximum value of x */
+    float xmin,        /* minimum value of x */
+    float xmax,        /* maximum value of x */
     Int fmt,            /* initial format to use (index into F_format, ...) */
 
     /* output */
@@ -78,8 +78,8 @@ PRIVATE Int RB(format)  /* return format to use (index in F_, C_format) */
 PRIVATE void RB(iformat)
 (
     /* input */
-    double xmin,            /* smallest integer to print */
-    double xmax,            /* largest integer to print */
+    float xmin,            /* smallest integer to print */
+    float xmax,            /* largest integer to print */
 
     /* output */
     char indfmt [21],       /* Fortran format to use */
@@ -110,7 +110,7 @@ PRIVATE Int RB(xprint)        /* returns TRUE if OK, FALSE otherwise */
     /* input */
     FILE *file,             /* which file to write to */
     char *valcfm,           /* C format to use */
-    double x,               /* value to write */
+    float x,               /* value to write */
     Int valn,               /* number of entries to write per line */
     Int mkind,              /* 0:real, 1:pattern, 2:complex, 3:integer */
 
@@ -128,8 +128,8 @@ PRIVATE void RB(fill)
 PRIVATE Int RB(fix_mkind_in)      /* return revised mkind */
 (
     Int mkind_in,       /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
-    double *Ax,
-    double *Az
+    float *Ax,
+    float *Az
 ) ;
 
 PRIVATE Int RB(writeTask)       /* returns TRUE if OK, FALSE on failure */
@@ -143,8 +143,8 @@ PRIVATE Int RB(writeTask)       /* returns TRUE if OK, FALSE on failure */
     Int skind,      /* -1:rect, 0:unsym, 1:sym, 2:hermitian, 3:skew */
     Int *Ap,        /* size ncol+1, column pointers */
     Int *Ai,        /* size anz=Ap[ncol], row indices */
-    double *Ax,     /* size anz, real values */
-    double *Az,     /* size anz, imaginary part (may be NULL) */
+    float *Ax,     /* size anz, real values */
+    float *Az,     /* size anz, imaginary part (may be NULL) */
     Int *Zp,        /* size ncol+1, column pointers for Z (may be NULL) */
     Int *Zi,        /* size Zp[ncol], row indices for Z */
     char *indcfm,   /* C format for indices */
@@ -175,8 +175,8 @@ PRIVATE Int RB(read2)     /* 0: OK, < 0: error, > 0: warning */
     /* output */
     Int *Ap,            /* size ncol+1, column pointers for A */
     Int *Ai,            /* size nnz, row indices for A */
-    double *Ax,         /* size nnz or 2*nnz if complex and Az NULL */
-    double *Az,         /* size nnz, or NULL, for complex matrices only */
+    float *Ax,         /* size nnz or 2*nnz if complex and Az NULL */
+    float *Az,         /* size nnz, or NULL, for complex matrices only */
 
     /* workspace */
     Int *w,             /* size MAX(nrow,ncol)+1 */
@@ -191,8 +191,8 @@ PRIVATE Int RB(zcount)    /* return number of explicit zeros in A */
 (
     Int nnz,            /* number of entries to check */
     Int mkind,          /* R: 0, P: 1, C: 2, I: 3 */
-    double *Ax,         /* NULL, size nnz, or 2*nnz */
-    double *Az          /* NULL or size nnz */
+    float *Ax,         /* NULL, size nnz, or 2*nnz */
+    float *Az          /* NULL or size nnz */
 ) ;
 
 PRIVATE Int RB(extract)   /* return # of explicit zero entries */
@@ -204,8 +204,8 @@ PRIVATE Int RB(extract)   /* return # of explicit zero entries */
     /* input/output */
     Int *Ap,            /* size ncol+1, column pointers A A */
     Int *Ai,            /* size nnz=Ap[ncol], row indices of A */
-    double *Ax,         /* NULL, size nnz, or 2*nnz */
-    double *Az,         /* NULL or size nnz */
+    float *Ax,         /* NULL, size nnz, or 2*nnz */
+    float *Az,         /* NULL or size nnz */
 
     /* output */
     Int *Zp,            /* size ncol+1, column pointers for Z */
@@ -238,7 +238,7 @@ PRIVATE Int RB(xtoken)   /* TRUE if token found, FALSE othewise */
     Int len,            /* length of s (input only) */
     Int *k,             /* start parsing at s [k] */
     /* output */
-    double *x           /* value of the token, or 0 if not found */
+    float *x           /* value of the token, or 0 if not found */
 ) ;
 
 PRIVATE Int RB(itoken)
@@ -297,7 +297,7 @@ PRIVATE Int RB(read1x)    /* TRUE if OK, false otherwise */
     Int *len,           /* strlen(s) */
     Int slen,           /* size of s */
     Int *k,             /* read position in s */
-    double *x           /* value read from the file */
+    float *x           /* value read from the file */
 ) ;
 
 PRIVATE Int RB(iread)     /* TRUE if OK, false otherwise */
@@ -323,8 +323,8 @@ PRIVATE Int RB(xread)     /* TRUE if OK, false otherwise */
     Int mkind,          /* R: 0, P: 1, C: 2, I: 3 */
 
     /* output */
-    double *Ax,         /* read reals from file into Ax [0..n-1] */
-    double *Az,         /* read reals from file into Az [0..n-1], may be NULL */
+    float *Ax,         /* read reals from file into Ax [0..n-1] */
+    float *Az,         /* read reals from file into Az [0..n-1], may be NULL */
 
     /* input/workspace */
     char *s,            /* first line of input may be present in s */
@@ -351,11 +351,11 @@ PRIVATE void RB(skipheader)
 PUBLIC void RB(get_entry)
 (
     Int mkind,          /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
-    double *Ax,         /* real part, or both if merged-complex */
-    double *Az,         /* imaginary part if split-complex */
+    float *Ax,         /* real part, or both if merged-complex */
+    float *Az,         /* imaginary part if split-complex */
     Int p,              /* index of the entry */
-    double *xr,         /* real part */
-    double *xz          /* imaginary part */
+    float *xr,         /* real part */
+    float *xz          /* imaginary part */
 )
 {
     if (mkind == 0 || mkind == 3)
@@ -392,11 +392,11 @@ PUBLIC void RB(get_entry)
 PUBLIC void RB(put_entry)
 (
     Int mkind,          /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
-    double *Ax,         /* real part, or both if merged-complex */
-    double *Az,         /* imaginary part if split-complex */
+    float *Ax,         /* real part, or both if merged-complex */
+    float *Az,         /* imaginary part if split-complex */
     Int p,              /* index of the entry */
-    double xr,          /* real part */
-    double xz           /* imaginary part */
+    float xr,          /* real part */
+    float xz           /* imaginary part */
 )
 {
     if (mkind == 0 || mkind == 3)
@@ -470,8 +470,8 @@ PRIVATE Int RB(read2)   /* 0: OK, < 0: error, > 0: warning */
     /* output */
     Int *Ap,            /* size ncol+1, column pointers for A */
     Int *Ai,            /* size nnz, row indices for A */
-    double *Ax,         /* size nnz or 2*nnz if complex and Az NULL */
-    double *Az,         /* size nnz, or NULL, for complex matrices only */
+    float *Ax,         /* size nnz or 2*nnz if complex and Az NULL */
+    float *Az,         /* size nnz, or NULL, for complex matrices only */
 
     /* workspace */
     Int *w,             /* size MAX(nrow,ncol)+1 */
@@ -482,7 +482,7 @@ PRIVATE Int RB(read2)   /* 0: OK, < 0: error, > 0: warning */
     Int slen
 )
 {
-    double xr = 0, xz = 0 ;
+    float xr = 0, xz = 0 ;
     Int p, i, j, k, ilast, alen, llen, psrc, pdst ;
 
     /* ---------------------------------------------------------------------- */
@@ -716,11 +716,11 @@ PRIVATE Int RB(zcount)    /* return number of explicit zeros in A */
 (
     Int nnz,            /* number of entries in A */
     Int mkind,          /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
-    double *Ax,         /* NULL, size nnz, or 2*nnz */
-    double *Az          /* NULL or size nnz */
+    float *Ax,         /* NULL, size nnz, or 2*nnz */
+    float *Az          /* NULL or size nnz */
 )
 {
-    double xr, xz ;
+    float xr, xz ;
     Int p, znz = 0 ;
     for (p = 0 ; p < nnz ; p++)
     {
@@ -752,15 +752,15 @@ PRIVATE Int RB(extract) /* return # of explicit zero entries */
     /* input/output */
     Int *Ap,            /* size ncol+1, column pointers A A */
     Int *Ai,            /* size nnz=Ap[ncol], row indices of A */
-    double *Ax,         /* NULL, size nnz, or 2*nnz */
-    double *Az,         /* NULL or size nnz */
+    float *Ax,         /* NULL, size nnz, or 2*nnz */
+    float *Az,         /* NULL or size nnz */
 
     /* output */
     Int *Zp,            /* size ncol+1, column pointers for Z */
     Int *Zi             /* size znz = Zp [ncol] = # of zeros in A on input */
 )
 {
-    double xr, xz ;
+    float xr, xz ;
     Int p, i, j, pa, pz ;
 
     pa = 0 ;
@@ -845,7 +845,7 @@ PRIVATE void RB(substring)
 
 
 /* -------------------------------------------------------------------------- */
-/* RBxtoken: get the next token from a string, returning it as a double */
+/* RBxtoken: get the next token from a string, returning it as a float */
 /* -------------------------------------------------------------------------- */
 
 /* On input, the token to return from s [0..len] starts at s[k].  On output, k
@@ -858,7 +858,7 @@ PRIVATE Int RB(xtoken)    /* TRUE if token found, FALSE othewise */
     Int len,            /* length of s (input only) */
     Int *k,             /* start parsing at s [k] */
     /* output */
-    double *x           /* value of the token, or 0 if not found */
+    float *x           /* value of the token, or 0 if not found */
 )
 {
     Int start ;
@@ -893,7 +893,7 @@ PRIVATE Int RB(xtoken)    /* TRUE if token found, FALSE othewise */
     }
 
     /* parse the current token and return its value */
-    return (sscanf (s+start, "%lg", x) == 1) ;
+    return (sscanf (s+start, "%g", x) == 1) ;
 }
 
 
@@ -914,10 +914,10 @@ PRIVATE Int RB(itoken)
     Int *i              /* value of the token, or 0 if not found */
 )
 {
-    double x ;
+    float x ;
     Int ok = RB(xtoken) (s, len, k, &x) ;
     *i = (Int) x ;      /* convert to integer */
-    return (ok && ((double) ((*i)+1) == (x+1))) ;
+    return (ok && ((float) ((*i)+1) == (x+1))) ;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1204,7 +1204,7 @@ PRIVATE Int RB(read1x)    /* TRUE if OK, false otherwise */
     Int *len,           /* strlen(s) */
     Int slen,           /* size of s */
     Int *k,             /* read position in s */
-    double *x           /* value read from the file */
+    float *x           /* value read from the file */
 )
 {
     /* read the token from the current line */
@@ -1270,15 +1270,15 @@ PRIVATE Int RB(xread)     /* TRUE if OK, FALSE otherwise */
     Int mkind,          /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
 
     /* output */
-    double *Ax,         /* read reals from file into Ax [0..n-1] */
-    double *Az,         /* read reals from file into Az [0..n-1], may be NULL */
+    float *Ax,         /* read reals from file into Ax [0..n-1] */
+    float *Az,         /* read reals from file into Az [0..n-1], may be NULL */
 
     /* input/workspace */
     char *s,            /* first line of input may be present in s */
     Int slen            /* s is of size slen+1 */
 )
 {
-    double xr, xz ;
+    float xr, xz ;
     Int k, len, i, ok = TRUE ;
 
     /* the first token will be read from the current line, s, on input */
@@ -1357,21 +1357,21 @@ PUBLIC Int RB(read)              /* 0: OK, < 0: error, > 0: warning */
     Int *ncol,
     Int *mkind,         /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
     Int *skind,         /* R: -1, U: 0, S: 1, H: 2, Z: 3 */
-    Int *asize,         /* Ai array has size asize*sizeof(double) */
+    Int *asize,         /* Ai array has size asize*sizeof(float) */
     Int *znz,           /* number of explicit zeros removed from A */
 
     /* output: these are malloc'ed below and must be freed by the caller */
     Int **p_Ap,         /* column pointers of A */
     Int **p_Ai,         /* row indices of A */
-    double **p_Ax,      /* real values (ignored if NULL) of A */
-    double **p_Az,      /* imaginary values (ignored if NULL) of A */
+    float **p_Ax,      /* real values (ignored if NULL) of A */
+    float **p_Az,      /* imaginary values (ignored if NULL) of A */
     Int **p_Zp,         /* column pointers of Z */
     Int **p_Zi          /* row indices of Z */
 )
 {
     Int nnz, nelnz, status, fem ;
     Int *w, *cp, *Ap, *Ai, *Zp, *Zi ;
-    double *Ax, *Az ;
+    float *Ax, *Az ;
     FILE *file = NULL ;     /* read from stdin if NULL */
     int ok ;
     char s [SLEN+1], ptrfmt [21], indfmt [21], valfmt [21] ;
@@ -1459,21 +1459,21 @@ PUBLIC Int RB(read)              /* 0: OK, < 0: error, > 0: warning */
         /* return A as real, integer, or pattern */
         if (p_Ax)
         {
-            Ax = (double *) SuiteSparse_malloc (*asize, sizeof (double)) ;
+            Ax = (float *) SuiteSparse_malloc (*asize, sizeof (float)) ;
             ok = ok && (Ax != NULL) ;
         }
     }
     else if (*mkind == 2)
     {
         /* return A as split-complex */
-        Ax = (double *) SuiteSparse_malloc (*asize, sizeof (double)) ;
-        Az = (double *) SuiteSparse_malloc (*asize, sizeof (double)) ;
+        Ax = (float *) SuiteSparse_malloc (*asize, sizeof (float)) ;
+        Az = (float *) SuiteSparse_malloc (*asize, sizeof (float)) ;
         ok = ok && (Ax != NULL && Az != NULL) ;
     }
     else /* if (*mkind == 4) */
     {
         /* return A as merged-complex */
-        Ax = (double *) SuiteSparse_malloc (*asize, 2*sizeof (double)) ;
+        Ax = (float *) SuiteSparse_malloc (*asize, 2*sizeof (float)) ;
         ok = ok && (Ax != NULL) ;
     }
 
@@ -1589,12 +1589,12 @@ PUBLIC Int RB(readraw)           /* 0: OK, < 0: error, > 0: warning */
     /* output: these are malloc'ed below and must be freed by the caller */
     Int **p_Ap,         /* size ncol+1, column pointers of A */
     Int **p_Ai,         /* size nnz, row indices of A */
-    double **p_Ax       /* size xsize, numerical values of A */
+    float **p_Ax       /* size xsize, numerical values of A */
 )
 {
     FILE *file = NULL ; /* read from stdin if NULL */
     Int *Ap, *Ai ;
-    double *Ax ;
+    float *Ax ;
     Int status ;
     int ok ;
     char s [SLEN+1], ptrfmt [21], indfmt [21], valfmt [21] ;
@@ -1656,7 +1656,7 @@ PUBLIC Int RB(readraw)           /* 0: OK, < 0: error, > 0: warning */
     {
         /* A has numerical values */
         *xsize = ((*fem) ? (*nelnz) : (*nnz)) * (((*mkind) == 2) ? 2 : 1) ;
-        Ax = (double *) SuiteSparse_malloc (*xsize, sizeof (double)) ;
+        Ax = (float *) SuiteSparse_malloc (*xsize, sizeof (float)) ;
         ok = ok && (Ax != NULL) ;
     }
 
@@ -1724,8 +1724,8 @@ PUBLIC Int RB(readraw)           /* 0: OK, < 0: error, > 0: warning */
 PRIVATE Int RB(fix_mkind_in)      /* return revised mkind */
 (
     Int mkind_in,       /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
-    double *Ax,
-    double *Az
+    float *Ax,
+    float *Az
 )
 {
     if (!Ax)
@@ -1756,8 +1756,8 @@ PUBLIC Int RB(write)         /* 0:OK, < 0: error, > 0: warning */
     Int ncol,
     Int *Ap,        /* size ncol+1, column pointers */
     Int *Ai,        /* size anz=Ap[ncol], row indices (sorted) */
-    double *Ax,     /* size anz or 2*anz, numerical values (binary if NULL) */
-    double *Az,     /* size anz, imaginary part (real if NULL) */
+    float *Ax,     /* size anz or 2*anz, numerical values (binary if NULL) */
+    float *Az,     /* size anz, imaginary part (real if NULL) */
     Int *Zp,        /* size ncol+1, column pointers for Z (or NULL) */
     Int *Zi,        /* size znz=Zp[ncol], row indices for Z (or NULL) */
     Int mkind_in,   /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
@@ -1766,7 +1766,7 @@ PUBLIC Int RB(write)         /* 0:OK, < 0: error, > 0: warning */
     char mtype [4]  /* matrix type (RUA, RSA, etc), may be NULL */
 )
 {
-    double xmin, xmax, zmin, zmax ;
+    float xmin, xmax, zmin, zmax ;
     Int *w, *cp ;
     FILE *file = NULL ;     /* write to stdout if NULL */
     Int mkind, skind, zmkind, zskind, nnz2, vals, valn, indn, ptrn, valcrd,
@@ -2030,8 +2030,8 @@ PUBLIC Int RB(kind)          /* 0: OK, < 0: error, > 0: warning */
     Int ncol,
     Int *Ap,        /* Ap [0...ncol]: column pointers */
     Int *Ai,        /* Ai [0...nnz-1]: row indices */
-    double *Ax,     /* Ax [0...nnz-1]: real values.  Az holds imaginary part */
-    double *Az,     /* if real, Az is NULL. if complex, Az is non-NULL */
+    float *Ax,     /* Ax [0...nnz-1]: real values.  Az holds imaginary part */
+    float *Az,     /* if real, Az is NULL. if complex, Az is non-NULL */
     Int mkind_in,   /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
 
     /* output */
@@ -2039,8 +2039,8 @@ PUBLIC Int RB(kind)          /* 0: OK, < 0: error, > 0: warning */
     Int *skind,     /* r: -1 (rectangular), u: 0 (unsymmetric), s: 1 symmetric,
                        h: 2 (Hermitian), z: 3 (skew symmetric) */
     char mtype [4], /* rua, psa, rra, cha, etc */
-    double *xmin,   /* smallest value */
-    double *xmax,   /* largest value */
+    float *xmin,   /* smallest value */
+    float *xmax,   /* largest value */
 
     /* workspace: allocated internally if NULL */
     Int *cp         /* workspace of size ncol+1, undefined on input and output*/
@@ -2048,7 +2048,7 @@ PUBLIC Int RB(kind)          /* 0: OK, < 0: error, > 0: warning */
 {
     Int nnz, is_h, is_z, is_s, k, p, i, j, pt, get_workspace ;
     Int *w = NULL ;
-    double aij_real, aij_imag, aji_real, aji_imag ;
+    float aij_real, aij_imag, aji_real, aji_imag ;
 
     /* ---------------------------------------------------------------------- */
     /* check inputs */
@@ -2123,11 +2123,11 @@ PUBLIC Int RB(kind)          /* 0: OK, < 0: error, > 0: warning */
             }
             if (is_int)
             {
-                double x = Ax [p] ;
+                float x = Ax [p] ;
                 k = (Int) x ;
                 *xmin = MIN (x, *xmin) ;
                 *xmax = MAX (x, *xmax) ;
-                if (((double) k) != x)
+                if (((float) k) != x)
                 {
                     /* the entry is not an integer */
                     is_int = FALSE ;
@@ -2368,10 +2368,10 @@ PRIVATE Int RB(format)  /* return format to use (index in F_, C_format) */
 (
     /* input */
     Int nnz,            /* number of nonzeros */
-    double *x,          /* of size nnz */
+    float *x,          /* of size nnz */
     Int is_int,         /* true if integer format is to be used */
-    double xmin,        /* minimum value of x */
-    double xmax,        /* maximum value of x */
+    float xmin,        /* minimum value of x */
+    float xmax,        /* maximum value of x */
     Int fmt,            /* initial format to use (index into F_format, ...) */
 
     /* output */
@@ -2381,7 +2381,7 @@ PRIVATE Int RB(format)  /* return format to use (index in F_, C_format) */
 )
 {
     Int i ;
-    double a, b ;
+    float a, b ;
     char s [1024] ;
 
     if (is_int)
@@ -2424,7 +2424,7 @@ PRIVATE Int RB(format)  /* return format to use (index in F_, C_format) */
                  * using the kth format */
                 sprintf (s, C_format [fmt], a) ;
                 b = 0 ;
-                sscanf (s, "%lg", &b) ;
+                sscanf (s, "%g", &b) ;
                 if (s [0] == ' ' && a == b)
                 {
                     /* success, use this format (or wider) for all numbers */
@@ -2463,8 +2463,8 @@ PRIVATE Int RB(writeTask)     /* returns TRUE if successful, FALSE on failure */
     Int skind,      /* -1:rect, 0:unsym, 1:sym, 2:hermitian, 3:skew */
     Int *Ap,        /* size ncol+1, column pointers */
     Int *Ai,        /* size anz=Ap[ncol], row indices */
-    double *Ax,     /* size anz, real values */
-    double *Az,     /* size anz, imaginary part (may be NULL) */
+    float *Ax,     /* size anz, real values */
+    float *Az,     /* size anz, imaginary part (may be NULL) */
     Int *Zp,        /* size ncol+1, column pointers for Z (may be NULL) */
     Int *Zi,        /* size Zp[ncol], row indices for Z */
     char *indcfm,   /* C format for indices */
@@ -2480,7 +2480,7 @@ PRIVATE Int RB(writeTask)     /* returns TRUE if successful, FALSE on failure */
     Int *cp         /* size ncol+1 */
 )
 {
-    double xr, xz ;
+    float xr, xz ;
     Int j, pa, pz, paend, pzend, ia, iz, i, nbuf, ok ;
 
     /* ---------------------------------------------------------------------- */
@@ -2632,7 +2632,7 @@ PRIVATE Int RB(xprint)    /* returns TRUE if OK, FALSE otherwise */
     /* input */
     FILE *file,         /* which file to write to */
     char *valcfm,       /* C format to use */
-    double x,           /* value to write */
+    float x,           /* value to write */
     Int valn,           /* number of entries to write per line */
     Int mkind,          /* 0:R, 1:P: 2:Csplit, 3:I, 4:Cmerged */
 
@@ -2669,8 +2669,8 @@ PRIVATE Int RB(xprint)    /* returns TRUE if OK, FALSE otherwise */
 PRIVATE void RB(iformat)
 (
     /* input */
-    double xmin,            /* smallest integer to print */
-    double xmax,            /* largest integer to print */
+    float xmin,            /* smallest integer to print */
+    float xmax,            /* largest integer to print */
 
     /* output */
     char indfmt [21],       /* Fortran format to use */
@@ -2811,8 +2811,8 @@ PUBLIC Int RB(ok)            /* 0:OK, < 0: error, > 0: warning */
     Int nzmax,      /* max # of entries */
     Int *Ap,        /* size ncol+1, column pointers */
     Int *Ai,        /* size nz = Ap [ncol], row indices */
-    double *Ax,     /* real part, or both if merged-complex */
-    double *Az,     /* imaginary part for split-complex */
+    float *Ax,     /* real part, or both if merged-complex */
+    float *Az,     /* imaginary part for split-complex */
     char *As,       /* logical matrices (useful for MATLAB caller only) */
     Int mkind,      /* 0:real, 1:logical/pattern, 2:split-complex, 3:integer,
                        4:merged-complex */
@@ -2822,7 +2822,7 @@ PUBLIC Int RB(ok)            /* 0:OK, < 0: error, > 0: warning */
     Int *p_nzeros      /* number of explicit zeros (-1 if not computed) */
 )
 {
-    double xr, xz ;
+    float xr, xz ;
     Int i, j, p, pend, njumbled, nzeros, ilast ;
 
     /* ---------------------------------------------------------------------- */
@@ -2897,7 +2897,7 @@ PUBLIC Int RB(ok)            /* 0:OK, < 0: error, > 0: warning */
             }
             if (mkind == 1 && As)
             {
-                xr = (double) (As [p]) ;
+                xr = (float) (As [p]) ;
                 xz = 0 ;
             }
             else

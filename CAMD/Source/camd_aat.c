@@ -24,11 +24,11 @@ GLOBAL size_t CAMD_aat	/* returns nz in A+A' */
     const Int Ai [ ],
     Int Len [ ],	/* Len [j]: length of column j of A+A', excl diagonal*/
     Int Tp [ ],		/* workspace of size n */
-    double Info [ ]
+    float Info [ ]
 )
 {
     Int p1, p2, p, i, j, pj, pj2, k, nzdiag, nzboth, nz ;
-    double sym ;
+    float sym ;
     size_t nzaat ;
 
 #ifndef NDEBUG
@@ -37,7 +37,7 @@ GLOBAL size_t CAMD_aat	/* returns nz in A+A' */
     ASSERT (CAMD_valid (n, n, Ap, Ai) == CAMD_OK) ;
 #endif
 
-    if (Info != (double *) NULL)
+    if (Info != (float *) NULL)
     {
 	/* clear the Info array, if it exists */
 	for (i = 0 ; i < CAMD_INFO ; i++)
@@ -156,7 +156,7 @@ GLOBAL size_t CAMD_aat	/* returns nz in A+A' */
     }
     else
     {
-	sym = (2 * (double) nzboth) / ((double) (nz - nzdiag)) ;
+	sym = (2 * (float) nzboth) / ((float) (nz - nzdiag)) ;
     }
 
     nzaat = 0 ;
@@ -165,11 +165,11 @@ GLOBAL size_t CAMD_aat	/* returns nz in A+A' */
 	nzaat += Len [k] ;
     }
     CAMD_DEBUG1 (("CAMD nz in A+A', excluding diagonal (nzaat) = %g\n",
-	(double) nzaat)) ;
+	(float) nzaat)) ;
     CAMD_DEBUG1 (("   nzboth: "ID" nz: "ID" nzdiag: "ID" symmetry: %g\n",
 		nzboth, nz, nzdiag, sym)) ;
 
-    if (Info != (double *) NULL)
+    if (Info != (float *) NULL)
     {
 	Info [CAMD_STATUS] = CAMD_OK ;
 	Info [CAMD_N] = n ;

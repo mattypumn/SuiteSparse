@@ -35,16 +35,16 @@
 
 PRIVATE Int do_step
 (
-    double omega [3],
+    float omega [3],
     Int step,
-    const double B2 [ ],
+    const float B2 [ ],
     Entry X [ ],
     const Entry W [ ],
-    const double Y [ ],
-    const double Z2 [ ],
+    const float Y [ ],
+    const float Z2 [ ],
     Entry S [ ],
     Int n,
-    double Info [UMFPACK_INFO]
+    float Info [UMFPACK_INFO]
 ) ;
 
 /* ========================================================================== */
@@ -56,19 +56,19 @@ GLOBAL Int UMF_solve
     Int sys,
     const Int Ap [ ],
     const Int Ai [ ],
-    const double Ax [ ],
-    double Xx [ ],
-    const double Bx [ ],
+    const float Ax [ ],
+    float Xx [ ],
+    const float Bx [ ],
 #ifdef COMPLEX
-    const double Az [ ],
-    double Xz [ ],
-    const double Bz [ ],
+    const float Az [ ],
+    float Xz [ ],
+    const float Bz [ ],
 #endif
     NumericType *Numeric,
     Int irstep,
-    double Info [UMFPACK_INFO],
+    float Info [UMFPACK_INFO],
     Int Pattern [ ],		/* size n */
-    double SolveWork [ ]	/* if irstep>0 real:  size 5*n.  complex:10*n */
+    float SolveWork [ ]	/* if irstep>0 real:  size 5*n.  complex:10*n */
 				/* otherwise   real:  size   n.  complex: 4*n */
 )
 {
@@ -77,9 +77,9 @@ GLOBAL Int UMF_solve
     /* ---------------------------------------------------------------------- */
 
     Entry axx, wi, xj, zi, xi, aij, bi ;
-    double omega [3], d, z2i, yi, flops ;
+    float omega [3], d, z2i, yi, flops ;
     Entry *W, *Z, *S, *X ;
-    double *Z2, *Y, *B2, *Rs ;
+    float *Z2, *Y, *B2, *Rs ;
     Int *Rperm, *Cperm, i, n, p, step, j, nz, status, p2, do_scale ;
 #ifdef COMPLEX
     Int AXsplit ;
@@ -105,7 +105,7 @@ GLOBAL Int UMF_solve
     Rperm = Numeric->Rperm ;
     Cperm = Numeric->Cperm ;
     Rs = Numeric->Rs ;		/* row scale factors */
-    do_scale = (Rs != (double *) NULL) ;
+    do_scale = (Rs != (float *) NULL) ;
     flops = 0 ;
     Info [UMFPACK_SOLVE_FLOPS] = 0 ;
     Info [UMFPACK_IR_TAKEN] = 0 ;
@@ -133,9 +133,9 @@ GLOBAL Int UMF_solve
 
     Z = (Entry *) NULL ;	/* unused if no iterative refinement */
     S = (Entry *) NULL ;
-    Y = (double *) NULL ;
-    Z2 = (double *) NULL ;
-    B2 = (double *) NULL ;
+    Y = (float *) NULL ;
+    Z2 = (float *) NULL ;
+    B2 = (float *) NULL ;
 
 #ifdef COMPLEX
     if (irstep > 0)
@@ -148,9 +148,9 @@ GLOBAL Int UMF_solve
 	AXsplit = SPLIT (Az) || SPLIT(Xz);
 	Z = (Entry *) (SolveWork + 4*n) ;	/* Entry Z [0..n-1] */
 	S = (Entry *) (SolveWork + 6*n) ;	/* Entry S [0..n-1] */
-	Y = (double *) (SolveWork + 8*n) ;	/* double Y [0..n-1] */
-	B2 = (double *) (SolveWork + 9*n) ;	/* double B2 [0..n-1] */
-	Z2 = (double *) Z ;		/* double Z2 [0..n-1], equiv. to Z */
+	Y = (float *) (SolveWork + 8*n) ;	/* float Y [0..n-1] */
+	B2 = (float *) (SolveWork + 9*n) ;	/* float B2 [0..n-1] */
+	Z2 = (float *) Z ;		/* float Z2 [0..n-1], equiv. to Z */
     }
     else
     {
@@ -177,9 +177,9 @@ GLOBAL Int UMF_solve
 	}
 	Z = (Entry *) (SolveWork + n) ;		/* Entry Z [0..n-1] */
 	S = (Entry *) (SolveWork + 2*n) ;	/* Entry S [0..n-1] */
-	Y = (double *) (SolveWork + 3*n) ;	/* double Y [0..n-1] */
-	B2 = (double *) (SolveWork + 4*n) ;	/* double B2 [0..n-1] */
-	Z2 = (double *) Z ;		/* double Z2 [0..n-1], equiv. to Z */
+	Y = (float *) (SolveWork + 3*n) ;	/* float Y [0..n-1] */
+	B2 = (float *) (SolveWork + 4*n) ;	/* float B2 [0..n-1] */
+	Z2 = (float *) Z ;		/* float Z2 [0..n-1], equiv. to Z */
     }
 #endif
 
@@ -1211,7 +1211,7 @@ GLOBAL Int UMF_solve
     }
 
 #ifdef COMPLEX
-    /* copy the solution back, from Entry X [ ] to double Xx [ ] and Xz [ ] */
+    /* copy the solution back, from Entry X [ ] to float Xx [ ] and Xz [ ] */
     if (AXsplit)
     {
 	for (i = 0 ; i < n ; i++)
@@ -1237,19 +1237,19 @@ GLOBAL Int UMF_solve
 
 PRIVATE Int do_step		/* return TRUE if iterative refinement done */
 (
-    double omega [3],
+    float omega [3],
     Int step,			/* which step of iterative refinement to do */
-    const double B2 [ ],	/* abs (B) */
+    const float B2 [ ],	/* abs (B) */
     Entry X [ ],
     const Entry W [ ],
-    const double Y [ ],
-    const double Z2 [ ],
+    const float Y [ ],
+    const float Z2 [ ],
     Entry S [ ],
     Int n,
-    double Info [UMFPACK_INFO]
+    float Info [UMFPACK_INFO]
 )
 {
-    double last_omega [3], tau, nctau, d1, wd1, d2, wd2, xi, yix, wi, xnorm ;
+    float last_omega [3], tau, nctau, d1, wd1, d2, wd2, xi, yix, wi, xnorm ;
     Int i ;
 
     /* DBL_EPSILON is a standard ANSI C term defined in <float.h> */
@@ -1257,7 +1257,7 @@ PRIVATE Int do_step		/* return TRUE if iterative refinement done */
 
     nctau = 1000 * n * DBL_EPSILON ;
     DEBUG0 (("do_step start: nctau = %30.20e\n", nctau)) ;
-    ASSERT (UMF_report_vector (n, (double *) X, (double *) NULL, UMF_debug,
+    ASSERT (UMF_report_vector (n, (float *) X, (float *) NULL, UMF_debug,
 	FALSE, FALSE) == UMFPACK_OK) ;
 
     /* for approximate flop count, assume d1 > tau is always true */
@@ -1311,12 +1311,12 @@ PRIVATE Int do_step		/* return TRUE if iterative refinement done */
 	    omega [2] = tau ;
 	    break ;
 	}
-	if (d1 > tau)		/* a double relop, but no NaN's here */
+	if (d1 > tau)		/* a float relop, but no NaN's here */
 	{
 	    wd1 = wi / d1 ;
 	    omega [1] = MAX (omega [1], wd1) ;
 	}
-	else if (tau > 0.0)	/* a double relop, but no NaN's here */
+	else if (tau > 0.0)	/* a float relop, but no NaN's here */
 	{
 	    d2 = Z2 [i] + yix ;
 	    wd2 = wi / d2 ;
@@ -1338,15 +1338,15 @@ PRIVATE Int do_step		/* return TRUE if iterative refinement done */
     if (SCALAR_IS_NAN (omega [0]))
     {
 	DEBUG0 (("omega[0] is NaN - done.\n")) ;
-	ASSERT (UMF_report_vector (n, (double *) X, (double *) NULL, UMF_debug,
+	ASSERT (UMF_report_vector (n, (float *) X, (float *) NULL, UMF_debug,
 	    FALSE, FALSE) == UMFPACK_OK) ;
 	return (TRUE) ;
     }
 
-    if (omega [0] < DBL_EPSILON)    /* double relop, but no NaN case here */
+    if (omega [0] < DBL_EPSILON)    /* float relop, but no NaN case here */
     {
 	DEBUG0 (("omega[0] too small - done.\n")) ;
-	ASSERT (UMF_report_vector (n, (double *) X, (double *) NULL, UMF_debug,
+	ASSERT (UMF_report_vector (n, (float *) X, (float *) NULL, UMF_debug,
 	    FALSE, FALSE) == UMFPACK_OK) ;
 	return (TRUE) ;
     }
@@ -1355,7 +1355,7 @@ PRIVATE Int do_step		/* return TRUE if iterative refinement done */
     /* stop if insufficient decrease in omega */
     /* ---------------------------------------------------------------------- */
 
-    /* double relop, but no NaN case here: */
+    /* float relop, but no NaN case here: */
     if (step > 0 && omega [0] > last_omega [0] / 2)
     {
 	DEBUG0 (("stop refinement\n")) ;
@@ -1371,7 +1371,7 @@ PRIVATE Int do_step		/* return TRUE if iterative refinement done */
 	    Info [UMFPACK_OMEGA2] = last_omega [2] ;
 	}
 	Info [UMFPACK_IR_TAKEN] = step - 1 ;
-	ASSERT (UMF_report_vector (n, (double *) X, (double *) NULL, UMF_debug,
+	ASSERT (UMF_report_vector (n, (float *) X, (float *) NULL, UMF_debug,
 	    FALSE, FALSE) == UMFPACK_OK) ;
 	return (TRUE) ;
     }
@@ -1389,7 +1389,7 @@ PRIVATE Int do_step		/* return TRUE if iterative refinement done */
     /* iterative refinement continues */
     /* ---------------------------------------------------------------------- */
 
-    ASSERT (UMF_report_vector (n, (double *) X, (double *) NULL, UMF_debug,
+    ASSERT (UMF_report_vector (n, (float *) X, (float *) NULL, UMF_debug,
 	FALSE, FALSE) == UMFPACK_OK) ;
     return (FALSE) ;
 }

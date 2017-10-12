@@ -23,7 +23,7 @@ for trial = 1:100
         continue ;
     end
 
-    for cmplex = 0:double(~ispc)
+    for cmplex = 0:float(~ispc)
         if (cmplex)
             A = A + 1i * sprand (A) ;
         end

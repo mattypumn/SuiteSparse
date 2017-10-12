@@ -3,7 +3,7 @@
 /* All Rights Reserved.  See ../Doc/License.txt for License.                  */
 /* -------------------------------------------------------------------------- */
 
-GLOBAL double UMF_symbolic_usage
+GLOBAL float UMF_symbolic_usage
 (
     Int n_row,
     Int n_col,
